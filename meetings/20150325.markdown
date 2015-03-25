@@ -1,0 +1,38 @@
+# Meeting Agenda
+
+Date: 2014-03-19
+
+Facilitator: Daniel Eineving
+
+Participants: Daniel Eineving, Mikael Malmqvist, Niklas Tegnander & Fredrik Thune
+  
+## Objectives
+The issues that we now have resolved before this meeting is that we have now decided what project we will do, which is a multiplayer version of the boardegame battleship.
+
+## Reports
+Since this is our first propper meeting, there have been no issuses frm the last meeting, but we have already made a few scetches what the application will look like.
+
+## Discussion items
+
+#### What design patterns will we use?
+After a short discussion we have all decided that Model-View-Control will suit this application the best.
+
+#### What frameworks will we use?
+We decided that everyone should get familiar with jMonkeyEngine and that we would use that. The project will be a Maven project and that we might use mbassador to help us with the observer classes.
+
+## Outcomes and assignments
+Mikael have finished the first part of the RAD, so Fredrik will take a long on the second part.
+
+Daniel will start looking over the SDD and what has to be done with that document.
+
+Everyone should get Maven to their own IDEs.
+
+Mikael should take the scetches and evaluete them with someone outside the project.
+
+## Wrap up 
+
+#### Unsolved
+Nothing
+
+#### Next meeting
+What was said in the assignments part.
