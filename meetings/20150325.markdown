@@ -1,0 +1,32 @@
+# Meeting Agenda
+Date: 2015-03-25
+
+Facilitator: Oscar Evertsson
+
+Participants: Mats Högberg, Oscar Evertsson, Filip Hallqvist, Jesper Jaxing
+  
+## Objectives
+At the moment we have no issues that prevent the team from continuing.
+
+## Reports
+Since this is the first meeting we don't have anything to report yet.
+
+## Discussion items
+
+### RAD
+* What to write?
+* How to structure the document?
+
+The RAD contains what the application should do. This is the first step of developing the application.
+
+## Outcomes and assignments
+We will all work on the RAD together.
+
+## Wrap up 
+The first step in the developing process is to begin writing the RAD. We will all do this together.
+
+### Unsolved issues
+Nothing.
+
+### Next meeting
+Tuesday 25/3 12.00-13.00 in EDIT-5205. Oscar will add this to the project calendar.
