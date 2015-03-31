@@ -1,0 +1,34 @@
+﻿# Meeting Agenda
+Date: 2015-03-31
+
+Facilitator: Oscar Evertsson
+
+Participants: Mats Högberg, Oscar Evertsson, Filip Hallqvist, Jesper Jaxing
+  
+## Objectives
+Unclear how to proceed with UML and which classses we have to make. Our knowlege of how a mail client works is limited, e.g. what protocols to use and how to communicate with mail servers. We didn't know how many use cases we needed, so we sent a mail to our mentor.
+
+## Reports
+We have been working together with the RAD and the use cases. As of right now we have a use case model, and we have started to work on the RAD and almost finished with the preliminary RAD.
+
+## Discussion items
+
+### Domain model
+There is a preliminary model. The model needs work, e.g. should the top-level class have an inbox and outbox or should all accounts have an inbox and outbox each? We think the later option is the best.
+
+### RAD
+We need more nouns to create our UML.
+
+## Outcomes and assignments
+We have sent an email to our mentor asking about how the domain model is supposed to be written. We will continue to work on the RAD, and aim to be done with the RAD by thursday to be able to start coding immediately.
+
+Mats checks the RAD
+Everyone else including check the JavaMail API
+
+## Wrap up 
+
+### Unsolved issues
+How the domain model is supposed to be writen.
+
+### Next meeting
+Thursday 2/4 9.00-10.00 in EDIT-5205.
