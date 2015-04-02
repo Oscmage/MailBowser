@@ -1,0 +1,38 @@
+# Meeting Agenda
+
+  Date: 2015-04-02
+
+  Facilitator: Oscar Evertsson
+
+  Participants: Oscar Evertsson, Jesper Jaxing, Filip Hallqvist
+
+## Objectives
+
+We just had our mentor meeting where all our issues have been resolved.
+    
+## Reports
+
+We've continued our work on the RAD and cleared any issues with help from our mentor. Mats has reviewed the RAD and the rest of us have continued looking over the Java Mail API.  
+
+## Discussion items
+
+- Extend functional requirements and dig deeper into the current function requirements.
+- Rewrite all the alternative flows in our use cases.
+- Review the sequence-diagram.
+- Review the domain model.
+
+## Outcomes and assignments 
+
+Continue our work on the Discussion items and also go through the Java Mail API even more firmly.
+
+## Wrap up
+
+### Issues to discuss until next meeting
+
+Who's gonna work with what(Programming)?
+
+### Next meeting
+
+2015-04-21, 12.00-13.00
+
+  
