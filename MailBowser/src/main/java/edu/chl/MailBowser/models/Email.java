@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Created by OscarEvertsson on 07/04/15.
+ * This class represents an Email with sender, receivers, subject, content, createdDate, sentDate, lastEditedDate and isSent.
  */
 public class Email {
     private EmailAddress sender;
@@ -16,13 +17,22 @@ public class Email {
     private Date lastEditedDate;
     private boolean isSent;
 
+    /**
+     * Creates an email with the specified sender, receivers, subject and content.
+     * @param sender Sets the sender for the email.
+     * @param receivers Sets the recievers for the email
+     * @param subject Sets the subject of the email.
+     * @param content Sets the content for the email.
+     */
     public Email(EmailAddress sender, List<EmailAddress> receivers, String subject, String content){
-        this.createdDate = new Date();
         this.isSent = false;
         this.sender = sender;
         this.receivers = receivers;
         this.subject = subject;
         this.content = content;
+        this.createdDate = new Date();
+
+        setLastEditedDate();
     }
 
     public boolean isSent() {
@@ -57,10 +67,6 @@ public class Email {
         return (Date)createdDate.clone();
     }
 
-    public void setSentDate(){
-        this.sentDate = new Date();
-    }
-
     public void setLastEditedDate(){
         this.lastEditedDate = new Date();
     }
@@ -85,8 +91,8 @@ public class Email {
         this.sender = sender;
     }
 
-    public void setSentDate(Date sentDate) {
-        this.sentDate = sentDate;
+    private void setSentDate(){
+        this.sentDate = new Date();
     }
 
     public void setSubject(String subject) {
@@ -95,6 +101,7 @@ public class Email {
 
     public void setSent(){
         this.isSent = true;
+        setSentDate();
     }
 
 }
