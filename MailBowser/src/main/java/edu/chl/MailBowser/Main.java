@@ -1,5 +1,8 @@
 package edu.chl.MailBowser;
 
+import edu.chl.MailBowser.controllers.EmailController;
+import edu.chl.MailBowser.models.EmailAddress;
+import edu.chl.MailBowser.views.SendEmailView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +21,20 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        launch(args);
+        // used to launch a JavaFX application
+        //launch(args);
+
+        // create necessary views and controllers
+        SendEmailView sendEmailView = new SendEmailView();
+        EmailController emailController = new EmailController(sendEmailView);
+
+        // simulate writing an email
+        sendEmailView.setEmailSubject("Subject");
+        sendEmailView.setEmailContent("Content");
+        sendEmailView.addEmailReceiver(new EmailAddress("test@mailbowser.com"));
+        sendEmailView.chooseAccount(0);
+
+        // simulate a click on the send button
+        sendEmailView.sendEmailButtonClicked();
     }
 }
