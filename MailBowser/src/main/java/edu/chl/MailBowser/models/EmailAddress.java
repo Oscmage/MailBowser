@@ -1,4 +1,4 @@
-package edu.chl.MailBowser;
+package edu.chl.MailBowser.models;
 
 /**
  * Created by OscarEvertsson on 07/04/15.
