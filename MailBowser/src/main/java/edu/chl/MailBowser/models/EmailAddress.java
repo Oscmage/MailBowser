@@ -1,25 +1,34 @@
 package edu.chl.MailBowser.models;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 /**
  * Created by OscarEvertsson on 07/04/15.
+ * EmailAddress represents an EmailAddress and have the possibility to check whether the address is correct or not.
  */
-public class EmailAddress {
-    private String address;
+public class EmailAddress implements Address{
+    private InternetAddress address;
 
     /**
-     * Creates an EmailAddress object with the specified address.
+     * Creates an EmailAddress object with the specified address trimmed(removes any space before and after the string).
+     * If the address is invalid the position of where the address possibly could be wrong is printed out.
      * @param address specifies the Email-address.
      */
     public EmailAddress(String address){
-        this.address = address.trim();
+        try {
+            this.address = new InternetAddress(address.trim());
+        } catch (AddressException e) {
+            System.out.println(e.getPos()); //SUPPOSED TO DO SOMETHING LATER WHEN VIEW IS AVAILABLE (remove this when fixed).
+        }
     }
 
     /**
-     * Sets the address to the given string.
+     * Sets the address to the given string also removes any space before and after the given string.
      * @param address specifies the Email-Address.
      */
     public void setAddress(String address){
-        this.address = address.trim();
+        this.address.setAddress(address.trim());
     }
 
     /**
@@ -27,20 +36,20 @@ public class EmailAddress {
      * @return returns a string of the address.
      */
     public String getAddress(){
-        return address;
+        return this.address.getAddress();
     }
 
     /**
-     * Validates the current address.
-     * @return returns true if it's ok and false if it's not ok.
+     * Validates the address.
+     * @return returns -1 if the string is valid otherwise returns the position of where the error was detected.
      */
-    public boolean isValid(){
-        for(int i=0;i<address.length();i++){
-            if(address.charAt(i) == '@'){
-                return true;
-            }
+    public int isValid(){
+        try {
+            this.address.validate();
+        } catch (AddressException e) {
+            return e.getPos();
         }
-        return false;
+        return -1;
     }
 
 }
