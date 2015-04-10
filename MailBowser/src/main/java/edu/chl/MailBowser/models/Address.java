@@ -10,6 +10,6 @@ package edu.chl.MailBowser.models;
  */
 public interface Address {
     void setAddress(String s);
-    String getAddress();
+    String toString();
     int isValid();
 }
