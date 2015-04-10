@@ -1,5 +1,9 @@
 package edu.chl.MailBowser.models;
 
+import com.sun.mail.smtp.SMTPMessage;
+
+import javax.mail.Message;
+import javax.mail.Session;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +11,7 @@ import java.util.List;
  * Created by OscarEvertsson on 07/04/15.
  * This class represents an Email with sender, receivers, subject, content, createdDate, sentDate, lastEditedDate and isSent.
  */
-public class Email {
+public class Email extends AbstractModel implements IEmail{
     private EmailAddress sender;
     private List<EmailAddress> receivers;
     private String subject;
@@ -20,7 +24,7 @@ public class Email {
     /**
      * Creates an email with the specified sender, receivers, subject and content.
      * @param sender Sets the sender for the email.
-     * @param receivers Sets the recievers for the email
+     * @param receivers Sets the receivers for the email
      * @param subject Sets the subject of the email.
      * @param content Sets the content for the email.
      */
@@ -33,6 +37,11 @@ public class Email {
         this.createdDate = new Date();
 
         setLastEditedDate();
+    }
+
+    @Override
+    public Message getJavaxMessage(Session session) {
+        return new SMTPMessage(session);
     }
 
     public boolean isSent() {
