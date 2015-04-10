@@ -24,6 +24,15 @@ public class EmailAddress implements Address{
     }
 
     /**
+     * Creates a new EmailAddress from an existing EmailAddress
+     *
+     * @param address the address
+     */
+    public EmailAddress(EmailAddress emailAddress) {
+        this(emailAddress.getAddress());
+    }
+
+    /**
      * Sets the address to the given string also removes any space before and after the given string.
      * @param address specifies the Email-Address.
      */
@@ -51,5 +60,4 @@ public class EmailAddress implements Address{
         }
         return -1;
     }
-
 }
