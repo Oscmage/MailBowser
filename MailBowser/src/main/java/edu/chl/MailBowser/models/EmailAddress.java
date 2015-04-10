@@ -23,20 +23,21 @@ public class EmailAddress extends AbstractModel implements Address{
         }
     }
 
-    /**
-     * @return Gives a copy of the javax.mail.InternetAddress object which holds the information
+    /** Creates a new EmailAddress from an existing EmailAddress
+     *
+     * @param emailAddress the address
      */
-    public InternetAddress getJavaxAddress(){
-        return (InternetAddress)this.address.clone();
+    public EmailAddress(EmailAddress emailAddress) {
+        this(emailAddress.toString());
     }
 
     /**
-     * Sets the address to the given string also removes any space before and after the given string.
-     * @param address specifies the Email-Address.
+     * @return Gives a copy of the javax.mail.InternetAddress object which holds the information
      */
-    public void setAddress(String address){
-        this.address.setAddress(address.trim());
+    public InternetAddress getJavaxAddress() {
+        return (InternetAddress)this.address.clone();
     }
+
 
     /**
      * Returns a string for the address.
@@ -45,18 +46,4 @@ public class EmailAddress extends AbstractModel implements Address{
     public String toString(){
         return this.address.toString();
     }
-
-    /**
-     * Validates the address.
-     * @return returns -1 if the string is valid otherwise returns the position of where the error was detected.
-     */
-    public int isValid(){
-        try {
-            this.address.validate();
-        } catch (AddressException e) {
-            return e.getPos();
-        }
-        return -1;
-    }
-
 }
