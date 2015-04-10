@@ -1,9 +1,8 @@
 package edu.chl.MailBowser.models;
 
-import com.sun.mail.smtp.SMTPMessage;
-
-import javax.mail.Message;
-import javax.mail.Session;
+import javax.mail.*;
+import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  */
 public class Email extends AbstractModel implements IEmail{
     private EmailAddress sender;
-    private List<EmailAddress> receivers;
+    private ArrayList<EmailAddress> recipients;
     private String subject;
     private String content;
     private Date createdDate;
@@ -28,10 +27,10 @@ public class Email extends AbstractModel implements IEmail{
      * @param subject Sets the subject of the email.
      * @param content Sets the content for the email.
      */
-    public Email(EmailAddress sender, List<EmailAddress> receivers, String subject, String content){
+    public Email(EmailAddress sender, ArrayList<EmailAddress> receivers, String subject, String content){
         this.isSent = false;
         this.sender = sender;
-        this.receivers = receivers;
+        this.recipients = receivers;
         this.subject = subject;
         this.content = content;
         this.createdDate = new Date();
@@ -41,7 +40,26 @@ public class Email extends AbstractModel implements IEmail{
 
     @Override
     public Message getJavaxMessage(Session session) {
-        return new SMTPMessage(session);
+        MimeMessage msg = new MimeMessage(session);
+        try {
+            msg.setFrom(this.sender.getJavaxAddress());
+            msg.setSubject(this.subject);
+            msg.setText(this.content);
+            msg.setSentDate(new Date());
+            msg.addRecipients(Message.RecipientType.TO,getJavaxRecipients());
+        } catch (MessagingException e) {
+            //TODO handle this exception.
+            e.printStackTrace();
+        }
+        return msg;
+    }
+
+    private javax.mail.Address[] getJavaxRecipients(){
+        javax.mail.Address javaxArray [] = new javax.mail.Address [recipients.size()];
+        for (int i=0;i<=recipients.size();i++){
+            javaxArray[i] = recipients.get(i).getJavaxAddress();
+        }
+        return javaxArray;
     }
 
     public boolean isSent() {
@@ -53,7 +71,7 @@ public class Email extends AbstractModel implements IEmail{
     }
 
     public List<EmailAddress> getReceivers() {
-        return receivers;
+        return recipients;
     }
 
     public String getContent() {
@@ -92,8 +110,8 @@ public class Email extends AbstractModel implements IEmail{
         this.lastEditedDate = lastEditedDate;
     }
 
-    public void setReceivers(List<EmailAddress> receivers) {
-        this.receivers = receivers;
+    public void setReceivers(ArrayList<EmailAddress> receivers) {
+        this.recipients = receivers;
     }
 
     public void setSender(EmailAddress sender) {
@@ -108,6 +126,9 @@ public class Email extends AbstractModel implements IEmail{
         this.subject = subject;
     }
 
+    /**
+     * Sets the isSent boolean to true and gives the sentDate the current date.
+     */
     public void setSent(){
         this.isSent = true;
         setSentDate();
