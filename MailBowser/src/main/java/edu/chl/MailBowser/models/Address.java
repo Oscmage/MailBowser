@@ -9,7 +9,5 @@ package edu.chl.MailBowser.models;
  * The interface also assumes you want set/get and a isValid method for your address.
  */
 public interface Address {
-    void setAddress(String s);
-    String getAddress();
-    int isValid();
+    String toString();
 }
