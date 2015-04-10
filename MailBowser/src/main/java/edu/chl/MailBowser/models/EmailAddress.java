@@ -7,7 +7,7 @@ import javax.mail.internet.InternetAddress;
  * Created by OscarEvertsson on 07/04/15.
  * EmailAddress represents an EmailAddress and have the possibility to check whether the address is correct or not.
  */
-public class EmailAddress implements Address{
+public class EmailAddress extends AbstractModel implements Address{
     private InternetAddress address;
 
     /**
@@ -24,6 +24,13 @@ public class EmailAddress implements Address{
     }
 
     /**
+     * @return Gives a copy of the javax.mail.InternetAddress object which holds the information
+     */
+    public InternetAddress getJavaxAddress(){
+        return (InternetAddress)this.address.clone();
+    }
+
+    /**
      * Sets the address to the given string also removes any space before and after the given string.
      * @param address specifies the Email-Address.
      */
@@ -35,8 +42,8 @@ public class EmailAddress implements Address{
      * Returns a string for the address.
      * @return returns a string of the address.
      */
-    public String getAddress(){
-        return this.address.getAddress();
+    public String toString(){
+        return this.address.toString();
     }
 
     /**
