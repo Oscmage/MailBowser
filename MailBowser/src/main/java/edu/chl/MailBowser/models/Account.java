@@ -2,59 +2,104 @@ package edu.chl.MailBowser.models;
 
 /**
  * Created by OscarEvertsson on 09/04/15.
+ *
  * The class Account stores the EmailAddress, username, password and Mail-server for a specific Email-account.
  */
 public class Account implements IAccount {
     private EmailAddress address;
-    private String username;
     private String password;
-    private MailServer server;
+
+    private IMailServer incomingServer;
+    private IMailServer outgoingServer;
 
     /**
-     * Constructs a Account with the specified EmailAddress, username, password and server.
+     * Constructor.
+     *
      * @param address
-     * @param username
      * @param password
-     * @param server
+     * @param incomingServer
+     * @param outgoingServer
      */
-    public Account(EmailAddress address, String username, String password, MailServer server){
+    public Account(EmailAddress address, String password, IMailServer incomingServer, IMailServer outgoingServer) {
         this.address = address;
-        this.username = username;
         this.password = password;
-        this.server = server;
+        this.incomingServer = incomingServer;
+        this.outgoingServer = outgoingServer;
     }
 
-    public void setPassword(String password){
-        this.password = password;
-    }
-
-    public void setUsername(String username){
-        this.username = username;
-    }
-
-    public void setServer(MailServer server){
-        this.server = server;
-    }
-
-    public void setEmailAddress(EmailAddress address){
-        this.address = address;
-    }
-
+    /**
+     * Sets the password to a new string.
+     *
+     * @param password
+     */
     @Override
-    public String getUsername() {
-        return this.username;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
+    /**
+     * @return password
+     */
     @Override
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
-    public MailServer getOutgoingServer(){
-        return this.server;
+    /**
+     * Updates the email address for the account.
+     *
+     * @param emailAddress new email address
+     */
+    @Override
+    public void setEmailAddress(EmailAddress emailAddress) {
+        this.address = new EmailAddress(emailAddress);
     }
 
-    public EmailAddress getEmailAddress(){
-        return this.address;
+    /**
+     * @return email address
+     */
+    @Override
+    public EmailAddress getEmailAddress() {
+        return new EmailAddress(address);
+    }
+
+    /**
+     * Sets the incoming server for the account.
+     *
+     * @param server
+     */
+    @Override
+    public void setIncomingServer(IMailServer server) {
+        // TODO: make immutable?
+        this.incomingServer = server;
+    }
+
+    /**
+     * @return incoming server
+     */
+    @Override
+    public IMailServer getIncomingServer() {
+        // TODO: make immutable?
+        return incomingServer;
+    }
+
+    /**
+     * Sets the outgoing server for the account.
+     *
+     * @param server
+     */
+    @Override
+    public void setOutgoingServer(IMailServer server) {
+        // TODO: make immutable?
+        this.outgoingServer = server;
+    }
+
+    /**
+     * @return outgoing server
+     */
+    @Override
+    public IMailServer getOutgoingServer() {
+        // TODO: make immutable?
+        return outgoingServer;
     }
 }
