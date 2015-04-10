@@ -9,7 +9,7 @@ public interface IAccount {
     void setPassword(String password);
     String getPassword();
     void setIncomingServer(IMailServer server);
-    IMailServer getIncomingServer(IMailServer server);
+    IMailServer getIncomingServer();
     void setOutgoingServer(IMailServer server);
-    IMailServer getOutgoingServer(IMailServer server);
+    IMailServer getOutgoingServer();
 }
