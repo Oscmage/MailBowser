@@ -1,8 +1,5 @@
 package edu.chl.MailBowser.models;
 
-import com.sun.mail.smtp.SMTPTransport;
-import sun.net.smtp.SmtpProtocolException;
-
 import javax.mail.*;
 import java.util.Properties;
 
@@ -13,25 +10,41 @@ public class MailServer implements IMailServer{
 
     @Override
     public boolean send(Email email, Account account){
-        EmailAddress emailAddress = account.getEmailAddress();
-        javax.mail.Address[] addresses = {emailAddress.getJavaxAddress()};
-        String password = account.getPassword();
-        String username = account.getUsername();
-        String protocol = account.getProtocol();
-        int port = account.getPort();
-        String host = emailAddress.getHost();
 
-        email.setSender(emailAddress);
-        Session session = Session.getDefaultInstance(new Properties());
-        URLName urlName = new URLName(protocol,host,port,null,username,password);
-        SMTPTransport transport = new SMTPTransport(session, urlName);
-        try{
-            transport.sendMessage(email.getJavaxMessage(session),addresses);
-        }catch (SendFailedException ex1){
+        // Set credentials for authentication
+        final String username = account.getEmailAddress().toString();
+        final String password = account.getPassword();
+
+        // Set server properties for the mail session
+        Properties props = new Properties();
+
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        // Create a new session with the specified credentials
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+
+            // Try to send the mail
+            Transport.send(email.getJavaxMessage(session));
+            System.out.println("Email sent");
+            return true;
+
+        } catch (MessagingException e) {
+
+            // Return false if it failed
+            System.out.println("An unspecified error occured");
             return false;
-        }catch (MessagingException ex2){
-            return false;
+
         }
-        return true;
+
     }
 }
