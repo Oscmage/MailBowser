@@ -3,7 +3,7 @@ package edu.chl.MailBowser.models;
 /**
  * Created by OscarEvertsson on 09/04/15.
  *
- * The class Account stores the EmailAddress, username, password and Mail-server for a specific Email-account.
+ * A model class for an email account. An account has an address, a password and two mail servers - an incoming and an outgoing.
  */
 public class Account implements IAccount {
     private IAddress address;
@@ -48,7 +48,7 @@ public class Account implements IAccount {
     /**
      * Updates the email address for the account.
      *
-     * @param emailAddress new email address
+     * @param address new address
      */
     @Override
     public void setAddress(IAddress address) {
@@ -56,7 +56,7 @@ public class Account implements IAccount {
     }
 
     /**
-     * @return email address
+     * @return address
      */
     @Override
     public IAddress getAddress() {
