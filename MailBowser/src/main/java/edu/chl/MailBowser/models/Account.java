@@ -28,6 +28,16 @@ public class Account implements IAccount {
     }
 
     /**
+     * Returns the username for the account as a String.
+     *
+     * @return username as a String
+     */
+    @Override
+    public String getUsername() {
+        return address.toString();
+    }
+
+    /**
      * Sets the password to a new string.
      *
      * @param password
