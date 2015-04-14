@@ -1,7 +1,6 @@
 package edu.chl.MailBowser.views;
 
 import edu.chl.MailBowser.models.Email;
-import edu.chl.MailBowser.models.EmailAddress;
 import edu.chl.MailBowser.models.IAccount;
 import edu.chl.MailBowser.models.IAddress;
 import edu.chl.MailBowser.models.IEmail;
