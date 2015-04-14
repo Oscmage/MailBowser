@@ -1,5 +1,7 @@
 package edu.chl.MailBowser.models;
 
+import edu.chl.MailBowser.Observable;
+
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
@@ -8,7 +10,7 @@ import javax.mail.internet.InternetAddress;
  *
  * Address represents an email address. You cannot create an invalid Address obejct.
  */
-public class Address extends AbstractModel implements IAddress {
+public class Address extends Observable implements IAddress {
     private InternetAddress address;
 
     /**
