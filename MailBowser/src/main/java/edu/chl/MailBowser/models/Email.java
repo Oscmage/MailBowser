@@ -1,5 +1,7 @@
 package edu.chl.MailBowser.models;
 
+import edu.chl.MailBowser.Observable;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -11,7 +13,7 @@ import java.util.List;
  * Created by OscarEvertsson on 07/04/15.
  * This class represents an Email with sender, receivers, subject, content, createdDate, sentDate, lastEditedDate and isSent.
  */
-public class Email extends AbstractModel implements IEmail{
+public class Email extends Observable implements IEmail{
     private IAddress sender;
     private List<IAddress> recipients;
     private String subject;

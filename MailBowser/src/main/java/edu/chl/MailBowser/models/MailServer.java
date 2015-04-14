@@ -9,7 +9,7 @@ import java.util.Properties;
 public class MailServer implements IMailServer{
 
     @Override
-    public boolean send(Email email, Account account){
+    public boolean send(IEmail email, IAccount account){
 
         // Set credentials for authentication
         final String username = account.getUsername().toString();
