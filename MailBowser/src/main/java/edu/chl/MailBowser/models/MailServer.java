@@ -23,6 +23,9 @@ public class MailServer implements IMailServer{
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
+        //Set the sender of the email
+        email.setSender(account.getAddress());
+
         // Create a new session with the specified credentials
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
