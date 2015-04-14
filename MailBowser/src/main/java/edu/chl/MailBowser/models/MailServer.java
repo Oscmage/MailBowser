@@ -12,7 +12,7 @@ public class MailServer implements IMailServer{
     public boolean send(Email email, Account account){
 
         // Set credentials for authentication
-        final String username = account.getEmailAddress().toString();
+        final String username = account.getUsername().toString();
         final String password = account.getPassword();
 
         // Set server properties for the mail session
