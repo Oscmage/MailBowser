@@ -57,7 +57,7 @@ public class Email extends Observable implements IEmail{
 
     private javax.mail.Address[] getJavaxRecipients(){
         javax.mail.Address javaxArray [] = new javax.mail.Address [recipients.size()];
-        for (int i=0;i<=recipients.size();i++){
+        for (int i=0;i<recipients.size();i++){
             javaxArray[i] = recipients.get(i).getJavaxAddress();
         }
         return javaxArray;
