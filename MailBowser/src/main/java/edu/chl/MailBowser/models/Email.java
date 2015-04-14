@@ -11,8 +11,8 @@ import java.util.List;
  * This class represents an Email with sender, receivers, subject, content, createdDate, sentDate, lastEditedDate and isSent.
  */
 public class Email extends AbstractModel implements IEmail{
-    private EmailAddress sender;
-    private ArrayList<EmailAddress> recipients;
+    private IAddress sender;
+    private ArrayList<IAddress> recipients;
     private String subject;
     private String content;
     private Date createdDate;
@@ -22,19 +22,17 @@ public class Email extends AbstractModel implements IEmail{
 
     /**
      * Creates an email with the specified sender, receivers, subject and content.
-     * @param sender Sets the sender for the email.
      * @param receivers Sets the receivers for the email
      * @param subject Sets the subject of the email.
      * @param content Sets the content for the email.
      */
-    public Email(EmailAddress sender, ArrayList<EmailAddress> receivers, String subject, String content){
+    public Email(ArrayList<IAddress> receivers, String subject, String content){
         this.isSent = false;
-        this.sender = sender;
         this.recipients = receivers;
         this.subject = subject;
         this.content = content;
-        this.createdDate = new Date();
 
+        this.createdDate = new Date();
         setLastEditedDate();
     }
 
@@ -66,11 +64,11 @@ public class Email extends AbstractModel implements IEmail{
         return isSent;
     }
 
-    public EmailAddress getSender() {
+    public IAddress getSender() {
         return sender;
     }
 
-    public List<EmailAddress> getReceivers() {
+    public List<IAddress> getReceivers() {
         return recipients;
     }
 
@@ -110,11 +108,11 @@ public class Email extends AbstractModel implements IEmail{
         this.lastEditedDate = lastEditedDate;
     }
 
-    public void setReceivers(ArrayList<EmailAddress> receivers) {
+    public void setReceivers(ArrayList<IAddress> receivers) {
         this.recipients = receivers;
     }
 
-    public void setSender(EmailAddress sender) {
+    public void setSender(IAddress sender) {
         this.sender = sender;
     }
 
