@@ -1,8 +1,9 @@
 package edu.chl.MailBowser.models;
 
-import javax.mail.*;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class Email extends AbstractModel implements IEmail{
     private IAddress sender;
-    private ArrayList<IAddress> recipients;
+    private List<IAddress> recipients;
     private String subject;
     private String content;
     private Date createdDate;
@@ -26,7 +27,7 @@ public class Email extends AbstractModel implements IEmail{
      * @param subject Sets the subject of the email.
      * @param content Sets the content for the email.
      */
-    public Email(ArrayList<IAddress> receivers, String subject, String content){
+    public Email(List<IAddress> receivers, String subject, String content){
         this.isSent = false;
         this.recipients = receivers;
         this.subject = subject;
@@ -108,7 +109,7 @@ public class Email extends AbstractModel implements IEmail{
         this.lastEditedDate = lastEditedDate;
     }
 
-    public void setReceivers(ArrayList<IAddress> receivers) {
+    public void setReceivers(List<IAddress> receivers) {
         this.recipients = receivers;
     }
 
