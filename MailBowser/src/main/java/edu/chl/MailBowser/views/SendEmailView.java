@@ -4,6 +4,7 @@ import edu.chl.MailBowser.models.Email;
 import edu.chl.MailBowser.models.EmailAddress;
 import edu.chl.MailBowser.models.IAccount;
 import edu.chl.MailBowser.models.IAddress;
+import edu.chl.MailBowser.models.IEmail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +79,7 @@ public class SendEmailView extends Observable {
      *
      * @return the email associated with this view
      */
-    public void getEmail() {
+    public IEmail getEmail() {
         return new Email(receivers, subject, content);
     }
 
