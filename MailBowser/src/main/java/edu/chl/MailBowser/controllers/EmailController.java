@@ -1,6 +1,9 @@
 package edu.chl.MailBowser.controllers;
 
 import edu.chl.MailBowser.models.Email;
+import edu.chl.MailBowser.models.IAccount;
+import edu.chl.MailBowser.models.IEmail;
+import edu.chl.MailBowser.models.IMailServer;
 import edu.chl.MailBowser.views.SendEmailView;
 
 import java.awt.event.ActionEvent;
@@ -28,9 +31,9 @@ public class EmailController implements Observer {
      * Fetches the email and account from the view, and tells the mailserver to send the email.
      */
     private void sendEmail() {
-        Email email = view.getEmail();
-        Account account = view.getAccount();
-        MailServer server = account.getOutgoingServer();
+        IEmail email = view.getEmail();
+        IAccount account = view.getAccount();
+        IMailServer server = account.getOutgoingServer();
         server.send(email, account);
     }
 
