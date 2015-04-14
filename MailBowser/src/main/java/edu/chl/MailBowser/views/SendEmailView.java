@@ -1,18 +1,21 @@
 package edu.chl.MailBowser.views;
 
+import edu.chl.MailBowser.DataHandler;
+import edu.chl.MailBowser.Observable;
 import edu.chl.MailBowser.models.Email;
 import edu.chl.MailBowser.models.IAccount;
 import edu.chl.MailBowser.models.IAddress;
 import edu.chl.MailBowser.models.IEmail;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 /**
  * Created by mats on 09/04/15.
  */
-public class SendEmailView extends Observable {
+public class SendEmailView extends Observable implements PropertyChangeListener {
     private List<IAccount> accounts = new ArrayList<>();
     private int selectedAccountIndex = -1;
 
@@ -21,11 +24,19 @@ public class SendEmailView extends Observable {
     private String content;
 
     /**
+     * Creates a view for sending email.
+     */
+    public SendEmailView() {
+        DataHandler dh = DataHandler.getInstance();
+        dh.addPropertyChangeListener(this);
+        accounts = dh.getAccounts();
+    }
+
+    /**
      * Method to simulate a button press. This method is called manually from Main.
      */
     public void sendEmailButtonClicked() {
-        setChanged();
-        notifyObservers("sendButtonClicked");
+        firePropertyChange("sendButtonClicked", null, null);
     }
 
     /**
@@ -89,5 +100,22 @@ public class SendEmailView extends Observable {
      */
     public IAccount getAccount() {
         return accounts.get(selectedAccountIndex);
+    }
+
+    /**
+     * This method gets called when something happens in a model that the view listens to.
+     *
+     * @param evt an object containing information about the event
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("addAccount")) {
+            updateAccountList();
+        }
+    }
+
+    private void updateAccountList() {
+        DataHandler dh = DataHandler.getInstance();
+        accounts = dh.getAccounts();
     }
 }

@@ -1,17 +1,18 @@
 package edu.chl.MailBowser.controllers;
 
-import edu.chl.MailBowser.models.Email;
+import edu.chl.MailBowser.models.IAccount;
+import edu.chl.MailBowser.models.IEmail;
+import edu.chl.MailBowser.models.IMailServer;
 import edu.chl.MailBowser.views.SendEmailView;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by mats on 09/04/15.
  */
-public class EmailController implements Observer {
+public class EmailController implements PropertyChangeListener {
     private SendEmailView view;
 
     /**
@@ -21,32 +22,29 @@ public class EmailController implements Observer {
      */
     public EmailController(SendEmailView view) {
         this.view = view;
-        this.view.addObserver(this);
+        this.view.addPropertyChangeListener(this);
     }
 
     /**
      * Fetches the email and account from the view, and tells the mailserver to send the email.
      */
     private void sendEmail() {
-        Email email = view.getEmail();
-        Account account = view.getAccount();
-        MailServer server = account.getOutgoingServer();
+        IEmail email = view.getEmail();
+        IAccount account = view.getAccount();
+        IMailServer server = account.getOutgoingServer();
         server.send(email, account);
     }
 
     /**
-     * This method gets called when something happens in the view. It parses the event and calls the appropriate controller method.
+     * This method gets called when something happens in a view that the controller listens to.
+     * It parses the event and calls the appropriate controller method.
      *
-     * @param o
-     * @param arg
+     * @param evt an object containing information about the event
      */
     @Override
-    public void update(Observable o, Object arg) {
-        if (arg instanceof String) {
-            String argStr = (String) arg;
-            if (argStr.equals("sendButtonClicked")) {
-                sendEmail();
-            }
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("sendButtonClicked")) {
+            sendEmail();
         }
     }
 }
