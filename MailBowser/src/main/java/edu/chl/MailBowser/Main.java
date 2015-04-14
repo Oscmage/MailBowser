@@ -1,6 +1,7 @@
 package edu.chl.MailBowser;
 
 import edu.chl.MailBowser.controllers.EmailController;
+import edu.chl.MailBowser.models.Address;
 import edu.chl.MailBowser.models.EmailAddress;
 import edu.chl.MailBowser.views.SendEmailView;
 import javafx.application.Application;
@@ -31,7 +32,7 @@ public class Main extends Application {
         // simulate writing an email
         sendEmailView.setEmailSubject("Subject");
         sendEmailView.setEmailContent("Content");
-        sendEmailView.addEmailReceiver(new EmailAddress("test@mailbowser.com"));
+        sendEmailView.addEmailReceiver(new Address("test@mailbowser.com"));
         sendEmailView.chooseAccount(0);
 
         // simulate a click on the send button
