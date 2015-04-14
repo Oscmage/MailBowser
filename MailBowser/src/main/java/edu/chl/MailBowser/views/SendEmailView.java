@@ -2,6 +2,8 @@ package edu.chl.MailBowser.views;
 
 import edu.chl.MailBowser.models.Email;
 import edu.chl.MailBowser.models.EmailAddress;
+import edu.chl.MailBowser.models.IAccount;
+import edu.chl.MailBowser.models.IAddress;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +13,10 @@ import java.util.Observable;
  * Created by mats on 09/04/15.
  */
 public class SendEmailView extends Observable {
-    private List<Account> accounts = new ArrayList<>();
+    private List<IAccount> accounts = new ArrayList<>();
     private int selectedAccountIndex = -1;
 
-    private List<EmailAddress> receivers = new ArrayList<>();
+    private List<IAddress> receivers = new ArrayList<>();
     private String subject;
     private String content;
 
@@ -49,7 +51,7 @@ public class SendEmailView extends Observable {
      *
      * @param receiver the receiver to add
      */
-    public void addEmailReceiver(EmailAddress receiver) {
+    public void addEmailReceiver(IAddress receiver) {
         receivers.add(receiver);
     }
 
@@ -58,7 +60,7 @@ public class SendEmailView extends Observable {
      *
      * @param receiver the receiver to remove
      */
-    public void removeEmailReceiver(EmailAddress receiver) {
+    public void removeEmailReceiver(IAddress receiver) {
         receivers.remove(receiver);
     }
 
@@ -77,7 +79,7 @@ public class SendEmailView extends Observable {
      * @return the email associated with this view
      */
     public void getEmail() {
-        return new Email(subject, content, receivers);
+        return new Email(receivers, subject, content);
     }
 
     /**
@@ -85,7 +87,7 @@ public class SendEmailView extends Observable {
      *
      * @return the chosen account
      */
-    public Account getAccount() {
+    public IAccount getAccount() {
         return accounts.get(selectedAccountIndex);
     }
 }
