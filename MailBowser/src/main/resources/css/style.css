@@ -1,0 +1,63 @@
+.root{
+    -fx-font-size: 13px;
+    -fx-font-family: Roboto, sans-serif;
+    -fx-background: #FFF;
+}
+
+.button {
+    -fx-background-color: #E5404C;
+    -fx-background-radius: 0;
+    -fx-text-fill: #FFF;
+}
+.button:hover {
+	-fx-background-color: derive(#E5404C, 20%);
+}
+.button:armed {
+	-fx-background-color: derive(#E5404C, -10%);
+}
+
+.text-field {
+	-fx-background-color: #FFF;
+	-fx-border-color: #CCC;
+	-fx-border-width: 0 0 1 0; 
+	-fx-padding: 0;
+}
+
+.text-area {
+    -fx-background-color: #FFF;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: #CCC;
+    -fx-border-width: 0 0 0 0;
+    -fx-padding: 5;
+    -fx-effect: null;
+}
+
+.text-area:focused {
+	-fx-background-radius: 0;
+	-fx-background-insets: 0;
+}
+
+.text-area .content {
+	-fx-background-radius: 0;
+    -fx-background-color: #FFF;
+    -fx-dropshadow: gaussian, red, 1, 1, 1;
+}
+
+.text-area:focused {
+    -fx-background-color: #FFF;
+    -fx-background-insets: -0.4, 1, 2;
+    -fx-background-radius: 3.4, 2, 2;
+    -fx-prompt-text-fill: transparent;
+}
+ 
+.text-area .content {
+    -fx-padding: 3 5 3 5;
+    -fx-cursor: text;
+}
+
+.label {
+	-fx-text-fill: #AAA;
+	-fx-font-size: 10px;
+	-fx-padding: 0;
+}

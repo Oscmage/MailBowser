@@ -17,15 +17,21 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MailBowser.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("MailBowser");
+
+        Scene scene = new Scene(root, 250, 300);
+
+        // Add fonts and styles to the scene
+        scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
+        scene.getStylesheets().add("/css/style.css");
+
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-
     public static void main(String[] args) {
         // used to launch a JavaFX application
-        //launch(args);
+        launch(args);
 
         // create necessary views and controllers
         SendEmailView sendEmailView = new SendEmailView();
@@ -48,6 +54,7 @@ public class Main extends Application {
         sendEmailView.chooseAccount(0);
 
         // simulate a click on the send button
-        sendEmailView.sendEmailButtonClicked();
+        // sendEmailView.sendEmailButtonClicked();
+
     }
 }
