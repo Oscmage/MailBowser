@@ -1,6 +1,7 @@
 package edu.chl.MailBowser;
 
 import edu.chl.MailBowser.controllers.EmailController;
+import edu.chl.MailBowser.factories.MailServerFactory;
 import edu.chl.MailBowser.models.Account;
 import edu.chl.MailBowser.models.Address;
 import edu.chl.MailBowser.models.IAccount;
@@ -41,8 +42,8 @@ public class Main extends Application {
         IAccount account = new Account(
                 new Address("mailbows3r@gmail.com"),
                 "VG5!qBY&#f$QCmV",
-                new MailServer(),
-                new MailServer()
+                MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
+                MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL)
         );
         DataHandler dh = DataHandler.getInstance();
         dh.addAccount(account);
