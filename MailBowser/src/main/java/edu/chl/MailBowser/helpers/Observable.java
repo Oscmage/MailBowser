@@ -1,4 +1,4 @@
-package edu.chl.MailBowser;
+package edu.chl.MailBowser.helpers;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
