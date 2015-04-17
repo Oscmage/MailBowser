@@ -1,7 +1,7 @@
 package edu.chl.MailBowser.views;
 
 import edu.chl.MailBowser.DataHandler;
-import edu.chl.MailBowser.Observable;
+import edu.chl.MailBowser.helpers.Observable;
 import edu.chl.MailBowser.models.Email;
 import edu.chl.MailBowser.models.IAccount;
 import edu.chl.MailBowser.models.IAddress;

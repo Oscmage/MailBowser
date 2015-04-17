@@ -1,6 +1,6 @@
 package edu.chl.MailBowser.models;
 
-import edu.chl.MailBowser.Observable;
+import edu.chl.MailBowser.helpers.Observable;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
