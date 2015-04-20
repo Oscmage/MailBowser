@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by mats on 09/04/15.
  */
-public class EmailController  {
+public class SendEmailController {
 
     // Get the DataHandler
     private DataHandler dh = DataHandler.getInstance();
