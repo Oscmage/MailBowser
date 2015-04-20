@@ -14,7 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MailBowser.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("SendEmail.fxml"));
         primaryStage.setTitle("MailBowser");
 
         Scene scene = new Scene(root, 250, 300);
