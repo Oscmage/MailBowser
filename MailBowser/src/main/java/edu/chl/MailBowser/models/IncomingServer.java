@@ -13,7 +13,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
      * fetches the emails from th server given in MailServer
      *
      */
-    public List<Email> fetch(String username, String Password) {
+    public List<IEmail> fetch(String username, String Password) {
         return null;
     }
 
