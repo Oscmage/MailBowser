@@ -1,22 +1,20 @@
-package edu.chl.MailBowser.controllers;
+package edu.chl.MailBowser.presenters;
 
 import edu.chl.MailBowser.DataHandler;
 import edu.chl.MailBowser.models.*;
 import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by mats on 09/04/15.
  */
-public class SendEmailController {
+public class SendEmailPresenter {
 
     // Get the DataHandler
     private DataHandler dh = DataHandler.getInstance();
