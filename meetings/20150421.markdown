@@ -1,0 +1,51 @@
+# Meeting Agenda
+
+Date: 2015-04-21
+
+Facilitator: Oscar Evertsson 
+
+Participants: Oscar Evertsson, Jesper Jaxing, Filip Hallqvist, Mats Högberg.
+
+## Objectives
+
+* Ask our mentor about Joachim's thoughts regarding removing MailServer from the domain Model.
+* Is inbox/outbox necessary?
+* Decide next use case to implement.
+
+## Reports from previous meeting
+
+* We've extended the functional requirements and dug deeper into the functional requirements.
+* All alternative flows have been rewritten. (Jesper Jaxing, Oscar Evertsson)
+* Review and updated the sequence-diagram. (Mats Högberg)
+* Review the domain model. (Everybody)
+* Figured out who's gooing to do what and started coding.
+* A simple GUI have been created. (Filip Hallqvist) 
+* Implemented the send email use case. 
+
+## Discussion items
+
+* Decide next use case to work with.
+* MVC folder structure.
+* Inbox/outbox necessary?
+* Who's taking contact with our mentor?
+* Check whether our sequence diagrams matches our implementation.
+
+## Outcomes and assignments 
+
+* Next use case will be read email since it's one of the main functional requirements for our program.
+* No MVC folder structure have been picked due to insufficient knowledge of javaFX. Filip Hallqvist have taken responsibility to dig deeper into this matter. 
+* Inbox/Outbox is not necessary since we can resolve this issue using only tags. 
+* Oscar Evertsson is taking responsibility to contact our mentor about this issue.
+* Mats Högberg will analyse the diagrams and the implementation until next meeting.
+* Start working on the UML/sequence diagram for read email. (Everybody)
+* Everybody should read up on recieving email. (JavaMail API)
+
+## Wrap up
+
+### Unresolved issues
+
+MVC folder structure
+
+### Next meeting
+
+2015-04-23, 09.00-10.00
