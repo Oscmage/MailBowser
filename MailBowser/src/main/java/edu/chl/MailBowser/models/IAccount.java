@@ -9,8 +9,8 @@ public interface IAccount {
     String getUsername();
     void setPassword(String password);
     String getPassword();
-    void setIncomingServer(IMailServer server);
-    IMailServer getIncomingServer();
-    void setOutgoingServer(IMailServer server);
-    IMailServer getOutgoingServer();
+    void setIncomingServer(IIncomingServer server);
+    IIncomingServer getIncomingServer();
+    void setOutgoingServer(IOutgoingServer server);
+    IOutgoingServer getOutgoingServer();
 }
