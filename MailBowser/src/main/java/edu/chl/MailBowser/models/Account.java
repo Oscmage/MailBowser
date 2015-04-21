@@ -1,5 +1,8 @@
 package edu.chl.MailBowser.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by OscarEvertsson on 09/04/15.
  *
@@ -9,8 +12,10 @@ public class Account implements IAccount {
     private IAddress address;
     private String password;
 
-    private IMailServer incomingServer;
-    private IMailServer outgoingServer;
+    private IIncomingServer incomingServer;
+    private IOutgoingServer outgoingServer;
+
+    private List<IEmail> emails = new ArrayList<>();
 
     /**
      * Constructor.
@@ -20,7 +25,7 @@ public class Account implements IAccount {
      * @param incomingServer
      * @param outgoingServer
      */
-    public Account(IAddress address, String password, IMailServer incomingServer, IMailServer outgoingServer) {
+    public Account(IAddress address, String password, IIncomingServer incomingServer, IOutgoingServer outgoingServer) {
         this.address = address;
         this.password = password;
         this.incomingServer = incomingServer;
@@ -79,7 +84,7 @@ public class Account implements IAccount {
      * @param server
      */
     @Override
-    public void setIncomingServer(IMailServer server) {
+    public void setIncomingServer(IIncomingServer server) {
         // TODO: make immutable?
         this.incomingServer = server;
     }
@@ -88,7 +93,7 @@ public class Account implements IAccount {
      * @return incoming server
      */
     @Override
-    public IMailServer getIncomingServer() {
+    public IIncomingServer getIncomingServer() {
         // TODO: make immutable?
         return incomingServer;
     }
@@ -99,7 +104,7 @@ public class Account implements IAccount {
      * @param server
      */
     @Override
-    public void setOutgoingServer(IMailServer server) {
+    public void setOutgoingServer(IOutgoingServer server) {
         // TODO: make immutable?
         this.outgoingServer = server;
     }
@@ -108,8 +113,15 @@ public class Account implements IAccount {
      * @return outgoing server
      */
     @Override
-    public IMailServer getOutgoingServer() {
+    public IOutgoingServer getOutgoingServer() {
         // TODO: make immutable?
         return outgoingServer;
+    }
+
+    /**
+     * Fetches for new email.
+     */
+    public void fetch(){
+        this.emails = incomingServer.fetch(getUsername(),password);
     }
 }
