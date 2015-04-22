@@ -8,4 +8,12 @@ import java.util.Properties;
 public abstract class MailServer{
     private String hostname;
     private String port;
+
+    public String getHostname(){
+        return hostname;
+    }
+
+    public String getPort(){
+        return port;
+    }
 }
