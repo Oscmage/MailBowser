@@ -37,10 +37,8 @@ public class SendEmailPresenter {
 
         // Let's just use the "default" account, and its belonging server, for now
         IAccount account = dh.getAccounts().get(0);
-        IMailServer server = account.getOutgoingServer();
 
         // Send the little bastard to its set recipients
-        server.send(email, account);
+        account.send(email);
     }
-
 }
