@@ -13,4 +13,5 @@ public interface IAccount {
     IIncomingServer getIncomingServer();
     void setOutgoingServer(IOutgoingServer server);
     IOutgoingServer getOutgoingServer();
+    void send(IEmail email);
 }
