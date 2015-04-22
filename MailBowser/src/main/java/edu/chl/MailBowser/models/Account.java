@@ -119,6 +119,17 @@ public class Account implements IAccount {
     }
 
     /**
+     * Uses the outgoing server to send an email.
+     *
+     * @param email the email to send
+     */
+    @Override
+    public void send(IEmail email) {
+        email.setSender(address);
+        outgoingServer.send(email, address.toString(), password);
+    }
+
+    /**
      * Fetches for new email.
      */
     public void fetch(){
