@@ -22,9 +22,7 @@ public class OutgoingServer extends MailServer implements IOutgoingServer {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", super.getHostname);
         props.put("mail.smtp.port", super.getPort);
-
-        // Set the sender of the email
-        //email.setSender(account.getAddress()); where do we get Address without account
+        
 
         // Create a new session with the specified credentials
         Session session = Session.getInstance(props,
