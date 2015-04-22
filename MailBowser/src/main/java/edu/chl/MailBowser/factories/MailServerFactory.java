@@ -1,7 +1,6 @@
 package edu.chl.MailBowser.factories;
 
-import edu.chl.MailBowser.models.IMailServer;
-import edu.chl.MailBowser.models.MailServer;
+import edu.chl.MailBowser.models.*;
 
 /**
  * Created by mats on 16/04/15.
@@ -9,10 +8,16 @@ import edu.chl.MailBowser.models.MailServer;
  * A factory class for creating configured MailServer objects.
  */
 public class MailServerFactory {
+    /**
+     * Types of pre-defined mail servers.
+     */
     public enum Type {
         GMAIL
     }
 
+    /*
+     * We define a private constructor to prevent other classes from creating objects of this class.
+     */
     private MailServerFactory() {}
 
     /**
@@ -21,12 +26,12 @@ public class MailServerFactory {
      * @param serverType the type of server to create
      * @return the created mail server
      */
-    public static IMailServer createOutgoingServer(Type serverType) {
-        IMailServer server = null;
+    public static IOutgoingServer createOutgoingServer(Type serverType) {
+        IOutgoingServer server = null;
 
         switch (serverType) {
             case GMAIL:
-                server = new MailServer("smtp.gmail.com", "587");
+                server = new OutgoingServer("smtp.gmail.com", "587");
                 break;
             default:
                 break;
@@ -41,12 +46,12 @@ public class MailServerFactory {
      * @param serverType the type of server to create
      * @return the created mail server
      */
-    public static IMailServer createIncomingServer(Type serverType) {
-        IMailServer server = null;
+    public static IIncomingServer createIncomingServer(Type serverType) {
+        IIncomingServer server = null;
 
         switch (serverType) {
             case GMAIL:
-                server = new MailServer("imap.gmail.com", "993");
+                server = new IncomingServer("imap.gmail.com", "993");
                 break;
             default:
                 break;
