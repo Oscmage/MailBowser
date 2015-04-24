@@ -2,6 +2,7 @@ package edu.chl.MailBowser.models;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.*;
@@ -60,5 +61,22 @@ public class IncomingServer extends MailServer implements IIncomingServer {
         }
 
         return null;
+    }
+
+    private List<IEmail> recursiveFetch (Folder folder) throws MessagingException {
+        List<IEmail> emails = new ArrayList<>();
+        if ((folder.getType() & Folder.HOLDS_MESSAGES) == Folder.HOLDS_MESSAGES) {
+            Message [] messages = folder.getMessages();
+            for (Message message : messages) {
+                emails.add(new Email(message));
+            }
+        }
+        if ((folder.getType() & Folder.HOLDS_FOLDERS) == Folder.HOLDS_FOLDERS){
+            Folder [] folders = folder.list();
+            for (Folder subFolder : folders){
+                emails.addAll(recursiveFetch(subFolder));
+            }
+        }
+        return emails;
     }
 }
