@@ -3,6 +3,7 @@ package edu.chl.MailBowser.models;
 import javax.mail.*;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Email implements IEmail {
     // TODO: add separate lists for the different recipient types: TO, CC, BCC. Constructors must also be updated.
 
     private IAddress sender;
-    private List<IAddress> recipients;
+    private List<IAddress> recipients = new ArrayList<>();
     private String subject;
     private String content;
     private Date createdDate;
