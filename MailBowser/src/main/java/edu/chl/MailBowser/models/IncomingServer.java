@@ -2,12 +2,11 @@ package edu.chl.MailBowser.models;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import javax.mail.Session;
-import javax.mail.Store;
-import javax.mail.Folder;
-import javax.mail.Message;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
 
 /**
  * Created by jesper on 2015-04-21.
@@ -26,38 +25,55 @@ public class IncomingServer extends MailServer implements IIncomingServer {
         super(hostname, port);
     }
 
-    @Override
     /**
-     * fetches the emails from the server given in MailServer
+     * Fetches all emails from the server, using the supplied username and password.
      *
+     * @param username the username to authenticate with
+     * @param password the password to authenticate with
      */
-    public List<IEmail> fetch(String username, String Password) {
+    @Override
+    public List<IEmail> fetch(String username, String password) {
+        List<IEmail> emails = new ArrayList<>();
+
         Properties props = new Properties();
+        props.setProperty("mail.store.protocol", "imaps");
+
+        Session session = Session.getInstance(props, null);
+
         try {
-            props.load(new FileInputStream(new File("C:\\smtp.properties")));// Not sure if a file is created or if we have to create a new one with info
-            Session session = Session.getDefaultInstance(props, null);
+            Store store = session.getStore();
+            store.connect(getHostname(), username, password);
 
-            Store store = session.getStore("imaps");
-            store.connect("smtp.gmail.com", "mailbows3r@gmail.com","VG5!qBY&#f$QCmV");
+            // start by getting the default (root) folder, and recursively work through all subfolders
+            Folder root = store.getDefaultFolder();
+            emails = recursiveFetch(root);
 
-            Folder allMails = store.getDefaultFolder();
-            allMails.open(Folder.READ_WRITE);
-            int messageCount = allMails.getMessageCount();
-
-            System.out.println("Total Messages:- " + messageCount);
-
-            Message[] messages = allMails.getMessages();
-            System.out.println("------------------------------");
-            for (int i = 0; i < 10; i++) {
-                System.out.println("Mail Subject:- " + messages[i].getSubject());
-            }
-            allMails.close(true);
             store.close();
-
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             e.printStackTrace();
         }
-        return null;
+
+        return emails;
     }
 
+    private List<IEmail> recursiveFetch (Folder folder) throws MessagingException {
+        List<IEmail> emails = new ArrayList<>();
+
+        if ((folder.getType() & Folder.HOLDS_MESSAGES) == Folder.HOLDS_MESSAGES) {
+            folder.open(Folder.READ_ONLY);
+            Message [] messages = folder.getMessages();
+            for (Message message : messages) {
+                emails.add(new Email(message));
+            }
+        }
+
+        if ((folder.getType() & Folder.HOLDS_FOLDERS) == Folder.HOLDS_FOLDERS){
+            Folder [] folders = folder.list();
+            for (Folder subFolder : folders){
+                emails.addAll(recursiveFetch(subFolder));
+            }
+        }
+
+        return emails;
+    }
 }
