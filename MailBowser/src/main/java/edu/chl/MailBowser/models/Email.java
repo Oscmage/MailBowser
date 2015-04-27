@@ -1,9 +1,8 @@
 package edu.chl.MailBowser.models;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
+import javax.mail.*;
 import javax.mail.internet.MimeMessage;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -12,12 +11,15 @@ import java.util.List;
  * This class represents an Email with sender, receivers, subject, content, createdDate, sentDate, lastEditedDate and isSent.
  */
 public class Email implements IEmail {
+    // TODO: add separate lists for the different recipient types: TO, CC, BCC. Constructors must also be updated.
+
     private IAddress sender;
     private List<IAddress> recipients;
     private String subject;
     private String content;
     private Date createdDate;
     private Date sentDate;
+    private Date receivedDate;
     private Date lastEditedDate;
     private boolean isSent;
 
@@ -37,6 +39,77 @@ public class Email implements IEmail {
         setLastEditedDate();
     }
 
+    /**
+     * Creates an email from an existing javax.mail.Message.
+     *
+     * @param message the message to create a new Email object from
+     */
+    public Email(Message message) {
+        try {
+            this.isSent = false;
+
+            // add recipients
+            javax.mail.Address[] recipients = message.getAllRecipients();
+            for (javax.mail.Address recipient : recipients) {
+                this.recipients.add(new Address(recipient));
+            }
+
+            // set subject and content
+            this.subject = message.getSubject();
+            this.content = recursiveGetText(message);
+
+            // set dates
+            this.sentDate = message.getSentDate();
+            this.receivedDate = message.getReceivedDate();
+        } catch (MessagingException | IOException e) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private static String recursiveGetText(Part p) throws MessagingException, IOException {
+        if (p.isMimeType("text/*")) {
+            String s = (String) p.getContent();
+            return s;
+        }
+
+        if (p.isMimeType("multipart/alternative")) {
+            // prefer html text over plain text
+            Multipart mp = (Multipart) p.getContent();
+            String text = null;
+            for (int i = 0; i < mp.getCount(); i++) {
+                Part bp = mp.getBodyPart(i);
+                if (bp.isMimeType("text/plain")) {
+                    if (text == null) {
+                        text = recursiveGetText(bp);
+                    }
+                } else if (bp.isMimeType("text/html")) {
+                    String s = recursiveGetText(bp);
+                    if (s != null) {
+                        return s;
+                    }
+                } else {
+                    return recursiveGetText(bp);
+                }
+            }
+            return text;
+        } else if (p.isMimeType("multipart/*")) {
+            Multipart mp = (Multipart) p.getContent();
+            for (int i = 0; i < mp.getCount(); i++) {
+                String s = recursiveGetText(mp.getBodyPart(i));
+                if (s != null)
+                    return s;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns this email represented as a javax.mail.Message object.
+     *
+     * @param session the session to use when creating the new message object
+     * @return an javax.mail.Message object representing this email.
+     */
     @Override
     public Message getJavaxMessage(Session session) {
         MimeMessage msg = new MimeMessage(session);

@@ -27,6 +27,19 @@ public class Address implements IAddress {
     }
 
     /**
+     * Creates an address from an existing javax.mail.Address.
+     *
+     * @param address the address to create a new Address object from
+     */
+    public Address(javax.mail.Address address) {
+        if (address.getType().equals("rfc822")) {
+            this.address = (InternetAddress) address;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    /**
      * Creates a new Address from an existing Address
      *
      * @param address the address to copy
