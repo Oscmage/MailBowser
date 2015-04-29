@@ -27,4 +27,8 @@ public enum DataHandler {
     public List<IAccount> getAccounts() {
         return accounts;
     }
+
+    public IAccount getAccount(int index) {
+        return accounts.get(index);
+    }
 }
