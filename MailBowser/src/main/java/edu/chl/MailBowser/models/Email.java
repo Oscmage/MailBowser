@@ -23,6 +23,7 @@ public class Email implements IEmail {
     private Date receivedDate;
     private Date lastEditedDate;
     private boolean isSent;
+    private List<ITag> tags;
 
     /**
      * Creates an email with the specified sender, receivers, subject and content.
@@ -36,6 +37,7 @@ public class Email implements IEmail {
         this.subject = subject;
         this.content = content;
 
+        this.tags = new ArrayList<>();
         this.createdDate = new Date();
         setLastEditedDate();
     }
@@ -167,6 +169,10 @@ public class Email implements IEmail {
         return (Date)createdDate.clone();
     }
 
+    public List<ITag> getTags(){
+        return this.tags;
+    }
+
     public void setLastEditedDate(){
         this.lastEditedDate = new Date();
     }
@@ -200,6 +206,14 @@ public class Email implements IEmail {
     }
 
     /**
+     * Adds the tag to the email.
+     * @param tag
+     */
+    public void addTag(ITag tag){
+        this.tags.add(tag);
+    }
+
+    /**
      * Sets the isSent boolean to true and gives the sentDate the current date.
      */
     public void setSent(){
@@ -207,4 +221,12 @@ public class Email implements IEmail {
         setSentDate();
     }
 
+    /**
+     * Removes the tag from the email.
+     * @param tag
+     * @return if true the tag was successfully removed, otherwise the tag didn't exist.
+     */
+    public boolean removeTag(ITag tag){
+        return this.tags.remove(tag);
+    }
 }
