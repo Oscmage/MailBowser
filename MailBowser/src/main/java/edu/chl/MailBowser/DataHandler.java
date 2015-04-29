@@ -21,7 +21,7 @@ public enum DataHandler {
     public void addAccount(IAccount account) {
         accounts.add(account);
 
-        EventBus.INSTANCE.publish(new Event(EventTag.ADD_ACCOUNT, accounts));
+        EventBus.INSTANCE.publish(new Event(EventTag.ADD_ACCOUNT, account));
     }
 
     public List<IAccount> getAccounts() {
