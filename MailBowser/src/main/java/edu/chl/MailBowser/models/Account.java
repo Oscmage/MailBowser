@@ -33,6 +33,17 @@ public class Account implements IAccount {
     }
 
     /**
+     * Returns a string representation of this object.
+     * The string will look like this: "Account [address=<address>, password=<password>"
+     *
+     * @return a string representation of this object
+     */
+    @Override
+    public String toString() {
+        return "Account [address=" + address + ", password=" + password + "]";
+    }
+
+    /**
      * Returns the username for the account as a String.
      *
      * @return username as a String

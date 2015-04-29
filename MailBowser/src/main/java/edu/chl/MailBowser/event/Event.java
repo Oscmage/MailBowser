@@ -45,6 +45,6 @@ public class Event implements IEvent {
      */
     @Override
     public String toString() {
-        return "Event [tag=" + tag + ", value=" + value + "]";
+        return "Event [tag=" + tag + ", value=(" + value + ")]";
     }
 }
