@@ -6,5 +6,5 @@ package edu.chl.MailBowser.event;
  * An enum for all possible event types.
  */
 public enum EventTag {
-
+    ADD_ACCOUNT
 }
