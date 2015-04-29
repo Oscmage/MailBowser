@@ -35,7 +35,7 @@ public class Address implements IAddress {
         if (address.getType().equals("rfc822")) {
             this.address = (InternetAddress) address;
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Address(javax.mail.Address): supplied address is not an InternetAddress");
         }
     }
 

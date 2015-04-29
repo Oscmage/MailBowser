@@ -63,7 +63,7 @@ public class Email implements IEmail {
             this.sentDate = message.getSentDate();
             this.receivedDate = message.getReceivedDate();
         } catch (MessagingException | IOException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Email(Message): An error occurred while reading the message");
         }
     }
 
