@@ -25,7 +25,4 @@ public interface IEmail {
     void setSender(IAddress sender);
     void setSubject(String subject);
     void setSent();
-    List<ITag> getTags();
-    void addTag(ITag tag);
-    boolean removeTag(ITag tag);
 }
