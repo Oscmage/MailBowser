@@ -9,7 +9,7 @@ import javax.mail.internet.InternetAddress;
  * Address represents an email address. You cannot create an invalid Address obejct.
  */
 public class Address implements IAddress {
-    private InternetAddress address;
+    private String address;
 
     /**
      * Creates an Address object with the specified String. The String is trimmed and validated upon creation.
@@ -18,11 +18,10 @@ public class Address implements IAddress {
      * @param address specifies the email address.
      */
     public Address(String address) {
-        try {
-            this.address = new InternetAddress(address.trim());
-        } catch (AddressException e) {
-            // TODO: do something here other than just printing out the error
-            System.out.println(e.getPos());
+        if (isValidAddress(address)) {
+            this.address = address;
+        } else {
+            throw new IllegalArgumentException("Address(String): supplied string is not a valid email address.");
         }
     }
 
@@ -33,7 +32,7 @@ public class Address implements IAddress {
      */
     public Address(javax.mail.Address address) {
         if (address.getType().equals("rfc822")) {
-            this.address = (InternetAddress) address;
+            this.address = ((InternetAddress)address).getAddress();
         } else {
             throw new IllegalArgumentException("Address(javax.mail.Address): supplied address is not an InternetAddress");
         }
@@ -45,7 +44,7 @@ public class Address implements IAddress {
      * @param address the address to copy
      */
     public Address(Address address) {
-        this(address.toString());
+        this(address.getString());
     }
 
     private boolean isValidAddress(String address) {
@@ -61,7 +60,12 @@ public class Address implements IAddress {
      * @return a copy of the javax.mail.InternetAddress object which holds the information
      */
     public InternetAddress getJavaxAddress() {
-        return (InternetAddress)this.address.clone();
+        try {
+            return new InternetAddress(this.address);
+        } catch (AddressException e) {
+            //This will never happen since the address is validated when created.
+        }
+        return null;
     }
 
 
@@ -71,7 +75,19 @@ public class Address implements IAddress {
      * @return a string representation of the address
      */
     public String toString() {
-        return this.address.getAddress();
+        return this.address;
     }
+
+    /**
+     * Returns a string representation of the address, in the format user@domain.com
+     * @return
+     */
+    public String getString(){
+        return this.address;
+    }
+
+
+
+
     
 }
