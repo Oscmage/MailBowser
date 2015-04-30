@@ -48,6 +48,15 @@ public class Address implements IAddress {
         this(address.toString());
     }
 
+    private boolean isValidAddress(String address) {
+        try {
+            new InternetAddress(address);
+        } catch (AddressException e) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * @return a copy of the javax.mail.InternetAddress object which holds the information
      */
