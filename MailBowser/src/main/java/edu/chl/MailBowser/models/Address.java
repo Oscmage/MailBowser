@@ -59,6 +59,7 @@ public class Address implements IAddress {
     /**
      * @return a copy of the javax.mail.InternetAddress object which holds the information
      */
+    @Override
     public InternetAddress getJavaxAddress() {
         try {
             return new InternetAddress(this.address);
@@ -74,6 +75,7 @@ public class Address implements IAddress {
      *
      * @return a string representation of the address
      */
+    @Override
     public String toString() {
         return this.address;
     }
@@ -82,8 +84,30 @@ public class Address implements IAddress {
      * Returns a string representation of the address, in the format user@domain.com
      * @return
      */
+    @Override
     public String getString(){
         return this.address;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        } else if (o == null) {
+            return false;
+        } else if (this.getClass().equals(o.getClass())) {
+            return false;
+        }
+        Address a = (Address)o;
+        return a.getString().equals(this.address);
+    }
+
+    /**
+     * Returns a hashcode for the object.
+     * @return
+     */
+    public int hashCode(){
+        return address.hashCode()*13;
     }
 
 
