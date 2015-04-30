@@ -1,5 +1,8 @@
 package edu.chl.MailBowser;
 
+import edu.chl.MailBowser.event.Event;
+import edu.chl.MailBowser.event.EventBus;
+import edu.chl.MailBowser.event.EventTag;
 import edu.chl.MailBowser.models.IAccount;
 
 import java.beans.PropertyChangeListener;
@@ -10,33 +13,22 @@ import java.util.List;
 /**
  * Created by mats on 14/04/15.
  */
-public class DataHandler {
-    private static DataHandler instance = new DataHandler();
-    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+public enum DataHandler {
+    INSTANCE;
 
     private List<IAccount> accounts = new ArrayList<>();
-
-    private DataHandler() {}
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(listener);
-    }
-
-    public static DataHandler getInstance() {
-        return instance;
-    }
 
     public void addAccount(IAccount account) {
         accounts.add(account);
 
-        pcs.firePropertyChange("addAccount", null, null);
+        EventBus.INSTANCE.publish(new Event(EventTag.ADD_ACCOUNT, account));
     }
 
     public List<IAccount> getAccounts() {
         return accounts;
+    }
+
+    public IAccount getAccount(int index) {
+        return accounts.get(index);
     }
 }
