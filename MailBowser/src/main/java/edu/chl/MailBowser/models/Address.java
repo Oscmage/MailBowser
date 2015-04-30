@@ -62,6 +62,7 @@ public class Address implements IAddress {
      * @return a string representation of the address
      */
     public String toString() {
-        return this.address.toString();
+        return this.address.getAddress();
     }
+    
 }
