@@ -6,4 +6,6 @@ package edu.chl.MailBowser.models;
 public interface ITag {
    void setTagName(String name);
    String getName();
+   boolean equals(Object o);
+   int hashCode();
 }
