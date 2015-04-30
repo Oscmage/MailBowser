@@ -50,7 +50,7 @@ public class Account implements IAccount {
      */
     @Override
     public String getUsername() {
-        return address.toString();
+        return address.getString();
     }
 
     /**
@@ -137,13 +137,13 @@ public class Account implements IAccount {
     @Override
     public void send(IEmail email) {
         email.setSender(address);
-        outgoingServer.send(email, address.toString(), password);
+        outgoingServer.send(email, getUsername(), password);
     }
 
     /**
      * Fetches for new email.
      */
-    public void fetch(){
-        this.emails = incomingServer.fetch(getUsername(),password);
+    public void fetch() {
+        this.emails = incomingServer.fetch(getUsername(), password);
     }
 }
