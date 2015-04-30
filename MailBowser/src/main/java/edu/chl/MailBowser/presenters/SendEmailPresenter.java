@@ -16,9 +16,6 @@ import java.util.List;
  */
 public class SendEmailPresenter {
 
-    // Get the DataHandler
-    private DataHandler dh = DataHandler.getInstance();
-
     // Assign the fields from the view to variables via the fx:id attribute
     // Note that these variables belong to the javafx.scene.control package
     @FXML private TextField receiver;
@@ -36,7 +33,7 @@ public class SendEmailPresenter {
         IEmail email = new Email(receivers, this.subject.getText(), this.content.getText());
 
         // Let's just use the "default" account, and its belonging server, for now
-        IAccount account = dh.getAccounts().get(0);
+        IAccount account = DataHandler.INSTANCE.getAccount(0);
 
         // Send the little bastard to its set recipients
         account.send(email);
