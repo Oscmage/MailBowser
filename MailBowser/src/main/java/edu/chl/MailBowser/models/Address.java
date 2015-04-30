@@ -95,7 +95,7 @@ public class Address implements IAddress {
             return true;
         } else if (o == null) {
             return false;
-        } else if (this.getClass().equals(o.getClass())) {
+        } else if (!this.getClass().equals(o.getClass())) {
             return false;
         }
         Address a = (Address)o;
