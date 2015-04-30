@@ -16,54 +16,47 @@ public class TagHandler{
     private TagHandler(){}
 
 
-
+    /**
+     * Returns the instance of the singleton.
+     * @return
+     */
     public static TagHandler getInstance(){
         return instance;
     }
 
+    /**
+     * Adds tag to an email.
+     * @param email
+     * @param tag
+     */
     public void addTag(IEmail email, ITag tag){
-        addTagToEmail(email,tag);
-        addEmailToTag(email,tag);
-    }
-
-    private void addTagToEmail(IEmail email,ITag tag){
-        Set<ITag> tagSet;
-        if(this.emails.containsKey(email)){
-            tagSet = this.emails.get(email);
-        } else {
-            tagSet = new HashSet<>();
-            this.emails.put(email,tagSet);
+        if (!tags.containsKey(tag)) {
+            tags.put(tag, new HashSet<>());
         }
-        tagSet.add(tag);
-    }
+        tags.get(tag).add(email);
 
-    private void addEmailToTag(IEmail email,ITag tag){
-        Set<IEmail> emailSet;
-        if(this.tags.containsKey(tag)){
-            emailSet = this.tags.get(tag);
-        } else {
-            emailSet = new HashSet<>();
-            this.tags.put(tag, emailSet);
+        if (!emails.containsKey(email)) {
+            emails.put(email, new HashSet<>());
         }
-        emailSet.add(email);
+        emails.get(email).add(tag);
     }
 
     /**
-     * Returns the email(s) for the specified tag.
+     * Returns a set of emails for the given tag.
      * @param tag
      * @return
      */
     public Set<IEmail> getEmails(ITag tag){
-        return tags.get(tag);
+        return new HashSet<>(tags.get(tag));
     }
 
     /**
-     * Returns the tag(s) for a certain email.
+     * Returns a set of tags for the given email.
      * @param email
      * @return
      */
     public Set<ITag> getTags(IEmail email){
-        return emails.get(email);
+        return new HashSet<>(emails.get(email));
     }
 
     /**
@@ -80,8 +73,17 @@ public class TagHandler{
      * @param tag
      */
     public void removeTag(IEmail email,ITag tag){
-        this.emails.get(email).remove(tag);
-        this.tags.get(tag).remove(email);
+        Set<ITag> tagSet = emails.get(email);
+        tagSet.remove(tag);
+        if (tagSet.isEmpty()) {
+            emails.remove(email);
+        }
+
+        Set<IEmail> emailSet = tags.get(tag);
+        emailSet.remove(email);
+        if (emailSet.isEmpty()) {
+            tags.remove(tag);
+        }
     }
 
     /**
@@ -89,22 +91,18 @@ public class TagHandler{
      * @param tag
      */
     public void removeTag(ITag tag) {
-        removeTagFromEmail(tag);
-        removeEmailFromTag(tag);
-    }
+        Set<IEmail> emailSet = tags.remove(tag);
 
-    private void removeTagFromEmail(ITag tag){
-        Object[] emails = this.tags.get(tag).toArray(); //Gets all email with the specified tag
-        for (int i = 0; i < emails.length; i++) { //Loops through every email with the tag and removes it (Removes from email Map).
-            this.emails.get(emails[i]).remove(tag);
+        for (IEmail email : emailSet) {
+            Set <ITag> tagSet = emails.get(email);
+            tagSet.remove(tag);
+
+            if (tagSet.isEmpty()) {
+                emails.remove(email);
+            }
         }
     }
 
-    private void removeEmailFromTag(ITag tag){
-        Set<IEmail> setOfEmails = this.tags.get(tag);
-        setOfEmails.clear();
-        this.tags.remove(tag);
-    }
 
 
 
