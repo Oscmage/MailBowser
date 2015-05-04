@@ -33,13 +33,24 @@ public class Account implements IAccount {
     }
 
     /**
+     * Returns a string representation of this object.
+     * The string will look like this: "Account [address=<address>, password=<password>"
+     *
+     * @return a string representation of this object
+     */
+    @Override
+    public String toString() {
+        return "Account [address=" + address + ", password=" + password + "]";
+    }
+
+    /**
      * Returns the username for the account as a String.
      *
      * @return username as a String
      */
     @Override
     public String getUsername() {
-        return address.toString();
+        return address.getString();
     }
 
     /**
@@ -126,13 +137,13 @@ public class Account implements IAccount {
     @Override
     public void send(IEmail email) {
         email.setSender(address);
-        outgoingServer.send(email, address.toString(), password);
+        outgoingServer.send(email, getUsername(), password);
     }
 
     /**
      * Fetches for new email.
      */
-    public void fetch(){
-        this.emails = incomingServer.fetch(getUsername(),password);
+    public void fetch() {
+        this.emails = incomingServer.fetch(getUsername(), password);
     }
 }
