@@ -13,15 +13,14 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/SendEmail.fxml"));
-        primaryStage.setTitle("MailBowser");
+    public void start(Stage mainStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/MainView.fxml"));
+        mainStage.setTitle("MailBowser");
 
-        Scene scene = new Scene(root, 250, 300);
+        Scene scene = new Scene(root, 960, 600);
 
         // Add fonts and styles to the scene
         scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
-        scene.getStylesheets().add("/css/style.css");
 
         // Create a default account
         IAccount account = new Account(
@@ -35,8 +34,8 @@ public class Main extends Application {
         DataHandler dh = DataHandler.getInstance();
         dh.addAccount(account);
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        mainStage.setScene(scene);
+        mainStage.show();
     }
 
     public static void main(String[] args) {
