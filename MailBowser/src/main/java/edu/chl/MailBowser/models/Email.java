@@ -167,6 +167,7 @@ public class Email implements IEmail {
         return (Date)createdDate.clone();
     }
 
+
     public void setLastEditedDate(){
         this.lastEditedDate = new Date();
     }
@@ -206,5 +207,4 @@ public class Email implements IEmail {
         this.isSent = true;
         setSentDate();
     }
-
 }

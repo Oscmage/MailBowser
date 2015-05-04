@@ -9,20 +9,20 @@ import java.util.List;
  */
 public interface IEmail {
     javax.mail.Message getJavaxMessage(Session session);
-    public boolean isSent();
-    public IAddress getSender();
-    public List<IAddress> getReceivers();
-    public String getContent();
-    public String getSubject();
-    public Date getSentDate();
-    public Date getLastEditedDate();
-    public Date getCreatedDate();
-    public void setLastEditedDate();
-    public void setContent(String content);
-    public void setCreatedDate(Date createdDate);
-    public void setLastEditedDate(Date lastEditedDate);
-    public void setReceivers(List<IAddress> receivers);
-    public void setSender(IAddress sender);
-    public void setSubject(String subject);
-    public void setSent();
+    boolean isSent();
+    IAddress getSender();
+    List<IAddress> getReceivers();
+    String getContent();
+    String getSubject();
+    Date getSentDate();
+    Date getLastEditedDate();
+    Date getCreatedDate();
+    void setLastEditedDate();
+    void setContent(String content);
+    void setCreatedDate(Date createdDate);
+    void setLastEditedDate(Date lastEditedDate);
+    void setReceivers(List<IAddress> receivers);
+    void setSender(IAddress sender);
+    void setSubject(String subject);
+    void setSent();
 }

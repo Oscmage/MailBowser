@@ -8,4 +8,5 @@ package edu.chl.MailBowser.models;
 public interface IAddress {
     String toString();
     javax.mail.Address getJavaxAddress();
+    String getString();
 }
