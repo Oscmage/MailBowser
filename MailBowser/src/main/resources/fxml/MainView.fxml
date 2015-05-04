@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.MailBowser.presenters.MainPresenter">
+   <children>
+      <!--<fx:include source="TopbarView.fxml" />-->
+      <HBox id="topbarHBox" alignment="CENTER_LEFT" maxHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="60.0">
+         <children>
+            <Button id="newEmailButton" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" text="New Email">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <styleClass>
+                  <String fx:value="topBarButton" />
+                  <String fx:value="wideButton" />
+               </styleClass>
+            </Button>
+         </children>
+      </HBox>
+      <HBox VBox.vgrow="ALWAYS">
+         <children>
+            <ScrollPane id="sidebarScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefViewportWidth="180.0" prefWidth="180.0" HBox.hgrow="NEVER">
+               <content>
+                  <Pane id="sidebarPane">
+                     <children>
+                        <!--<fx:include source="SidebarView.fxml" /> -->
+                        <VBox id="sidebarVBox">
+                           <children>
+                              <Label text="Tags" VBox.vgrow="ALWAYS" />
+                              <Label text="Inbox" VBox.vgrow="ALWAYS" />
+                              <Label text="Sent" VBox.vgrow="ALWAYS" />
+                              <Label text="Drafts" VBox.vgrow="ALWAYS" />
+                              <Label text="Trash" VBox.vgrow="ALWAYS" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+               </content>
+            </ScrollPane>
+            <ScrollPane id="emailListScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefViewportWidth="240.0" prefWidth="240.0" HBox.hgrow="NEVER">
+               <content>
+                  <Pane id="emailListPane">
+                     <children>
+                        <!--<fx:include source="EmailListView.fxml" />-->
+                        <VBox id="emailListVBox">
+                           <children>
+                              <AnchorPane prefHeight="90.0" prefWidth="240.0" VBox.vgrow="NEVER">
+                                 <children>
+                                    <Label prefWidth="120.0" text="Mottaget" textAlignment="RIGHT" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Label layoutX="10.0" layoutY="10.0" prefWidth="120.0" styleClass="name" text="Skrivet av" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Label layoutX="20.0" layoutY="20.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="240.0" styleClass="h2" text="Mailets rubrik" AnchorPane.leftAnchor="0.0" />
+                                    <Label layoutX="30.0" layoutY="30.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="240.0" text="Alla mail här kommer fyllas programmatiskt, så detta är bara utfyllnad" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+               </content>
+            </ScrollPane>
+            <ScrollPane id="emailDetailScrollPane" fitToHeight="true" fitToWidth="true" prefViewportHeight="521.0" HBox.hgrow="ALWAYS">
+               <content>
+                  <VBox id="emailDetailVBox" spacing="30.0">
+                     <children>
+                        <GridPane id="emailLetterMetaDataGridPane" VBox.vgrow="NEVER">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="331.0" minWidth="10.0" prefWidth="250.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="248.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <VBox AnchorPane.leftAnchor="0.0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="NEVER" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="From" />
+                                    <Label id="emailLetterMetaDataFromLabel" text="Nisse Svensson &lt;nisse.svensson@gmail.com&gt;" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_RIGHT" AnchorPane.rightAnchor="0.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="NEVER">
+                                 <children>
+                                    <Label text="Received" />
+                                    <Label id="emailLetterMetaDataReceivedLabel" text="11:35" textAlignment="RIGHT" wrapText="true" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                        <Label id="emailLetterHeader" styleClass="h1" text="What a wonderful headline" />
+                        <Label lineSpacing="6.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tempus, nisi ac sagittis pretium, risus tellus tincidunt diam, sit amet sollicitudin turpis erat vel nisl. In non turpis fringilla, tristique augue eget, tempor nulla. Maecenas volutpat turpis ipsum, et lobortis orci consectetur sit amet. Vivamus eu nibh in enim lobortis vulputate. Maecenas nec dictum tortor, ut posuere odio. Morbi egestas felis turpis, id mollis nunc placerat sit amet. Nullam turpis nibh, bibendum quis magna sagittis, fermentum consequat odio. Integer sit amet blandit felis. Nam consequat venenatis laoreet. Aliquam gravida orci id nisi tempor egestas. Nullam placerat vitae sem sed commodo." wrapText="true" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </HBox>
+   </children>
+</VBox>
