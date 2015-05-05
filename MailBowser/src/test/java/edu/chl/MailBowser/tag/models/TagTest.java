@@ -1,6 +1,7 @@
 package edu.chl.mailbowser.tag.models;
 
 import edu.chl.mailbowser.tag.models.Tag;
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,5 +33,18 @@ public class TagTest {
     public void testHashCode() throws Exception {
         assertTrue(tag.hashCode() == tag.hashCode());
         assertFalse(tag.hashCode() == s.hashCode());
+    }
+
+    @Test
+    public void testMatches() throws Exception {
+        assertTrue(tag.matches(""));
+        assertFalse(tag.matches("ork"));
+        assertFalse(tag.matches(null));
+        assertTrue(tag.matches("W"));
+        assertTrue(tag.matches("w"));
+        assertTrue(tag.matches("work"));
+        assertTrue(tag.matches("Work"));
+        assertFalse(tag.matches("workasdf"));
+        assertFalse(tag.matches("Workasdf"));
     }
 }
