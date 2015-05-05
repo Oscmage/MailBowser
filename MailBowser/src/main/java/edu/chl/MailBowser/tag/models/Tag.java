@@ -1,10 +1,12 @@
 package edu.chl.mailbowser.tag.models;
 
+import edu.chl.mailbowser.search.Searchable;
+
 /**
  * Created by OscarEvertsson on 24/04/15.
  * The class Tag represents a certain email tag, examples could be "Work", "School" etc.
  */
-public class Tag implements ITag {
+public class Tag implements ITag, Searchable {
     private String name;
 
     /**
@@ -14,7 +16,6 @@ public class Tag implements ITag {
     public Tag(String name) {
         this.name = name.toLowerCase();
     }
-
 
     @Override
     public void setTagName(String name) {
@@ -42,4 +43,14 @@ public class Tag implements ITag {
         return name.hashCode()*11;
     }
 
+    /**
+     * Checks whether or not this tag matches a given string.
+     *
+     * @param query the string to match against
+     * @return true if the tag name begins with str, false otherwise
+     */
+    @Override
+    public boolean matches(String query) {
+        return query != null && name.startsWith(query.toLowerCase());
+    }
 }
