@@ -35,4 +35,24 @@ public abstract class MailServer{
     public String getPort(){
         return port;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MailServer)) return false;
+
+        MailServer that = (MailServer) o;
+
+        if (hostname != null ? !hostname.equals(that.hostname) : that.hostname != null) return false;
+        if (port != null ? !port.equals(that.port) : that.port != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = hostname != null ? hostname.hashCode() : 0;
+        result = 31 * result + (port != null ? port.hashCode() : 0);
+        return result;
+    }
 }
