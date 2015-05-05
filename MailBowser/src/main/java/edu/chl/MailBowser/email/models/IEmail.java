@@ -1,4 +1,6 @@
-package edu.chl.MailBowser.models;
+package edu.chl.mailbowser.email.models;
+
+import edu.chl.mailbowser.address.models.IAddress;
 
 import javax.mail.Session;
 import java.util.Date;

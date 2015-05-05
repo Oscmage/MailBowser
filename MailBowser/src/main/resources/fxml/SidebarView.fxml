@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<ScrollPane fx:controller="edu.chl.MailBowser.presenters.SidebarPresenter" id="sidebarScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportWidth="180.0" prefWidth="180.0" HBox.hgrow="NEVER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane fx:controller="edu.chl.mailbowser.presenters.SidebarPresenter" id="sidebarScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportWidth="180.0" prefWidth="180.0" HBox.hgrow="NEVER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <content>
         <Pane id="sidebarPane">
             <children>

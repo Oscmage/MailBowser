@@ -1,4 +1,4 @@
-package edu.chl.MailBowser.models;
+package edu.chl.mailbowser.email.models;
 
 import org.junit.Test;
 
