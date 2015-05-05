@@ -207,4 +207,34 @@ public class Email implements IEmail {
         this.isSent = true;
         setSentDate();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Email)) return false;
+
+        Email email = (Email) o;
+        //TODO: if not sent sendDate and receiveDate
+        if (isSent != email.isSent) return false;
+        if (content != null ? !content.equals(email.content) : email.content != null) return false;
+        if (receivedDate != null ? !receivedDate.equals(email.receivedDate) : email.receivedDate != null) return false;
+        if (recipients != null ? !recipients.equals(email.recipients) : email.recipients != null) return false;
+        if (sender != null ? !sender.equals(email.sender) : email.sender != null) return false;
+        if (sentDate != null ? !sentDate.equals(email.sentDate) : email.sentDate != null) return false;
+        if (subject != null ? !subject.equals(email.subject) : email.subject != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = sender != null ? sender.hashCode() : 0;
+        result = 31 * result + (recipients != null ? recipients.hashCode() : 0);
+        result = 31 * result + (subject != null ? subject.hashCode() : 0);
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (sentDate != null ? sentDate.hashCode() : 0);
+        result = 31 * result + (receivedDate != null ? receivedDate.hashCode() : 0);
+        result = 31 * result + (isSent ? 1 : 0);
+        return result;
+    }
 }
