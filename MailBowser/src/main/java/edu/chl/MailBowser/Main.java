@@ -1,9 +1,10 @@
-package edu.chl.MailBowser;
+package edu.chl.mailbowser;
 
-import edu.chl.MailBowser.factories.MailServerFactory;
-import edu.chl.MailBowser.models.Account;
-import edu.chl.MailBowser.models.Address;
-import edu.chl.MailBowser.models.IAccount;
+import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.mailserver.factories.MailServerFactory;
+import edu.chl.mailbowser.account.models.Account;
+import edu.chl.mailbowser.address.models.Address;
+import edu.chl.mailbowser.account.models.IAccount;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,15 +14,14 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/SendEmail.fxml"));
-        primaryStage.setTitle("MailBowser");
+    public void start(Stage mainStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/MainView.fxml"));
+        mainStage.setTitle("MailBowser");
 
-        Scene scene = new Scene(root, 250, 300);
+        Scene scene = new Scene(root, 960, 600);
 
         // Add fonts and styles to the scene
         scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
-        scene.getStylesheets().add("/css/style.css");
 
         // Create a default account
         IAccount account = new Account(
@@ -32,10 +32,10 @@ public class Main extends Application {
         );
 
         // ... And put it in the DataHandler ("database")
-        DataHandler.INSTANCE.addAccount(account);
+        AccountHandler.INSTANCE.addAccount(account);
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        mainStage.setScene(scene);
+        mainStage.show();
     }
 
     public static void main(String[] args) {
