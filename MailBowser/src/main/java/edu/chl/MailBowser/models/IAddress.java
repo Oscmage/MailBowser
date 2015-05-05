@@ -9,4 +9,6 @@ public interface IAddress {
     String toString();
     javax.mail.Address getJavaxAddress();
     String getString();
+    boolean equals(Object o);
+    int hashCode();
 }
