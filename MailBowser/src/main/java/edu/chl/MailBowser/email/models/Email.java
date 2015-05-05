@@ -44,6 +44,21 @@ public class Email implements IEmail, Searchable {
     }
 
     /**
+     * Constructor for testing the email search function.
+     *
+     * @param subject
+     * @param content
+     * @param sender
+     * @param recipients
+     */
+    public Email(String subject, String content, IAddress sender, List<IAddress> recipients) {
+        this.subject = subject;
+        this.content = content;
+        this.sender = sender;
+        this.recipients = recipients;
+    }
+
+    /**
      * Creates an email from an existing javax.mail.Message.
      *
      * @param message the message to create a new Email object from
@@ -249,14 +264,16 @@ public class Email implements IEmail, Searchable {
      */
     @Override
     public boolean matches(String query) {
+        query = query.toLowerCase();
+
         for (IAddress recipient : recipients) {
-            if (recipient.getString().contains(query)) {
+            if (recipient.getString().toLowerCase().contains(query)) {
                 return true;
             }
         }
 
-        return subject.contains(query)
-                || content.contains(query)
-                || sender.getString().contains(query);
+        return subject.toLowerCase().contains(query)
+                || content.toLowerCase().contains(query)
+                || sender.getString().toLowerCase().contains(query);
     }
 }
