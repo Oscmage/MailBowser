@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<ScrollPane fx:controller="edu.chl.mailbowser.presenters.SidebarPresenter" id="sidebarScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportWidth="180.0" prefWidth="180.0" HBox.hgrow="NEVER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane id="sidebarScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefViewportWidth="180.0" prefWidth="180.0" HBox.hgrow="NEVER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.SidebarPresenter">
     <content>
         <Pane id="sidebarPane">
             <children>
-
                 <VBox id="sidebarVBox">
                     <children>
                         <Label text="Tags" VBox.vgrow="ALWAYS" />

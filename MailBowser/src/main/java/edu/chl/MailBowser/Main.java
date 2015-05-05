@@ -15,13 +15,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage mainStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/MainView.fxml"));
-        mainStage.setTitle("MailBowser");
-
-        Scene scene = new Scene(root, 960, 600);
-
-        // Add fonts and styles to the scene
-        scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
 
         // Create a default account
         IAccount account = new Account(
@@ -33,6 +26,14 @@ public class Main extends Application {
 
         // ... And put it in the DataHandler ("database")
         AccountHandler.INSTANCE.addAccount(account);
+
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/MainView.fxml"));
+        mainStage.setTitle("MailBowser");
+
+        Scene scene = new Scene(root, 960, 600);
+
+        // Add fonts and styles to the scene
+        scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
 
         mainStage.setScene(scene);
         mainStage.show();

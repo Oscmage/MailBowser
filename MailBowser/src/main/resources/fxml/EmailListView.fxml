@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<ScrollPane fx:controller="edu.chl.mailbowser.presenters.EmailListPresenter" fx:id="emailListScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefViewportWidth="240.0" prefWidth="240.0" HBox.hgrow="NEVER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane fx:id="emailListScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefViewportWidth="240.0" prefWidth="240.0" HBox.hgrow="NEVER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.EmailListPresenter">
    <content>
       <Pane id="emailListPane">
          <children>
-
-            <VBox id="emailListVBox">
-               <children>
-                  <AnchorPane prefHeight="90.0" prefWidth="240.0" VBox.vgrow="NEVER">
-                     <children>
-                        <Label prefWidth="120.0" text="Mottaget" textAlignment="RIGHT" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <Label layoutX="10.0" layoutY="10.0" prefWidth="120.0" styleClass="name" text="Skrivet av" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <Label layoutX="20.0" layoutY="20.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="240.0" styleClass="h2" text="Mailets rubrik" AnchorPane.leftAnchor="0.0" />
-                        <Label layoutX="30.0" layoutY="30.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="240.0" text="Alla mail här kommer fyllas programmatiskt, så detta är bara utfyllnad" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0" />
-                     </children>
-                  </AnchorPane>
-               </children>
-            </VBox>
+            <ListView fx:id="emailListListView" />
          </children>
       </Pane>
    </content>

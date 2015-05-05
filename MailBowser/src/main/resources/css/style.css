@@ -18,12 +18,15 @@
     -fx-border-color: black;
 }
 
+#sidebarScrollPane {
+    -fx-padding: 10;
+}
+
 #sidebarScrollPane,
 #emailListScrollPane {
     -fx-background-color: white;
     -fx-border-width: 0 1 0 0;
     -fx-border-color: black;
-    -fx-padding: 10;
 }
 
 #sidebarPane,
