@@ -39,7 +39,7 @@ public abstract class MailServer{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof MailServer)) return false;
+        if (!this.getClass().equals(o.getClass())) return false;
 
         MailServer that = (MailServer) o;
 

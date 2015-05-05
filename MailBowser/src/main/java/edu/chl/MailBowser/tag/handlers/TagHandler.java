@@ -3,7 +3,7 @@ package edu.chl.mailbowser.tag.handlers;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventTag;
+import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.tag.models.ITag;
 
 import java.util.HashMap;
@@ -46,7 +46,7 @@ public class TagHandler{
         }
         emails.get(email).add(tag);
 
-        EventBus.INSTANCE.publish(new Event(EventTag.ADD_TAG, tag));
+        EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG, tag));
     }
 
     /**
@@ -92,7 +92,7 @@ public class TagHandler{
         if (emailSet.isEmpty()) {
             tags.remove(tag);
         }
-        EventBus.INSTANCE.publish(new Event(EventTag.REMOVE_TAG,tag));
+        EventBus.INSTANCE.publish(new Event(EventType.REMOVE_TAG,tag));
     }
 
     /**
