@@ -1,9 +1,15 @@
 package edu.chl.mailbowser.tag.handlers;
 
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.tag.models.ITag;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by OscarEvertsson on 29/04/15.
@@ -39,6 +45,8 @@ public class TagHandler{
             emails.put(email, new HashSet<>());
         }
         emails.get(email).add(tag);
+
+        EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG, tag));
     }
 
     /**
@@ -84,6 +92,7 @@ public class TagHandler{
         if (emailSet.isEmpty()) {
             tags.remove(tag);
         }
+        EventBus.INSTANCE.publish(new Event(EventType.REMOVE_TAG,tag));
     }
 
     /**
