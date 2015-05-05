@@ -1,6 +1,7 @@
 package edu.chl.mailbowser.email.models;
 
 import edu.chl.mailbowser.address.models.*;
+import edu.chl.mailbowser.search.Searchable;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMessage;
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by OscarEvertsson on 07/04/15.
  * This class represents an Email with sender, receivers, subject, content, createdDate, sentDate, lastEditedDate and isSent.
  */
-public class Email implements IEmail {
+public class Email implements IEmail, Searchable {
     // TODO: add separate lists for the different recipient types: TO, CC, BCC. Constructors must also be updated.
 
     private IAddress sender;
@@ -238,5 +239,24 @@ public class Email implements IEmail {
         result = 31 * result + (receivedDate != null ? receivedDate.hashCode() : 0);
         result = 31 * result + (isSent ? 1 : 0);
         return result;
+    }
+
+    /**
+     * Checks whether or not this email matches a given string.
+     *
+     * @param query the string to match against
+     * @return true if the email's content, subject, sender or recipients contains the query
+     */
+    @Override
+    public boolean matches(String query) {
+        for (IAddress recipient : recipients) {
+            if (recipient.getString().contains(query)) {
+                return true;
+            }
+        }
+
+        return subject.contains(query)
+                || content.contains(query)
+                || sender.getString().contains(query);
     }
 }
