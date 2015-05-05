@@ -2,7 +2,7 @@ package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventTag;
+import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.tag.handlers.TagHandler;
@@ -28,9 +28,9 @@ public class EmailDetailPresenter implements IObserver {
 
     @Override
     public void onEvent(IEvent evt) {
-        if (evt.getTag() == EventTag.ADD_TAG) {
+        if (evt.getType() == EventType.ADD_TAG) {
             // TODO Present this in gui
-        } else if (evt.getTag() == EventTag.REMOVE_TAG) {
+        } else if (evt.getType() == EventType.REMOVE_TAG) {
             // TODO Present this in gui
         }
     }
