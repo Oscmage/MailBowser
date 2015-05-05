@@ -264,6 +264,10 @@ public class Email implements IEmail, Searchable {
      */
     @Override
     public boolean matches(String query) {
+        if (query == null) {
+            return false;
+        }
+
         query = query.toLowerCase();
 
         for (IAddress recipient : recipients) {
