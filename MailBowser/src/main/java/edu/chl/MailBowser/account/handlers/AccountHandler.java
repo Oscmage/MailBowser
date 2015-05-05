@@ -2,7 +2,7 @@ package edu.chl.mailbowser.account.handlers;
 
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventTag;
+import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.account.models.IAccount;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public enum AccountHandler {
     public void addAccount(IAccount account) {
         accounts.add(account);
 
-        EventBus.INSTANCE.publish(new Event(EventTag.ADD_ACCOUNT, account));
+        EventBus.INSTANCE.publish(new Event(EventType.ADD_ACCOUNT, account));
     }
 
     public List<IAccount> getAccounts() {

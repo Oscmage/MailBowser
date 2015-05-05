@@ -4,28 +4,28 @@ package edu.chl.mailbowser.event;
  * Created by mats on 29/04/15.
  */
 public class Event implements IEvent {
-    private final EventTag tag;
+    private final EventType type;
     private final Object value;
 
     /**
-     * Creates a new Event with a specific tag and value.
+     * Creates a new Event with a specific type and value.
      *
-     * @param tag
+     * @param type
      * @param value
      */
-    public Event(EventTag tag, Object value) {
-        this.tag = tag;
+    public Event(EventType type, Object value) {
+        this.type = type;
         this.value = value;
     }
 
     /**
-     * Returns the tag of this event.
+     * Returns the type of this event.
      *
-     * @return the tag of this event.
+     * @return the type of this event.
      */
     @Override
-    public EventTag getTag() {
-        return tag;
+    public EventType getType() {
+        return type;
     }
 
     /**
@@ -45,6 +45,6 @@ public class Event implements IEvent {
      */
     @Override
     public String toString() {
-        return "Event [tag=" + tag + ", value=(" + value + ")]";
+        return "Event [type=" + type + ", value=(" + value + ")]";
     }
 }
