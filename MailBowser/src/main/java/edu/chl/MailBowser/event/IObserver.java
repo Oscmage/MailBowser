@@ -1,4 +1,4 @@
-package edu.chl.MailBowser.event;
+package edu.chl.mailbowser.event;
 
 /**
  * Created by mats on 29/04/15.

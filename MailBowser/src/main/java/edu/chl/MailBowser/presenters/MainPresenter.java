@@ -1,4 +1,4 @@
-package edu.chl.MailBowser.presenters;
+package edu.chl.mailbowser.presenters;
 
 /**
  * Created by filip on 04/05/15.

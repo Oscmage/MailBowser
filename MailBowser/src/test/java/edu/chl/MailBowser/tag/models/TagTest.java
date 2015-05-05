@@ -1,5 +1,6 @@
-package edu.chl.MailBowser.models;
+package edu.chl.mailbowser.tag.models;
 
+import edu.chl.mailbowser.tag.models.Tag;
 import org.junit.Before;
 import org.junit.Test;
 

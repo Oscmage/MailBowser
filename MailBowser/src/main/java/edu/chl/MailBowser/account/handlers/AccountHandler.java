@@ -1,19 +1,17 @@
-package edu.chl.MailBowser;
+package edu.chl.mailbowser.account.handlers;
 
-import edu.chl.MailBowser.event.Event;
-import edu.chl.MailBowser.event.EventBus;
-import edu.chl.MailBowser.event.EventTag;
-import edu.chl.MailBowser.models.IAccount;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventTag;
+import edu.chl.mailbowser.account.models.IAccount;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by mats on 14/04/15.
  */
-public enum DataHandler {
+public enum AccountHandler {
     INSTANCE;
 
     private List<IAccount> accounts = new ArrayList<>();

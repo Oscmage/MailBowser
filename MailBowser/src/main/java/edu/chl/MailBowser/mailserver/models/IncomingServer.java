@@ -1,12 +1,12 @@
-package edu.chl.MailBowser.models;
+package edu.chl.mailbowser.mailserver.models;
 
-import java.io.File;
-import java.io.FileInputStream;
+import edu.chl.mailbowser.email.models.Email;
+import edu.chl.mailbowser.email.models.IEmail;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.*;
-import javax.mail.internet.InternetAddress;
 
 /**
  * Created by jesper on 2015-04-21.

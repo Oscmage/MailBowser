@@ -1,9 +1,10 @@
-package edu.chl.MailBowser;
+package edu.chl.mailbowser;
 
-import edu.chl.MailBowser.factories.MailServerFactory;
-import edu.chl.MailBowser.models.Account;
-import edu.chl.MailBowser.models.Address;
-import edu.chl.MailBowser.models.IAccount;
+import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.mailserver.factories.MailServerFactory;
+import edu.chl.mailbowser.account.models.Account;
+import edu.chl.mailbowser.address.models.Address;
+import edu.chl.mailbowser.account.models.IAccount;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,7 +32,7 @@ public class Main extends Application {
         );
 
         // ... And put it in the DataHandler ("database")
-        DataHandler.INSTANCE.addAccount(account);
+        AccountHandler.INSTANCE.addAccount(account);
 
         mainStage.setScene(scene);
         mainStage.show();

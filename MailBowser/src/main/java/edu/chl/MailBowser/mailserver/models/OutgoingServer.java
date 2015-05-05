@@ -1,4 +1,6 @@
-package edu.chl.MailBowser.models;
+package edu.chl.mailbowser.mailserver.models;
+
+import edu.chl.mailbowser.email.models.IEmail;
 
 import java.util.Properties;
 import javax.mail.*;
