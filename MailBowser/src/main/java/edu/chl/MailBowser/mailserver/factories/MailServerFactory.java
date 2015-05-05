@@ -1,6 +1,9 @@
-package edu.chl.MailBowser.factories;
+package edu.chl.mailbowser.mailserver.factories;
 
-import edu.chl.MailBowser.models.*;
+import edu.chl.mailbowser.mailserver.models.IIncomingServer;
+import edu.chl.mailbowser.mailserver.models.IOutgoingServer;
+import edu.chl.mailbowser.mailserver.models.IncomingServer;
+import edu.chl.mailbowser.mailserver.models.OutgoingServer;
 
 /**
  * Created by mats on 16/04/15.

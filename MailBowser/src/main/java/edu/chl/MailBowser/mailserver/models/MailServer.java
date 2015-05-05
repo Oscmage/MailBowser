@@ -1,6 +1,4 @@
-package edu.chl.MailBowser.models;
-
-import java.util.Properties;
+package edu.chl.mailbowser.mailserver.models;
 
 /**
  * Created by filip on 09/04/15.

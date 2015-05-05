@@ -1,4 +1,4 @@
-package edu.chl.MailBowser.event;
+package edu.chl.mailbowser.event;
 
 import java.util.ArrayList;
 import java.util.List;

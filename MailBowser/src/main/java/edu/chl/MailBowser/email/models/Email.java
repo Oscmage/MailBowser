@@ -1,4 +1,6 @@
-package edu.chl.MailBowser.models;
+package edu.chl.mailbowser.email.models;
+
+import edu.chl.mailbowser.address.models.*;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMessage;
@@ -52,7 +54,7 @@ public class Email implements IEmail {
             // add recipients
             javax.mail.Address[] recipients = message.getAllRecipients();
             for (javax.mail.Address recipient : recipients) {
-                this.recipients.add(new Address(recipient));
+                this.recipients.add(new edu.chl.mailbowser.address.models.Address(recipient));
             }
 
             // set subject and content
