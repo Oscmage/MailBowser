@@ -12,7 +12,7 @@ public class Tag implements ITag {
      * @param name Creates a tag with the specified name.
      */
     public Tag(String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
     }
 
 
