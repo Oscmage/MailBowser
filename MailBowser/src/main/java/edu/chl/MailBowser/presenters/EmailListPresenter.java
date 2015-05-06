@@ -3,6 +3,9 @@ package edu.chl.mailbowser.presenters;
 import edu.chl.mailbowser.account.handlers.AccountHandler;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.IEvent;
+import edu.chl.mailbowser.event.IObserver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,17 +25,18 @@ import java.util.ResourceBundle;
 /**
  * Created by filip on 04/05/15.
  */
-public class EmailListPresenter implements Initializable {
+public class EmailListPresenter implements Initializable, IObserver {
 
     // OK, do not get frightened. Read it like so: "An email-list ListView."
     @FXML
-    protected ListView<Pane> emailListListView;
+    private ListView<Pane> emailListListView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        EventBus.INSTANCE.register(this);
+    }
 
-        IAccount account = AccountHandler.INSTANCE.getAccount(0);
-        List<IEmail> emails = AccountHandler.INSTANCE.getAccount(0).getIncomingServer().fetch(account.getUsername(), account.getPassword());
+    private void updateListView(List<IEmail> emails) {
 
         ObservableList<Pane> emailListItems = FXCollections.observableArrayList();
 
@@ -54,7 +58,14 @@ public class EmailListPresenter implements Initializable {
         }
 
         emailListListView.setItems(emailListItems);
-
     }
 
+    @Override
+    public void onEvent(IEvent evt) {
+        switch (evt.getType()) {
+            case FETCH_EMAILS:
+                List<IEmail> emails = (List<IEmail>)evt.getValue();
+                updateListView(emails);
+        }
+    }
 }
