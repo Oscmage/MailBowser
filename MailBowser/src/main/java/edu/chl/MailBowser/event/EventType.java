@@ -10,5 +10,4 @@ public enum EventType {
     SELECTED_EMAIL,
     ADD_TAG,
     REMOVE_TAG,
-
 }
