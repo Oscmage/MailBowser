@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public enum TagHandler{
     INSTANCE;
-    
+
     private Map<ITag,Set<IEmail>> tags = new HashMap<>();
     private Map<IEmail,Set<ITag>> emails = new HashMap<>();
 
@@ -92,7 +92,7 @@ public enum TagHandler{
     public void removeTag(ITag tag) {
         Set<IEmail> emailSet = tags.remove(tag);
 
-        for (IEmail email : emailSet) {
+        for (IEmail email : emailSet) { 
             Set <ITag> tagSet = emails.get(email);
             tagSet.remove(tag);
 
