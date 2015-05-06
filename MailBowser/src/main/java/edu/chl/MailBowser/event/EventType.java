@@ -6,5 +6,6 @@ package edu.chl.mailbowser.event;
  * An enum for all possible event types.
  */
 public enum EventType {
-    ADD_ACCOUNT
+    ADD_ACCOUNT,
+    SELECTED_EMAIL
 }
