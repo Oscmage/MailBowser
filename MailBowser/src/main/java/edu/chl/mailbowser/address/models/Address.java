@@ -120,6 +120,6 @@ public class Address implements IAddress {
      */
     @Override
     public boolean matches(String query) {
-        return address.contains(query);
+        return query != null && address.contains(query);
     }
 }
