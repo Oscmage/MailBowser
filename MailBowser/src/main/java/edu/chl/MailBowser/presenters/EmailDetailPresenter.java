@@ -12,6 +12,7 @@ import edu.chl.mailbowser.event.IObserver;
  */
 public class EmailDetailPresenter implements IObserver{
 
+
     public EmailDetailPresenter() {
         EventBus.INSTANCE.register(this);
     }
@@ -19,9 +20,12 @@ public class EmailDetailPresenter implements IObserver{
     @Override
     public void onEvent(IEvent evt) {
         if(evt.getType() == EventType.SELECTED_EMAIL) {
-            IEmail email = (Email)evt.getValue();
-            
+            updateView((Email)evt.getValue());
         }
+    }
+
+    private void updateView(IEmail email){
+
     }
 }
 
