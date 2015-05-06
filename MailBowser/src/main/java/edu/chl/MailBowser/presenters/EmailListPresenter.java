@@ -3,6 +3,8 @@ package edu.chl.mailbowser.presenters;
 import edu.chl.mailbowser.account.handlers.AccountHandler;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -66,7 +68,7 @@ public class EmailListPresenter implements Initializable {
 
     public void selectedItemChanged(Event evt) {
         IEmail email = paneIEmailMap.get(this.emailListListView.getSelectionModel().getSelectedItem());
-        //onEvent(new edu.chl.mailbowser.event.Event());
+        EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_EMAIL,email));
     }
 
 }
