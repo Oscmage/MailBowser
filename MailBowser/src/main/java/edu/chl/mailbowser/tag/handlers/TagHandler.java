@@ -14,21 +14,11 @@ import java.util.Set;
 /**
  * Created by OscarEvertsson on 29/04/15.
  */
-public class TagHandler{
-    private static TagHandler instance = new TagHandler();
+public enum TagHandler{
+    INSTANCE;
+
     private Map<ITag,Set<IEmail>> tags = new HashMap<>();
     private Map<IEmail,Set<ITag>> emails = new HashMap<>();
-
-    private TagHandler(){}
-
-
-    /**
-     * Returns the instance of the singleton.
-     * @return
-     */
-    public static TagHandler getInstance(){
-        return instance;
-    }
 
     /**
      * Adds tag to an email.
@@ -102,7 +92,7 @@ public class TagHandler{
     public void removeTag(ITag tag) {
         Set<IEmail> emailSet = tags.remove(tag);
 
-        for (IEmail email : emailSet) {
+        for (IEmail email : emailSet) { 
             Set <ITag> tagSet = emails.get(email);
             tagSet.remove(tag);
 
