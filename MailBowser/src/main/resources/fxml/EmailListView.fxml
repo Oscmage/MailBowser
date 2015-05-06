@@ -8,7 +8,7 @@
    <content>
       <Pane id="emailListPane">
          <children>
-            <ListView fx:id="emailListListView" />
+            <ListView fx:id="emailListListView" onKeyReleased="#selectedItemChanged" onMouseClicked="#selectedItemChanged" />
          </children>
       </Pane>
    </content>
