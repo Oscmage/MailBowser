@@ -14,7 +14,7 @@ import java.util.List;
  * Created by OscarEvertsson on 07/04/15.
  * This class represents an Email with sender, receivers, subject, content, createdDate, sentDate, lastEditedDate and isSent.
  */
-public class Email implements IEmail, Searchable {
+public class Email implements IEmail {
     // TODO: add separate lists for the different recipient types: TO, CC, BCC. Constructors must also be updated.
 
     private IAddress sender;
@@ -271,13 +271,13 @@ public class Email implements IEmail, Searchable {
         query = query.toLowerCase();
 
         for (IAddress recipient : recipients) {
-            if (recipient.getString().toLowerCase().contains(query)) {
+            if (recipient.matches(query)) {
                 return true;
             }
         }
 
         return subject.toLowerCase().contains(query)
                 || content.toLowerCase().contains(query)
-                || sender.getString().toLowerCase().contains(query);
+                || sender.matches(query);
     }
 }

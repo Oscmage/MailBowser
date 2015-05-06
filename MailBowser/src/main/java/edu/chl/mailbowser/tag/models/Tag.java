@@ -6,7 +6,7 @@ import edu.chl.mailbowser.search.Searchable;
  * Created by OscarEvertsson on 24/04/15.
  * The class Tag represents a certain email tag, examples could be "Work", "School" etc.
  */
-public class Tag implements ITag, Searchable {
+public class Tag implements ITag {
     private String name;
 
     /**
