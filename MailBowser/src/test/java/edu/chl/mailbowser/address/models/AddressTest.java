@@ -43,4 +43,16 @@ public class AddressTest {
         assertTrue(address.hashCode() == address.hashCode());
         assertFalse(address.hashCode() == s1.hashCode());
     }
+
+    @Test
+    public void testMatches() throws Exception {
+        assertTrue(address.matches("osc"));
+        assertTrue(address.matches("oscar.evertsson@live.com"));
+        assertTrue(address.matches("evert"));
+        assertFalse(address.matches("lol"));
+        assertFalse(address.matches(null));
+        assertTrue(address.matches(""));
+        assertFalse(address.matches("oscliv"));
+        assertFalse(address.matches("osc@live.com"));
+    }
 }
