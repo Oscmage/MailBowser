@@ -3,8 +3,6 @@ package edu.chl.mailbowser.presenters;
 import edu.chl.mailbowser.account.handlers.AccountHandler;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.event.IEvent;
-import edu.chl.mailbowser.event.IObserver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -25,7 +23,7 @@ import java.util.ResourceBundle;
 /**
  * Created by filip on 04/05/15.
  */
-public class EmailListPresenter implements Initializable, IObserver {
+public class EmailListPresenter implements Initializable {
     private Map<Pane,IEmail> paneIEmailMap;
 
     // OK, do not get frightened. Read it like so: "An email-list ListView."
@@ -71,8 +69,4 @@ public class EmailListPresenter implements Initializable, IObserver {
         //onEvent(new edu.chl.mailbowser.event.Event());
     }
 
-    @Override
-    public void onEvent(IEvent evt) {
-
-    }
 }
