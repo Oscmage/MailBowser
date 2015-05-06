@@ -1,5 +1,7 @@
 package edu.chl.mailbowser.address.models;
 
+import edu.chl.mailbowser.search.Searchable;
+
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
@@ -110,8 +112,14 @@ public class Address implements IAddress {
         return address.hashCode()*13;
     }
 
-
-
-
-    
+    /**
+     * Checks whether or not this address matches a given string.
+     *
+     * @param query the string to match against
+     * @return true if the address contains the given query
+     */
+    @Override
+    public boolean matches(String query) {
+        return query != null && address.contains(query);
+    }
 }
