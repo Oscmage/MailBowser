@@ -2,6 +2,9 @@ package edu.chl.mailbowser.account.models;
 
 import edu.chl.mailbowser.address.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.mailserver.models.IIncomingServer;
 import edu.chl.mailbowser.mailserver.models.IOutgoingServer;
 
@@ -150,6 +153,7 @@ public class Account implements IAccount {
      */
     public void fetch() {
         this.emails = incomingServer.fetch(getUsername(), password);
+        EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS, emails));
     }
 
     @Override

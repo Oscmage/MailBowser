@@ -1,6 +1,7 @@
 package edu.chl.mailbowser;
 
 import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.mailserver.factories.MailServerFactory;
 import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.address.models.Address;
@@ -34,6 +35,8 @@ public class Main extends Application {
 
         // Add fonts and styles to the scene
         scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
+
+        AccountHandler.INSTANCE.getAccount(0).fetch();
 
         mainStage.setScene(scene);
         mainStage.show();

@@ -1,10 +1,10 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.account.handlers.AccountHandler;
-import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
+import edu.chl.mailbowser.event.IEvent;
+import edu.chl.mailbowser.event.IObserver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -25,20 +25,24 @@ import java.util.ResourceBundle;
 /**
  * Created by filip on 04/05/15.
  */
-public class EmailListPresenter implements Initializable {
+
+public class EmailListPresenter implements Initializable, IObserver {
     private Map<Pane,IEmail> paneIEmailMap;
 
     // OK, do not get frightened. Read it like so: "An email-list ListView."
     @FXML
     protected ListView<Pane> emailListListView;
-    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        EventBus.INSTANCE.register(this);
+    }
+
+    private void updateListView(List<IEmail> emails) {
+
 
         this.paneIEmailMap = new HashMap<>(); // Created for keeping track on which email belongs to what pane.
-        IAccount account = AccountHandler.INSTANCE.getAccount(0);
-        List<IEmail> emails = AccountHandler.INSTANCE.getAccount(0).getIncomingServer().fetch(account.getUsername(), account.getPassword());
+
 
         ObservableList<Pane> emailListItems = FXCollections.observableArrayList();
 
@@ -62,13 +66,25 @@ public class EmailListPresenter implements Initializable {
         }
 
         emailListListView.setItems(emailListItems);
-
     }
 
 
+    /**
+     * Sends an event when a different email is selected.
+     * @param evt
+     */
     public void selectedItemChanged(Event evt) {
         IEmail email = paneIEmailMap.get(this.emailListListView.getSelectionModel().getSelectedItem());
         EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_EMAIL,email));
     }
 
+
+    @Override
+    public void onEvent(IEvent evt) {
+        switch (evt.getType()) {
+            case FETCH_EMAILS:
+                List<IEmail> emails = (List<IEmail>)evt.getValue();
+                updateListView(emails);
+        }
+    }
 }
