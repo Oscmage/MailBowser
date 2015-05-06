@@ -5,6 +5,7 @@ package edu.chl.mailbowser.search;
  *
  * An interface that enables searching of the objects that implements it.
  */
+@FunctionalInterface
 public interface Searchable {
     /**
      * Checks whether or not this object matches the query. It is up to each individual implementation
