@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<ScrollPane fx:id="emailListScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefViewportWidth="240.0" prefWidth="240.0" HBox.hgrow="NEVER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.EmailListPresenter">
-   <content>
-      <Pane id="emailListPane">
-         <children>
-            <ListView fx:id="emailListListView" onKeyReleased="#selectedItemChanged" onMouseClicked="#selectedItemChanged" />
-         </children>
-      </Pane>
-   </content>
-</ScrollPane>
+<ListView
+   xmlns="http://javafx.com/javafx/8"
+   xmlns:fx="http://javafx.com/fxml/1"
+
+   fx:controller="edu.chl.mailbowser.presenters.EmailListPresenter"
+   fx:id="emailListListView"
+
+   maxWidth="240.0"
+   minWidth="240.0"
+   prefWidth="240.0"
+
+   onKeyPressed="#onItemChanged"
+   onMouseClicked="#onItemChanged"
+/>
