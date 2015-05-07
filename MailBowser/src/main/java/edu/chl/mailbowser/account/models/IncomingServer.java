@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.mailserver.models;
+package edu.chl.mailbowser.account.models;
 
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;

@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.mailserver.models;
+package edu.chl.mailbowser.account.models;
 
 /**
  * Created by filip on 09/04/15.
