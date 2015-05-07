@@ -8,7 +8,7 @@ import edu.chl.mailbowser.account.models.Account;
 public class BackgroundFetching extends Thread {
     private static BackgroundFetching instance = new BackgroundFetching();
 
-    private Account account = Account.getInstance();
+    private Account account = Account.INSTANCE;
 
     private BackgroundFetching(){}
 
