@@ -33,8 +33,8 @@ public class OutgoingServer extends MailServer implements IOutgoingServer {
      * @param password the password to authenticate with
      */
     @Override
-    public void send(IEmail email, String username, String password) {
-        Sender sender = new Sender(email, username, password, new SendCallback());
+    public void send(IEmail email, String username, String password, Callback<IEmail> callback) {
+        Sender sender = new Sender(email, username, password, callback);
         new Thread(sender).start();
     }
 
