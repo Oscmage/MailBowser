@@ -9,4 +9,6 @@ public enum EventType {
     ADD_ACCOUNT,
     ADD_TAG,
     REMOVE_TAG,
+    FETCH_EMAILS,
+    FETCH_EMAILS_FAIL
 }
