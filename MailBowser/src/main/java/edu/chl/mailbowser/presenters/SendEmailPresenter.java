@@ -2,8 +2,8 @@ package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.account.handlers.AccountHandler;
 import edu.chl.mailbowser.account.models.IAccount;
-import edu.chl.mailbowser.address.models.Address;
-import edu.chl.mailbowser.address.models.IAddress;
+import edu.chl.mailbowser.email.models.Address;
+import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;
 import javafx.event.ActionEvent;

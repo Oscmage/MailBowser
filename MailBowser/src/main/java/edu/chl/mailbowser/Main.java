@@ -3,7 +3,7 @@ package edu.chl.mailbowser;
 import edu.chl.mailbowser.account.handlers.AccountHandler;
 import edu.chl.mailbowser.mailserver.factories.MailServerFactory;
 import edu.chl.mailbowser.account.models.Account;
-import edu.chl.mailbowser.address.models.Address;
+import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.account.models.IAccount;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
