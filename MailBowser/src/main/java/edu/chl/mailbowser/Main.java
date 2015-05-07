@@ -29,7 +29,9 @@ public class Main extends Application {
                 MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
                 MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL)
         );
-        new Thread(BackgroundFetching.getInstance()).start();
+        Thread backgroundFetching = new Thread(BackgroundFetching.getInstance());
+        backgroundFetching.setDaemon(true);
+        backgroundFetching.start();
 
         mainStage.setScene(scene);
         mainStage.show();
