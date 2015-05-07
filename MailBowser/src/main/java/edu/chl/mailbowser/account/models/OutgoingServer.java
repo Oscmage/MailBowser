@@ -38,19 +38,6 @@ public class OutgoingServer extends MailServer implements IOutgoingServer {
         new Thread(sender).start();
     }
 
-    private class SendCallback implements Callback<IEmail> {
-
-        @Override
-        public void onSuccess(IEmail object) {
-            EventBus.INSTANCE.publish(new Event(EventType.SEND_EMAIL, object));
-        }
-
-        @Override
-        public void onFailure(String msg) {
-            EventBus.INSTANCE.publish(new Event(EventType.SEND_EMAIL_FAIL, msg));
-        }
-    }
-
     private class Sender implements Runnable {
         private IEmail email;
         private String username;
