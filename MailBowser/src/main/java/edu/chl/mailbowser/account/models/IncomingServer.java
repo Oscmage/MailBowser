@@ -57,7 +57,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
 
         @Override
         public void run() {
-            List<IEmail> emails = new ArrayList<>();
+            List<IEmail> emails;
 
             Properties props = new Properties();
             props.setProperty("mail.store.protocol", "imaps");
