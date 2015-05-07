@@ -2,6 +2,8 @@ package edu.chl.mailbowser.account.models;
 
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.mailserver.models.IIncomingServer;
+import edu.chl.mailbowser.mailserver.models.IOutgoingServer;
 
 /**
  * Created by OscarEvertsson on 09/04/15.
