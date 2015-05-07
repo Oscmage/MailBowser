@@ -37,25 +37,10 @@ public class IncomingServer extends MailServer implements IIncomingServer {
      * @param password the password to authenticate with
      */
     @Override
-    public void fetch(String username, String password) {
+    public void fetch(String username, String password, Callback<List<IEmail>> callback) {
         if (fetcher == null) {
-            fetcher = new Fetcher(username, password, new FetchCallback());
+            fetcher = new Fetcher(username, password, callback);
             new Thread(fetcher).start();
-        }
-    }
-
-    private class FetchCallback implements Callback<List<IEmail>> {
-
-        @Override
-        public void onSuccess(List<IEmail> object) {
-            EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS, object));
-            fetcher = null;
-        }
-
-        @Override
-        public void onFailure(String msg) {
-            EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS_FAIL, null));
-            fetcher = null;
         }
     }
 
