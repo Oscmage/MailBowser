@@ -35,9 +35,11 @@ public class Main extends Application {
         // ... And put it in the DataHandler ("database")
         //AccountHandler.INSTANCE.addAccount(account);
 
+        AccountHandler.INSTANCE.getAccount(0).fetch();
+
         mainStage.setScene(scene);
         mainStage.show();
-        new Thread(new BackgroundFetching()).start();
+        new Thread(BackgroundFetching.getInstance()).start();
     }
 
     public static void main(String[] args) {
