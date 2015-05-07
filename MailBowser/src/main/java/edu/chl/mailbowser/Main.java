@@ -31,15 +31,10 @@ public class Main extends Application {
                 MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
                 MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL)
         );
-
-        // ... And put it in the DataHandler ("database")
-        //AccountHandler.INSTANCE.addAccount(account);
-
-        AccountHandler.INSTANCE.getAccount(0).fetch();
+        new Thread(BackgroundFetching.getInstance()).start();
 
         mainStage.setScene(scene);
         mainStage.show();
-        new Thread(BackgroundFetching.getInstance()).start();
     }
 
     public static void main(String[] args) {

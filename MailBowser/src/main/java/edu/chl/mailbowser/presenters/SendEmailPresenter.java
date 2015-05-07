@@ -1,6 +1,7 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.email.models.IAddress;
@@ -33,13 +34,8 @@ public class SendEmailPresenter {
         List<IAddress> receivers = new ArrayList<IAddress>();
         receivers.add(new Address(this.receiver.getText()));
 
-        // Create a new email
+        // Create a new email and send it
         IEmail email = new Email(receivers, this.subject.getText(), this.content.getText());
-
-        // Let's just use the "default" account, and its belonging server, for now
-        IAccount account = AccountHandler.INSTANCE.getAccount(0);
-
-        // Send the little bastard to its set recipients
-        account.send(email);
+        Account.INSTANCE.send(email);
     }
 }
