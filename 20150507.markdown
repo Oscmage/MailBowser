@@ -1,0 +1,36 @@
+# Meeting Agenda
+Date: 2015-05-07
+
+Facilitator: Oscar Evertsson
+
+Participants: Mats Högberg, Oscar Evertsson, Filip Hallqvist
+  
+## Objectives
+
+* Data storage
+* Presenters
+
+## Reports
+
+* We now have a search function
+* A preliminary package structure has been implemented
+* Backend for switching between emails is implemented
+
+## Discussion items
+
+* How should we map emails to panes in emaillistview?
+* Search function?
+
+## Outcomes and assignments
+
+* Mats will work on fetching with background thread
+* Oscar and Filip will continue connecting backend with frontend
+* Jax continues with new use cases
+* We'll need to discuss further more how to store data with out handler
+
+### Unsolved issues
+
+* Data storage 
+
+### Next meeting
+2015-05-12: 12.00-13.00
