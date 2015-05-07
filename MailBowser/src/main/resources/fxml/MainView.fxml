@@ -2,14 +2,25 @@
 
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="960.0" prefHeight="600.0" prefWidth="960.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.MainPresenter">
+<VBox
+   xmlns="http://javafx.com/javafx/8"
+   xmlns:fx="http://javafx.com/fxml/1"
+
+   fx:controller="edu.chl.mailbowser.presenters.MainPresenter"
+   stylesheets="@../css/style.css"
+
+   minHeight="600.0"
+   minWidth="960.0"
+   prefHeight="600.0"
+   prefWidth="960.0"
+>
    <children>
-      <fx:include fx:id="topbarView" source="TopbarView.fxml" />
+      <fx:include source="TopbarView.fxml" />
       <HBox VBox.vgrow="ALWAYS">
          <children>
-            <fx:include fx:id="sidebarView" source="SidebarView.fxml" />
-            <fx:include fx:id="emailListView" source="EmailListView.fxml" />
-            <fx:include fx:id="emailDetailView" source="EmailDetailView.fxml" />
+            <fx:include source="SidebarView.fxml" />
+            <fx:include source="EmailListView.fxml" />
+            <fx:include source="EmailDetailView.fxml" />
          </children>
       </HBox>
    </children>

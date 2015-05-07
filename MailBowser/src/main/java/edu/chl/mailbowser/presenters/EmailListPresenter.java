@@ -10,17 +10,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 
-import java.io.IOException;
+import javafx.scene.layout.Pane;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -32,10 +25,9 @@ import java.util.ResourceBundle;
  */
 
 public class EmailListPresenter implements Initializable, IObserver {
-    private Map<Pane,IEmail> paneIEmailMap;
 
     // OK, do not get frightened. Read it like so: "An email-list ListView."
-    @FXML protected ListView<Pane> emailListListView;
+    @FXML protected ListView<EmailListViewItem> emailListListView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -44,16 +36,11 @@ public class EmailListPresenter implements Initializable, IObserver {
 
     private void updateListView(List<IEmail> emails) {
 
-        this.paneIEmailMap = new HashMap<>(); // Created for keeping track on which email belongs to what pane.
-
-        ObservableList<Pane> emailListItems = FXCollections.observableArrayList();
+        ObservableList<EmailListViewItem> emailListItems = FXCollections.observableArrayList();
 
         for(IEmail email : emails) {
-
             EmailListViewItem emailListViewItem = new EmailListViewItem(email);
-
             emailListItems.add(emailListViewItem);
-            this.paneIEmailMap.put(emailListViewItem,email);
         }
 
         emailListListView.setItems(emailListItems);
@@ -65,8 +52,9 @@ public class EmailListPresenter implements Initializable, IObserver {
      * @param evt
      */
     public void onItemChanged(Event evt) {
-        IEmail email = paneIEmailMap.get(this.emailListListView.getSelectionModel().getSelectedItem());
-        EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_EMAIL,email));
+        EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(
+                EventType.SELECTED_EMAIL, this.emailListListView.getSelectionModel().getSelectedItem().getEmail()
+        ));
     }
 
     @Override

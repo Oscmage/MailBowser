@@ -8,20 +8,24 @@ import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.Tag;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 /**
  * Created by filip on 04/05/15.
  */
 
 public class EmailDetailPresenter implements IObserver {
-    private IEmail email;
+    private Email email;
+
+    @FXML protected Label emailLetterHeader;
 
     public EmailDetailPresenter() {
         EventBus.INSTANCE.register(this);
     }
 
-    private void updateView(){
-        // TODO update: sender, receive timestamp etc in gui.
+    private void updateView() {
+        emailLetterHeader.setText(email.getSubject());
     }
 
 
@@ -40,7 +44,7 @@ public class EmailDetailPresenter implements IObserver {
         } else if (evt.getType() == EventType.REMOVE_TAG) {
             // TODO Present this in gui
         } else if (evt.getType() == EventType.SELECTED_EMAIL) {
-            this.email = (Email)evt.getValue();
+            this.email = (Email) evt.getValue();
             updateView();
         }
     }

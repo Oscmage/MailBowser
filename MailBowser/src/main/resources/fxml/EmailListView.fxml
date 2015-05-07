@@ -9,9 +9,9 @@
    fx:controller="edu.chl.mailbowser.presenters.EmailListPresenter"
    fx:id="emailListListView"
 
+   prefWidth="240.0"
    maxWidth="240.0"
    minWidth="240.0"
-   prefWidth="240.0"
 
    onKeyPressed="#onItemChanged"
    onMouseClicked="#onItemChanged"
