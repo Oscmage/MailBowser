@@ -1,8 +1,6 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.account.handlers.AccountHandler;
 import edu.chl.mailbowser.account.models.Account;
-import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.Email;
