@@ -65,6 +65,8 @@ public class IncomingServer extends MailServer implements IIncomingServer {
         private String password;
 
         public Fetcher(String username, String password, Callback<List<IEmail>> callback) {
+            this.username = username;
+            this.password = password;
             this.callback = callback;
         }
 
