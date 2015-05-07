@@ -34,6 +34,8 @@ public class Main extends Application {
         // ... And put it in the DataHandler ("database")
         AccountHandler.INSTANCE.addAccount(account);
 
+        AccountHandler.INSTANCE.getAccount(0).fetch();
+
         mainStage.setScene(scene);
         mainStage.show();
     }

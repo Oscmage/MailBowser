@@ -30,7 +30,7 @@
                         </VBox>
                     </children>
                 </GridPane>
-                <Label id="emailLetterHeader" styleClass="h1" text="What a wonderful headline" />
+                <Label fx:id="emailLetterHeader" styleClass="h1" text="What a wonderful headline" />
                 <Label lineSpacing="6.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tempus, nisi ac sagittis pretium, risus tellus tincidunt diam, sit amet sollicitudin turpis erat vel nisl. In non turpis fringilla, tristique augue eget, tempor nulla. Maecenas volutpat turpis ipsum, et lobortis orci consectetur sit amet. Vivamus eu nibh in enim lobortis vulputate. Maecenas nec dictum tortor, ut posuere odio. Morbi egestas felis turpis, id mollis nunc placerat sit amet. Nullam turpis nibh, bibendum quis magna sagittis, fermentum consequat odio. Integer sit amet blandit felis. Nam consequat venenatis laoreet. Aliquam gravida orci id nisi tempor egestas. Nullam placerat vitae sem sed commodo." wrapText="true" VBox.vgrow="ALWAYS" />
             </children>
         </VBox>
