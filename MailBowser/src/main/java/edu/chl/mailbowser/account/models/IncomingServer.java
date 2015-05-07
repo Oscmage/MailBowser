@@ -88,11 +88,11 @@ public class IncomingServer extends MailServer implements IIncomingServer {
                 emails = recursiveFetch(root);
 
                 store.close();
+
+                callback.onSuccess(emails);
             } catch (MessagingException e) {
                 callback.onFailure("Failed to fetch email from server");
             }
-
-            callback.onSuccess(emails);
         }
 
         private List<IEmail> recursiveFetch (Folder folder) throws MessagingException {
