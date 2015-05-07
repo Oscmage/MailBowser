@@ -16,6 +16,9 @@ public class BackgroundFetching extends Thread {
         return instance;
     }
 
+    /**
+     * Tells account to fetchs emails every 30 secounds.
+     */
     @Override
     public void run() {
         while (!this.isInterrupted()) {
