@@ -174,6 +174,10 @@ public class Email implements IEmail {
         return (Date)sentDate.clone();
     }
 
+    public Date getReceivedDate(){
+        return (Date)this.receivedDate.clone();
+    }
+
     public Date getLastEditedDate() {
         return (Date)lastEditedDate.clone();
     }
