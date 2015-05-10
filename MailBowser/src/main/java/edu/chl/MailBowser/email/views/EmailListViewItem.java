@@ -17,6 +17,8 @@ import java.util.ResourceBundle;
  */
 public class EmailListViewItem extends FlowPane implements Initializable {
 
+    private IEmail email;
+
     @FXML private Label sender;
     @FXML private Label sent;
     @FXML private Label subject;
@@ -39,6 +41,8 @@ public class EmailListViewItem extends FlowPane implements Initializable {
     public EmailListViewItem(IEmail email) {
         this();
 
+        this.email = email;
+
         sender.setText(email.getSender().toString());
         sent.setText(email.getSentDate().toString());
         subject.setText(email.getSubject());
@@ -49,5 +53,9 @@ public class EmailListViewItem extends FlowPane implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    public IEmail getEmail() {
+        return this.email;
     }
 }
