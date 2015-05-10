@@ -1,12 +1,10 @@
 package edu.chl.mailbowser.tag.models;
 
-import edu.chl.mailbowser.tag.models.Tag;
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by OscarEvertsson on 30/04/15.

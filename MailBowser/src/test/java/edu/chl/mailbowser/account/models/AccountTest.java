@@ -1,13 +1,10 @@
 package edu.chl.mailbowser.account.models;
 
-import edu.chl.mailbowser.address.models.Address;
-import edu.chl.mailbowser.mailserver.models.IncomingServer;
-import edu.chl.mailbowser.mailserver.models.OutgoingServer;
+import edu.chl.mailbowser.email.models.Address;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class AccountTest {
     Account a = new Account(new Address("Jax@gmail.com"), "hej", new IncomingServer("@","@"), new OutgoingServer("@","@"));

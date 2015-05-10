@@ -1,11 +1,10 @@
 package edu.chl.mailbowser.email.models;
 
-import edu.chl.mailbowser.email.models.Address;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by OscarEvertsson on 30/04/15.
