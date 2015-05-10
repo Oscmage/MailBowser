@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<ListView
+   xmlns="http://javafx.com/javafx/8"
+   xmlns:fx="http://javafx.com/fxml/1"
+
+   fx:controller="edu.chl.mailbowser.presenters.EmailListPresenter"
+   fx:id="emailListListView"
+
+   prefWidth="240.0"
+   maxWidth="240.0"
+   minWidth="240.0"
+
+   onKeyPressed="#onItemChanged"
+   onMouseClicked="#onItemChanged"
+/>

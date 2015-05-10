@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<HBox fx:controller="edu.chl.mailbowser.presenters.TopbarPresenter" id="topbarHBox" alignment="CENTER_LEFT" maxHeight="60.0" prefHeight="60.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<children>
+   <Button id="newEmailButton" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" text="New Email" />
+</children>
+</HBox>

@@ -1,13 +1,63 @@
-.root{
-    -fx-font-size: 13px;
-    -fx-font-family: Roboto, sans-serif;
-    -fx-background: #FFF;
+.root {
+    -fx-font-size: 12;
+    -fx-font-family: Courier, monotype;
+    -fx-background-color: white;
+}
+
+* {
+    -fx-background-insets: 0;
+}
+
+.h1 {
+    -fx-font-size: 26;
+    -fx-font-family: Menlo, monotype;
+}
+
+#topbarHBox {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: black;
+}
+
+#sidebarScrollPane {
+    -fx-padding: 10;
+}
+
+#sidebarScrollPane,
+#emailListScrollPane {
+    -fx-background-color: white;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: black;
+}
+
+#sidebarPane,
+#emailListPane,
+#emailDetailPane {
+    -fx-background-color: white;
+}
+
+#emailDetailPane {
+    -fx-border-width: 1 1 0;
+    -fx-border-color: black;
+}
+
+#emailDetailVBox {
+    -fx-padding: 30;
+    -fx-background-color: white;
+    -fx-border-width: 1 1 0;
+    -fx-border-color: black;
+}
+
+#emailDetailScrollPane {
+    -fx-padding: 10 10 0 10;
+    -fx-background-color: white;
 }
 
 .button {
+    -fx-cursor: HAND;
     -fx-background-color: #E5404C;
     -fx-background-radius: 0;
-    -fx-text-fill: #FFF;
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
 }
 .button:hover {
 	-fx-background-color: derive(#E5404C, 20%);
@@ -54,10 +104,4 @@
 .text-area .content {
     -fx-padding: 3 5 3 5;
     -fx-cursor: text;
-}
-
-.label {
-	-fx-text-fill: #AAA;
-	-fx-font-size: 10px;
-	-fx-padding: 0;
 }
