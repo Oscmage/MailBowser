@@ -1,9 +1,7 @@
 package edu.chl.mailbowser.account.models;
 
-import edu.chl.mailbowser.address.models.IAddress;
+import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.mailserver.models.IIncomingServer;
-import edu.chl.mailbowser.mailserver.models.IOutgoingServer;
 
 import java.util.ArrayList;
 import java.util.List;

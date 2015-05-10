@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<ScrollPane fx:controller="edu.chl.mailbowser.presenters.EmailDetailPresenter" id="emailDetailScrollPane" fitToHeight="true" fitToWidth="true" prefViewportHeight="521.0" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane id="emailDetailScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="407.0" prefViewportHeight="521.0" prefWidth="494.0" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.EmailDetailPresenter">
     <content>
         <VBox id="emailDetailVBox" spacing="30.0">
             <children>
@@ -19,19 +21,19 @@
                         <VBox AnchorPane.leftAnchor="0.0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="NEVER" HBox.hgrow="ALWAYS">
                             <children>
                                 <Label text="From" />
-                                <Label id="emailLetterMetaDataFromLabel" text="Nisse Svensson &lt;nisse.svensson@gmail.com&gt;" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS" />
+                                <Label id="emailLetterMetaDataFromLabel" fx:id="fromLabel" text="Nisse Svensson &lt;nisse.svensson@gmail.com&gt;" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS" />
                             </children>
                         </VBox>
                         <VBox alignment="TOP_RIGHT" AnchorPane.rightAnchor="0.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="NEVER">
                             <children>
                                 <Label text="Received" />
-                                <Label id="emailLetterMetaDataReceivedLabel" text="11:35" textAlignment="RIGHT" wrapText="true" VBox.vgrow="ALWAYS" />
+                                <Label id="emailLetterMetaDataReceivedLabel" fx:id="receivedDateLabel" text="11:35" textAlignment="RIGHT" wrapText="true" VBox.vgrow="ALWAYS" />
                             </children>
                         </VBox>
                     </children>
                 </GridPane>
-                <Label id="emailLetterHeader" styleClass="h1" text="What a wonderful headline" />
-                <Label lineSpacing="6.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tempus, nisi ac sagittis pretium, risus tellus tincidunt diam, sit amet sollicitudin turpis erat vel nisl. In non turpis fringilla, tristique augue eget, tempor nulla. Maecenas volutpat turpis ipsum, et lobortis orci consectetur sit amet. Vivamus eu nibh in enim lobortis vulputate. Maecenas nec dictum tortor, ut posuere odio. Morbi egestas felis turpis, id mollis nunc placerat sit amet. Nullam turpis nibh, bibendum quis magna sagittis, fermentum consequat odio. Integer sit amet blandit felis. Nam consequat venenatis laoreet. Aliquam gravida orci id nisi tempor egestas. Nullam placerat vitae sem sed commodo." wrapText="true" VBox.vgrow="ALWAYS" />
+                <Label fx:id="subjectLabel" styleClass="h1" text="What a wonderful headline" />
+            <WebView fx:id="webView" prefHeight="281.0" prefWidth="497.0" />
             </children>
         </VBox>
     </content>

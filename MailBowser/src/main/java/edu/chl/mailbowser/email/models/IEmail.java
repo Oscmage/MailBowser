@@ -1,6 +1,5 @@
 package edu.chl.mailbowser.email.models;
 
-import edu.chl.mailbowser.address.models.IAddress;
 import edu.chl.mailbowser.search.Searchable;
 
 import javax.mail.Session;

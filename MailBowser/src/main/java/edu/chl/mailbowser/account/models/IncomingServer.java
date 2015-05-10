@@ -1,7 +1,10 @@
-package edu.chl.mailbowser.mailserver.models;
+package edu.chl.mailbowser.account.models;
 
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +55,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
+        EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS, emails));
         return emails;
     }
 

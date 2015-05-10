@@ -1,21 +1,41 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.Tag;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.web.WebView;
 
 /**
  * Created by filip on 04/05/15.
  */
+
 public class EmailDetailPresenter implements IObserver {
-    private IEmail email;
+
+
+
+    private Email email;
+
+    @FXML protected Label subjectLabel;
+    @FXML protected Label fromLabel;
+    @FXML protected Label receivedDateLabel;
+    @FXML protected WebView webView;
 
     public EmailDetailPresenter() {
         EventBus.INSTANCE.register(this);
+
+    }
+
+
+    private void updateView() {
+        subjectLabel.setText(email.getSubject());
+        receivedDateLabel.setText(email.getReceivedDate().toString());
+        this.webView.getEngine().loadContent(email.getContent());
     }
 
     public void addTagActionPerformed() {
@@ -32,7 +52,11 @@ public class EmailDetailPresenter implements IObserver {
             // TODO Present this in gui
         } else if (evt.getType() == EventType.REMOVE_TAG) {
             // TODO Present this in gui
+        } else if (evt.getType() == EventType.SELECTED_EMAIL) {
+            this.email = (Email) evt.getValue();
+            updateView();
         }
     }
+
 }
 

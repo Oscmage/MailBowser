@@ -1,8 +1,5 @@
 package edu.chl.mailbowser.email.models;
 
-import edu.chl.mailbowser.address.models.*;
-import edu.chl.mailbowser.search.Searchable;
-
 import javax.mail.*;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
@@ -70,12 +67,13 @@ public class Email implements IEmail {
             // add recipients
             javax.mail.Address[] recipients = message.getAllRecipients();
             for (javax.mail.Address recipient : recipients) {
-                this.recipients.add(new edu.chl.mailbowser.address.models.Address(recipient));
+                this.recipients.add(new Address(recipient));
             }
 
-            // set subject and content
+            // set subject, content and from
             this.subject = message.getSubject();
             this.content = recursiveGetText(message);
+            this.sender = new Address(message.getFrom()[0]);
 
             // set dates
             this.sentDate = message.getSentDate();
@@ -175,6 +173,10 @@ public class Email implements IEmail {
 
     public Date getSentDate() {
         return (Date)sentDate.clone();
+    }
+
+    public Date getReceivedDate(){
+        return (Date)this.receivedDate.clone();
     }
 
     public Date getLastEditedDate() {

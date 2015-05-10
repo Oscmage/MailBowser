@@ -19,7 +19,7 @@ public class TopbarPresenter {
         // Get the parent stage, simply to position our newly created window related to it
         Stage mainStage = (Stage)((Node)event.getTarget()).getScene().getWindow();
 
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/SendEmail.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ComposeEmailView.fxml"));
 
         Stage newEmailStage = new Stage();
         newEmailStage.setTitle("New Email...");
