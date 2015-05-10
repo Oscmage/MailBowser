@@ -1,6 +1,6 @@
 .root {
     -fx-font-size: 12;
-    -fx-font-family: Courier, monotype;
+    -fx-font-family: Roboto, monotype;
     -fx-background-color: white;
 }
 
@@ -10,45 +10,20 @@
 
 .h1 {
     -fx-font-size: 26;
-    -fx-font-family: Menlo, monotype;
+    -fx-font-family: Roboto, sans-serif;
 }
 
-#topbarHBox {
-    -fx-border-width: 0 0 1 0;
-    -fx-border-color: black;
-}
 
-#sidebarScrollPane {
-    -fx-padding: 10;
-}
-
-#sidebarScrollPane,
-#emailListScrollPane {
-    -fx-background-color: white;
-    -fx-border-width: 0 1 0 0;
-    -fx-border-color: black;
-}
-
-#sidebarPane,
-#emailListPane,
-#emailDetailPane {
+#sidebar,
+#emailDetail {
     -fx-background-color: white;
 }
-
-#emailDetailPane {
-    -fx-border-width: 1 1 0;
-    -fx-border-color: black;
+#emailList {
+    -fx-background-color: #EEE;
 }
 
 #emailDetailVBox {
     -fx-padding: 30;
-    -fx-background-color: white;
-    -fx-border-width: 1 1 0;
-    -fx-border-color: black;
-}
-
-#emailDetailScrollPane {
-    -fx-padding: 10 10 0 10;
     -fx-background-color: white;
 }
 
@@ -104,4 +79,42 @@
 .text-area .content {
     -fx-padding: 3 5 3 5;
     -fx-cursor: text;
+}
+
+/* The main scrollbar **track** CSS class  */
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color:transparent;
+    -fx-border-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-border-radius:2em;
+    visibility: hidden;
+}
+
+/* The increment and decrement button CSS class of scrollbar */
+.scroll-bar:horizontal .increment-button ,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-padding:0 0 10 0;
+
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color:derive(black,90%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+}
+
+.scroll-bar .increment-button {
+  visibility: hidden;
+}
+
+.scroll-bar .decrement-button {
+  visibility: hidden;
+}
+
+.scroll-bar:vertical {
+  -fx-background-color: transparent;
 }
