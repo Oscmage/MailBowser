@@ -25,6 +25,7 @@ public class TagTest {
         assertFalse(tag.equals(new Object()));
         assertFalse(tag.equals(10));
         assertTrue(tag.equals(new Tag(s)));
+        assertFalse(tag.equals(s));
     }
 
     @Test
