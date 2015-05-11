@@ -1,6 +1,9 @@
 package edu.chl.mailbowser.account.models;
 
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 
 import java.util.Properties;
 import javax.mail.*;
@@ -30,26 +33,46 @@ public class OutgoingServer extends MailServer implements IOutgoingServer {
      * @param password the password to authenticate with
      */
     @Override
-    public void send(IEmail email, String username, String password) {
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", getHostname());
-        props.put("mail.smtp.port", getPort());
+    public void send(IEmail email, String username, String password, Callback<IEmail> callback) {
+        Sender sender = new Sender(email, username, password, callback);
+        new Thread(sender).start();
+    }
 
-        Session session = Session.getInstance(props,
-                new Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
+    private class Sender implements Runnable {
+        private IEmail email;
+        private String username;
+        private String password;
+        private Callback<IEmail> callback;
 
-        try {
-            // Try to send the mail
-            Transport.send(email.getJavaxMessage(session));
-            System.out.println("Email sent");
-        } catch (MessagingException e) {
-            System.out.println("An unspecified error occured");
+        private Sender(IEmail email, String username, String password, Callback<IEmail> callback) {
+            this.email = email;
+            this.username = username;
+            this.password = password;
+            this.callback = callback;
+        }
+
+        @Override
+        public void run() {
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", getHostname());
+            props.put("mail.smtp.port", getPort());
+
+            Session session = Session.getInstance(props,
+                    new Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(username, password);
+                        }
+                    });
+
+            try {
+                // Try to send the mail
+                Transport.send(email.getJavaxMessage(session));
+                callback.onSuccess(email);
+            } catch (MessagingException e) {
+                callback.onFailure("Error sending email");
+            }
         }
     }
 }
