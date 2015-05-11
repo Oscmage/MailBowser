@@ -14,8 +14,8 @@ import java.util.List;
  *
  * A model class for an email account. An account has an address, a password and two mail servers - an incoming and an outgoing.
  */
-public enum Account implements IAccount {
-    INSTANCE;
+public class Account implements IAccount {
+    private static Account instance = null;
 
     private IAddress address;
     private String password;
@@ -25,13 +25,24 @@ public enum Account implements IAccount {
 
     private List<IEmail> emails = new ArrayList<>();
 
-
-    public void init (IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer){
+    private Account(IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer) {
         address = newAddress;
         password = newPassword;
         incomingServer = newIncomingServer;
         outgoingServer = newOutgoingServer;
     }
+
+    public static void createInstance(IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer) {
+        instance = new Account(newAddress, newPassword, newIncomingServer, newOutgoingServer);
+    }
+
+    public static Account getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException();
+        }
+        return instance;
+    }
+
     /**
      * Returns a string representation of this object.
      * The string will look like this: "Account [address=<address>, password=<password>"

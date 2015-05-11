@@ -34,6 +34,6 @@ public class SendEmailPresenter {
 
         // Create a new email and send it
         IEmail email = new Email(receivers, this.subject.getText(), this.content.getText());
-        Account.INSTANCE.send(email);
+        Account.getInstance().send(email);
     }
 }

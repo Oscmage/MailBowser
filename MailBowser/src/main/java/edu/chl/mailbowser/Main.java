@@ -26,7 +26,7 @@ public class Main extends Application {
         //scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
 
         //Initialize Account instance
-        Account.INSTANCE.init(
+        Account.createInstance(
                 new Address("mailbows3r@gmail.com"),
                 "VG5!qBY&#f$QCmV", // It really doesn't get more Open Source™ than this
                 MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
