@@ -30,7 +30,7 @@ public class ObjectReader<T extends Serializable> {
             fileInputStream = new FileInputStream(source);
             objectInputStream = new ObjectInputStream(fileInputStream);
             object = (T) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException | NullPointerException e) {
             throw new ObjectReadException();
         } finally {
             closeStream(fileInputStream);

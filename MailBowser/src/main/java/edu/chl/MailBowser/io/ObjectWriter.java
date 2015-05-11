@@ -31,8 +31,7 @@ public class ObjectWriter<T extends Serializable> {
 
             fileOutputStream.close();
             objectOutputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | NullPointerException e) {
             success = false;
         } finally {
             closeStream(fileOutputStream);
