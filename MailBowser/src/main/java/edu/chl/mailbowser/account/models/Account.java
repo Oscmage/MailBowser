@@ -6,6 +6,8 @@ import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -177,5 +179,10 @@ public class Account implements IAccount {
                 EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS_FAIL, msg));
             }
         });
+    }
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        instance = this;
     }
 }
