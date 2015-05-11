@@ -5,6 +5,8 @@ import edu.chl.mailbowser.io.*;
 
 /**
  * Created by mats on 11/05/15.
+ *
+ * A singleton for managing accounts.
  */
 public class AccountHandler {
     private static final AccountHandler instance = new AccountHandler();
