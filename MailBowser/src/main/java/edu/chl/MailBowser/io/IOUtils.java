@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.fileutils;
+package edu.chl.mailbowser.io;
 
 import java.io.Closeable;
 import java.io.IOException;

@@ -1,10 +1,8 @@
-package edu.chl.mailbowser.fileutils;
-
-import edu.chl.mailbowser.account.models.Account;
+package edu.chl.mailbowser.io;
 
 import java.io.*;
 
-import static edu.chl.mailbowser.fileutils.IOUtils.closeStream;
+import static edu.chl.mailbowser.io.IOUtils.closeStream;
 
 /**
  * Created by mats on 11/05/15.

@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.fileutils;
+package edu.chl.mailbowser.io;
 
 /**
  * Created by mats on 11/05/15.

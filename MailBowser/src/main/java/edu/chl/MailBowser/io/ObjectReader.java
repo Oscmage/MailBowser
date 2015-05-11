@@ -1,11 +1,11 @@
-package edu.chl.mailbowser.fileutils;
+package edu.chl.mailbowser.io;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
-import static edu.chl.mailbowser.fileutils.IOUtils.closeStream;
+import static edu.chl.mailbowser.io.IOUtils.closeStream;
 
 /**
  * Created by mats on 11/05/15.
@@ -24,7 +24,7 @@ public class ObjectReader<T extends Serializable> {
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
 
-        T object;
+        T object = null;
 
         try {
             fileInputStream = new FileInputStream(source);
