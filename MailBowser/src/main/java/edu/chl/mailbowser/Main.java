@@ -43,6 +43,11 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         // used to launch a JavaFX application
+        try {
+            read();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         launch(args);
         write();
     }
@@ -65,6 +70,22 @@ public class Main extends Application {
             o_out_TagHandler.close();
         }catch (IOException e){
             System.out.print("Fuck off");
+        }
+    }
+
+    private static void read() throws ClassNotFoundException {
+        FileInputStream f_in_Account;
+        FileInputStream f_in_TagHandler;
+        ObjectInputStream o_in_Account;
+        ObjectInputStream o_in_TagHandler;
+        try{
+            f_in_Account = new FileInputStream("Account.ser");
+            f_in_TagHandler = new FileInputStream("TagHandler.ser");
+            o_in_Account = new ObjectInputStream(f_in_Account);
+            o_in_TagHandler = new ObjectInputStream(f_in_TagHandler);
+
+        }catch (IOException e){
+
         }
     }
 }
