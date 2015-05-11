@@ -4,11 +4,14 @@ import edu.chl.mailbowser.account.BackgroundFetching;
 import edu.chl.mailbowser.account.factories.MailServerFactory;
 import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.email.models.Address;
+import edu.chl.mailbowser.tag.handlers.TagHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.*;
 
 public class Main extends Application {
 
@@ -41,5 +44,27 @@ public class Main extends Application {
     public static void main(String[] args) {
         // used to launch a JavaFX application
         launch(args);
+        write();
+    }
+
+    private static void write(){
+        FileOutputStream f_out_Account;
+        FileOutputStream f_out_TagHandler;
+        ObjectOutputStream o_out_Account;
+        ObjectOutputStream o_out_TagHandler;
+        try {
+            f_out_Account = new FileOutputStream("Account.ser");
+            f_out_TagHandler = new FileOutputStream("TagHandler.ser");
+            o_out_Account = new ObjectOutputStream(f_out_Account);
+            o_out_TagHandler = new ObjectOutputStream(f_out_TagHandler);
+            o_out_Account.writeObject(Account.INSTANCE);
+            o_out_TagHandler.writeObject(TagHandler.INSTANCE);
+            f_out_Account.close();
+            f_out_TagHandler.close();
+            o_out_Account.close();
+            o_out_TagHandler.close();
+        }catch (IOException e){
+            System.out.print("Fuck off");
+        }
     }
 }
