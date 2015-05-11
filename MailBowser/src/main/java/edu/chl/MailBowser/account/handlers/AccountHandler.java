@@ -1,9 +1,7 @@
 package edu.chl.mailbowser.account.handlers;
 
 import edu.chl.mailbowser.account.models.IAccount;
-import edu.chl.mailbowser.io.ObjectReadException;
-import edu.chl.mailbowser.io.ObjectReader;
-import edu.chl.mailbowser.io.ObjectWriter;
+import edu.chl.mailbowser.io.*;
 
 /**
  * Created by mats on 11/05/15.
@@ -48,7 +46,7 @@ public class AccountHandler {
      * @return false if no account is found, otherwise true
      */
     public boolean readAccount(String filename) {
-        ObjectReader<IAccount> objectReader = new ObjectReader<>();
+        IObjectReader<IAccount> objectReader = new ObjectReader<>();
 
         try {
             account = objectReader.read(filename);
@@ -65,7 +63,7 @@ public class AccountHandler {
      * @return true if the write was successful, otherwise false
      */
     public boolean writeAccount(String filename) {
-        ObjectWriter<IAccount> objectReaderWriter = new ObjectWriter<>();
+        IObjectWriter<IAccount> objectReaderWriter = new ObjectWriter<>();
         return objectReaderWriter.write(account, filename);
     }
 
