@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  * Address represents an email address. You cannot create an invalid Address obejct.
  */
-public class Address implements IAddress, Serializable{
+public class Address implements IAddress{
     private String address;
 
     /**
