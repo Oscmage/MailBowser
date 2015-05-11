@@ -9,14 +9,11 @@ import static edu.chl.mailbowser.io.IOUtils.closeStream;
  *
  * A generic class for writing serializable objects to files.
  */
-public class ObjectWriter<T extends Serializable> {
+public class ObjectWriter<T extends Serializable> implements IObjectWriter<T> {
     /**
-     * Writes an object to a destination.
-     *
-     * @param object the object to write
-     * @param destination the path to the file to write to
-     * @return true if the write is successful, otherwise false
+     * {@inheritDoc}
      */
+    @Override
     public boolean write(T object, String destination) {
         FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;

@@ -12,14 +12,11 @@ import static edu.chl.mailbowser.io.IOUtils.closeStream;
  *
  * A generic class for reading serializable objects from files.
  */
-public class ObjectReader<T extends Serializable> {
+public class ObjectReader<T extends Serializable> implements IObjectReader<T> {
     /**
-     * Read an object from a source file.
-     *
-     * @param source the file to read from
-     * @return the object that is read
-     * @throws ObjectReadException if an error occurs while reading the object
+     * {@inheritDoc}
      */
+    @Override
     public T read(String source) throws ObjectReadException {
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
