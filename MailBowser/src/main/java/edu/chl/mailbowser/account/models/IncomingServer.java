@@ -39,7 +39,19 @@ public class IncomingServer extends MailServer implements IIncomingServer {
     @Override
     public void fetch(String username, String password, Callback<List<IEmail>> callback) {
         if (fetcher == null) {
-            fetcher = new Fetcher(username, password, callback);
+            fetcher = new Fetcher(username, password, new Callback<List<IEmail>>() {
+                @Override
+                public void onSuccess(List<IEmail> object) {
+                    fetcher = null;
+                    callback.onSuccess(object);
+                }
+
+                @Override
+                public void onFailure(String msg) {
+                    fetcher = null;
+                    callback.onFailure(msg);
+                }
+            });
             new Thread(fetcher).start();
         }
     }
