@@ -81,7 +81,9 @@ public class IncomingServer extends MailServer implements IIncomingServer {
                 store.connect(getHostname(), username, password);
 
                 // start by getting the default (root) folder, and recursively work through all subfolders
-                Folder root = store.getDefaultFolder();
+
+//                Folder root = store.getDefaultFolder();
+                Folder root = store.getFolder("INBOX");
                 emails = recursiveFetch(root);
 
                 store.close();
@@ -95,11 +97,20 @@ public class IncomingServer extends MailServer implements IIncomingServer {
         private List<IEmail> recursiveFetch (Folder folder) throws MessagingException {
             List<IEmail> emails = new ArrayList<>();
 
+            FetchProfile fetchProfile = new FetchProfile();
+
+            fetchProfile.add(FetchProfile.Item.ENVELOPE);
+            fetchProfile.add(FetchProfile.Item.FLAGS);
+            fetchProfile.add(FetchProfile.Item.CONTENT_INFO);
+            fetchProfile.add("X-mailer");
+
             if ((folder.getType() & Folder.HOLDS_MESSAGES) == Folder.HOLDS_MESSAGES) {
                 folder.open(Folder.READ_ONLY);
                 Message [] messages = folder.getMessages();
                 for (Message message : messages) {
-                    emails.add(new Email(message));
+                    IEmail email = new Email(message);
+                    emails.add(email);
+                    EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAIL, email));
                 }
             }
 

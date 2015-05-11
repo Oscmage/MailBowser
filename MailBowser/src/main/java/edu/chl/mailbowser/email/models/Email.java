@@ -72,13 +72,13 @@ public class Email implements IEmail {
 
             // set subject, content and from
             this.subject = message.getSubject();
-            this.content = recursiveGetText(message);
+            this.content = null; //recursiveGetText(message);
             this.sender = new Address(message.getFrom()[0]);
 
             // set dates
             this.sentDate = message.getSentDate();
             this.receivedDate = message.getReceivedDate();
-        } catch (MessagingException | IOException e) {
+        } catch (MessagingException e) {
             throw new IllegalArgumentException("Email(Message): An error occurred while reading the message");
         }
     }

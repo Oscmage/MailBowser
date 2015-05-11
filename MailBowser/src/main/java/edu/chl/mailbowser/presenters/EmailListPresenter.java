@@ -8,6 +8,7 @@ import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -63,6 +64,19 @@ public class EmailListPresenter implements Initializable, IObserver {
         emailListListView.setItems(observableList);
     }
 
+    private void updateListView(IEmail email) {
+        ObservableList<EmailListViewItem> observableList = emailListListView.getItems();
+
+        if(!observableList.contains(email)) {
+            EmailListViewItem emailListViewItem = new EmailListViewItem(email);
+
+            observableList.add(emailListViewItem);
+
+            emailListListView.setItems(observableList);
+        }
+
+    }
+
 
     /**
      * Sends an event when a different email is selected.
@@ -77,9 +91,15 @@ public class EmailListPresenter implements Initializable, IObserver {
     @Override
     public void onEvent(IEvent evt) {
         switch (evt.getType()) {
+            case FETCH_EMAIL:
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateListView((IEmail)evt.getValue());
+                    }
+                });
             case FETCH_EMAILS:
-                List<IEmail> emails = (List<IEmail>)evt.getValue();
-                updateListView(emails);
+                //updateListView((List<IEmail>)evt.getValue());
         }
     }
 
