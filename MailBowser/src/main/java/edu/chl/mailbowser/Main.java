@@ -63,7 +63,7 @@ public class Main extends Application {
             o_out_Account = new ObjectOutputStream(f_out_Account);
             o_out_TagHandler = new ObjectOutputStream(f_out_TagHandler);
             o_out_Account.writeObject(Account.INSTANCE);
-            o_out_TagHandler.writeObject(TagHandler.INSTANCE);
+            o_out_TagHandler.writeObject(TagHandler.getInstance());
             f_out_Account.close();
             f_out_TagHandler.close();
             o_out_Account.close();

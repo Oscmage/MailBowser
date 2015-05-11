@@ -39,11 +39,11 @@ public class EmailDetailPresenter implements IObserver {
     }
 
     public void addTagActionPerformed() {
-        TagHandler.INSTANCE.addTag(this.email, new Tag("")); // TODO Change so addTag takes the specified tag.
+        TagHandler.getInstance().addTag(this.email, new Tag("")); // TODO Change so addTag takes the specified tag.
     }
 
     public void removeTagActionPerformed() {
-        TagHandler.INSTANCE.removeTag(new Tag("")); // TODO changes so removeTag takes the tag.
+        TagHandler.getInstance().removeTag(new Tag("")); // TODO changes so removeTag takes the tag.
     }
 
     @Override
