@@ -60,34 +60,9 @@ public class Main extends Application {
             System.out.println("load: loaded account from Account.ser");
             System.out.println(AccountHandler.getInstance().getAccount());
         }
-
-        //FileInputStream f_in_TagHandler;
-        //ObjectInputStream o_in_TagHandler;
-        //try{
-        //    f_in_TagHandler = new FileInputStream("TagHandler.ser");
-        //    o_in_TagHandler = new ObjectInputStream(f_in_TagHandler);
-        //    o_in_TagHandler.readObject();
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //    System.out.println("read: failed reading TagHandler.ser");
-        //}
     }
 
     private static void save() {
         AccountHandler.getInstance().writeAccount("Account.ser");
-
-        //FileOutputStream f_out_TagHandler;
-        //ObjectOutputStream o_out_TagHandler;
-        //
-        //try {
-        //    f_out_TagHandler = new FileOutputStream("TagHandler.ser");
-        //    o_out_TagHandler = new ObjectOutputStream(f_out_TagHandler);
-        //    o_out_TagHandler.writeObject(TagHandler.getInstance());
-        //    f_out_TagHandler.close();
-        //    o_out_TagHandler.close();
-        //} catch (IOException e){
-        //    e.printStackTrace();
-        //    System.out.print("write: failed writing TagHandler.ser");
-        //}
     }
 }
