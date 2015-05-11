@@ -1,5 +1,7 @@
 package edu.chl.mailbowser.presenters;
 
+import edu.chl.mailbowser.email.models.Address;
+import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.email.views.EmailListViewItem;
 import edu.chl.mailbowser.event.EventBus;
@@ -11,14 +13,20 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
+
+import javax.mail.Folder;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Store;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * Created by filip on 04/05/15.
@@ -34,16 +42,25 @@ public class EmailListPresenter implements Initializable, IObserver {
         EventBus.INSTANCE.register(this);
     }
 
+    /**
+     * Updates the EmailDetailView, and sets its content to whatever the current email is.
+     * @param emails
+     */
     private void updateListView(List<IEmail> emails) {
 
-        ObservableList<EmailListViewItem> emailListItems = FXCollections.observableArrayList();
+        List<EmailListViewItem> list = new ArrayList<>();
+
+        ObservableList<EmailListViewItem> observableList = FXCollections.observableList(list);
 
         for(IEmail email : emails) {
+
             EmailListViewItem emailListViewItem = new EmailListViewItem(email);
-            emailListItems.add(emailListViewItem);
+
+            observableList.add(emailListViewItem);
+
         }
 
-        emailListListView.setItems(emailListItems);
+        emailListListView.setItems(observableList);
     }
 
 
