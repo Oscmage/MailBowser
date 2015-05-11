@@ -6,6 +6,7 @@ import edu.chl.mailbowser.account.handlers.AccountHandler;
 import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.tag.handlers.TagHandler;
+import edu.chl.mailbowser.tag.models.Tag;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -45,6 +46,7 @@ public class Main extends Application {
 
     private static void load() {
         boolean loadAccountSuccessful = AccountHandler.getInstance().readAccount("Account.ser");
+        boolean loadTagHandlerSuccessful = TagHandler.getInstance().readTags("Tags.ser");
 
         // create a new account if no account was found on disk
         if (!loadAccountSuccessful) {
@@ -60,9 +62,16 @@ public class Main extends Application {
             System.out.println("load: loaded account from Account.ser");
             System.out.println(AccountHandler.getInstance().getAccount());
         }
+
+        if(!loadTagHandlerSuccessful){
+            System.out.println("load: failed to load TagHandler");
+        } else {
+            System.out.println("load: loaded TagHandler");
+        }
     }
 
     private static void save() {
         AccountHandler.getInstance().writeAccount("Account.ser");
+        TagHandler.getInstance().writeTags("Tags.ser");
     }
 }
