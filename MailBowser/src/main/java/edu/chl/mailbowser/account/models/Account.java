@@ -130,6 +130,15 @@ public class Account implements IAccount {
     }
 
     /**
+     * Returns all emails that belong to this account.
+     *
+     * @return a list of all emails that belong to this account
+     */
+    public List<IEmail> getEmails() {
+        return emails;
+    }
+
+    /**
      * Uses the outgoing server to send an email.
      *
      * @param email the email to send

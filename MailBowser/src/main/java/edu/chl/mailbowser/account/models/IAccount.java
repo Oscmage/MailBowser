@@ -4,6 +4,7 @@ import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by OscarEvertsson on 09/04/15.
@@ -20,4 +21,5 @@ public interface IAccount extends Serializable {
     IOutgoingServer getOutgoingServer();
     void send(IEmail email);
     void fetch();
+    List<IEmail> getEmails();
 }
