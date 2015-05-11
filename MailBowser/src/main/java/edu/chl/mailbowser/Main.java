@@ -20,7 +20,7 @@ public class Main extends Application {
         Scene scene = new Scene(root, 960, 600);
 
         // Add fonts and styles to the scene
-        scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
+        //scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
 
         //Initialize Account instance
         Account.INSTANCE.init(

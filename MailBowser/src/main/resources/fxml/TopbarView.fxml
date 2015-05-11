@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<HBox fx:controller="edu.chl.mailbowser.presenters.TopbarPresenter" id="topbarHBox" alignment="CENTER_LEFT" maxHeight="60.0" prefHeight="60.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="topbar" alignment="CENTER_LEFT" maxHeight="60.0" prefHeight="60.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.TopbarPresenter">
 <children>
-   <Button id="newEmailButton" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" text="New Email" />
+   <Button id="newEmailButton" maxHeight="60.0" maxWidth="200.0" minHeight="60.0" minWidth="200.0" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" prefHeight="60.0" prefWidth="200.0" text="New Email" />
 </children>
 </HBox>

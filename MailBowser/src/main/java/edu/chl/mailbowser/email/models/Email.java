@@ -70,9 +70,10 @@ public class Email implements IEmail {
                 this.recipients.add(new Address(recipient));
             }
 
-            // set subject and content
+            // set subject, content and from
             this.subject = message.getSubject();
             this.content = recursiveGetText(message);
+            this.sender = new Address(message.getFrom()[0]);
 
             // set dates
             this.sentDate = message.getSentDate();
@@ -172,6 +173,10 @@ public class Email implements IEmail {
 
     public Date getSentDate() {
         return (Date)sentDate.clone();
+    }
+
+    public Date getReceivedDate(){
+        return (Date)this.receivedDate.clone();
     }
 
     public Date getLastEditedDate() {
