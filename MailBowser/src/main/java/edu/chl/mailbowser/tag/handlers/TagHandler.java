@@ -6,6 +6,7 @@ import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.tag.models.ITag;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.Set;
 /**
  * Created by OscarEvertsson on 29/04/15.
  */
-public enum TagHandler{
+public enum TagHandler implements Serializable{
     INSTANCE;
 
     private Map<ITag,Set<IEmail>> tags = new HashMap<>();
