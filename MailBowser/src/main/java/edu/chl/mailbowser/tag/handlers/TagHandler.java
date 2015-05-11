@@ -1,10 +1,15 @@
 package edu.chl.mailbowser.tag.handlers;
 
+import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
+import edu.chl.mailbowser.fileutils.ObjectReadException;
+import edu.chl.mailbowser.fileutils.ObjectReader;
+import edu.chl.mailbowser.fileutils.ObjectWriter;
 import edu.chl.mailbowser.tag.models.ITag;
+import edu.chl.mailbowser.tag.models.Tag;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -114,5 +119,40 @@ public class TagHandler implements Serializable{
                 emails.remove(email);
             }
         }
+    }
+
+    /**
+     * Reads in the tags HashMap from disk
+     * Then builds the emails HashMap from tags
+     * @param filename location of the file
+     * @return true if the reading of tags was successful
+     */
+    public boolean readTags(String filename){
+        ObjectReader<HashMap> objectReader = new ObjectReader<>();
+
+        try{
+            tags = objectReader.read(filename);
+        }catch (ObjectReadException e){
+            return false;
+        }
+        Set<ITag> tempTags = tags.keySet();
+
+        for (ITag tag: tempTags){
+            Set<IEmail> emails = tags.get(tag);
+            for (IEmail email: emails){
+                addTag(email,tag);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Writes the tags HashMap to disk
+     * @param filename the location of the file
+     * @return return true on success
+     */
+    public boolean writeTags(String filename){
+        ObjectWriter<HashMap> objectReaderWriter = new ObjectWriter<>();
+        return objectReaderWriter.write((HashMap)tags, filename);
     }
 }
