@@ -6,6 +6,9 @@ import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.tag.models.ITag;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -14,8 +17,19 @@ import java.util.Set;
 /**
  * Created by OscarEvertsson on 29/04/15.
  */
-public enum TagHandler{
-    INSTANCE;
+public class TagHandler implements Serializable{
+    private static TagHandler instance = new TagHandler();
+
+    public static TagHandler getInstance(){
+        return instance;
+    }
+
+    private TagHandler(){}
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        instance = this;
+    }
 
     private Map<ITag,Set<IEmail>> tags = new HashMap<>();
     private Map<IEmail,Set<ITag>> emails = new HashMap<>();
@@ -101,9 +115,4 @@ public enum TagHandler{
             }
         }
     }
-
-
-
-
-
 }
