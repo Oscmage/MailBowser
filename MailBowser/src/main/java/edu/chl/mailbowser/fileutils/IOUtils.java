@@ -5,6 +5,8 @@ import java.io.IOException;
 
 /**
  * Created by mats on 11/05/15.
+ *
+ * A utility class for IO.
  */
 public class IOUtils {
     private IOUtils() {} // private constructor to prevent instantiation

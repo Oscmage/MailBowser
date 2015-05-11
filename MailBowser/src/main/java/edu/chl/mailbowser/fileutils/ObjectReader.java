@@ -9,6 +9,8 @@ import static edu.chl.mailbowser.fileutils.IOUtils.closeStream;
 
 /**
  * Created by mats on 11/05/15.
+ *
+ * A generic class for reading serializable objects from files.
  */
 public class ObjectReader<T extends Serializable> {
     /**
