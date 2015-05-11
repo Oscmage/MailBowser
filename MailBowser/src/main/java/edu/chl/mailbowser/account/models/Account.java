@@ -17,8 +17,6 @@ import java.util.List;
  * A model class for an email account. An account has an address, a password and two mail servers - an incoming and an outgoing.
  */
 public class Account implements IAccount {
-    private static Account instance = null;
-
     private IAddress address;
     private String password;
 
@@ -27,22 +25,11 @@ public class Account implements IAccount {
 
     private List<IEmail> emails = new ArrayList<>();
 
-    private Account(IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer) {
+    public Account(IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer) {
         address = newAddress;
         password = newPassword;
         incomingServer = newIncomingServer;
         outgoingServer = newOutgoingServer;
-    }
-
-    public static void createInstance(IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer) {
-        instance = new Account(newAddress, newPassword, newIncomingServer, newOutgoingServer);
-    }
-
-    public static Account getInstance() {
-        if (instance == null) {
-            throw new IllegalStateException();
-        }
-        return instance;
     }
 
     /**
@@ -179,10 +166,5 @@ public class Account implements IAccount {
                 EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS_FAIL, msg));
             }
         });
-    }
-
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        ois.defaultReadObject();
-        instance = this;
     }
 }
