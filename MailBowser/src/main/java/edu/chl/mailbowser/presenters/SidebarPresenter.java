@@ -1,27 +1,60 @@
 package edu.chl.mailbowser.presenters;
 
+import edu.chl.mailbowser.email.models.Email;
+import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
+import edu.chl.mailbowser.tag.handlers.TagHandler;
+import edu.chl.mailbowser.tag.models.ITag;
+import edu.chl.mailbowser.tag.models.Tag;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * Created by filip on 04/05/15.
  */
-public class SidebarPresenter implements IObserver{
+public class SidebarPresenter implements IObserver, Initializable {
 
-    @FXML private ListView sidebarListView;
-
-    public SidebarPresenter() {
-        EventBus.INSTANCE.register(this);
-    }
+    @FXML private ListView<SidebarViewItemPresenter> sidebarListView;
 
     @Override
-    public void onEvent(IEvent evt) {
+    public void initialize(URL location, ResourceBundle resources) {
+        EventBus.INSTANCE.register(this);
+        Set<ITag> tags = TagHandler.getInstance().getTags();
 
+        for(ITag tag : tags) {
+            updateView(tag);
+        }
+    }
+
+    public void updateView(Set<ITag> tags) {
+        if (!tags.isEmpty()) {
+            for (ITag tag : tags) {
+                updateView(tag);
+            }
+        }
+    }
+
+    public void updateView(ITag tag) {
+        ObservableList<SidebarViewItemPresenter> observableList = sidebarListView.getItems();
+
+        SidebarViewItemPresenter emailListViewItem = new SidebarViewItemPresenter((Tag)tag);
+
+        if(!observableList.contains(emailListViewItem)) {
+            observableList.add(emailListViewItem);
+        }
+
+        sidebarListView.setItems(observableList);
     }
 
     /**
@@ -38,5 +71,17 @@ public class SidebarPresenter implements IObserver{
                     sidebarListView.getSelectionModel().getSelectedItem()));
         }
     }
+
+    @Override
+    public void onEvent(IEvent evt) {
+        switch (evt.getType()) {
+            case FETCH_EMAIL:
+                Platform.runLater(
+                        () -> updateView(TagHandler.getInstance().getTags((IEmail)evt.getValue()))
+                );
+
+        }
+    }
+
 }
 
