@@ -103,4 +103,9 @@ public class MockEmail implements IEmail {
     public boolean matches(String query) {
         return false;
     }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
 }

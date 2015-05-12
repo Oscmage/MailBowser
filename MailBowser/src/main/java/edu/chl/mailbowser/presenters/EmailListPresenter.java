@@ -1,6 +1,7 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.email.views.EmailListViewItem;
 import edu.chl.mailbowser.event.EventBus;
@@ -41,33 +42,33 @@ public class EmailListPresenter implements Initializable, IObserver {
      * @param emails
      */
     private void updateListView(List<IEmail> emails) {
-
-        List<EmailListViewItem> list = new ArrayList<>();
-
-        ObservableList<EmailListViewItem> observableList = FXCollections.observableList(list);
-
         for(IEmail email : emails) {
-
-            EmailListViewItem emailListViewItem = new EmailListViewItem(email);
-
-            observableList.add(emailListViewItem);
-
+            updateListView(email);
         }
-
-        emailListListView.setItems(observableList);
     }
 
     private void updateListView(IEmail email) {
         ObservableList<EmailListViewItem> observableList = emailListListView.getItems();
 
-        if(!observableList.contains(email)) {
-            EmailListViewItem emailListViewItem = new EmailListViewItem(email);
+        EmailListViewItem emailListViewItem = new EmailListViewItem((Email)email);
 
-            observableList.add(emailListViewItem);
-
+        if(!observableList.contains(emailListViewItem)) {
+            if(observableList.size()!=0) {
+                for (int i = 0 ; i < observableList.size() ; i++) {
+                    if (emailListViewItem.compareTo(observableList.get(i)) < 0) {
+                        observableList.add(i, emailListViewItem);
+                        break;
+                    }
+                    if(i == observableList.size()-1){
+                        observableList.add(emailListViewItem);
+                        break;
+                    }
+                }
+            }else {
+                observableList.add(emailListViewItem);
+            }
             emailListListView.setItems(observableList);
         }
-
     }
 
     private void search(String query) {
@@ -88,7 +89,6 @@ public class EmailListPresenter implements Initializable, IObserver {
             updateListView(email);
         }
     }
-
 
     /**
      * Sends an event when a different email is selected.
