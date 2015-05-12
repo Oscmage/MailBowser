@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="112.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="closeButton" layoutX="1.0" layoutY="1.0" mnemonicParsing="false" text="X" />
+      <Label fx:id="tagLabel" layoutX="27.0" layoutY="3.0" prefHeight="106.0" prefWidth="212.0" text="tag name" />
+   </children>
+</Pane>
