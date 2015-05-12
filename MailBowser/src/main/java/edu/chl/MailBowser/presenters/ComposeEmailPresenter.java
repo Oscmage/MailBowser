@@ -5,17 +5,23 @@ import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import org.markdown4j.Markdown4jProcessor;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +37,7 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
     @FXML private TextField receiver;
     @FXML private TextField subject;
     @FXML private TextArea content;
+    @FXML private WebView markdown;
 
     public ComposeEmailPresenter(String recipient, String subject, String content) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ComposeEmailView.fxml"));
@@ -77,5 +84,15 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    public void onKeyTyped() {
+        String html = null;
+        try {
+            html = new Markdown4jProcessor().process(content.getText());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        markdown.getEngine().loadContent(html);
     }
 }
