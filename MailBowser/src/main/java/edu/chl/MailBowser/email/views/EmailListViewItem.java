@@ -1,5 +1,6 @@
 package edu.chl.mailbowser.email.views;
 
+import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.tag.handlers.TagHandler;
 import javafx.fxml.FXML;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
  */
 public class EmailListViewItem extends FlowPane implements Initializable, Comparable {
 
-    private IEmail email;
+    private Email email;
 
     @FXML private Label sender;
     @FXML private Label sent;
@@ -38,7 +39,7 @@ public class EmailListViewItem extends FlowPane implements Initializable, Compar
 
     }
 
-    public EmailListViewItem(IEmail email) {
+    public EmailListViewItem(Email email) {
         this();
 
         this.email = email;
@@ -55,16 +56,29 @@ public class EmailListViewItem extends FlowPane implements Initializable, Compar
 
     }
 
-    public IEmail getEmail() {
+    public Email getEmail() {
         return this.email;
     }
 
     @Override
     public int compareTo(Object o) {
-        if(o instanceof EmailListViewItem){
+        if (o instanceof EmailListViewItem) {
             EmailListViewItem e = (EmailListViewItem) o;
             return this.getEmail().compareTo(e);
         }
         return 0;
+    }
+    public boolean equals(Object o) {
+        if(o instanceof EmailListViewItem) {
+            return this.email.equals(
+                    ((EmailListViewItem)o).getEmail()
+            );
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.email.hashCode();
     }
 }

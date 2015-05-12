@@ -55,7 +55,7 @@ public class EmailListPresenter implements Initializable, IObserver {
 
         for(IEmail email : emails) {
 
-            EmailListViewItem emailListViewItem = new EmailListViewItem(email);
+            EmailListViewItem emailListViewItem = new EmailListViewItem((Email)email);
 
             observableList.add(emailListViewItem);
 
@@ -67,8 +67,9 @@ public class EmailListPresenter implements Initializable, IObserver {
     private void updateListView(IEmail email) {
         ObservableList<EmailListViewItem> observableList = emailListListView.getItems();
 
-        if(!observableList.contains(email)) {
-            EmailListViewItem emailListViewItem = new EmailListViewItem(email);
+        EmailListViewItem emailListViewItem = new EmailListViewItem((Email)email);
+
+        if(!observableList.contains(emailListViewItem)) {
 
             observableList.add(emailListViewItem);
 
