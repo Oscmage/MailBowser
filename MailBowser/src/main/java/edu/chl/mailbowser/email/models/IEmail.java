@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by OscarEvertsson on 10/04/15.
  */
-public interface IEmail extends Searchable, Serializable {
+public interface IEmail extends Searchable, Serializable, Comparable {
     javax.mail.Message getJavaxMessage(Session session);
     boolean isSent();
     IAddress getSender();

@@ -72,7 +72,11 @@ public class Email implements IEmail {
 
             // set subject, content and from
             this.subject = message.getSubject();
-            this.content = null; //recursiveGetText(message);
+            try {
+                this.content = recursiveGetText(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             this.sender = new Address(message.getFrom()[0]);
 
             // set dates
@@ -281,5 +285,14 @@ public class Email implements IEmail {
         return subject.toLowerCase().contains(query)
                 || content.toLowerCase().contains(query)
                 || sender.matches(query);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(o instanceof Email){
+            Email email = (Email) o;
+            return (email.getSentDate().compareTo(this.getSentDate()));
+        }
+        return 0;
     }
 }

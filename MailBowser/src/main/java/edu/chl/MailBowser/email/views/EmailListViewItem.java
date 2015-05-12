@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 /**
  * Created by filip on 07/05/15.
  */
-public class EmailListViewItem extends FlowPane implements Initializable {
+public class EmailListViewItem extends FlowPane implements Initializable, Comparable {
 
     private IEmail email;
 
@@ -57,5 +57,14 @@ public class EmailListViewItem extends FlowPane implements Initializable {
 
     public IEmail getEmail() {
         return this.email;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(o instanceof EmailListViewItem){
+            EmailListViewItem e = (EmailListViewItem) o;
+            return this.getEmail().compareTo(e);
+        }
+        return 0;
     }
 }
