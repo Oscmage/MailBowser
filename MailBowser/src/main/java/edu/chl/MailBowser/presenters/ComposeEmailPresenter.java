@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by mats on 09/04/15.
  */
-public class SendEmailPresenter {
+public class ComposeEmailPresenter {
 
     // Assign the fields from the view to variables via the fx:id attribute
     // Note that these variables belong to the javafx.scene.control package
