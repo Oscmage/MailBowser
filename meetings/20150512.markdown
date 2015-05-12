@@ -1,0 +1,41 @@
+# Meeting Agenda
+Date: 2015-05-05
+
+Facilitator: Oscar Evertsson
+
+Participants: Mats Högberg, Oscar Evertsson, Filip Hallqvist, Jesper Jaxing
+  
+## Objectives
+
+* Jesper explains to the rest of the team how CallBack works in the asynchronous jobs.
+* Filip explains to the rest of the team how to use the JavaFX Scene Builder.
+
+## Reports
+
+* Mats, Jesper and Oscar started making the program serializable. Mats finalized the Account storage, and Jesper finalized the Tag storage.
+* Filip made it so that emails now are lazy fetched.
+* Mats complemented the existing tests.
+* Mats and Jesper fixed asynchronous fetching.
+* Oscar continued with the GUI work.
+
+## Discussion items
+
+* How should we sync the fetch and JavaFX threads?
+* How should we make the fetching faster?
+* How should we design the new email/reply to email/forward email portion of the code to avoid duplicate code?
+* Should we redesign the event system?
+
+## Outcomes and assignments
+
+* Filip has a solution for syncing the threads. Is is already implemented in the program.
+* Filip used a FetchProfile to fetch only the metadata from email. This made the program much faster. We now have to implement a new background thread for fetching the content of the emails. Filip and Jesper will do this.
+* To solve the new email/reply to email/forward email problem we will put all the buttons in the top bar. Mats and Oscar will implement this and the other GUI stuff.
+* We will not change the event system now. If we run into problems with the existing system we will look at developing a new one.
+
+### Unsolved issues
+
+No unsolved issues for now.
+
+### Next meeting
+
+2015-05-14 09.00-10.00
