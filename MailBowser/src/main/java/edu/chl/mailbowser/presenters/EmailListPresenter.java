@@ -1,30 +1,21 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.email.models.Address;
-import edu.chl.mailbowser.email.models.Email;
+import edu.chl.mailbowser.account.handlers.AccountHandler;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.email.views.EmailListViewItem;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
+import edu.chl.mailbowser.search.Searcher;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
-import javafx.scene.layout.Pane;
-import javafx.util.Callback;
-
-import javax.mail.Folder;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Store;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -37,6 +28,8 @@ public class EmailListPresenter implements Initializable, IObserver {
 
     // OK, do not get frightened. Read it like so: "An email-list ListView."
     @FXML protected ListView<EmailListViewItem> emailListListView;
+
+    private boolean searchActivated = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -77,6 +70,25 @@ public class EmailListPresenter implements Initializable, IObserver {
 
     }
 
+    private void search(String query) {
+        List<IEmail> emails = AccountHandler.getInstance().getAccount().getEmails();
+
+        if (query != "") {
+            searchActivated = true;
+            List<IEmail> matchingEmails = Searcher.search(emails, query);
+            updateListView(matchingEmails);
+        } else {
+            searchActivated = false;
+            updateListView(emails);
+        }
+    }
+
+    private void fetchEmail(IEmail email) {
+        if (!searchActivated) {
+            updateListView(email);
+        }
+    }
+
 
     /**
      * Sends an event when a different email is selected.
@@ -92,14 +104,17 @@ public class EmailListPresenter implements Initializable, IObserver {
     public void onEvent(IEvent evt) {
         switch (evt.getType()) {
             case FETCH_EMAIL:
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateListView((IEmail)evt.getValue());
-                    }
-                });
+                Platform.runLater(
+                        () -> fetchEmail((IEmail) evt.getValue())
+                );
             case FETCH_EMAILS:
-                //updateListView((List<IEmail>)evt.getValue());
+                //updateListView((List<IEmail>)evt.getValue())
+                break;
+            case SEARCH:
+                Platform.runLater(
+                        () -> search((String) evt.getValue())
+                );
+                break;
         }
     }
 

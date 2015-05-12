@@ -1,7 +1,9 @@
 package edu.chl.mailbowser.presenters;
 
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -42,7 +44,8 @@ public class TopbarPresenter {
     }
 
     @FXML public void searchFieldOnAction(ActionEvent actionEvent) {
-        System.out.println(searchField.getText());
+        String text = searchField.getText();
+        EventBus.INSTANCE.publish(new Event(EventType.SEARCH, text));
     }
 }
 

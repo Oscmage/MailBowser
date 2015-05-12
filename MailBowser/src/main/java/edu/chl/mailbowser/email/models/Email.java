@@ -279,7 +279,7 @@ public class Email implements IEmail {
         }
 
         return subject.toLowerCase().contains(query)
-                || content.toLowerCase().contains(query)
+                || (content != null && content.toLowerCase().contains(query))
                 || sender.matches(query);
     }
 }

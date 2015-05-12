@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
  *
  * A class for searching for strings in sets.
  */
-public class Search {
+public class Searcher {
     /*
      * private constructor to prevent initialization
      */
-    private Search() {}
+    private Searcher() {}
 
     /**
      * Takes a set and a query, and returns a new set with all the items that matches the query.
@@ -23,7 +23,7 @@ public class Search {
      * @param query the query to search for
      * @return a new set with all items from the original set that matches the given query
      */
-    public static <T extends Searchable> Set<T> setSearch(Set<T> set, String query) {
+    public static <T extends Searchable> Set<T> search(Set<T> set, String query) {
         return set.stream()
                 .filter(item -> item.matches(query))
                 .collect(Collectors.toSet());
@@ -37,7 +37,7 @@ public class Search {
      * @param query the query to search for
      * @return a new list with all items from the original list that matches the given query
      */
-    public static <T extends Searchable> List<T> listSearch(List<T> list, String query) {
+    public static <T extends Searchable> List<T> search(List<T> list, String query) {
         return list.stream()
                 .filter(item -> item.matches(query))
                 .collect(Collectors.toList());
