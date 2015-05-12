@@ -64,7 +64,7 @@ public class EmailListViewItem extends FlowPane implements Initializable, Compar
     public int compareTo(Object o) {
         if (o instanceof EmailListViewItem) {
             EmailListViewItem e = (EmailListViewItem) o;
-            return this.getEmail().compareTo(e);
+            return this.getEmail().compareTo(e.getEmail());
         }
         return 0;
     }

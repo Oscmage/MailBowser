@@ -291,7 +291,8 @@ public class Email implements IEmail {
     public int compareTo(Object o) {
         if(o instanceof Email){
             Email email = (Email) o;
-            return (email.getSentDate().compareTo(this.getSentDate()));
+
+            return (email.getReceivedDate().compareTo(this.getReceivedDate()));
         }
         return 0;
     }
