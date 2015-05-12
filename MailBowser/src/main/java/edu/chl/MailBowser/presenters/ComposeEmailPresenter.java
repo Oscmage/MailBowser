@@ -64,8 +64,15 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
         List<IAddress> receivers = new ArrayList<IAddress>();
         receivers.add(new Address(this.receiver.getText()));
 
+        //Convert markdown to html
+        String html = null;
+        try {
+            html = new Markdown4jProcessor().process(content.getText());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // Create a new email and send it
-        IEmail email = new Email(receivers, this.subject.getText(), this.content.getText());
+        IEmail email = new Email(receivers, this.subject.getText(), html);
         AccountHandler.getInstance().getAccount().send(email);
     }
 
