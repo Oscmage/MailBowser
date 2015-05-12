@@ -6,6 +6,8 @@ import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +16,7 @@ import java.util.List;
  *
  * A model class for an email account. An account has an address, a password and two mail servers - an incoming and an outgoing.
  */
-public enum Account implements IAccount {
-    INSTANCE;
-
+public class Account implements IAccount {
     private IAddress address;
     private String password;
 
@@ -25,13 +25,13 @@ public enum Account implements IAccount {
 
     private List<IEmail> emails = new ArrayList<>();
 
-
-    public void init (IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer){
+    public Account(IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer) {
         address = newAddress;
         password = newPassword;
         incomingServer = newIncomingServer;
         outgoingServer = newOutgoingServer;
     }
+
     /**
      * Returns a string representation of this object.
      * The string will look like this: "Account [address=<address>, password=<password>"
@@ -127,6 +127,15 @@ public enum Account implements IAccount {
     public IOutgoingServer getOutgoingServer() {
         // TODO: make immutable?
         return outgoingServer;
+    }
+
+    /**
+     * Returns all emails that belong to this account.
+     *
+     * @return a list of all emails that belong to this account
+     */
+    public List<IEmail> getEmails() {
+        return emails;
     }
 
     /**
