@@ -1,5 +1,6 @@
 package edu.chl.mailbowser.search;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -8,11 +9,11 @@ import java.util.stream.Collectors;
  *
  * A class for searching for strings in sets.
  */
-public class SetSearch {
+public class Searcher {
     /*
      * private constructor to prevent initialization
      */
-    private SetSearch() {}
+    private Searcher() {}
 
     /**
      * Takes a set and a query, and returns a new set with all the items that matches the query.
@@ -26,5 +27,19 @@ public class SetSearch {
         return set.stream()
                 .filter(item -> item.matches(query))
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * Takes a list and a query, and returns a new list with all the items that matches the query.
+     * It is up to each individual item in the set to determine if it matches the query or not.
+     *
+     * @param list the list to search in
+     * @param query the query to search for
+     * @return a new list with all items from the original list that matches the given query
+     */
+    public static <T extends Searchable> List<T> search(List<T> list, String query) {
+        return list.stream()
+                .filter(item -> item.matches(query))
+                .collect(Collectors.toList());
     }
 }

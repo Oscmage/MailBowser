@@ -15,5 +15,6 @@ public enum EventType {
     FETCH_EMAILS_FAIL,
     SEND_EMAIL,
     SEND_EMAIL_FAIL,
-    SELECTED_TAG
+    SELECTED_TAG,
+    SEARCH
 }

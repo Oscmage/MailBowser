@@ -6,6 +6,18 @@
 
 <HBox id="topbar" alignment="CENTER_LEFT" maxHeight="60.0" maxWidth="1.7976931348623157E308" prefHeight="60.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.TopbarPresenter">
 <children>
-   <Button id="newEmailButton" maxHeight="60.0" maxWidth="200.0" minHeight="60.0" minWidth="200.0" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" prefHeight="60.0" prefWidth="200.0" text="New Email" />
+      <Pane maxHeight="60.0" maxWidth="440.0" minHeight="60.0" minWidth="440.0" prefHeight="60.0" prefWidth="379.0">
+         <children>
+         <Button id="newEmailButton" maxHeight="60.0" maxWidth="200.0" minHeight="60.0" minWidth="200.0" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" prefHeight="60.0" prefWidth="200.0" text="New Email" />
+            <TextField fx:id="searchField" layoutX="200.0" layoutY="11.0" maxWidth="220.0" minWidth="240.0" onAction="#searchFieldOnAction" prefHeight="38.0" prefWidth="220.0" promptText="Search here..." />
+         </children>
+      </Pane>
+      <Pane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Forward" />
+            <Button layoutX="81.0" layoutY="14.0" mnemonicParsing="false" text="Reply" />
+            <Button layoutX="133.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
+         </children>
+      </Pane>
 </children>
 </HBox>
