@@ -100,6 +100,9 @@ public class EmailListPresenter implements Initializable, IObserver {
         ));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onEvent(IEvent evt) {
         switch (evt.getType()) {
