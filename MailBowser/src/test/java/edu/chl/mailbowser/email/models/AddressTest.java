@@ -1,11 +1,13 @@
 package edu.chl.mailbowser.email.models;
 
-import edu.chl.mailbowser.email.models.Address;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
+import javax.mail.internet.InternetAddress;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by OscarEvertsson on 30/04/15.
@@ -22,6 +24,7 @@ public class AddressTest {
     @Test
     public void testGetJavaxAddress() throws Exception {
         assertTrue(address.getJavaxAddress().getAddress().equals(s1));
+        assertEquals(address.getJavaxAddress(), new InternetAddress(s1));
     }
 
     @Test
@@ -36,6 +39,7 @@ public class AddressTest {
         assertFalse(address.equals(new Object()));
         assertFalse(address.equals(10));
         assertTrue(address.equals(new Address(s1)));
+        assertFalse(address.equals(s1));
     }
 
     @Test

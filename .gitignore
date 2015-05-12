@@ -17,3 +17,7 @@ lib/
 
 # Misc
 *.swp
+*.log
+
+# Serializable
+*.ser

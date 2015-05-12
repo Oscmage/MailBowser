@@ -10,7 +10,10 @@ public enum EventType {
     SELECTED_EMAIL,
     ADD_TAG,
     REMOVE_TAG,
+    FETCH_EMAIL,
     FETCH_EMAILS,
+    FETCH_EMAILS_FAIL,
+    SEND_EMAIL,
+    SEND_EMAIL_FAIL,
     SELECTED_TAG
-
 }

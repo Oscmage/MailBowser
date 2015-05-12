@@ -2,7 +2,12 @@ package edu.chl.mailbowser.account.models;
 
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,19 +25,11 @@ public class Account implements IAccount {
 
     private List<IEmail> emails = new ArrayList<>();
 
-    /**
-     * Constructor.
-     *
-     * @param address
-     * @param password
-     * @param incomingServer
-     * @param outgoingServer
-     */
-    public Account(IAddress address, String password, IIncomingServer incomingServer, IOutgoingServer outgoingServer) {
-        this.address = address;
-        this.password = password;
-        this.incomingServer = incomingServer;
-        this.outgoingServer = outgoingServer;
+    public Account(IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer) {
+        address = newAddress;
+        password = newPassword;
+        incomingServer = newIncomingServer;
+        outgoingServer = newOutgoingServer;
     }
 
     /**
@@ -133,6 +130,15 @@ public class Account implements IAccount {
     }
 
     /**
+     * Returns all emails that belong to this account.
+     *
+     * @return a list of all emails that belong to this account
+     */
+    public List<IEmail> getEmails() {
+        return emails;
+    }
+
+    /**
      * Uses the outgoing server to send an email.
      *
      * @param email the email to send
@@ -140,42 +146,34 @@ public class Account implements IAccount {
     @Override
     public void send(IEmail email) {
         email.setSender(address);
-        outgoingServer.send(email, getUsername(), password);
+        outgoingServer.send(email, getUsername(), password, new Callback<IEmail>() {
+            @Override
+            public void onSuccess(IEmail object) {
+                EventBus.INSTANCE.publish(new Event(EventType.SEND_EMAIL, object));
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                EventBus.INSTANCE.publish(new Event(EventType.SEND_EMAIL_FAIL, msg));
+            }
+        });
     }
 
     /**
      * Fetches for new email.
      */
     public void fetch() {
-        this.emails = incomingServer.fetch(getUsername(), password);
-    }
+        incomingServer.fetch(getUsername(), password, new Callback<List<IEmail>>() {
+            @Override
+            public void onSuccess(List<IEmail> object) {
+                emails = object;
+                EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS, object));
+            }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        if (!(o instanceof Account)) return false;
-
-        Account account = (Account) o;
-
-        if (address != null ? !address.equals(account.address) : account.address != null) return false;
-        if (emails != null ? !emails.equals(account.emails) : account.emails != null) return false;
-        if (incomingServer != null ? !incomingServer.equals(account.incomingServer) : account.incomingServer != null)
-            return false;
-        if (outgoingServer != null ? !outgoingServer.equals(account.outgoingServer) : account.outgoingServer != null)
-            return false;
-        if (password != null ? !password.equals(account.password) : account.password != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = address != null ? address.hashCode() : 0;
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (incomingServer != null ? incomingServer.hashCode() : 0);
-        result = 31 * result + (outgoingServer != null ? outgoingServer.hashCode() : 0);
-        result = 31 * result + (emails != null ? emails.hashCode() : 0);
-        return result;
+            @Override
+            public void onFailure(String msg) {
+                EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS_FAIL, msg));
+            }
+        });
     }
 }

@@ -1,9 +1,11 @@
 package edu.chl.mailbowser.account.models;
 
+import java.io.Serializable;
+
 /**
  * Created by filip on 09/04/15.
  */
-public abstract class MailServer{
+public abstract class MailServer implements Serializable {
     private String hostname;
     private String port;
 

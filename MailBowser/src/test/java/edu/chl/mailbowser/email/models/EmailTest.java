@@ -3,10 +3,15 @@ package edu.chl.mailbowser.email.models;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
-import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -24,7 +29,15 @@ public class EmailTest {
 
     @Test
     public void testGetJavaxMessage() throws Exception {
+        Session s = Session.getInstance(new Properties());
+        Message m = email.getJavaxMessage(s);
 
+        assertEquals(m.getSubject(), "Subject");
+        assertEquals(m.getContent(), "Content");
+        assertEquals(m.getFrom().length, 1);
+        assertEquals(m.getFrom()[0], new InternetAddress("mailbows3r@gmail.com"));
+        assertEquals(m.getRecipients(Message.RecipientType.TO).length, 1);
+        assertEquals(m.getRecipients(Message.RecipientType.TO)[0], new InternetAddress("address@hotmail.com"));
     }
 
     @Test
