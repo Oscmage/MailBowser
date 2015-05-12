@@ -1,19 +1,12 @@
 package edu.chl.mailbowser.tag.handlers;
 
-import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
-import edu.chl.mailbowser.fileutils.ObjectReadException;
-import edu.chl.mailbowser.fileutils.ObjectReader;
-import edu.chl.mailbowser.fileutils.ObjectWriter;
+import edu.chl.mailbowser.io.*;
 import edu.chl.mailbowser.tag.models.ITag;
-import edu.chl.mailbowser.tag.models.Tag;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -22,7 +15,7 @@ import java.util.Set;
 /**
  * Created by OscarEvertsson on 29/04/15.
  */
-public class TagHandler implements Serializable{
+public class TagHandler{
     private static TagHandler instance = new TagHandler();
 
     public static TagHandler getInstance(){
@@ -30,11 +23,6 @@ public class TagHandler implements Serializable{
     }
 
     private TagHandler(){}
-
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        ois.defaultReadObject();
-        instance = this;
-    }
 
     private Map<ITag,Set<IEmail>> tags = new HashMap<>();
     private Map<IEmail,Set<ITag>> emails = new HashMap<>();
@@ -128,7 +116,7 @@ public class TagHandler implements Serializable{
      * @return true if the reading of tags was successful
      */
     public boolean readTags(String filename){
-        ObjectReader<HashMap> objectReader = new ObjectReader<>();
+        IObjectReader<HashMap> objectReader = new ObjectReader<>();
 
         try{
             tags = objectReader.read(filename);
@@ -152,7 +140,7 @@ public class TagHandler implements Serializable{
      * @return return true on success
      */
     public boolean writeTags(String filename){
-        ObjectWriter<HashMap> objectReaderWriter = new ObjectWriter<>();
+        IObjectWriter<HashMap> objectReaderWriter = new ObjectWriter<>();
         return objectReaderWriter.write((HashMap)tags, filename);
     }
 }
