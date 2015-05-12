@@ -1,8 +1,11 @@
 package edu.chl.mailbowser.presenters;
 
+import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
+import edu.chl.mailbowser.tag.handlers.TagHandler;
+import edu.chl.mailbowser.tag.models.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -15,8 +18,10 @@ import javafx.stage.Stage;
  */
 public class TopbarPresenter {
 
-    @FXML
-    private TextField searchField;
+    private IEmail email;
+
+    @FXML private TextField addTagTextField;
+    @FXML private TextField searchField;
 
     // This method is invoked when the "New Email"-button is pressed, and is bound via the onAction attribute
     @FXML
@@ -45,6 +50,14 @@ public class TopbarPresenter {
         // add the component to the stage
         newEmailStage.setScene(new Scene(composeEmailPresenter));
         newEmailStage.show();
+    }
+
+    @FXML
+    private void addTagOnAction(ActionEvent actionEvent) {
+        String text = addTagTextField.getText();
+        Tag tag = new Tag(text);
+        TagHandler.getInstance().addTag(email,tag);
+        EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG,tag));
     }
 }
 
