@@ -76,7 +76,6 @@ public class SidebarPresenter implements IObserver, Initializable {
     public void onEvent(IEvent evt) {
         switch (evt.getType()) {
             case FETCH_EMAIL:
-                System.out.println(TagHandler.getInstance().getTags((IEmail) evt.getValue()).toString());
                 Platform.runLater(
                         () -> updateView(TagHandler.getInstance().getTags((IEmail)evt.getValue()))
                 );
