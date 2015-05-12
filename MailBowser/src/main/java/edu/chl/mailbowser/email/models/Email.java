@@ -137,7 +137,7 @@ public class Email implements IEmail {
         try {
             msg.setFrom(this.sender.getJavaxAddress());
             msg.setSubject(this.subject);
-            msg.setText(this.content);
+            msg.setContent(this.content, "text/html");
             msg.setSentDate(new Date());
             msg.addRecipients(Message.RecipientType.TO,getJavaxRecipients());
         } catch (MessagingException e) {
