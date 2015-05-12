@@ -5,11 +5,14 @@ import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
+import edu.chl.mailbowser.tag.handlers.TagHandler;
+import edu.chl.mailbowser.tag.models.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.*;
+import javax.mail.search.FlagTerm;
 
 /**
  * Created by jesper on 2015-04-21.
@@ -17,6 +20,8 @@ import javax.mail.*;
  * A concrete implementation of IIncomingServer.
  */
 public class IncomingServer extends MailServer implements IIncomingServer {
+
+    Flags processedFlag = new Flags("mailbowserprocessed");
 
     private transient Fetcher fetcher = null;
 
@@ -90,6 +95,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
 
                 callback.onSuccess(emails);
             } catch (MessagingException e) {
+                System.out.println(e);
                 callback.onFailure("Failed to fetch email from server");
             }
         }
@@ -105,11 +111,17 @@ public class IncomingServer extends MailServer implements IIncomingServer {
             fetchProfile.add("X-mailer");
 
             if ((folder.getType() & Folder.HOLDS_MESSAGES) == Folder.HOLDS_MESSAGES) {
-                folder.open(Folder.READ_ONLY);
-                Message [] messages = folder.getMessages();
+                folder.open(Folder.READ_WRITE);
+
+                Message[] messages = folder.search(new FlagTerm(processedFlag, false));
                 for (Message message : messages) {
                     IEmail email = new Email(message);
                     emails.add(email);
+
+                    message.setFlags(processedFlag, true);
+
+                    TagHandler.getInstance().addTag(email, new Tag(folder.getName()));
+
                     EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAIL, email));
                 }
             }
