@@ -61,7 +61,10 @@ public class TagHandler{
      * @return
      */
     public Set<ITag> getTags(IEmail email){
-        return new HashSet<>(emails.get(email));
+        if(emails.get(email) != null) {
+            return new HashSet<>(emails.get(email));
+        }
+        return new HashSet<>();
     }
 
     /**
