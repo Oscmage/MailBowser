@@ -18,7 +18,7 @@
       <fx:include source="TopbarView.fxml" />
       <HBox VBox.vgrow="ALWAYS">
          <children>
-            <fx:include source="SidebarView.fxml" />
+            <fx:include source="sidebar/SidebarView.fxml" />
             <fx:include source="EmailListView.fxml" />
             <fx:include source="EmailDetailView.fxml" />
          </children>
