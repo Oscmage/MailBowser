@@ -6,8 +6,6 @@ import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,7 +164,7 @@ public class Account implements IAccount {
         incomingServer.fetch(getUsername(), password, new Callback<List<IEmail>>() {
             @Override
             public void onSuccess(List<IEmail> object) {
-                emails = object;
+                emails.addAll(object);
                 EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS, object));
             }
 
