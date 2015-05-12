@@ -35,6 +35,7 @@ public class EmailListPresenter implements Initializable, IObserver {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
+        updateListView(AccountHandler.getInstance().getAccount().getEmails());
     }
 
     /**
@@ -90,6 +91,10 @@ public class EmailListPresenter implements Initializable, IObserver {
         }
     }
 
+    private void loadAccount(List<IEmail> emails) {
+        updateListView(emails);
+    }
+
     /**
      * Sends an event when a different email is selected.
      * @param evt
@@ -110,8 +115,6 @@ public class EmailListPresenter implements Initializable, IObserver {
                 Platform.runLater(
                         () -> fetchEmail((IEmail) evt.getValue())
                 );
-            case FETCH_EMAILS:
-                //updateListView((List<IEmail>)evt.getValue())
                 break;
             case SEARCH:
                 Platform.runLater(
