@@ -9,7 +9,7 @@
       <Pane maxHeight="60.0" maxWidth="440.0" minHeight="60.0" minWidth="440.0" prefHeight="60.0" prefWidth="379.0">
          <children>
          <Button id="newEmailButton" maxHeight="60.0" maxWidth="200.0" minHeight="60.0" minWidth="200.0" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" prefHeight="60.0" prefWidth="200.0" text="New Email" />
-            <TextField fx:id="searchField" layoutX="200.0" layoutY="11.0" maxWidth="220.0" minWidth="240.0" prefHeight="38.0" prefWidth="220.0" promptText="Search here..." />
+            <TextField fx:id="searchField" layoutX="200.0" layoutY="11.0" maxWidth="220.0" minWidth="240.0" onAction="#searchFieldOnAction" prefHeight="38.0" prefWidth="220.0" promptText="Search here..." />
          </children>
       </Pane>
       <Pane prefHeight="200.0" prefWidth="200.0">

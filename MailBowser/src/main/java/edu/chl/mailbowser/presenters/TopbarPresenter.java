@@ -1,17 +1,22 @@
 package edu.chl.mailbowser.presenters;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
  * Created by filip on 04/05/15.
  */
 public class TopbarPresenter {
+
+    @FXML
+    private TextField searchField;
 
     // This method is invoked when the "New Email"-button is pressed, and is bound via the onAction attribute
     @FXML protected void newEmailButtonActionPerformed(ActionEvent event) throws Exception {
@@ -36,5 +41,8 @@ public class TopbarPresenter {
 
     }
 
+    @FXML public void searchFieldOnAction(ActionEvent actionEvent) {
+        System.out.println(searchField.getText());
+    }
 }
 
