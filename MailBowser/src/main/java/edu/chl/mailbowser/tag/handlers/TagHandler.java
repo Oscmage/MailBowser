@@ -4,6 +4,7 @@ import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
+import edu.chl.mailbowser.io.*;
 import edu.chl.mailbowser.tag.models.ITag;
 
 import java.util.HashMap;
@@ -14,8 +15,14 @@ import java.util.Set;
 /**
  * Created by OscarEvertsson on 29/04/15.
  */
-public enum TagHandler{
-    INSTANCE;
+public class TagHandler{
+    private static TagHandler instance = new TagHandler();
+
+    public static TagHandler getInstance(){
+        return instance;
+    }
+
+    private TagHandler(){}
 
     private Map<ITag,Set<IEmail>> tags = new HashMap<>();
     private Map<IEmail,Set<ITag>> emails = new HashMap<>();
@@ -102,8 +109,38 @@ public enum TagHandler{
         }
     }
 
+    /**
+     * Reads in the tags HashMap from disk
+     * Then builds the emails HashMap from tags
+     * @param filename location of the file
+     * @return true if the reading of tags was successful
+     */
+    public boolean readTags(String filename){
+        IObjectReader<HashMap> objectReader = new ObjectReader<>();
 
+        try{
+            tags = objectReader.read(filename);
+        }catch (ObjectReadException e){
+            return false;
+        }
+        Set<ITag> tempTags = tags.keySet();
 
+        for (ITag tag: tempTags){
+            Set<IEmail> emails = tags.get(tag);
+            for (IEmail email: emails){
+                addTag(email,tag);
+            }
+        }
+        return true;
+    }
 
-
+    /**
+     * Writes the tags HashMap to disk
+     * @param filename the location of the file
+     * @return return true on success
+     */
+    public boolean writeTags(String filename){
+        IObjectWriter<HashMap> objectReaderWriter = new ObjectWriter<>();
+        return objectReaderWriter.write((HashMap)tags, filename);
+    }
 }

@@ -3,10 +3,13 @@ package edu.chl.mailbowser.account.models;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * Created by OscarEvertsson on 09/04/15.
  */
-public interface IAccount {
+public interface IAccount extends Serializable {
     void setAddress(IAddress address);
     IAddress getAddress();
     String getUsername();
@@ -18,4 +21,5 @@ public interface IAccount {
     IOutgoingServer getOutgoingServer();
     void send(IEmail email);
     void fetch();
+    List<IEmail> getEmails();
 }

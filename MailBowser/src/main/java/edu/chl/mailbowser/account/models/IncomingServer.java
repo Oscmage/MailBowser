@@ -18,7 +18,7 @@ import javax.mail.*;
  */
 public class IncomingServer extends MailServer implements IIncomingServer {
 
-    private Fetcher fetcher = null;
+    private transient Fetcher fetcher = null;
 
     /**
      * Creates a new IncomingServer with the specified hostname and port.

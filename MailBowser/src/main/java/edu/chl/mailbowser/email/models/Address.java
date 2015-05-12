@@ -2,13 +2,14 @@ package edu.chl.mailbowser.email.models;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import java.io.Serializable;
 
 /**
  * Created by OscarEvertsson on 07/04/15.
  *
  * Address represents an email address. You cannot create an invalid Address obejct.
  */
-public class Address implements IAddress {
+public class Address implements IAddress{
     private String address;
 
     /**

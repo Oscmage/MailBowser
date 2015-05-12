@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.account.models.Account;
+import edu.chl.mailbowser.account.handlers.AccountHandler;
 import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.Email;
@@ -34,6 +34,6 @@ public class SendEmailPresenter {
 
         // Create a new email and send it
         IEmail email = new Email(receivers, this.subject.getText(), this.content.getText());
-        Account.INSTANCE.send(email);
+        AccountHandler.getInstance().getAccount().send(email);
     }
 }
