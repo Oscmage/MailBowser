@@ -82,8 +82,8 @@ public class IncomingServer extends MailServer implements IIncomingServer {
 
                 // start by getting the default (root) folder, and recursively work through all subfolders
 
-//                Folder root = store.getDefaultFolder();
-                Folder root = store.getFolder("INBOX");
+              Folder root = store.getDefaultFolder();
+                //Folder root = store.getFolder("INBOX");
                 emails = recursiveFetch(root);
 
                 store.close();

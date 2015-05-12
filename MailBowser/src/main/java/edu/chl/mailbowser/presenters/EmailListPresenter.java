@@ -48,35 +48,45 @@ public class EmailListPresenter implements Initializable, IObserver {
      * @param emails
      */
     private void updateListView(List<IEmail> emails) {
-
-        List<EmailListViewItem> list = new ArrayList<>();
-
-        ObservableList<EmailListViewItem> observableList = FXCollections.observableList(list);
-
         for(IEmail email : emails) {
-
-            EmailListViewItem emailListViewItem = new EmailListViewItem(email);
-
-            observableList.add(emailListViewItem);
-
+            updateListView(email);
         }
-
-        emailListListView.setItems(observableList);
     }
 
     private void updateListView(IEmail email) {
         ObservableList<EmailListViewItem> observableList = emailListListView.getItems();
 
-        if(!observableList.contains(email)) {
-            EmailListViewItem emailListViewItem = new EmailListViewItem(email);
+        EmailListViewItem emailListViewItem = new EmailListViewItem((Email)email);
 
-            observableList.add(emailListViewItem);
-
+        if(!observableList.contains(emailListViewItem)) {
+            if(observableList.size()!=0) {
+                for (int i = 0 ; i < observableList.size() ; i++) {
+                    if (emailListViewItem.compareTo(observableList.get(i)) < 0) {
+                        observableList.add(i, emailListViewItem);
+                        break;
+                    }
+                    if(i == observableList.size()-1){
+                        observableList.add(emailListViewItem);
+                        break;
+                    }
+                }
+            }else {
+                observableList.add(emailListViewItem);
+            }
             emailListListView.setItems(observableList);
         }
-
     }
 
+    private class SortCompator<T> implements Comparator{
+
+        @Override
+        public int compare(Object o1, Object o2) {
+            if(o1 instanceof Comparable || o2 instanceof Comparable){
+                return ((Comparable)o1).compareTo((Comparable)o2);
+            }
+            throw new IllegalArgumentException();
+        }
+    }
 
     /**
      * Sends an event when a different email is selected.
