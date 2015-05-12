@@ -5,18 +5,25 @@ import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Created by filip on 04/05/15.
  */
-public class TopbarPresenter {
+public class TopbarPresenter implements Initializable {
 
     @FXML
     private TextField searchField;
+
+    @FXML private Button forwardButton;
 
     // This method is invoked when the "New Email"-button is pressed, and is bound via the onAction attribute
     @FXML
@@ -45,6 +52,11 @@ public class TopbarPresenter {
         // add the component to the stage
         newEmailStage.setScene(new Scene(composeEmailPresenter));
         newEmailStage.show();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        //this.forwardButton.setText(new String("\uf112"));
     }
 }
 

@@ -11,6 +11,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -19,13 +20,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage mainStage) throws Exception {
+        Font.loadFont(getClass().getClassLoader().getResource("fonts/fontawesome.ttf").toExternalForm(), 16);
+
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/MainView.fxml"));
         mainStage.setTitle("MailBowser");
 
         Scene scene = new Scene(root, 960, 600);
 
         // Add fonts and styles to the scene
-        //scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
+        scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
         
         Thread backgroundFetching = BackgroundFetching.getInstance();
         backgroundFetching.setDaemon(true);

@@ -13,6 +13,18 @@
     -fx-font-family: Roboto, sans-serif;
 }
 
+#topbarSearchTextField {
+    -fx-background-color: white;
+    -fx-padding: 0 0 0 15;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #EEE;
+}
+
+.fontawesome {
+    -fx-font-family: FontAwesome;
+    -fx-color: black;
+}
+
 
 #sidebar,
 #emailDetail {
