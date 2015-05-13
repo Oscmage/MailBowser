@@ -1,7 +1,6 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.account.handlers.AccountHandler;
-import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.email.views.EmailListViewItem;
 import edu.chl.mailbowser.event.EventBus;
@@ -12,6 +11,7 @@ import edu.chl.mailbowser.search.Searcher;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,12 +20,19 @@ import javafx.scene.control.ListView;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by filip on 04/05/15.
  */
-
 public class EmailListPresenter implements Initializable, IObserver {
+
+    // this list holds all EmailListViewItems. when you add an item to this list, emailListListView will update
+    // itself automatically
+    @FXML private ObservableList<EmailListViewItem> observableEmailList = FXCollections.observableArrayList();
+
+    // a wrapper for observableEmailList that automatically sorts the items using the compareTo method in EmailListViewItem
+    @FXML private SortedList<EmailListViewItem> sortedObservableEmailList = new SortedList<>(observableEmailList, Comparator.<EmailListViewItem>naturalOrder());
 
     // OK, do not get frightened. Read it like so: "An email-list ListView."
     @FXML protected ListView<EmailListViewItem> emailListListView;
@@ -35,64 +42,65 @@ public class EmailListPresenter implements Initializable, IObserver {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
-        updateListView(AccountHandler.getInstance().getAccount().getEmails());
+
+        emailListListView.setItems(sortedObservableEmailList);
+
+        replaceListViewContent(AccountHandler.getInstance().getAccount().getEmails());
     }
 
     /**
-     * Updates the EmailDetailView, and sets its content to whatever the current email is.
-     * @param emails
+     * Replaces all items in emailListListView with new list items for the given emails
+     *
+     * @param emails the new emails to show in the list
      */
-    private void updateListView(List<IEmail> emails) {
-        for(IEmail email : emails) {
-            updateListView(email);
+    private void replaceListViewContent(List<IEmail> emails) {
+        observableEmailList.setAll(emails.stream()
+                .map(EmailListViewItem::new)
+                .collect(Collectors.toList())
+        );
+    }
+
+    /**
+     * Adds a single email to emailListListView
+     *
+     * @param email
+     */
+    private void addEmailToListView(IEmail email) {
+        EmailListViewItem emailListViewItem = new EmailListViewItem(email);
+        if (!observableEmailList.contains(emailListViewItem)) {
+            observableEmailList.addAll(emailListViewItem);
         }
     }
 
-    private void updateListView(IEmail email) {
-        ObservableList<EmailListViewItem> observableList = emailListListView.getItems();
-
-        EmailListViewItem emailListViewItem = new EmailListViewItem((Email)email);
-
-        if(!observableList.contains(emailListViewItem)) {
-            if(observableList.size()!=0) {
-                for (int i = 0 ; i < observableList.size() ; i++) {
-                    if (emailListViewItem.compareTo(observableList.get(i)) < 0) {
-                        observableList.add(i, emailListViewItem);
-                        break;
-                    }
-                    if(i == observableList.size()-1){
-                        observableList.add(emailListViewItem);
-                        break;
-                    }
-                }
-            }else {
-                observableList.add(emailListViewItem);
-            }
-            emailListListView.setItems(observableList);
-        }
-    }
-
+    /**
+     * This method is called when a search event comes in. It filters all emails and calls replaceListViewContent
+     * with the result.
+     *
+     * @param query the query to search for
+     */
     private void search(String query) {
         List<IEmail> emails = AccountHandler.getInstance().getAccount().getEmails();
 
-        if (query != "") {
+        if (!query.equals("")) {
             searchActivated = true;
             List<IEmail> matchingEmails = Searcher.search(emails, query);
-            updateListView(matchingEmails);
+            System.out.println("matching emails: " + matchingEmails.size());
+            replaceListViewContent(matchingEmails);
         } else {
             searchActivated = false;
-            updateListView(emails);
+            replaceListViewContent(emails);
         }
     }
 
+    /**
+     * This method is called when a fetch event comes in.
+     *
+     * @param email the fetched email
+     */
     private void fetchEmail(IEmail email) {
         if (!searchActivated) {
-            updateListView(email);
+            addEmailToListView(email);
         }
-    }
-
-    private void loadAccount(List<IEmail> emails) {
-        updateListView(emails);
     }
 
     /**
