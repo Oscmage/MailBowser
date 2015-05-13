@@ -44,6 +44,8 @@ public class TagHandler{
         emails.get(email).add(tag);
 
         EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG, tag));
+
+        System.out.println("addTag: " + emails.get(email));
     }
 
     /**
@@ -61,7 +63,11 @@ public class TagHandler{
      * @return
      */
     public Set<ITag> getTags(IEmail email){
-        return new HashSet<>(emails.get(email));
+        System.out.println("getTags: " + emails.get(email));
+        if(emails.get(email) != null) {
+            return new HashSet<>(emails.get(email));
+        }
+        return new HashSet<>();
     }
 
     /**

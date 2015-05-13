@@ -57,7 +57,6 @@ public class TopbarPresenter {
         String text = addTagTextField.getText();
         Tag tag = new Tag(text);
         TagHandler.getInstance().addTag(email,tag);
-        EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG,tag));
     }
 }
 

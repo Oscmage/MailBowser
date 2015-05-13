@@ -9,20 +9,25 @@ import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.models.Tag;
 import edu.chl.mailbowser.tag.views.TagListItemPresenter;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.web.WebView;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by filip on 04/05/15.
  */
 
-public class EmailDetailPresenter implements IObserver {
+public class EmailDetailPresenter implements IObserver, Initializable {
 
     private Email email;
 
@@ -32,45 +37,40 @@ public class EmailDetailPresenter implements IObserver {
     @FXML protected Label tagLabel;
     @FXML protected WebView webView;
     @FXML protected FlowPane tagFlowPane;
+
+    @FXML private ObservableList<TagListItemPresenter> observableTagList = FXCollections.observableArrayList();
     @FXML protected ListView<TagListItemPresenter> tagListView;
 
-    public EmailDetailPresenter() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
+        tagListView.setItems(observableTagList);
     }
-
 
     private void updateView() {
         subjectLabel.setText(email.getSubject());
         receivedDateLabel.setText(email.getReceivedDate().toString());
         this.webView.getEngine().loadContent(email.getContent());
-        updateTags(TagHandler.getInstance().getTags(this.email));
+
+        Set<ITag> tags = TagHandler.getInstance().getTags(this.email);
+        System.out.println(tags);
+        replaceListViewContent(TagHandler.getInstance().getTags(this.email));
     }
 
-    private void updateTags(Set<ITag> tags) {
-        for (ITag tag : tags) {
-            updateTags(tag);
-        }
+    private void replaceListViewContent(Set<ITag> tags) {
+        observableTagList.setAll(
+                tags.stream()
+                        .map(TagListItemPresenter::new)
+                        .collect(Collectors.toList())
+        );
     }
 
-    private void updateTags(ITag tag){
-        ObservableList<TagListItemPresenter> observableList = tagListView.getItems();
-        TagListItemPresenter p = new TagListItemPresenter(tag);
+    private void addTagToListView(ITag tag) {
+        TagListItemPresenter tagListItem = new TagListItemPresenter(tag);
 
-        if(!observableList.contains(p)) {
-            if(observableList.size()!=0) {
-                for(int i=0;i<observableList.size();i++) {
-                    if (p.equals(observableList.get(i).getTag())) {
-                        break;
-                    }
-                    if (i == observableList.size() - 1) {
-                        observableList.add(p);
-                    }
-                }
-            } else {
-                observableList.add(p);
-            }
+        if (!observableTagList.contains(tagListItem)) {
+            observableTagList.add(tagListItem);
         }
-        this.tagListView.setItems(observableList);
     }
 
     public void removeTagActionPerformed() {
@@ -85,7 +85,7 @@ public class EmailDetailPresenter implements IObserver {
         } else if (evt.getType() == EventType.REMOVE_TAG) {
             // something
         } else if (evt.getType() == EventType.ADD_TAG){
-            updateTags(((ITag) evt.getValue()));
+            addTagToListView(((ITag) evt.getValue()));
         }
     }
 
