@@ -287,13 +287,19 @@ public class Email implements IEmail {
                 || sender.matches(query);
     }
 
-    @Override
-    public int compareTo(Object o) {
-        if(o instanceof Email){
-            Email email = (Email) o;
+    //@Override
+    //public int compareTo(Object o) {
+    //    if(o instanceof IEmail){
+    //        IEmail email = (IEmail) o;
+    //
+    //        return (email.getReceivedDate().compareTo(this.getReceivedDate()));
+    //    }
+    //    return 0;
+    //}
 
-            return (email.getReceivedDate().compareTo(this.getReceivedDate()));
-        }
-        return 0;
+    @Override
+    public int compareTo(IEmail o) {
+        return o.getReceivedDate().compareTo(this.getReceivedDate());
+        //return o.getSubject().compareTo(this.getSubject());
     }
 }
