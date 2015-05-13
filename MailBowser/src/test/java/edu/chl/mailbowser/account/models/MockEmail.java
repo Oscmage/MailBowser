@@ -50,6 +50,11 @@ public class MockEmail implements IEmail {
     }
 
     @Override
+    public Date getReceivedDate() {
+        return null;
+    }
+
+    @Override
     public Date getLastEditedDate() {
         return null;
     }
@@ -105,7 +110,7 @@ public class MockEmail implements IEmail {
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(IEmail o) {
         return 0;
     }
 }
