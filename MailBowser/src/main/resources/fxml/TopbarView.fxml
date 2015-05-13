@@ -18,9 +18,9 @@
       </Pane>
       <Pane prefHeight="60.0" prefWidth="425.0">
          <children>
-            <Button layoutX="14.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Forward" />
-            <Button layoutX="81.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Reply" />
-            <Button layoutX="133.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Button" />
+            <Button fx:id="forwardButton" layoutX="14.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Forward" />
+            <Button fx:id="replyButton" layoutX="81.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Reply" />
+            <Button fx:id="replyAllButton" layoutX="133.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Reply All" />
             <TextField fx:id="addTagTextField" layoutX="213.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" onAction="#addTagOnAction" prefHeight="40.0" promptText="Add new tag..." />
          </children>
       </Pane>

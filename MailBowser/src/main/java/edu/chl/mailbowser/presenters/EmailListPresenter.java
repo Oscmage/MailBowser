@@ -10,7 +10,6 @@ import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.search.Searcher;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -18,8 +17,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
-import java.util.*;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by filip on 04/05/15.

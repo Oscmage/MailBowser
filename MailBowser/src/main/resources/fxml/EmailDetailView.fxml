@@ -33,7 +33,7 @@
                     </children>
                 </GridPane>
                 <Label fx:id="subjectLabel" styleClass="h1" text="What a wonderful headline" />
-            <FlowPane fx:id="tagFlowPane" prefHeight="63.0" prefWidth="492.0" />
+            <ListView fx:id="tagListView" orientation="HORIZONTAL" prefHeight="62.0" prefWidth="492.0" />
             <WebView fx:id="webView" prefHeight="281.0" prefWidth="497.0" />
             </children>
         </VBox>
