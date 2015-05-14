@@ -12,7 +12,7 @@ public class MockInServer implements IIncomingServer {
     public boolean called = false;
 
     @Override
-    public void fetch(String username, String Password, Callback<List<IEmail>> callback) {
+    public void fetch(String username, String Password, boolean cleanFetch, Callback<List<IEmail>> callback) {
         called = true;
     }
 }

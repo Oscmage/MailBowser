@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
@@ -12,11 +13,12 @@
             <TextField fx:id="searchField" layoutX="200.0" layoutY="11.0" maxWidth="220.0" minWidth="240.0" onAction="#searchFieldOnAction" prefHeight="38.0" prefWidth="220.0" promptText="Search here..." />
          </children>
       </Pane>
-      <Pane prefHeight="200.0" prefWidth="200.0">
+      <Pane prefHeight="60.0" prefWidth="371.0">
          <children>
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Forward" />
             <Button layoutX="81.0" layoutY="14.0" mnemonicParsing="false" text="Reply" />
             <Button layoutX="133.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
+            <Button layoutX="200.0" layoutY="14.0" mnemonicParsing="false" onAction="#refetchButtonOnAction" text="Refetch" />
          </children>
       </Pane>
 </children>
