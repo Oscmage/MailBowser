@@ -104,6 +104,13 @@ public class EmailListPresenter implements Initializable, IObserver {
     }
 
     /**
+     * This method is called when a clear emails event comes in.
+     */
+    private void clearEmails() {
+        observableEmailList.clear();
+    }
+
+    /**
      * Sends an event when a different email is selected.
      * @param evt
      */
@@ -129,7 +136,10 @@ public class EmailListPresenter implements Initializable, IObserver {
                         () -> search((String) evt.getValue())
                 );
                 break;
+            case CLEAR_EMAILS:
+                Platform.runLater(
+                        () -> clearEmails()
+                );
         }
     }
-
 }
