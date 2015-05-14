@@ -21,7 +21,7 @@ import javax.mail.search.FlagTerm;
  */
 public class IncomingServer extends MailServer implements IIncomingServer {
 
-    private Flags processedFlag = new Flags("testflag4");
+    private Flags processedFlag = new Flags("MailBowserProcessed");
 
     private transient Fetcher fetcher = null;
 
