@@ -64,14 +64,6 @@ public class EmailDetailPresenter implements IObserver, Initializable {
         );
     }
 
-    private void addTagToListView(ITag tag) {
-        TagListItemPresenter tagListItem = new TagListItemPresenter(tag);
-
-        if (!observableTagList.contains(tagListItem)) {
-            observableTagList.add(tagListItem);
-        }
-    }
-
     public void removeTagActionPerformed() {
         TagHandler.getInstance().removeTag(new Tag("")); // TODO changes so removeTag takes the tag.
     }
@@ -84,7 +76,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
         } else if (evt.getType() == EventType.REMOVE_TAG) {
             // something
         } else if (evt.getType() == EventType.ADD_TAG){
-            addTagToListView(((ITag) evt.getValue()));
+            replaceListViewContent(TagHandler.getInstance().getTags(this.email));
         }
     }
 
