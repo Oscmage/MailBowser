@@ -50,6 +50,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
     private void updateView() {
         subjectLabel.setText(email.getSubject());
         receivedDateLabel.setText(email.getReceivedDate().toString());
+        this.fromLabel.setText(email.getSender().getString());
 
         this.webView.getEngine().loadContent(email.getContent());
 
