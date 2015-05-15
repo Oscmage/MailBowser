@@ -1,9 +1,7 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.event.Event;
-import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventType;
+import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.Tag;
 import javafx.event.ActionEvent;
@@ -16,9 +14,13 @@ import javafx.stage.Stage;
 /**
  * Created by filip on 04/05/15.
  */
-public class TopbarPresenter {
+public class TopbarPresenter implements IObserver {
 
     private IEmail email;
+
+    public TopbarPresenter(){
+        EventBus.INSTANCE.register(this);
+    }
 
     @FXML private TextField addTagTextField;
     @FXML private TextField searchField;
@@ -55,8 +57,16 @@ public class TopbarPresenter {
     @FXML
     private void addTagOnAction(ActionEvent actionEvent) {
         String text = addTagTextField.getText();
-        Tag tag = new Tag(text);
-        TagHandler.getInstance().addTag(email,tag);
+        TagHandler.getInstance().addTag(this.email,new Tag(text));
+    }
+
+    @Override
+    public void onEvent(IEvent evt) {
+        switch (evt.getType()) {
+            case SELECTED_EMAIL:
+                this.email = (IEmail) evt.getValue();
+                break;
+        }
     }
 }
 
