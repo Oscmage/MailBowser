@@ -83,6 +83,18 @@ public class TopbarPresenter implements IObserver {
         account.refetch();
     }
 
+    @FXML
+    private void forwardButtonOnAction(ActionEvent actionEvent) {
+        Stage mainStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
+        openComposeEmailWindow(mainStage, "", "FW: " + email.getSubject(), this.email.getContent());
+    }
+
+    @FXML
+    private void replyButtonOnAction(ActionEvent actionEvent) {
+        Stage mainStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
+        openComposeEmailWindow(mainStage, this.email.getSender().getString(), "RE: " + this.email.getSubject(),
+                this.email.getContent());
+    }
 
 }
 
