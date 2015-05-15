@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by OscarEvertsson on 10/04/15.
  */
-public interface IEmail extends Searchable, Serializable, Comparable {
+public interface IEmail extends Searchable, Serializable, Comparable<IEmail> {
     javax.mail.Message getJavaxMessage(Session session);
     boolean isSent();
     IAddress getSender();
@@ -18,6 +18,7 @@ public interface IEmail extends Searchable, Serializable, Comparable {
     String getContent();
     String getSubject();
     Date getSentDate();
+    Date getReceivedDate();
     Date getLastEditedDate();
     Date getCreatedDate();
     void setLastEditedDate();

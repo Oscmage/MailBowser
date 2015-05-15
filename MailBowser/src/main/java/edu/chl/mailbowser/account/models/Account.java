@@ -6,8 +6,6 @@ import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,10 +161,32 @@ public class Account implements IAccount {
      * Fetches for new email.
      */
     public void fetch() {
-        incomingServer.fetch(getUsername(), password, new Callback<List<IEmail>>() {
+        fetch(false);
+    }
+
+    /**
+     * Clears the already fetched emails and does a new fetch from a clean state.
+     */
+    @Override
+    public void refetch() {
+        emails = new ArrayList<>();
+        EventBus.INSTANCE.publish(new Event(EventType.CLEAR_EMAILS, null));
+        fetch(true);
+    }
+
+    /**
+     * Fetches email from the server. If the cleanFetch flag is set, all mail from the server will be fetched,
+     * regardless of whether they have been fetched before. If cleanFetch is not set, only emails that haven't
+     * been fetched yet will be fetched from the server.
+     *
+     * @param cleanFetch if true, all emails will be fetched. if false, only emails that haven't been fetched before
+     *                   will be fetched
+     */
+    private void fetch(boolean cleanFetch) {
+        incomingServer.fetch(getUsername(), password, cleanFetch, new Callback<List<IEmail>>() {
             @Override
             public void onSuccess(List<IEmail> object) {
-                emails = object;
+                emails.addAll(object);
                 EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS, object));
             }
 

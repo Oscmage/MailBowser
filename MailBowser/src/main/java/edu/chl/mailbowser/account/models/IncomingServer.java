@@ -5,11 +5,14 @@ import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
+import edu.chl.mailbowser.tag.handlers.TagHandler;
+import edu.chl.mailbowser.tag.models.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.*;
+import javax.mail.search.FlagTerm;
 
 /**
  * Created by jesper on 2015-04-21.
@@ -17,6 +20,8 @@ import javax.mail.*;
  * A concrete implementation of IIncomingServer.
  */
 public class IncomingServer extends MailServer implements IIncomingServer {
+
+    private Flags processedFlag = new Flags("MailBowserProcessed");
 
     private transient Fetcher fetcher = null;
 
@@ -37,9 +42,9 @@ public class IncomingServer extends MailServer implements IIncomingServer {
      * @param password the password to authenticate with
      */
     @Override
-    public void fetch(String username, String password, Callback<List<IEmail>> callback) {
+    public void fetch(String username, String password, boolean cleanFetch, Callback<List<IEmail>> callback) {
         if (fetcher == null) {
-            fetcher = new Fetcher(username, password, new Callback<List<IEmail>>() {
+            fetcher = new Fetcher(username, password, cleanFetch, new Callback<List<IEmail>>() {
                 @Override
                 public void onSuccess(List<IEmail> object) {
                     fetcher = null;
@@ -60,10 +65,12 @@ public class IncomingServer extends MailServer implements IIncomingServer {
         private Callback<List<IEmail>> callback;
         private String username;
         private String password;
+        private boolean clearProcessedFlag;
 
-        public Fetcher(String username, String password, Callback<List<IEmail>> callback) {
+        public Fetcher(String username, String password, boolean clearProcessedFlag, Callback<List<IEmail>> callback) {
             this.username = username;
             this.password = password;
+            this.clearProcessedFlag = clearProcessedFlag;
             this.callback = callback;
         }
 
@@ -81,15 +88,14 @@ public class IncomingServer extends MailServer implements IIncomingServer {
                 store.connect(getHostname(), username, password);
 
                 // start by getting the default (root) folder, and recursively work through all subfolders
-
-              Folder root = store.getDefaultFolder();
-                //Folder root = store.getFolder("INBOX");
+                Folder root = store.getDefaultFolder();
                 emails = recursiveFetch(root);
 
                 store.close();
 
                 callback.onSuccess(emails);
             } catch (MessagingException e) {
+                System.out.println(e);
                 callback.onFailure("Failed to fetch email from server");
             }
         }
@@ -105,11 +111,27 @@ public class IncomingServer extends MailServer implements IIncomingServer {
             fetchProfile.add("X-mailer");
 
             if ((folder.getType() & Folder.HOLDS_MESSAGES) == Folder.HOLDS_MESSAGES) {
-                folder.open(Folder.READ_ONLY);
-                Message [] messages = folder.getMessages();
+                folder.open(Folder.READ_WRITE);
+
+                if (clearProcessedFlag) {
+                    Message[] messages = folder.search(new FlagTerm(processedFlag, true));
+                    folder.setFlags(messages, processedFlag, false);
+                }
+
+                Message[] messages = folder.search(new FlagTerm(processedFlag, false));
+
+                if (clearProcessedFlag) {
+                    folder.setFlags(messages, processedFlag, false);
+                }
+
                 for (Message message : messages) {
                     IEmail email = new Email(message);
                     emails.add(email);
+
+                    message.setFlags(processedFlag, true);
+
+                    TagHandler.getInstance().addTag(email, new Tag(folder.getName()));
+
                     EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAIL, email));
                 }
             }

@@ -7,22 +7,26 @@
 
 <HBox id="topbar" alignment="CENTER_LEFT" maxHeight="60.0" maxWidth="1.7976931348623157E308" prefHeight="60.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.TopbarPresenter">
 <children>
-      <Pane maxHeight="60.0" maxWidth="440.0" minHeight="60.0" minWidth="440.0" prefHeight="60.0" prefWidth="379.0">
-         <children>
-         <Button id="newEmailButton" maxHeight="60.0" maxWidth="200.0" minHeight="60.0" minWidth="200.0" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" prefHeight="60.0" prefWidth="200.0" text="New Email" />
-            <TextField fx:id="searchField" layoutX="206.0" layoutY="10.0" maxHeight="40.0" maxWidth="220.0" minHeight="40.0" minWidth="200.0" onAction="#searchFieldOnAction" prefHeight="40.0" prefWidth="220.0" promptText="Search here...">
-               <opaqueInsets>
-                  <Insets left="10.0" right="10.0" />
-               </opaqueInsets></TextField>
-         </children>
-      </Pane>
-      <Pane prefHeight="60.0" prefWidth="425.0">
+          <Pane maxHeight="60.0" maxWidth="440.0" minHeight="60.0" minWidth="440.0" prefHeight="60.0" prefWidth="379.0">
+             <children>
+             <Button id="newEmailButton" maxHeight="60.0" maxWidth="200.0" minHeight="60.0" minWidth="200.0" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" prefHeight="60.0" prefWidth="200.0" text="New Email" />
+                <TextField fx:id="searchField" layoutX="206.0" layoutY="10.0" maxHeight="40.0" maxWidth="220.0" minHeight="40.0" minWidth="200.0" onAction="#searchFieldOnAction" prefHeight="40.0" prefWidth="220.0" promptText="Search here...">
+                   <opaqueInsets>
+                      <Insets left="10.0" right="10.0" />
+                   </opaqueInsets>
+                </TextField>
+             </children>
+          </Pane>
+
+      <Pane prefHeight="60.0" prefWidth="524.0">
          <children>
             <Button fx:id="forwardButton" layoutX="14.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Forward" />
             <Button fx:id="replyButton" layoutX="81.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Reply" />
             <Button fx:id="replyAllButton" layoutX="133.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Reply All" />
-            <TextField fx:id="addTagTextField" layoutX="213.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" onAction="#addTagOnAction" prefHeight="40.0" promptText="Add new tag..." />
-         </children>
+            <TextField fx:id="addTagTextField" layoutX="300.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" onAction="#addTagOnAction" prefHeight="40.0" promptText="Add new tag..." />
+            <Button layoutX="203.0" layoutY="10.0" mnemonicParsing="false" onAction="#refetchButtonOnAction" prefHeight="40.0" prefWidth="87.0" text="Refetch" />
+        </children>
       </Pane>
+      <Pane prefHeight="60.0" prefWidth="371.0" />
 </children>
 </HBox>

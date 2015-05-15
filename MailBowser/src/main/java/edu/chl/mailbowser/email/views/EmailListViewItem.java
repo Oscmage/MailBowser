@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  */
 public class EmailListViewItem extends FlowPane implements Initializable, Comparable {
 
-    private Email email;
+    private IEmail email;
 
     @FXML private Label sender;
     @FXML private Label sent;
@@ -39,7 +39,7 @@ public class EmailListViewItem extends FlowPane implements Initializable, Compar
 
     }
 
-    public EmailListViewItem(Email email) {
+    public EmailListViewItem(IEmail email) {
         this();
 
         this.email = email;
@@ -56,7 +56,7 @@ public class EmailListViewItem extends FlowPane implements Initializable, Compar
 
     }
 
-    public Email getEmail() {
+    public IEmail getEmail() {
         return this.email;
     }
 
