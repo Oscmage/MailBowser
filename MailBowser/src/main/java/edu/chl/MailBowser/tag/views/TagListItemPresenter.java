@@ -3,7 +3,6 @@ package edu.chl.mailbowser.tag.views;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
-import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,7 +59,7 @@ public class TagListItemPresenter extends Pane implements Initializable, IObserv
     }
 
     @FXML private void removeTagButtonOnAction(ActionEvent event) {
-        TagHandler.getInstance().removeTag(this.email, this.tag);
+        //TagHandler.getInstance().removeTag(this.email, this.tag);
     }
 
     @Override
