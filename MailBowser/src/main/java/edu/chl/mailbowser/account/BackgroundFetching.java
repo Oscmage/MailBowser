@@ -25,7 +25,7 @@ public class BackgroundFetching extends Thread {
         while (!this.isInterrupted()) {
             account.fetch();
             try {
-                this.sleep(30000);
+                this.sleep(300000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
