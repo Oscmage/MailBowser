@@ -1,22 +1,21 @@
 package edu.chl.mailbowser.presenters;
 
 
+import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.account.models.IAccount;
+import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.Tag;
-
-import edu.chl.mailbowser.account.handlers.AccountHandler;
-import edu.chl.mailbowser.account.models.IAccount;
-import edu.chl.mailbowser.event.Event;
-import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.util.List;
 
 /**
  * Created by filip on 04/05/15.
@@ -86,18 +85,24 @@ public class TopbarPresenter implements IObserver {
     @FXML
     private void forwardButtonOnAction(ActionEvent actionEvent) {
         Stage mainStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
-        openComposeEmailWindow(mainStage, "", "FW: " + email.getSubject(), this.email.getContent());
+        openComposeEmailWindow(mainStage, "", "Fw: " + email.getSubject(), this.email.getContent());
     }
 
     @FXML
     private void replyButtonOnAction(ActionEvent actionEvent) {
         Stage mainStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
-        openComposeEmailWindow(mainStage, this.email.getSender().getString(), "RE: " + this.email.getSubject(),
+        openComposeEmailWindow(mainStage, this.email.getSender().getString(), "Re: " + this.email.getSubject(),
                 this.email.getContent());
     }
 
     @FXML private void replyAllButtonOnAction(ActionEvent actionEvent) {
-
+        Stage mainStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
+        String recipientsString = "";
+        List<IAddress> recipientsList = this.email.getReceivers();
+        for (IAddress recipient : recipientsList) {
+            recipientsString += ", " + recipient.getString();
+        }
+        openComposeEmailWindow(mainStage,recipientsString,"Rex§: " + this.email.getSubject(),this.email.getContent());
     }
 }
 
