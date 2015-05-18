@@ -96,6 +96,9 @@ public class TopbarPresenter implements IObserver {
                 this.email.getContent());
     }
 
+    @FXML private void replyAllButtonOnAction(ActionEvent actionEvent) {
+
+    }
 }
 
 

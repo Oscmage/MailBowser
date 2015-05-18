@@ -22,7 +22,7 @@
          <children>
             <Button fx:id="forwardButton" layoutX="14.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" onAction="#forwardButtonOnAction" prefHeight="40.0" text="Forward" />
             <Button fx:id="replyButton" layoutX="81.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" onAction="#replyButtonOnAction" prefHeight="40.0" text="Reply" />
-            <Button fx:id="replyAllButton" layoutX="133.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Reply All" />
+            <Button fx:id="replyAllButton" layoutX="133.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" onAction="#replyAllButtonOnAction" prefHeight="40.0" text="Reply All" />
             <TextField fx:id="addTagTextField" layoutX="300.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" onAction="#addTagOnAction" prefHeight="40.0" promptText="Add new tag..." />
             <Button layoutX="203.0" layoutY="10.0" mnemonicParsing="false" onAction="#refetchButtonOnAction" prefHeight="40.0" prefWidth="87.0" text="Refetch" />
         </children>
