@@ -53,7 +53,7 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
         getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
 
-        setReceiver(recipients);
+        setReceivers(recipients);
         setSubject(subject);
         setContent(content);
     }
@@ -63,7 +63,7 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
         // Declare receivers
         List<IAddress> receivers = new ArrayList<IAddress>();
-        receivers.add(new Address(this.receiver.getText()));
+        receivers.add(new Address(this.receivers.getText()));
 
         //Convert markdown to html
         String html = null;
