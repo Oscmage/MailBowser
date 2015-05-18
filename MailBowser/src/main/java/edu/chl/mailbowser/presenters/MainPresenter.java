@@ -1,5 +1,9 @@
 package edu.chl.mailbowser.presenters;
 
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
+import edu.chl.mailbowser.event.IEvent;
+import edu.chl.mailbowser.event.IObserver;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,11 +21,14 @@ import java.util.ResourceBundle;
 /**
  * Created by filip on 04/05/15.
  */
-public class MainPresenter {
+public class MainPresenter implements IObserver {
     @FXML MenuItem addAccountMenuItem;
+    Stage newStage;
 
     public void onAction() throws IOException {
-        Stage newStage = new Stage();
+        EventBus.INSTANCE.register(this);
+
+        newStage = new Stage();
         Parent node = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AddAccountView.fxml"));
         newStage.setTitle("Add Account");
         
@@ -29,5 +36,13 @@ public class MainPresenter {
 
         newStage.setScene(scene);
         newStage.show();
+    }
+
+
+    @Override
+    public void onEvent(IEvent evt) {
+        if(evt.getType()==EventType.CLOSE_THIS){
+            newStage.close();
+        }
     }
 }

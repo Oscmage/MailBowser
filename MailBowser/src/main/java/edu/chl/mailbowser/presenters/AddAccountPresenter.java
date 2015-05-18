@@ -5,8 +5,17 @@ import edu.chl.mailbowser.account.handlers.AccountHandler;
 import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.Address;
+import edu.chl.mailbowser.email.models.IAddress;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 /**
@@ -21,14 +30,16 @@ public class AddAccountPresenter {
 
 
     public void onMouseClicked(){
-        AccountHandler.getInstance().setAccount(new Account(new Address(addressField.getText())
+        IAddress address = new Address(addressField.getText());
+        Account account = new Account(address
                 ,passwordField.getText(),
                 MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
-                MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL)));
-        IAccount account = AccountHandler.getInstance().getAccount();
+                MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL));
         if(!account.testConnect()){
             errorLabel.setText("Could not connect to server");
+        }else {
+            AccountHandler.getInstance().setAccount(account);
         }
-        System.out.print(AccountHandler.getInstance());
+        EventBus.INSTANCE.publish(new Event(EventType.CLOSE_THIS,this));
     }
 }
