@@ -81,17 +81,22 @@ public class TagHandler{
      * @param tag
      */
     public synchronized void removeTag(IEmail email,ITag tag){
-        Set<ITag> tagSet = emails.get(email);
-        tagSet.remove(tag);
-        if (tagSet.isEmpty()) {
-            emails.remove(email);
+        if (emails.containsKey(email)) {
+            Set<ITag> tagSet = emails.get(email);
+            tagSet.remove(tag);
+            if (tagSet.isEmpty()) {
+                emails.remove(email);
+            }
         }
 
-        Set<IEmail> emailSet = tags.get(tag);
-        emailSet.remove(email);
-        if (emailSet.isEmpty()) {
-            tags.remove(tag);
+        if (tags.containsKey(tag)) {
+            Set<IEmail> emailSet = tags.get(tag);
+            emailSet.remove(email);
+            if (emailSet.isEmpty()) {
+                tags.remove(tag);
+            }
         }
+
         EventBus.INSTANCE.publish(new Event(EventType.REMOVE_TAG,tag));
     }
 

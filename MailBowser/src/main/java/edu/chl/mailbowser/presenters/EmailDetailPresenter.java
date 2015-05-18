@@ -7,6 +7,7 @@ import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.views.TagListItemPresenter;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -65,6 +66,12 @@ public class EmailDetailPresenter implements IObserver, Initializable {
 
     @Override
     public void onEvent(IEvent evt) {
+        Platform.runLater(
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt) {
         switch (evt.getType()) {
             case SELECTED_EMAIL:
                 this.email = (Email) evt.getValue();
@@ -77,7 +84,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
                 break;
             case GUI_REMOVE_TAG:
                 ITag tag = (ITag) evt.getValue();
-                TagHandler.getInstance().removeTag(this.email,tag);
+                TagHandler.getInstance().removeTag(this.email, tag);
                 updateView();
                 break;
         }
