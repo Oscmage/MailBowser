@@ -6,9 +6,8 @@ import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.Address;
 import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 
-import java.awt.*;
 
 /**
  * Created by jesper on 2015-05-18.
@@ -22,10 +21,14 @@ public class AddAccountPresenter {
 
 
     public void onMouseClicked(){
-        AccountHandler.getInstance().setAccount(new Account(new Address(addressField.getText()),passwordField.getText(), MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL), MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL)));
+        AccountHandler.getInstance().setAccount(new Account(new Address(addressField.getText())
+                ,passwordField.getText(),
+                MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
+                MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL)));
         IAccount account = AccountHandler.getInstance().getAccount();
         if(!account.testConnect()){
             errorLabel.setText("Could not connect to server");
         }
+        System.out.print(AccountHandler.getInstance());
     }
 }
