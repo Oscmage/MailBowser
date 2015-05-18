@@ -102,7 +102,7 @@ public class TopbarPresenter implements IObserver {
         for (IAddress recipient : recipientsList) {
             recipientsString += ", " + recipient.getString();
         }
-        openComposeEmailWindow(mainStage,recipientsString,"Rex§: " + this.email.getSubject(),this.email.getContent());
+        openComposeEmailWindow(mainStage,recipientsString,"Re: " + this.email.getSubject(),this.email.getContent());
     }
 }
 
