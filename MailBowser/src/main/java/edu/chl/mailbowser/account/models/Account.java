@@ -164,6 +164,10 @@ public class Account implements IAccount {
         fetch(false);
     }
 
+    public boolean testConnect(){
+        return incomingServer.testConnection(getUsername(),getPassword());
+    }
+
     /**
      * Clears the already fetched emails and does a new fetch from a clean state.
      */

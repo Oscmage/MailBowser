@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface IIncomingServer extends Serializable {
     void fetch(String username, String Password, boolean cleanFetch, Callback<List<IEmail>> callback);
+    boolean testConnection(String username, String password);
 }

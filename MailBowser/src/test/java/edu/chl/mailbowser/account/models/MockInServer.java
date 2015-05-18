@@ -15,4 +15,9 @@ public class MockInServer implements IIncomingServer {
     public void fetch(String username, String Password, boolean cleanFetch, Callback<List<IEmail>> callback) {
         called = true;
     }
+
+    @Override
+    public boolean testConnection(String username, String password) {
+        return false;
+    }
 }
