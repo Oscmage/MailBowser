@@ -23,4 +23,5 @@ public interface IAccount extends Serializable {
     void fetch();
     List<IEmail> getEmails();
     void refetch();
+    boolean testConnect();
 }

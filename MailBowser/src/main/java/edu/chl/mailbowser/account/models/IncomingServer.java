@@ -61,6 +61,24 @@ public class IncomingServer extends MailServer implements IIncomingServer {
         }
     }
 
+    @Override
+    public boolean testConnection(String username, String password) {
+        List<IEmail> emails;
+
+        Properties props = new Properties();
+        props.setProperty("mail.store.protocol", "imaps");
+
+        Session session = Session.getInstance(props, null);
+
+        try {
+            Store store = session.getStore();
+            store.connect(getHostname(), username, password);
+        } catch (MessagingException e) {
+            return false;
+        }
+        return true;
+    }
+
     private class Fetcher implements Runnable {
         private Callback<List<IEmail>> callback;
         private String username;
