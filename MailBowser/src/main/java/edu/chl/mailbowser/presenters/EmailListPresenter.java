@@ -18,8 +18,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
@@ -32,7 +33,8 @@ public class EmailListPresenter implements Initializable, IObserver {
     @FXML private ObservableList<EmailListViewItem> observableEmailList = FXCollections.observableArrayList();
 
     // a wrapper for observableEmailList that automatically sorts the items using the compareTo method in EmailListViewItem
-    @FXML private SortedList<EmailListViewItem> sortedObservableEmailList = new SortedList<>(observableEmailList, Comparator.<EmailListViewItem>naturalOrder());
+    @FXML private SortedList<EmailListViewItem> sortedObservableEmailList = new SortedList<>(observableEmailList,
+            Comparator.<EmailListViewItem>naturalOrder());
 
     // OK, do not get frightened. Read it like so: "An email-list ListView."
     @FXML protected ListView<EmailListViewItem> emailListListView;
@@ -55,8 +57,8 @@ public class EmailListPresenter implements Initializable, IObserver {
      */
     private void replaceListViewContent(List<IEmail> emails) {
         observableEmailList.setAll(emails.stream()
-                .map(EmailListViewItem::new)
-                .collect(Collectors.toList())
+                        .map(EmailListViewItem::new)
+                        .collect(Collectors.toList())
         );
     }
 
