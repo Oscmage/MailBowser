@@ -2,9 +2,6 @@ package edu.chl.mailbowser.account.models;
 
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.event.Event;
-import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.Tag;
 
@@ -37,18 +34,17 @@ public class IncomingServer extends MailServer implements IIncomingServer {
 
     /**
      * Fetches all emails from the server, using the supplied username and password.
-     *
-     * @param username the username to authenticate with
+     *  @param username the username to authenticate with
      * @param password the password to authenticate with
+     * @param callback
      */
     @Override
-    public void fetch(String username, String password, boolean cleanFetch, Callback<List<IEmail>> callback) {
+    public void fetch(String username, String password, boolean cleanFetch, Callback<IEmail> callback) {
         if (fetcher == null) {
-            fetcher = new Fetcher(username, password, cleanFetch, new Callback<List<IEmail>>() {
+            fetcher = new Fetcher(username, password, cleanFetch, callback, new Callback<String>() {
                 @Override
-                public void onSuccess(List<IEmail> object) {
+                public void onSuccess(String object) {
                     fetcher = null;
-                    callback.onSuccess(object);
                 }
 
                 @Override
@@ -80,16 +76,18 @@ public class IncomingServer extends MailServer implements IIncomingServer {
     }
 
     private class Fetcher implements Runnable {
-        private Callback<List<IEmail>> callback;
+        private Callback<IEmail> callback;
+        private Callback<String> callbackDone;
         private String username;
         private String password;
         private boolean clearProcessedFlag;
 
-        public Fetcher(String username, String password, boolean clearProcessedFlag, Callback<List<IEmail>> callback) {
+        public Fetcher(String username, String password, boolean clearProcessedFlag, Callback<IEmail> callback, Callback<String> callbackDone) {
             this.username = username;
             this.password = password;
             this.clearProcessedFlag = clearProcessedFlag;
             this.callback = callback;
+            this.callbackDone= callbackDone;
         }
 
         @Override
@@ -111,10 +109,11 @@ public class IncomingServer extends MailServer implements IIncomingServer {
 
                 store.close();
 
-                callback.onSuccess(emails);
+                callbackDone.onSuccess("Fetching is done");
             } catch (MessagingException e) {
                 System.out.println(e);
                 callback.onFailure("Failed to fetch email from server");
+                callbackDone.onFailure("Failed to fetch emails from server");
             }
         }
 
@@ -150,7 +149,8 @@ public class IncomingServer extends MailServer implements IIncomingServer {
 
                     TagHandler.getInstance().addTag(email, new Tag(folder.getName()));
 
-                    EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAIL, email));
+                    callback.onSuccess(email);
+                    //EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAIL, email));
                 }
             }
 
