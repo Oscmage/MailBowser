@@ -9,6 +9,6 @@ import java.util.List;
  * Created by jesper on 2015-04-21.
  */
 public interface IIncomingServer extends Serializable {
-    void fetch(String username, String Password, boolean cleanFetch, Callback<List<IEmail>> callback);
+    void fetch(String username, String Password, boolean cleanFetch, Callback<IEmail> callback);
     boolean testConnection(String username, String password);
 }

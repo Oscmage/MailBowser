@@ -187,11 +187,11 @@ public class Account implements IAccount {
      *                   will be fetched
      */
     private void fetch(boolean cleanFetch) {
-        incomingServer.fetch(getUsername(), password, cleanFetch, new Callback<List<IEmail>>() {
+        incomingServer.fetch(getUsername(), password, cleanFetch, new Callback<IEmail>() {
             @Override
-            public void onSuccess(List<IEmail> object) {
-                emails.addAll(object);
-                EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS, object));
+            public void onSuccess(IEmail object) {
+                emails.add(object);
+                EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAIL, object));
             }
 
             @Override
