@@ -27,7 +27,7 @@
               <Insets left="10.0" right="10.0" top="10.0" />
           </GridPane.margin>
       </Label>
-      <TextField fx:id="receiver" prefHeight="40.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
+      <TextField fx:id="receivers" prefHeight="40.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" />
          </GridPane.margin></TextField>

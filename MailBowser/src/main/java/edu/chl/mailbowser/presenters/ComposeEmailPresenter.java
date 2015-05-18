@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -34,12 +35,12 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
     // Assign the fields from the view to variables via the fx:id attribute
     // Note that these variables belong to the javafx.scene.control package
-    @FXML private TextField receiver;
+    @FXML private TextField receivers;
     @FXML private TextField subject;
     @FXML private TextArea content;
     @FXML private WebView markdown;
 
-    public ComposeEmailPresenter(String recipient, String subject, String content) {
+    public ComposeEmailPresenter(String recipients, String subject, String content) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ComposeEmailView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -52,7 +53,7 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
         getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
 
-        setReceiver(recipient);
+        setReceiver(recipients);
         setSubject(subject);
         setContent(content);
     }
@@ -76,8 +77,8 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
         AccountHandler.getInstance().getAccount().send(email);
     }
 
-    public void setReceiver(String value) {
-        receiver.textProperty().set(value);
+    public void setReceivers(String value) {
+        receivers.textProperty().set(value);
     }
 
     public void setSubject(String value) {
@@ -86,6 +87,23 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
     public void setContent(String value) {
         content.textProperty().set(value);
+    }
+
+    /**
+     * Parses the string in the recipients field and returns a list of IAddresses.
+     *
+     * @param addressString a string with addresses to parse, separated by comma
+     * @return a list of parsed IAddresses
+     */
+    public List<IAddress> parseAddresses(String addressString) {
+        String[] addressArray = receivers.getText().split(",");
+
+        List<IAddress> addressList = new ArrayList<>();
+        for (String address : addressArray) {
+            addressList.add(new Address(address));
+        }
+
+        return addressList;
     }
 
     @Override
