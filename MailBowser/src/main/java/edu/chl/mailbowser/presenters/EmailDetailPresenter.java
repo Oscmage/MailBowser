@@ -2,13 +2,12 @@ package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
-import edu.chl.mailbowser.tag.models.Tag;
 import edu.chl.mailbowser.tag.views.TagListItemPresenter;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -65,19 +64,29 @@ public class EmailDetailPresenter implements IObserver, Initializable {
         );
     }
 
-    public void removeTagActionPerformed() {
-        TagHandler.getInstance().removeTag(new Tag("")); // TODO changes so removeTag takes the tag.
-    }
-
     @Override
     public void onEvent(IEvent evt) {
-        if(evt.getType() == EventType.SELECTED_EMAIL) {
-            this.email = (Email) evt.getValue();
-            updateView();
-        } else if (evt.getType() == EventType.REMOVE_TAG) {
-            // something
-        } else if (evt.getType() == EventType.ADD_TAG){
-            replaceListViewContent(TagHandler.getInstance().getTags(this.email));
+        Platform.runLater(
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt) {
+        switch (evt.getType()) {
+            case SELECTED_EMAIL:
+                this.email = (Email) evt.getValue();
+                updateView();
+                break;
+            case REMOVE_TAG:
+                break;
+            case ADD_TAG:
+                replaceListViewContent(TagHandler.getInstance().getTags(this.email));
+                break;
+            case GUI_REMOVE_TAG:
+                ITag tag = (ITag) evt.getValue();
+                TagHandler.getInstance().removeTag(this.email, tag);
+                updateView();
+                break;
         }
     }
 
