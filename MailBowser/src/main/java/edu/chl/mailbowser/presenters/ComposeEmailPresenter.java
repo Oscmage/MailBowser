@@ -95,8 +95,8 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
      * @param addressString a string with addresses to parse, separated by comma
      * @return a list of parsed IAddresses
      */
-    public List<IAddress> parseAddresses(String addressString) {
-        String[] addressArray = receivers.getText().split(",");
+    public static List<IAddress> parseAddresses(String addressString) {
+        String[] addressArray = addressString.split(", ");
 
         List<IAddress> addressList = new ArrayList<>();
         for (String address : addressArray) {
