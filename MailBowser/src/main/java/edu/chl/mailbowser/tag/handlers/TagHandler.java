@@ -32,7 +32,7 @@ public class TagHandler{
      * @param email
      * @param tag
      */
-    public void addTag(IEmail email, ITag tag){
+    public synchronized void addTag(IEmail email, ITag tag){
         if (!tags.containsKey(tag)) {
             tags.put(tag, new HashSet<>());
         }
@@ -80,7 +80,7 @@ public class TagHandler{
      * @param email
      * @param tag
      */
-    public void removeTag(IEmail email,ITag tag){
+    public synchronized void removeTag(IEmail email,ITag tag){
         Set<ITag> tagSet = emails.get(email);
         tagSet.remove(tag);
         if (tagSet.isEmpty()) {
@@ -99,7 +99,7 @@ public class TagHandler{
      * Removes the specified tag completly
      * @param tag
      */
-    public void removeTag(ITag tag) {
+    public synchronized void removeTag(ITag tag) {
         Set<IEmail> emailSet = tags.remove(tag);
 
         for (IEmail email : emailSet) { 
