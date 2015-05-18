@@ -1,8 +1,8 @@
 package edu.chl.mailbowser.tag.views;
 
-import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.event.IEvent;
-import edu.chl.mailbowser.event.IObserver;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
+import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.tag.models.ITag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,9 +18,8 @@ import java.util.ResourceBundle;
 /**
  * Created by OscarEvertsson on 12/05/15.
  */
-public class TagListItemPresenter extends Pane implements Initializable, IObserver{
+public class TagListItemPresenter extends Pane implements Initializable{
 
-    private IEmail email;
     private ITag tag;
 
     @FXML protected Label tagLabel;
@@ -59,15 +58,7 @@ public class TagListItemPresenter extends Pane implements Initializable, IObserv
     }
 
     @FXML private void removeTagButtonOnAction(ActionEvent event) {
-        //TagHandler.getInstance().removeTag(this.email, this.tag);
+        EventBus.INSTANCE.publish(new Event(EventType.GUI_REMOVE_TAG,this.tag));
     }
 
-    @Override
-    public void onEvent(IEvent evt) {
-        switch (evt.getType()) {
-            case SELECTED_EMAIL:
-                this.email = (IEmail) evt.getValue();
-                break;
-        }
-    }
 }
