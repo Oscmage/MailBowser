@@ -17,5 +17,6 @@ public enum EventType {
     SEND_EMAIL_FAIL,
     SELECTED_TAG,
     CLEAR_EMAILS,
-    SEARCH
+    SEARCH,
+    GUI_REMOVE_TAG
 }
