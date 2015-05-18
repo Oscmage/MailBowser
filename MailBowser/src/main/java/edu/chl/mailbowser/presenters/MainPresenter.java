@@ -24,8 +24,8 @@ public class MainPresenter {
         Stage newStage = new Stage();
         Parent node = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AddAccountView.fxml"));
         newStage.setTitle("Add Account");
-
-        Scene scene = new Scene(node, 960, 600);
+        
+        Scene scene = new Scene(node, node.prefWidth(0), node.prefHeight(0));
 
         newStage.setScene(scene);
         newStage.show();
