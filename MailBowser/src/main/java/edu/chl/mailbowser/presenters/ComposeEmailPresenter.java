@@ -63,7 +63,7 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
         // Declare receivers
         List<IAddress> receivers = new ArrayList<IAddress>();
-        receivers.add(new Address(this.receivers.getText()));
+        receivers.addAll(parseAddresses(this.receivers.getText()));
 
         //Convert markdown to html
         String html = null;
