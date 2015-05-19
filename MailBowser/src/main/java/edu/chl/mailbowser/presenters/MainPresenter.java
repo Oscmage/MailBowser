@@ -53,7 +53,6 @@ public class MainPresenter implements IObserver, Initializable {
 
     }
 
-
     @Override
     public void onEvent(IEvent evt) {
         if(evt.getType()==EventType.CLOSE_THIS){

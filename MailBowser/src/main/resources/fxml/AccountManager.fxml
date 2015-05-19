@@ -5,15 +5,15 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox prefHeight="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:controller="edu.chl.mailbowser.presenters.AccountManagerPresenter" prefHeight="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox>
          <children>
-            <ListView prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="accountsList" prefWidth="200.0" VBox.vgrow="ALWAYS" />
             <HBox spacing="5.0">
                <children>
-                  <Button maxHeight="40.0" maxWidth="92.5" minHeight="40.0" minWidth="92.5" mnemonicParsing="false" prefWidth="92.5" text="Add" />
-                  <Button maxHeight="40.0" maxWidth="92.5" minHeight="40.0" minWidth="92.5" mnemonicParsing="false" prefWidth="92.5" text="Delete" />
+                  <Button fx:id="addAccount" maxHeight="40.0" maxWidth="92.5" minHeight="40.0" minWidth="92.5" mnemonicParsing="false" prefWidth="92.5" text="Add" />
+                  <Button fx:id="deleteAccount" maxHeight="40.0" maxWidth="92.5" minHeight="40.0" minWidth="92.5" mnemonicParsing="false" prefWidth="92.5" text="Delete" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -39,15 +39,15 @@
                <children>
                   <Label alignment="CENTER_RIGHT" text="Type" textAlignment="RIGHT" GridPane.halignment="RIGHT" />
                   <Label alignment="CENTER_RIGHT" text="Address" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="address" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label alignment="CENTER_RIGHT" text="Password" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                  <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" />
+                  <ChoiceBox fx:id="serverTypes" prefWidth="150.0" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <HBox alignment="CENTER_RIGHT" spacing="5.0">
                <children>
-                  <Button alignment="CENTER" maxHeight="40.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" prefHeight="40.0" text="Save" VBox.vgrow="NEVER" />
+                  <Button fx:id="saveAccount" alignment="CENTER" maxHeight="40.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" prefHeight="40.0" text="Save" VBox.vgrow="NEVER" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
