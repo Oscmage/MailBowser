@@ -21,13 +21,17 @@ import java.util.ResourceBundle;
 /**
  * Created by filip on 04/05/15.
  */
-public class MainPresenter implements IObserver {
+public class MainPresenter implements IObserver, Initializable {
     @FXML MenuItem addAccountMenuItem;
     Stage newStage;
+    Stage accountManager;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        EventBus.INSTANCE.register(this);
+    }
 
     public void onAction() throws IOException {
-        EventBus.INSTANCE.register(this);
-
         newStage = new Stage();
         Parent node = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AddAccountView.fxml"));
         newStage.setTitle("Add Account");
@@ -38,6 +42,16 @@ public class MainPresenter implements IObserver {
         newStage.show();
     }
 
+    public void openAccountManager() throws IOException {
+
+        Parent fxml = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AccountManager.fxml"));
+
+        accountManager = new Stage();
+        accountManager.setTitle("Account Manager");
+        accountManager.setScene(new Scene(fxml, 400, 300));
+        accountManager.show();
+
+    }
 
     @Override
     public void onEvent(IEvent evt) {

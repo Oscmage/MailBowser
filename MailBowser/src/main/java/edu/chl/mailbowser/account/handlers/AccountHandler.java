@@ -3,6 +3,9 @@ package edu.chl.mailbowser.account.handlers;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.io.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by mats on 11/05/15.
  *
@@ -10,6 +13,7 @@ import edu.chl.mailbowser.io.*;
  */
 public class AccountHandler implements IAccountHandler{
     private IAccount account;
+    private List<IAccount> accounts = new ArrayList<>();
 
     /**
      * Sets the account.
@@ -29,6 +33,11 @@ public class AccountHandler implements IAccountHandler{
     @Override
     public IAccount getAccount() {
         return account;
+    }
+
+    @Override
+    public List<IAccount> getAccounts() {
+        return accounts;
     }
 
     /**
