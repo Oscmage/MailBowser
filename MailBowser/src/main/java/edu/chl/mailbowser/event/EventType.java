@@ -19,5 +19,6 @@ public enum EventType {
     CLEAR_EMAILS,
     SEARCH,
     CLOSE_THIS,
-    GUI_REMOVE_TAG
+    GUI_REMOVE_TAG,
+    DELETE_TAG
 }

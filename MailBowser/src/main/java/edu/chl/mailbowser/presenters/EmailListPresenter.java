@@ -9,6 +9,8 @@ import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.search.Searcher;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
+import edu.chl.mailbowser.tag.models.ITag;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -30,6 +33,7 @@ import java.util.stream.Collectors;
 public class EmailListPresenter implements Initializable, IObserver {
 
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
+    private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
     // this list holds all EmailListViewItems. when you add an item to this list, emailListListView will update
     // itself automatically
@@ -144,6 +148,10 @@ public class EmailListPresenter implements Initializable, IObserver {
             case CLEAR_EMAILS:
                 Platform.runLater(
                         () -> clearEmails()
+                );
+            case SELECTED_TAG:
+                Platform.runLater(
+                        () -> replaceListViewContent(new ArrayList<>(tagHandler.getEmails((ITag)evt.getValue())))
                 );
         }
     }
