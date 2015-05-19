@@ -49,29 +49,13 @@ public class Main extends Application {
 
     private static void load() {
         boolean loadAccountsSuccessful = accountHandler.readAccounts("Accounts.ser");
-        boolean loadAccountSuccessful = accountHandler.readAccount("Account.ser");
         boolean loadTagHandlerSuccessful = tagHandler.readTags("Tags.ser");
-
-        // create a new account if no account was found on disk
-        if (!loadAccountSuccessful) {
-            System.out.println("load: failed to load account");
-
-            accountHandler.setAccount(new Account(
-                    new Address("mailbows3r@gmail.com"),
-                    "VG5!qBY&#f$QCmV", // It really doesn't get more Open Source™ than this
-                    MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
-                    MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL)
-            ));
-        } else {
-            System.out.println("load: loaded account from Account.ser");
-            System.out.println(accountHandler.getAccount());
-        }
 
         // create a new account if no account was found on disk
         if (!loadAccountsSuccessful) {
             System.out.println("load: failed to load accounts");
 
-            accountHandler.setAccount(new Account(
+            accountHandler.addAccount(new Account(
                     new Address("mailbows3r@gmail.com"),
                     "VG5!qBY&#f$QCmV", // It really doesn't get more Open Source™ than this
                     MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
@@ -92,7 +76,6 @@ public class Main extends Application {
 
     private static void save() {
         accountHandler.writeAccounts("Accounts.ser");
-        accountHandler.writeAccount("Account.ser");
         tagHandler.writeTags("Tags.ser");
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
  * Created by OscarEvertsson on 19/05/15.
  */
 public interface IAccountHandler {
-
+    void addAccount(IAccount account);
     void setAccount(IAccount account);
     IAccount getAccount();
     List<IAccount> getAccounts();

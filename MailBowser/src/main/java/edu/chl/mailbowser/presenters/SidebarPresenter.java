@@ -86,14 +86,17 @@ public class SidebarPresenter implements IObserver, Initializable {
                 Platform.runLater(
                         () -> updateView(tagHandler.getTags((IEmail)evt.getValue()))
                 );
+                break;
             case ADD_TAG:
                 Platform.runLater(
                         () -> updateView((ITag)evt.getValue())
                 );
+                break;
             case DELETE_TAG:
                 Platform.runLater(
                         () -> deleteTag((SidebarViewItemPresenter)evt.getValue())
                 );
+                break;
         }
     }
 
