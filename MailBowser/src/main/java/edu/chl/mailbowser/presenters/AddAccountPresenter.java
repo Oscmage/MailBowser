@@ -37,8 +37,10 @@ public class AddAccountPresenter {
                 MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL));
         if(!account.testConnect()){
             errorLabel.setText("Could not connect to server");
-        }else {
-            accountHandler.setAccount(account);
+        }else if(accountHandler.getAccounts().contains(account)) {
+            errorLabel.setText("This account already exists");
+        } else {
+            accountHandler.addAccount(account);
         }
         EventBus.INSTANCE.publish(new Event(EventType.CLOSE_THIS,this));
     }

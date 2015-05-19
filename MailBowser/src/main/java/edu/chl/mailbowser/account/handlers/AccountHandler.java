@@ -27,6 +27,11 @@ public class AccountHandler implements IAccountHandler{
         this.account = account;
     }
 
+    @Override
+    public void addAccount(IAccount account) {
+        accounts.add(account);
+    }
+
     /**
      * Returns the account
      *
