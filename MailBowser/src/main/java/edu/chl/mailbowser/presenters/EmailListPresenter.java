@@ -54,7 +54,7 @@ public class EmailListPresenter implements Initializable, IObserver {
 
         emailListListView.setItems(sortedObservableEmailList);
 
-        replaceListViewContent(accountHandler.getAccount().getEmails());
+        replaceListViewContent(accountHandler.getAllEmails());
     }
 
     /**
@@ -88,7 +88,7 @@ public class EmailListPresenter implements Initializable, IObserver {
      * @param query the query to search for
      */
     private void search(String query) {
-        List<IEmail> emails = accountHandler.getAccount().getEmails();
+        List<IEmail> emails = accountHandler.getAllEmails();
 
         if (!query.equals("")) {
             searchActivated = true;
