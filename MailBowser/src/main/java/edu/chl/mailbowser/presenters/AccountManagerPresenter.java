@@ -3,6 +3,7 @@ package edu.chl.mailbowser.presenters;
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.factories.MailServerFactory;
 import edu.chl.mailbowser.account.handlers.IAccountHandler;
+import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.event.EventBus;
@@ -89,9 +90,38 @@ public class AccountManagerPresenter implements Initializable {
 
     @FXML
     protected void saveAccount() {
-        IAccount account = accountHandler.getAccount(currentAccount);
-        account.setAddress(new Address(address.getText()));
-        account.setPassword(password.getText());
+        if(address.getText().equals("") || password.getText().equals("")) {
+            System.out.println("Address or password field was empty. Aborting save.");
+        } else {
+            IAccount account = accountHandler.getAccount(currentAccount);
+            account.setAddress(new Address(address.getText()));
+            account.setPassword(password.getText());
+        }
+    }
+
+    @FXML
+    protected void addAccount() {
+        currentAccount = new Account(
+                new Address(""),
+                "",
+                MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
+                MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL)
+        );
+        address.setText("");
+        password.setText("");
+    }
+
+    @FXML
+    protected void deleteAccount() {
+        int currentIndex = accountsList.getItems().indexOf(currentAccount);
+
+        if(currentIndex > 0) {
+            accountsList.getSelectionModel().select(currentIndex - 1);
+            accountHandler.getAccounts().remove(currentAccount);
+            updateAccountsList();
+        } else {
+            System.out.println("You need at least one account. Aborting deletion.");
+        }
     }
 
     class ServerType {
