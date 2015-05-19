@@ -15,14 +15,7 @@ import java.util.Set;
 /**
  * Created by OscarEvertsson on 29/04/15.
  */
-public class TagHandler{
-    private static TagHandler instance = new TagHandler();
-
-    public static TagHandler getInstance(){
-        return instance;
-    }
-
-    private TagHandler(){}
+public class TagHandler implements ITagHandler{
 
     private Map<ITag,Set<IEmail>> tags = new HashMap<>();
     private Map<IEmail,Set<ITag>> emails = new HashMap<>();
@@ -32,7 +25,8 @@ public class TagHandler{
      * @param email
      * @param tag
      */
-    public void addTag(IEmail email, ITag tag){
+    @Override
+    public synchronized void addTag(IEmail email, ITag tag){
         if (!tags.containsKey(tag)) {
             tags.put(tag, new HashSet<>());
         }
@@ -51,6 +45,7 @@ public class TagHandler{
      * @param tag
      * @return
      */
+    @Override
     public Set<IEmail> getEmails(ITag tag){
         return new HashSet<>(tags.get(tag));
     }
@@ -60,6 +55,7 @@ public class TagHandler{
      * @param email
      * @return
      */
+    @Override
     public Set<ITag> getTags(IEmail email){
         if(emails.get(email) != null) {
             return new HashSet<>(emails.get(email));
@@ -71,6 +67,7 @@ public class TagHandler{
      * returns the tag(s).
      * @return
      */
+    @Override
     public Set<ITag> getTags(){
         return tags.keySet();
     }
@@ -80,18 +77,24 @@ public class TagHandler{
      * @param email
      * @param tag
      */
-    public void removeTag(IEmail email,ITag tag){
-        Set<ITag> tagSet = emails.get(email);
-        tagSet.remove(tag);
-        if (tagSet.isEmpty()) {
-            emails.remove(email);
+    @Override
+    public synchronized void removeTag(IEmail email,ITag tag){
+        if (emails.containsKey(email)) {
+            Set<ITag> tagSet = emails.get(email);
+            tagSet.remove(tag);
+            if (tagSet.isEmpty()) {
+                emails.remove(email);
+            }
         }
 
-        Set<IEmail> emailSet = tags.get(tag);
-        emailSet.remove(email);
-        if (emailSet.isEmpty()) {
-            tags.remove(tag);
+        if (tags.containsKey(tag)) {
+            Set<IEmail> emailSet = tags.get(tag);
+            emailSet.remove(email);
+            if (emailSet.isEmpty()) {
+                tags.remove(tag);
+            }
         }
+
         EventBus.INSTANCE.publish(new Event(EventType.REMOVE_TAG,tag));
     }
 
@@ -99,7 +102,8 @@ public class TagHandler{
      * Removes the specified tag completly
      * @param tag
      */
-    public void removeTag(ITag tag) {
+    @Override
+    public synchronized void removeTag(ITag tag) {
         Set<IEmail> emailSet = tags.remove(tag);
 
         for (IEmail email : emailSet) { 
@@ -118,6 +122,7 @@ public class TagHandler{
      * @param filename location of the file
      * @return true if the reading of tags was successful
      */
+    @Override
     public boolean readTags(String filename){
         IObjectReader<HashMap> objectReader = new ObjectReader<>();
 
@@ -142,6 +147,7 @@ public class TagHandler{
      * @param filename the location of the file
      * @return return true on success
      */
+    @Override
     public boolean writeTags(String filename){
         IObjectWriter<HashMap> objectReaderWriter = new ObjectWriter<>();
         return objectReaderWriter.write((HashMap)tags, filename);
