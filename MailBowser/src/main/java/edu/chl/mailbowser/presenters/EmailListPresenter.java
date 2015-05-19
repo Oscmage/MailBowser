@@ -1,6 +1,7 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.MainHandler;
+import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.email.views.EmailListViewItem;
 import edu.chl.mailbowser.event.EventBus;
@@ -28,6 +29,8 @@ import java.util.stream.Collectors;
  */
 public class EmailListPresenter implements Initializable, IObserver {
 
+    private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
+
     // this list holds all EmailListViewItems. when you add an item to this list, emailListListView will update
     // itself automatically
     @FXML private ObservableList<EmailListViewItem> observableEmailList = FXCollections.observableArrayList();
@@ -47,7 +50,7 @@ public class EmailListPresenter implements Initializable, IObserver {
 
         emailListListView.setItems(sortedObservableEmailList);
 
-        replaceListViewContent(AccountHandler.getInstance().getAccount().getEmails());
+        replaceListViewContent(accountHandler.getAccount().getEmails());
     }
 
     /**
@@ -81,7 +84,7 @@ public class EmailListPresenter implements Initializable, IObserver {
      * @param query the query to search for
      */
     private void search(String query) {
-        List<IEmail> emails = AccountHandler.getInstance().getAccount().getEmails();
+        List<IEmail> emails = accountHandler.getAccount().getEmails();
 
         if (!query.equals("")) {
             searchActivated = true;

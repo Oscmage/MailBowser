@@ -1,30 +1,24 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.MainHandler;
+import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.email.models.Address;
-import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.Email;
+import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
-import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
-
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.InputMethodEvent;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import org.markdown4j.Markdown4jProcessor;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,6 +26,8 @@ import java.util.ResourceBundle;
  * Created by mats on 09/04/15.
  */
 public class ComposeEmailPresenter extends GridPane implements Initializable {
+
+    private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
 
     // Assign the fields from the view to variables via the fx:id attribute
     // Note that these variables belong to the javafx.scene.control package
@@ -74,7 +70,7 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
         }
         // Create a new email and send it
         IEmail email = new Email(receivers, this.subject.getText(), html);
-        AccountHandler.getInstance().getAccount().send(email);
+        accountHandler.getAccount().send(email);
     }
 
     public void setReceivers(String value) {

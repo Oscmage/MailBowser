@@ -1,12 +1,12 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.email.models.Email;
+import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
-import edu.chl.mailbowser.tag.handlers.TagHandler;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.models.Tag;
 import javafx.application.Platform;
@@ -25,12 +25,14 @@ import java.util.Set;
  */
 public class SidebarPresenter implements IObserver, Initializable {
 
+    private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
+
     @FXML private ListView<SidebarViewItemPresenter> sidebarListView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
-        Set<ITag> tags = TagHandler.getInstance().getTags();
+        Set<ITag> tags = tagHandler.getTags();
 
         for(ITag tag : tags) {
             updateView(tag);
@@ -77,7 +79,7 @@ public class SidebarPresenter implements IObserver, Initializable {
         switch (evt.getType()) {
             case FETCH_EMAIL:
                 Platform.runLater(
-                        () -> updateView(TagHandler.getInstance().getTags((IEmail)evt.getValue()))
+                        () -> updateView(tagHandler.getTags((IEmail)evt.getValue()))
                 );
 
         }

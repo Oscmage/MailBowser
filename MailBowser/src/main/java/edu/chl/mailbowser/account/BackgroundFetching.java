@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.account;
 
-import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.models.IAccount;
 
 /**
@@ -9,7 +9,7 @@ import edu.chl.mailbowser.account.models.IAccount;
 public class BackgroundFetching extends Thread {
     private static BackgroundFetching instance = new BackgroundFetching();
 
-    private IAccount account = AccountHandler.getInstance().getAccount();
+    private IAccount account = MainHandler.INSTANCE.getAccountHandler().getAccount();
 
     private BackgroundFetching(){}
 
