@@ -38,8 +38,8 @@ public class AccountHandler implements IAccountHandler{
      * @return the account
      */
     @Override
-    public IAccount getAccount() {
-        return account;
+    public IAccount getAccount(IAccount account) {
+        return accounts.get(accounts.indexOf(account));
     }
 
     @Override
