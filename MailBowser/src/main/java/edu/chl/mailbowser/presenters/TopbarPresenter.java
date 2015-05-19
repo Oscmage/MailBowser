@@ -1,12 +1,13 @@
 package edu.chl.mailbowser.presenters;
 
 
-import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.MainHandler;
+import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.*;
-import edu.chl.mailbowser.tag.handlers.TagHandler;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,6 +24,8 @@ import java.util.List;
 public class TopbarPresenter implements IObserver {
 
     private IEmail email;
+    private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
+    private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
 
     public TopbarPresenter(){
         EventBus.INSTANCE.register(this);
@@ -49,7 +52,7 @@ public class TopbarPresenter implements IObserver {
     @FXML
     private void addTagOnAction(ActionEvent actionEvent) {
         String text = addTagTextField.getText();
-        TagHandler.getInstance().addTag(this.email, new Tag(text));
+        tagHandler.addTag(this.email, new Tag(text));
     }
 
     @Override
@@ -78,7 +81,7 @@ public class TopbarPresenter implements IObserver {
     // This method is invoked when the "Refetch"-button is pressed, ans id bound via the onAction attribute
     @FXML
     private void refetchButtonOnAction(ActionEvent actionEvent) {
-        IAccount account = AccountHandler.getInstance().getAccount();
+        IAccount account = accountHandler.getAccount();
         account.refetch();
     }
 

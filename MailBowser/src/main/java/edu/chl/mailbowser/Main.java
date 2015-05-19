@@ -2,20 +2,20 @@ package edu.chl.mailbowser;
 
 import edu.chl.mailbowser.account.BackgroundFetching;
 import edu.chl.mailbowser.account.factories.MailServerFactory;
-import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.email.models.Address;
-import edu.chl.mailbowser.tag.handlers.TagHandler;
-import edu.chl.mailbowser.tag.models.Tag;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.*;
-
 public class Main extends Application {
+
+    private static ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
+    private static IAccountHandler accountHandler= MainHandler.INSTANCE.getAccountHandler();
 
     @Override
     public void start(Stage mainStage) throws Exception {
@@ -45,14 +45,14 @@ public class Main extends Application {
     }
 
     private static void load() {
-        boolean loadAccountSuccessful = AccountHandler.getInstance().readAccount("Account.ser");
-        boolean loadTagHandlerSuccessful = TagHandler.getInstance().readTags("Tags.ser");
+        boolean loadAccountSuccessful = accountHandler.readAccount("Account.ser");
+        boolean loadTagHandlerSuccessful = tagHandler.readTags("Tags.ser");
 
         // create a new account if no account was found on disk
         if (!loadAccountSuccessful) {
             System.out.println("load: failed to load account");
 
-            AccountHandler.getInstance().setAccount(new Account(
+            accountHandler.setAccount(new Account(
                     new Address("mailbows3r@gmail.com"),
                     "VG5!qBY&#f$QCmV", // It really doesn't get more Open Source™ than this
                     MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
@@ -60,7 +60,7 @@ public class Main extends Application {
             ));
         } else {
             System.out.println("load: loaded account from Account.ser");
-            System.out.println(AccountHandler.getInstance().getAccount());
+            System.out.println(accountHandler.getAccount());
         }
 
         if(!loadTagHandlerSuccessful){
@@ -71,7 +71,7 @@ public class Main extends Application {
     }
 
     private static void save() {
-        AccountHandler.getInstance().writeAccount("Account.ser");
-        TagHandler.getInstance().writeTags("Tags.ser");
+        accountHandler.writeAccount("Account.ser");
+        tagHandler.writeTags("Tags.ser");
     }
 }

@@ -1,15 +1,15 @@
 package edu.chl.mailbowser.account.models;
 
+import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.Tag;
 
+import javax.mail.*;
+import javax.mail.search.FlagTerm;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import javax.mail.*;
-import javax.mail.search.FlagTerm;
 
 /**
  * Created by jesper on 2015-04-21.
@@ -147,7 +147,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
 
                     message.setFlags(processedFlag, true);
 
-                    TagHandler.getInstance().addTag(email, new Tag(folder.getName()));
+                    MainHandler.INSTANCE.getTagHandler().addTag(email, new Tag(folder.getName()));
 
                     callback.onSuccess(email);
                     //EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAIL, email));

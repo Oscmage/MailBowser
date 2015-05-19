@@ -1,27 +1,27 @@
 package edu.chl.mailbowser.presenters;
 
+import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.factories.MailServerFactory;
-import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.account.models.Account;
-import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 
 /**
  * Created by jesper on 2015-05-18.
  */
 public class AddAccountPresenter {
+
+    private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
 
     @FXML private TextField addressField;
     @FXML private PasswordField passwordField;
@@ -38,7 +38,7 @@ public class AddAccountPresenter {
         if(!account.testConnect()){
             errorLabel.setText("Could not connect to server");
         }else {
-            AccountHandler.getInstance().setAccount(account);
+            accountHandler.setAccount(account);
         }
         EventBus.INSTANCE.publish(new Event(EventType.CLOSE_THIS,this));
     }

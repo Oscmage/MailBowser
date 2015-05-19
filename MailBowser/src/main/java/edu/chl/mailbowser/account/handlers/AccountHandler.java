@@ -8,27 +8,15 @@ import edu.chl.mailbowser.io.*;
  *
  * A singleton for managing accounts.
  */
-public class AccountHandler {
-    private static final AccountHandler instance = new AccountHandler();
-
+public class AccountHandler implements IAccountHandler{
     private IAccount account;
-
-    private AccountHandler() {} // Private constructor to prevent instantiation
-
-    /**
-     * Returns the singleton instance.
-     *
-     * @return the singleton instance
-     */
-    public static AccountHandler getInstance() {
-        return instance;
-    }
 
     /**
      * Sets the account.
      *
      * @param account the account to use
      */
+    @Override
     public void setAccount(IAccount account) {
         this.account = account;
     }
@@ -38,6 +26,7 @@ public class AccountHandler {
      *
      * @return the account
      */
+    @Override
     public IAccount getAccount() {
         return account;
     }
@@ -47,6 +36,7 @@ public class AccountHandler {
      *
      * @return false if no account is found, otherwise true
      */
+    @Override
     public boolean readAccount(String filename) {
         IObjectReader<IAccount> objectReader = new ObjectReader<>();
 
@@ -64,6 +54,7 @@ public class AccountHandler {
      *
      * @return true if the write was successful, otherwise false
      */
+    @Override
     public boolean writeAccount(String filename) {
         IObjectWriter<IAccount> objectReaderWriter = new ObjectWriter<>();
         return objectReaderWriter.write(account, filename);

@@ -1,10 +1,11 @@
 package edu.chl.mailbowser.presenters;
 
+import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
-import edu.chl.mailbowser.tag.handlers.TagHandler;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.views.TagListItemPresenter;
 import javafx.application.Platform;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 public class EmailDetailPresenter implements IObserver, Initializable {
 
     private Email email;
+    private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
     @FXML protected Label subjectLabel;
     @FXML protected Label fromLabel;
@@ -53,7 +55,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
 
         this.webView.getEngine().loadContent(email.getContent());
 
-        replaceListViewContent(TagHandler.getInstance().getTags(this.email));
+        replaceListViewContent(tagHandler.getTags(this.email));
     }
 
     private void replaceListViewContent(Set<ITag> tags) {
@@ -80,11 +82,11 @@ public class EmailDetailPresenter implements IObserver, Initializable {
             case REMOVE_TAG:
                 break;
             case ADD_TAG:
-                replaceListViewContent(TagHandler.getInstance().getTags(this.email));
+                replaceListViewContent(tagHandler.getTags(this.email));
                 break;
             case GUI_REMOVE_TAG:
                 ITag tag = (ITag) evt.getValue();
-                TagHandler.getInstance().removeTag(this.email, tag);
+                tagHandler.removeTag(this.email, tag);
                 updateView();
                 break;
         }
