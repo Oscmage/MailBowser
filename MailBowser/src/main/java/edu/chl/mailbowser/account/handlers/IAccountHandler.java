@@ -11,7 +11,7 @@ import java.util.List;
 public interface IAccountHandler {
     void addAccount(IAccount account);
     void setAccount(IAccount account);
-    IAccount getAccount();
+    IAccount getAccount(IAccount account);
     List<IAccount> getAccounts();
     List<IEmail> getAllEmails();
     boolean readAccount(String filename);

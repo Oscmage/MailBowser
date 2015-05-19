@@ -47,7 +47,7 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" spacing="5.0">
                <children>
-                  <Button fx:id="saveAccount" alignment="CENTER" maxHeight="40.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" prefHeight="40.0" text="Save" VBox.vgrow="NEVER" />
+                  <Button fx:id="saveAccount" alignment="CENTER" maxHeight="40.0" onAction="#saveAccount" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" prefHeight="40.0" text="Save" VBox.vgrow="NEVER" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -4,6 +4,7 @@ import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.factories.MailServerFactory;
 import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.account.models.IAccount;
+import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObservable;
@@ -76,7 +77,7 @@ public class AccountManagerPresenter implements Initializable {
 
     @FXML
     private void updateView() {
-        address.setText(currentAccount.getUsername());
+        address.setText(currentAccount.getAddress().toString());
         password.setText(currentAccount.getPassword());
     }
 
@@ -84,6 +85,13 @@ public class AccountManagerPresenter implements Initializable {
     protected void onItemChanged() {
         currentAccount = this.accountsList.getSelectionModel().getSelectedItem();
         updateView();
+    }
+
+    @FXML
+    protected void saveAccount() {
+        IAccount account = accountHandler.getAccount(currentAccount);
+        account.setAddress(new Address(address.getText()));
+        account.setPassword(password.getText());
     }
 
     class ServerType {

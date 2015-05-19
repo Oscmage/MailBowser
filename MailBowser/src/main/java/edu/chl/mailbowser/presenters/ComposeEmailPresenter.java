@@ -72,7 +72,7 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
         IEmail email = new Email(receivers, this.subject.getText(), html);
 
         // TODO: Fix sender
-        accountHandler.getAccount().send(email);
+        accountHandler.getAccount(accountHandler.getAccounts().get(0)).send(email);
     }
 
     public void setReceivers(String value) {
