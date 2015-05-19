@@ -11,6 +11,7 @@ import edu.chl.mailbowser.account.models.OutgoingServer;
  * A factory class for creating configured MailServer objects.
  */
 public class MailServerFactory {
+
     /**
      * Types of pre-defined mail servers.
      */
