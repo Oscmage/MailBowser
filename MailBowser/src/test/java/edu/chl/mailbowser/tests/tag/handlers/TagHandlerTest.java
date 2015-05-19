@@ -1,16 +1,14 @@
-package edu.chl.mailbowser.tag.handlers;
+package edu.chl.mailbowser.tests.tag.handlers;
 
 import edu.chl.mailbowser.account.models.MockEmail;
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.HashSet;
-import java.util.Set;
 
 
 /**
