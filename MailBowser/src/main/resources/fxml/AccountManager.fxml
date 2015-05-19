@@ -12,8 +12,8 @@
             <ListView fx:id="accountsList" prefWidth="200.0" VBox.vgrow="ALWAYS" onKeyPressed="#onItemChanged" onMouseClicked="#onItemChanged" />
             <HBox spacing="5.0">
                <children>
-                  <Button fx:id="addAccount" maxHeight="40.0" maxWidth="92.5" minHeight="40.0" minWidth="92.5" mnemonicParsing="false" prefWidth="92.5" text="Add" />
-                  <Button fx:id="deleteAccount" maxHeight="40.0" maxWidth="92.5" minHeight="40.0" minWidth="92.5" mnemonicParsing="false" prefWidth="92.5" text="Delete" />
+                  <Button fx:id="addAccount" onAction="#addAccount" maxHeight="40.0" maxWidth="92.5" minHeight="40.0" minWidth="92.5" mnemonicParsing="false" prefWidth="92.5" text="Add" />
+                  <Button fx:id="deleteAccount" onAction="#deleteAccount" maxHeight="40.0" maxWidth="92.5" minHeight="40.0" minWidth="92.5" mnemonicParsing="false" prefWidth="92.5" text="Delete" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
