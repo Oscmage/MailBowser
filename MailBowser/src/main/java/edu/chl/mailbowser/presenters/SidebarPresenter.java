@@ -70,18 +70,13 @@ public class SidebarPresenter implements IObserver, Initializable {
     }
 
     /**
-     * If the current selected item is "All emails"(index 0) the method sends an event with null
-     * since All emails isn't a tag.
-     * Otherwise the method sends an event with the chosen tag.
+     * Sends an event with the chosen listItem's tag.
      * @param event
      */
     public void onItemChanged(Event event) {
-        if(sidebarListView.getSelectionModel().getSelectedIndex() != 0) {
-            EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_TAG, null));
-        } else {
             EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_TAG,
-                    sidebarListView.getSelectionModel().getSelectedItem()));
-        }
+                    sidebarListView.getSelectionModel().getSelectedItem().getTag()));
+
     }
 
     @Override
