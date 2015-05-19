@@ -14,4 +14,5 @@ public interface IAccountHandler {
     List<IAccount> getAccounts();
     boolean readAccount(String filename);
     boolean writeAccount(String filename);
+    boolean writeAccounts(String filename);
 }
