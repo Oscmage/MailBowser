@@ -1,8 +1,10 @@
 package edu.chl.mailbowser.account.handlers;
 
 import edu.chl.mailbowser.account.models.IAccount;
+import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.io.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ import java.util.List;
  */
 public class AccountHandler implements IAccountHandler{
     private IAccount account;
-    private List<IAccount> accounts = new ArrayList<>();
+    private ArrayList<IAccount> accounts = new ArrayList<>();
 
     /**
      * Sets the account.
@@ -40,6 +42,17 @@ public class AccountHandler implements IAccountHandler{
         return accounts;
     }
 
+    @Override
+    public List<IEmail> getAllEmails() {
+        List<IEmail> emails = new ArrayList<IEmail>();
+
+        for(IAccount account : accounts) {
+            emails.addAll(account.getEmails());
+        }
+
+        return emails;
+    }
+
     /**
      * Reads an account from disk.
      *
@@ -59,6 +72,24 @@ public class AccountHandler implements IAccountHandler{
     }
 
     /**
+     * Reads a list of accounts from disk.
+     *
+     * @return false if no account is found, otherwise true
+     */
+    @Override
+    public boolean readAccounts(String filename) {
+        IObjectReader<ArrayList<IAccount>> objectReader = new ObjectReader<>();
+
+        try {
+            accounts = objectReader.read(filename);
+        } catch (ObjectReadException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Writes the account to disk.
      *
      * @return true if the write was successful, otherwise false
@@ -67,6 +98,17 @@ public class AccountHandler implements IAccountHandler{
     public boolean writeAccount(String filename) {
         IObjectWriter<IAccount> objectReaderWriter = new ObjectWriter<>();
         return objectReaderWriter.write(account, filename);
+    }
+
+    /**
+     * Writes the list of accounts to disk.
+     *
+     * @return true if the write was successful, otherwise false
+     */
+    @Override
+    public boolean writeAccounts(String filename) {
+        IObjectWriter<ArrayList<IAccount>> objectReaderWriter = new ObjectWriter<>();
+        return objectReaderWriter.write(accounts, filename);
     }
 
 }
