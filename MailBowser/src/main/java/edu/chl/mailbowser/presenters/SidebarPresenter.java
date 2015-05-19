@@ -7,6 +7,7 @@ import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
+import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.models.Tag;
 import javafx.application.Platform;
@@ -32,6 +33,10 @@ public class SidebarPresenter implements IObserver, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
+        updateView();
+    }
+
+    public void updateView() {
         Set<ITag> tags = tagHandler.getTags();
 
         for(ITag tag : tags) {
@@ -59,19 +64,19 @@ public class SidebarPresenter implements IObserver, Initializable {
         sidebarListView.setItems(observableList);
     }
 
+    public void deleteTag(SidebarViewItemPresenter listItem) {
+        tagHandler.removeTag(listItem.getTag());
+        sidebarListView.getItems().remove(listItem);
+    }
+
     /**
-     * If the current selected item is "All emails"(index 0) the method sends an event with null
-     * since All emails isn't a tag.
-     * Otherwise the method sends an event with the chosen tag.
+     * Sends an event with the chosen listItem's tag.
      * @param event
      */
     public void onItemChanged(Event event) {
-        if(sidebarListView.getSelectionModel().getSelectedIndex() != 0) {
-            EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_TAG, null));
-        } else {
             EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_TAG,
-                    sidebarListView.getSelectionModel().getSelectedItem()));
-        }
+                    sidebarListView.getSelectionModel().getSelectedItem().getTag()));
+
     }
 
     @Override
@@ -81,7 +86,17 @@ public class SidebarPresenter implements IObserver, Initializable {
                 Platform.runLater(
                         () -> updateView(tagHandler.getTags((IEmail)evt.getValue()))
                 );
-
+                break;
+            case ADD_TAG:
+                Platform.runLater(
+                        () -> updateView((ITag)evt.getValue())
+                );
+                break;
+            case DELETE_TAG:
+                Platform.runLater(
+                        () -> deleteTag((SidebarViewItemPresenter)evt.getValue())
+                );
+                break;
         }
     }
 

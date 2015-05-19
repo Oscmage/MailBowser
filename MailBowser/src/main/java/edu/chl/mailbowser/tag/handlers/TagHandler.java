@@ -17,8 +17,6 @@ import java.util.Set;
  */
 public class TagHandler implements ITagHandler{
 
-
-
     private Map<ITag,Set<IEmail>> tags = new HashMap<>();
     private Map<IEmail,Set<ITag>> emails = new HashMap<>();
 

@@ -81,8 +81,9 @@ public class TopbarPresenter implements IObserver {
     // This method is invoked when the "Refetch"-button is pressed, ans id bound via the onAction attribute
     @FXML
     private void refetchButtonOnAction(ActionEvent actionEvent) {
-        IAccount account = accountHandler.getAccount();
-        account.refetch();
+        for(IAccount account : accountHandler.getAccounts()) {
+            account.refetch();
+        }
     }
 
     @FXML

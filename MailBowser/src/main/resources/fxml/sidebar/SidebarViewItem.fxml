@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<fx:root type="javafx.scene.layout.FlowPane" alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="200.0" minHeight="200.0" minWidth="200.0" prefHeight="20.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="182.0" minHeight="-Infinity" minWidth="182.0" prefHeight="40.0" prefWidth="182.0" spacing="10.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="button" text="X" />
+      <Button fx:id="button" onAction="#removeTagFromSidebar" text="X" />
       <Label fx:id="name" text="Label" />
    </children>
 </fx:root>

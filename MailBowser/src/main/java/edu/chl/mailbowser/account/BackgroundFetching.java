@@ -3,13 +3,15 @@ package edu.chl.mailbowser.account;
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.models.IAccount;
 
+import java.util.List;
+
 /**
  * Created by jesper on 2015-05-07.
  */
 public class BackgroundFetching extends Thread {
     private static BackgroundFetching instance = new BackgroundFetching();
 
-    private IAccount account = MainHandler.INSTANCE.getAccountHandler().getAccount();
+    private List<IAccount> accounts = MainHandler.INSTANCE.getAccountHandler().getAccounts();
 
     private BackgroundFetching(){}
 
@@ -23,7 +25,9 @@ public class BackgroundFetching extends Thread {
     @Override
     public void run() {
         while (!this.isInterrupted()) {
-            account.fetch();
+            for(IAccount account : accounts) {
+                account.fetch();
+            }
             try {
                 this.sleep(30000);
             } catch (InterruptedException e) {
