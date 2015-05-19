@@ -6,7 +6,7 @@
 
 <fx:root type="javafx.scene.layout.FlowPane" alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="200.0" minHeight="200.0" minWidth="200.0" prefHeight="20.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="button" text="X" />
+      <Button fx:id="button" text="X" onAction="#removeTagFromSidebar" />
       <Label fx:id="name" text="Label" />
    </children>
 </fx:root>
