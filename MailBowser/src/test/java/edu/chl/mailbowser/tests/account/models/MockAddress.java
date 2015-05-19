@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.account.models;
+package edu.chl.mailbowser.tests.account.models;
 
 import edu.chl.mailbowser.email.models.IAddress;
 
