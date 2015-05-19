@@ -1,5 +1,8 @@
-package edu.chl.mailbowser.email.models;
+package edu.chl.mailbowser.tests.email.models;
 
+import edu.chl.mailbowser.email.models.Address;
+import edu.chl.mailbowser.email.models.Email;
+import edu.chl.mailbowser.email.models.IAddress;
 import org.junit.Before;
 import org.junit.Test;
 

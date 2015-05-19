@@ -1,7 +1,8 @@
-package edu.chl.mailbowser.presenters;
+package edu.chl.mailbowser.tests.presenters;
 
 import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.email.models.IAddress;
+import edu.chl.mailbowser.presenters.ComposeEmailPresenter;
 import org.junit.Test;
 
 import java.util.List;

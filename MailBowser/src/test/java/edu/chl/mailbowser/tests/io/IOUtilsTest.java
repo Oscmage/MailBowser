@@ -1,9 +1,7 @@
-package edu.chl.mailbowser.io;
+package edu.chl.mailbowser.tests.io;
 
+import edu.chl.mailbowser.io.IOUtils;
 import org.junit.Test;
-
-import java.io.Closeable;
-import java.io.FileInputStream;
 
 import static org.junit.Assert.*;
 

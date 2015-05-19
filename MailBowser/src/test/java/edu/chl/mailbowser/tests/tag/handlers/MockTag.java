@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.tag.handlers;
+package edu.chl.mailbowser.tests.tag.handlers;
 
 import edu.chl.mailbowser.tag.models.ITag;
 

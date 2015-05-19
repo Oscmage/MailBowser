@@ -1,14 +1,8 @@
-package edu.chl.mailbowser.account.models;
+package edu.chl.mailbowser.tests.account.models;
 
-import edu.chl.mailbowser.email.models.Address;
-import edu.chl.mailbowser.email.models.Email;
-import edu.chl.mailbowser.email.models.IAddress;
-import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.account.models.Account;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 import static org.junit.Assert.assertTrue;

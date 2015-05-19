@@ -1,5 +1,6 @@
-package edu.chl.mailbowser.event;
+package edu.chl.mailbowser.tests.event;
 
+import edu.chl.mailbowser.event.*;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
