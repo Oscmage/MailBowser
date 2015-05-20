@@ -1,5 +1,7 @@
-package edu.chl.mailbowser.io;
+package edu.chl.mailbowser.tests.io;
 
+import edu.chl.mailbowser.io.ObjectReadException;
+import edu.chl.mailbowser.io.ObjectReader;
 import org.junit.Before;
 import org.junit.Test;
 
