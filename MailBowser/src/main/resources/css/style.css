@@ -2,12 +2,9 @@
 .root {
     -fx-font-size: 12;
     -fx-font-family: Roboto, sans-serif;
-    -fx-background-color: rgba(255,255,255,1);
     -fx-dark: rgba(0,0,0,1);
     -fx-bright: rgba(255,255,255,1);
     -fx-base-color: rgba(250,70,43,1);
-    -fx-min-width: 960;
-    -fx-min-height: 600;
 }
 
 .fontawesome {
@@ -43,7 +40,6 @@
     -fx-text-fill: -fx-bright;
     -fx-cursor: hand;
 }
-
 /* LIST VIEWS */
 
 .list-view {
