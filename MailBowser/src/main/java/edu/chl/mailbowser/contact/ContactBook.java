@@ -1,5 +1,7 @@
 package edu.chl.mailbowser.contact;
 
+import edu.chl.mailbowser.search.Searcher;
+
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -25,8 +27,9 @@ public class ContactBook implements IContactBook{
         return this.contacts;
     }
 
+    
     @Override
     public Set<IContact> getMatchingContacts(String query) {
-        return null;
+        return Searcher.search(this.contacts,query);
     }
 }
