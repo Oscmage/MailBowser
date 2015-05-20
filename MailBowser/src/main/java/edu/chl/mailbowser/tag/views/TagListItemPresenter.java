@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -18,17 +19,17 @@ import java.util.ResourceBundle;
 /**
  * Created by OscarEvertsson on 12/05/15.
  */
-public class TagListItemPresenter extends Pane implements Initializable{
+public class TagListItemPresenter extends HBox implements Initializable{
 
     private ITag tag;
 
-    @FXML protected Label tagLabel;
+    @FXML protected Label name;
 
     public TagListItemPresenter(ITag tag) {
         this();
 
         this.tag = tag;
-        tagLabel.setText(this.tag.getName());
+        name.setText(this.tag.getName());
     }
 
     public TagListItemPresenter() {
@@ -57,7 +58,7 @@ public class TagListItemPresenter extends Pane implements Initializable{
 
     }
 
-    @FXML private void removeTagButtonOnAction(ActionEvent event) {
+    @FXML private void removeTagFromEmail(ActionEvent event) {
         EventBus.INSTANCE.publish(new Event(EventType.GUI_REMOVE_TAG,this.tag));
     }
 
