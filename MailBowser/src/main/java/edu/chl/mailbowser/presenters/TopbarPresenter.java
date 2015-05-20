@@ -45,10 +45,6 @@ public class TopbarPresenter implements IObserver, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        refetchButton.setText("\uf019");
-        forwardButton.setText("\uf061");
-        replyButton.setText("\uf112");
-        replyAllButton.setText("\uf122");
     }
 
     private void openComposeEmailWindow(Stage parentStage, String recipient, String subject, String content) {

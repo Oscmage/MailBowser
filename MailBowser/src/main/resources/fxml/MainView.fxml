@@ -27,7 +27,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <fx:include source="TopbarView.fxml" />
+        <fx:include charset="utf-8" source="TopbarView.fxml" />
         <HBox VBox.vgrow="ALWAYS">
             <children>
                 <fx:include source="sidebar/SidebarView.fxml" />
