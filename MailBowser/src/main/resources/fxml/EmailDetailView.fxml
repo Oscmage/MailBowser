@@ -6,11 +6,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<ScrollPane id="emailDetailScrollPane" fitToHeight="true" fitToWidth="true" prefViewportHeight="521.0" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.EmailDetailPresenter">
-    <content>
-        <VBox id="emailDetailVBox">
-            <children>
-                <GridPane id="emailLetterMetaDataGridPane" maxWidth="1.7976931348623157E308" prefWidth="1.0E7" VBox.vgrow="SOMETIMES">
+
+  <VBox id="emailDetailVBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.EmailDetailPresenter">
+      <children>
+      <VBox id="emailDetailTop">
+         <children>
+                <GridPane id="emailDetailMeta" maxWidth="1.7976931348623157E308" prefWidth="1.0E7" VBox.vgrow="SOMETIMES">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="331.0" minWidth="10.0" prefWidth="250.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="248.0" />
@@ -33,13 +34,10 @@
                         </VBox>
                     </children>
                 </GridPane>
-                <Label fx:id="subjectLabel" styleClass="h1" text="What a wonderful headline" VBox.vgrow="SOMETIMES" />
-            <ListView fx:id="tagListView" id="emailDetailTagsList" orientation="HORIZONTAL" VBox.vgrow="NEVER" />
-            <WebView fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
-            </children>
-        </VBox>
-    </content>
-   <opaqueInsets>
-      <Insets />
-   </opaqueInsets>
-</ScrollPane>
+            <ListView id="emailDetailTagsList" fx:id="tagListView" orientation="HORIZONTAL" VBox.vgrow="NEVER" />
+                <Label id="emailDetailSubject" fx:id="subjectLabel" styleClass="h1" text="What a wonderful headline" wrapText="true" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+      <WebView id="webView" fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
+      </children>
+  </VBox>

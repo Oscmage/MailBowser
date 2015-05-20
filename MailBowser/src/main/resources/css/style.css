@@ -140,9 +140,11 @@
 /* SCROLL BAR */
 
 .scroll-bar {
-    -fx-background-color: transparent;
+    -fx-background-color: derive(-fx-bright, -15%);
     -fx-background-insets: 0;
-    -fx-border-width: 0;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: derive(-fx-bright, -15%);
+
 }
 
 .scroll-bar .track {
@@ -154,7 +156,7 @@
 }
 
 .scroll-bar:hover {
-    -fx-background-color: derive(-fx-bright, -1%);
+    -fx-background-color: derive(-fx-bright, -20%);
 }
 
 .scroll-bar .thumb {
@@ -182,6 +184,8 @@
 .scroll-pane {
     -fx-background-insets: 0;
     -fx-border-width: 0;
+    -fx-box-border: transparent;
+    -fx-border-insets: 0;
 }
 
 /* COMPONENT SPECIFICS */
@@ -200,6 +204,10 @@
 #topbar .button:hover {
     -fx-background-color: -fx-bright;
     -fx-text-fill: -fx-dark;
+}
+
+#sidebar {
+    -fx-border-width: 0 1 0 0;
 }
 
 #sidebar .label {
@@ -246,49 +254,38 @@
     -fx-opacity: 1;
 }
 
-#emailDetailScrollPane {
-    -fx-background-color: transparent;
-}
-
 #emailDetailVBox {
-    -fx-margin: 0;
+    -fx-background-color: -fx-bright;
+    -fx-margin: -1;
     -fx-border-width: 0;
     -fx-background-insets: 0;
+    -fx-border-insets: 0;
 }
 
 #emailDetailTagsList {
     -fx-max-height: 20;
-    -fx-spacing: 10;
+    -fx-padding: 0 10;
 }
-
 
 #emailDetailTagsList .list-cell {
     -fx-padding: 0 0 0 1;
 }
 
-/*
-
-#emailDetailTagsList .list-view .list-cell .button,
-#emailDetailTagsList .list-view:focused .list-cell .button {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-    -fx-padding: 0;
-    -fx-opacity: 0.5;
+#emailDetailTagsList .list-cell:selected {
+    -fx-background-color: -fx-bright;
 }
 
-#emailDetailTagsList .list-view .list-cell:selected .button,
-#emailDetailTagsList .list-view:focused .list-cell:selected .button{
-    -fx-text-fill: -fx-bright;
-    -fx-opacity: 0.75;
+#emailDetailMeta {
+    -fx-padding: 10;
+    -fx-background-color: -fx-bright;
 }
 
-#emailDetailTagsList .list-view .list-cell .button:hover {
-    -fx-opacity: 1;
-    -fx-text-fill: -fx-dark;
+#emailDetailSubject {
+    -fx-font-size: 26;
+    -fx-padding: 10;
 }
 
-#emailDetailTagsList .list-view .list-cell:selected .button:hover {
-    -fx-text-fill: -fx-bright;
-    -fx-opacity: 1;
+#emailDetailTop {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: derive(-fx-bright, -15%);
 }
-*/
