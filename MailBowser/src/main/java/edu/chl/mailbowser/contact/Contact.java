@@ -45,7 +45,7 @@ public class Contact implements IContact {
     }
 
     @Override
-    public List<IAddress> getEmailAddress() {
+    public List<IAddress> getEmailAddresses() {
         return new ArrayList<IAddress>(emailAddresses);
     }
 
