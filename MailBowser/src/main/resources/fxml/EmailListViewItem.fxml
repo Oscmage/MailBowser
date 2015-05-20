@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<fx:root maxHeight="80.0" minHeight="80.0" minWidth="240.0" prefHeight="80.0" prefWidth="240.0" type="javafx.scene.layout.FlowPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="80.0" minHeight="80.0" minWidth="220.0" prefHeight="80.0" prefWidth="220.0" type="javafx.scene.layout.FlowPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="sender" maxHeight="20.0" maxWidth="110.0" minHeight="20.0" minWidth="110.0" prefHeight="20.0" prefWidth="110.0" text="Senders" textOverrun="CLIP" />
       <Label fx:id="sent" maxHeight="20.0" maxWidth="110.0" minHeight="20.0" minWidth="110.0" prefHeight="20.0" prefWidth="110.0" text="Sent" textAlignment="RIGHT" textOverrun="CLIP" />

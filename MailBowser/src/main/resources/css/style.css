@@ -5,6 +5,7 @@
     -fx-background-color: rgba(255,255,255,1);
     -fx-dark: rgba(0,0,0,1);
     -fx-bright: rgba(255,255,255,1);
+    -fx-base-color: rgba(250,70,43,1);
 }
 
 .fontawesome {
@@ -40,13 +41,23 @@
     -fx-padding: 0;
 }
 
+.list-view:focused {
+    fx-background-insets: 0;
+}
+
 .list-cell {
-    -fx-padding: 0;
+    -fx-padding: 10px;
 }
 
 .list-cell:odd {
-    -fx-background-color: rgba(255,255,255,1);
+    -fx-background-color: -fx-bright;
 }
+
+.list-cell:focused {
+    -fx-background-color: -fx-base-color;
+    -fx-text-fill: -fx-bright;
+}
+
 
 /* TEXT FIELD */
 
@@ -74,13 +85,11 @@
 }
 
 .scroll-bar .track {
-    -fx-border-width: 0, 1;
-    -fx-border-color: -fx-dark;
+    -fx-opacity: 0;
 }
 
 .scroll-bar .track-background {
-    -fx-border-width: 0, 1;
-    -fx-border-color: -fx-dark;
+    -fx-opacity: 0;
 }
 
 .scroll-bar:hover {
@@ -91,6 +100,20 @@
     -fx-background-color: -fx-dark;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: -fx-dark;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color: -fx-bright;
+    -fx-padding: 0 5;
+    -fx-shape: "";
 }
 
 /* SCROLL PANE */
