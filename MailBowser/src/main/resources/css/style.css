@@ -21,16 +21,24 @@
 }
 
 .invisible {
-    -fx-background-color: rgba(255,255,255,0);
+    -fx-background-color: transparent;
 }
 
 /* BUTTONS */
 
 .button {
-    -fx-background-color: rgba(255,255,255,0);
+    -fx-background-color: -fx-bright;
     -fx-border-radius: 3em;
     -fx-border-width: 2px;
-    -fx-border-color: rgba(0,0,0,.67);
+    -fx-border-color: -fx-dark;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3em;
+    -fx-text-fill: -fx-dark;
+}
+
+.button:hover {
+    -fx-background-color: -fx-dark;
+    -fx-text-fill: -fx-bright;
 }
 
 /* LIST VIEWS */
@@ -129,13 +137,14 @@
 }
 
 #topbar .button {
+    -fx-background-color: -fx-dark;
     -fx-border-color: -fx-bright;
     -fx-text-fill: -fx-bright;
-    -fx-border-radius: 0;
 }
 
-#topbar .button.circle {
-    -fx-border-radius: 3em;
+#topbar .button:hover {
+    -fx-background-color: -fx-bright;
+    -fx-text-fill: -fx-dark;
 }
 
 /*
