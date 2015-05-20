@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.contact;
 
-import java.util.SortedSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -8,7 +8,7 @@ import java.util.TreeSet;
  */
 public class ContactBook implements IContactBook{
 
-    private SortedSet<IContact> contacts = new TreeSet<IContact>();
+    private Set<IContact> contacts = new TreeSet<IContact>();
 
     @Override
     public void addContact(IContact contact) {
@@ -21,12 +21,12 @@ public class ContactBook implements IContactBook{
     }
 
     @Override
-    public SortedSet<IContact> getContacts() {
+    public Set<IContact> getContacts() {
         return this.contacts;
     }
 
     @Override
-    public SortedSet<IContact> getMatchingContacts(String query) {
+    public Set<IContact> getMatchingContacts(String query) {
         return null;
     }
 }
