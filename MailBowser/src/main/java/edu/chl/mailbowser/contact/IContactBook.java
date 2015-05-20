@@ -7,6 +7,8 @@ import java.util.SortedSet;
  */
 public interface IContactBook {
 
+    void addContact(IContact contact);
+    void removeContact(IContact contact);
     SortedSet<IContact> getContacts();
     SortedSet<IContact> getMatchingContacts(String query);
 
