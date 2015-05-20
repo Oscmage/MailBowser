@@ -35,6 +35,9 @@ public class Main extends Application {
         backgroundFetching.setDaemon(true);
         backgroundFetching.start();
 
+        mainStage.setMinHeight(600);
+        mainStage.setMinWidth(800);
+
         mainStage.setScene(scene);
         mainStage.show();
     }
