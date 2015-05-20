@@ -1,3 +1,9 @@
+.fontawesome {
+    -fx-font-family: FontAwesome;
+}
+
+/*
+
 .root {
     -fx-font-size: 12;
     -fx-font-family: Roboto, monotype;
@@ -19,12 +25,6 @@
     -fx-border-width: 0 1 0 0;
     -fx-border-color: #EEE;
 }
-
-.fontawesome {
-    -fx-font-family: FontAwesome;
-    -fx-color: black;
-}
-
 
 #sidebar,
 #emailDetail {
@@ -93,7 +93,7 @@
     -fx-cursor: text;
 }
 
-/* The main scrollbar **track** CSS class  */
+
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track{
     -fx-background-color:transparent;
@@ -103,7 +103,7 @@
     visibility: hidden;
 }
 
-/* The increment and decrement button CSS class of scrollbar */
+
 .scroll-bar:horizontal .increment-button ,
 .scroll-bar:horizontal .decrement-button {
     -fx-background-color:transparent;
@@ -129,4 +129,4 @@
 
 .scroll-bar:vertical {
   -fx-background-color: transparent;
-}
+} */

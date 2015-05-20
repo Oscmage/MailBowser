@@ -11,17 +11,21 @@ import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by filip on 04/05/15.
  */
-public class TopbarPresenter implements IObserver {
+public class TopbarPresenter implements IObserver, Initializable {
 
     private IEmail email;
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
@@ -33,6 +37,19 @@ public class TopbarPresenter implements IObserver {
 
     @FXML private TextField addTagTextField;
     @FXML private TextField searchField;
+
+    @FXML private Button forwardButton;
+    @FXML private Button replyButton;
+    @FXML private Button replyAllButton;
+    @FXML private Button refetchButton;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        refetchButton.setText("\uf019");
+        forwardButton.setText("\uf061");
+        replyButton.setText("\uf112");
+        replyAllButton.setText("\uf122");
+    }
 
     private void openComposeEmailWindow(Stage parentStage, String recipient, String subject, String content) {
         // create the component
