@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
 import java.net.URL;
@@ -40,6 +41,8 @@ public class EmailDetailPresenter implements IObserver, Initializable {
     @FXML protected WebView webView;
     @FXML protected FlowPane tagFlowPane;
 
+    @FXML protected VBox emailDetail;
+
     @FXML private ObservableList<TagListItemPresenter> observableTagList = FXCollections.observableArrayList();
     @FXML protected ListView<TagListItemPresenter> tagListView;
 
@@ -47,6 +50,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
         tagListView.setItems(observableTagList);
+        emailDetail.setOpacity(0.5);
     }
 
     private void updateView() {
@@ -57,6 +61,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
         this.webView.getEngine().loadContent(email.getContent());
 
         replaceListViewContent(tagHandler.getTags(this.email));
+        emailDetail.setOpacity(1);
     }
 
     private void replaceListViewContent(Set<ITag> tags) {
