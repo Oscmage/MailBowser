@@ -363,3 +363,13 @@
     -fx-border-width: 0 0 1 0;
     -fx-border-color: derive(-fx-bright, -15%);
 }
+
+/* EMAIL LIST */
+
+.label.emailListItemSender,
+.label.emailListItemSent {
+    -fx-font-size: 10;
+    -fx-text-fill: derive(-fx-bright, -30%);
+    -fx-padding: 0;
+
+}
