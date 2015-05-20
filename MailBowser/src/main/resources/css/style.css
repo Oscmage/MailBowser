@@ -1,8 +1,3 @@
-.fontawesome {
-    -fx-font-family: FontAwesome;
-}
-
-/*
 
 .root {
     -fx-font-size: 12;
@@ -10,9 +5,23 @@
     -fx-background-color: white;
 }
 
-* {
-    -fx-background-insets: 0;
+.fontawesome {
+    -fx-font-family: FontAwesome;
 }
+
+.circle {
+    -fx-background-radius: 3em;
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+    -fx-min-height: 3em;
+    -fx-max-height: 3em;
+}
+
+.invisible {
+    -fx-background-color: rgba(0,0,0,0);
+}
+
+/*
 
 .h1 {
     -fx-font-size: 26;
