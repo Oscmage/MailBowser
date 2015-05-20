@@ -23,6 +23,56 @@
     -fx-background-color: transparent;
 }
 
+/* MENU BAR */
+
+.menu-bar {
+    -fx-background-color: -fx-bright;
+}
+
+.menu-button {
+    -fx-text-fill: -fx-dark;
+}
+
+.menu-button:hover {
+    -fx-background-color: derive(-fx-bright, -10%);
+}
+
+.menu-button:hover .label {
+    -fx-text-fill: -fx-dark;
+}
+
+.menu-button:showing,
+.menu-button:showing:hover {
+    -fx-background-color: derive(-fx-bright, -15%);
+}
+
+.menu-button:showing .label,
+.menu-button:showing:hover .label {
+    -fx-text-fill: -fx-dark;
+}
+
+.menu-button:showing .menu-item .label {
+    -fx-text-fill: -fx-dark;
+}
+
+.menu-button:showing .menu-item {
+    -fx-background-color: -fx-bright;
+    -fx-padding: 5 10;
+}
+
+.menu-button:showing .menu-item:hover {
+    -fx-background-color: derive(-fx-bright, -15%);
+}
+
+.context-menu {
+    -fx-border-width: 0 1 1 1;
+    -fx-padding: 0;
+}
+
+
+
+
+
 /* BUTTONS */
 
 .button {
