@@ -57,4 +57,9 @@ public class Contact implements IContact {
         }
         throw new IllegalArgumentException();
     }
+
+    @Override
+    public boolean matches(String query) {
+        return getFullName().matches(query);
+    }
 }
