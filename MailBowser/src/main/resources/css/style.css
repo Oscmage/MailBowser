@@ -23,6 +23,37 @@
     -fx-background-color: transparent;
 }
 
+/* BUTTONS */
+
+.button {
+    -fx-background-color: -fx-bright;
+    -fx-border-radius: 3em;
+    -fx-border-width: 2px;
+    -fx-border-color: -fx-dark;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3em;
+    -fx-text-fill: -fx-dark;
+}
+
+.button:hover {
+    -fx-background-color: -fx-dark;
+    -fx-text-fill: -fx-bright;
+    -fx-cursor: hand;
+}
+
+.button.naked {
+    -fx-background-color: transparent;
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-opacity: 0.5;
+}
+
+.button.naked:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-dark;
+    -fx-opacity: 1;
+}
+
 /* MENU BAR */
 
 .menu-bar {
@@ -69,27 +100,6 @@
     -fx-padding: 0;
 }
 
-
-
-
-
-/* BUTTONS */
-
-.button {
-    -fx-background-color: -fx-bright;
-    -fx-border-radius: 3em;
-    -fx-border-width: 2px;
-    -fx-border-color: -fx-dark;
-    -fx-background-insets: 0;
-    -fx-background-radius: 3em;
-    -fx-text-fill: -fx-dark;
-}
-
-.button:hover {
-    -fx-background-color: -fx-dark;
-    -fx-text-fill: -fx-bright;
-    -fx-cursor: hand;
-}
 /* LIST VIEWS */
 
 .list-view {

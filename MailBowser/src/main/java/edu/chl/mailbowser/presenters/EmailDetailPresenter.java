@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
@@ -43,8 +44,8 @@ public class EmailDetailPresenter implements IObserver, Initializable {
 
     @FXML protected VBox emailDetail;
 
-    @FXML private ObservableList<TagListItemPresenter> observableTagList = FXCollections.observableArrayList();
-    @FXML protected ListView<TagListItemPresenter> tagListView;
+    @FXML private ObservableList<HBox> observableTagList = FXCollections.observableArrayList();
+    @FXML protected ListView<HBox> tagListView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

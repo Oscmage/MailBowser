@@ -21,6 +21,7 @@
           <Button fx:id="refetchButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#refetchButtonOnAction" prefHeight="40.0" text="&#xf019;" />
       <HBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="10.0" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
          <children>
+             <Button fx:id="addTagButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#addTagButtonOnAction" prefHeight="40.0" text="&#xf02b;" />
                 <Button fx:id="forwardButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#forwardButtonOnAction" prefHeight="40.0" text="&#xf061;" />
                 <Button fx:id="replyButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyButtonOnAction" prefHeight="40.0" text="&#xf112;" />
                 <Button fx:id="replyAllButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyAllButtonOnAction" prefHeight="40.0" text="&#xf122;" />
