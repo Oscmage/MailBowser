@@ -39,6 +39,7 @@
 .button:hover {
     -fx-background-color: -fx-dark;
     -fx-text-fill: -fx-bright;
+    -fx-cursor: hand;
 }
 
 /* LIST VIEWS */
@@ -49,29 +50,40 @@
     -fx-padding: 0;
 }
 
-.list-view .list-cell,
-.list-view .list-cell:odd {
+.list-cell,
+.list-cell:odd {
+    -fx-background-color: transparent;
+}
+
+.list-view .list-cell:filled,
+.list-view .list-cell:filled:odd {
     -fx-background-color: -fx-bright;
     -fx-background-insets: 0;
     -fx-padding: 10px;
 }
 
-.list-view .list-cell:hover,
-.list-view .list-cell:odd:hover {
+.list-view .list-cell:filled:hover,
+.list-view .list-cell:filled:odd:hover {
     -fx-background-color: derive(-fx-bright, -5%);
     -fx-cursor: hand;
 }
 
-.list-view .list-cell:selected,
-.list-view .list-cell:odd:selected {
+.list-view .list-cell:filled:selected,
+.list-view .list-cell:filled:odd:selected {
     -fx-background-color: -fx-base-color;
 }
 
-.list-view .list-cell:selected .label,
-.list-view .list-cell:odd:selected .label {
+.list-view .list-cell:filled:selected .label,
+.list-view .list-cell:filled:odd:selected .label {
     -fx-text-fill: -fx-bright;
 }
 
+/* TREE VIEW */
+
+
+.tree-view {
+    -fx-background-insets: 0;
+}
 
 /* TEXT FIELD */
 
@@ -140,6 +152,7 @@
 
 #topbar {
     -fx-background-color: -fx-dark;
+    -fx-padding: 10;
 }
 
 #topbar .button {
@@ -151,6 +164,50 @@
 #topbar .button:hover {
     -fx-background-color: -fx-bright;
     -fx-text-fill: -fx-dark;
+}
+
+#sidebar .label {
+    -fx-padding: 10;
+}
+
+#sidebar .list-view {
+    -fx-background-insets: 0;
+}
+
+#sidebar .list-view .list-cell {
+    -fx-padding: 5;
+}
+
+#sidebar .list-view .list-cell .label {
+    -fx-padding: 0;
+}
+
+#sidebar .list-view .list-cell {
+    -fx-padding: 5 10;
+}
+
+#sidebar .list-view .list-cell .button,
+#sidebar .list-view:focused .list-cell .button {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+    -fx-opacity: 0.5;
+}
+
+#sidebar .list-view .list-cell:selected .button,
+#sidebar .list-view:focused .list-cell:selected .button{
+    -fx-text-fill: -fx-bright;
+    -fx-opacity: 0.75;
+}
+
+#sidebar .list-view .list-cell .button:hover {
+    -fx-opacity: 1;
+    -fx-text-fill: -fx-dark;
+}
+
+#sidebar .list-view .list-cell:selected .button:hover {
+    -fx-text-fill: -fx-bright;
+    -fx-opacity: 1;
 }
 
 /*

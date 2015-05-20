@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-
-<ListView id="sidebar" fx:id="sidebarListView" editable="true" minWidth="200.0" onKeyPressed="#onItemChanged" onMouseClicked="#onItemChanged" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.SidebarPresenter" />
+<VBox id="sidebar" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.SidebarPresenter">
+   <children>
+      <Label text="Tags" VBox.vgrow="NEVER" />
+      <ListView fx:id="tagsList" editable="true" minWidth="200.0" onKeyPressed="#onItemChanged" onMouseClicked="#onItemChanged" prefWidth="200.0" VBox.vgrow="NEVER" />
+      <Label text="Accounts" VBox.vgrow="NEVER" />
+      <TreeView fx:id="accountsList" prefWidth="200.0" VBox.vgrow="NEVER" />
+   </children>
+</VBox>
