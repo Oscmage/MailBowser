@@ -29,6 +29,7 @@ public class Main extends Application {
 
         // Add fonts and styles to the scene
         scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
+        scene.getStylesheets().add("css/style.css");
         
         Thread backgroundFetching = BackgroundFetching.getInstance();
         backgroundFetching.setDaemon(true);
