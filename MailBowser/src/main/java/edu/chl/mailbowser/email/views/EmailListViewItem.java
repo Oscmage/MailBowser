@@ -13,6 +13,7 @@ import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -47,9 +48,9 @@ public class EmailListViewItem extends FlowPane implements Initializable, Compar
         this.email = email;
 
         sender.setText(email.getSender().toString());
-        sent.setText(email.getSentDate().toString());
+        sent.setText(new SimpleDateFormat("yyyy-MM-dd").format(email.getSentDate()));
         subject.setText(email.getSubject());
-        content.setText(email.getContent());
+        content.setText(email.getContent().replaceAll("<[^>]*>", "").replace("\n", "").replace("\r", ""));
 
         List<String> tagStrings = new ArrayList<String>();
         Set<ITag> tagSet = MainHandler.INSTANCE.getTagHandler().getTags(email);

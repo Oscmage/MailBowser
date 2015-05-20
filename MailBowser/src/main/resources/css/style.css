@@ -367,9 +367,18 @@
 /* EMAIL LIST */
 
 .label.emailListItemSender,
-.label.emailListItemSent {
+.label.emailListItemSent,
+.label.emailListItemTags {
     -fx-font-size: 10;
     -fx-text-fill: derive(-fx-bright, -30%);
     -fx-padding: 0;
+}
 
+.label.emailListItemSubject {
+    -fx-font-weight: 700;
+}
+
+.label.emailListItemContent {
+    -fx-font-size: 12;
+    -fx-text-fill: derive(-fx-bright, -50%);
 }
