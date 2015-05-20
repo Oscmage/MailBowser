@@ -47,6 +47,7 @@
 .list-view {
     -fx-background-color: -fx-bright;
     -fx-background-insets: 0;
+    -fx-border-width: 0;
     -fx-padding: 0;
 }
 
@@ -78,6 +79,39 @@
     -fx-text-fill: -fx-bright;
 }
 
+/* TAG */
+
+.tag {
+    -fx-background-color: -fx-dark;
+    -fx-background-radius: 24;
+    -fx-background-insets: 0;
+    -fx-padding: 3 8;
+}
+
+.tag:hover {
+    -fx-background-color: derive(-fx-dark, 25%);
+}
+
+.tag .label {
+    -fx-text-fill: -fx-bright;
+    -fx-height: 20;
+    -fx-font-size: 10;
+}
+
+.tag .button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+    -fx-height: 20;
+    -fx-width: 20;
+    -fx-text-fill: -fx-bright;
+    -fx-opacity: 0.75;
+}
+
+.tag .button:hover {
+    -fx-opacity: 1;
+}
+
 /* TREE VIEW */
 
 
@@ -106,8 +140,11 @@
 /* SCROLL BAR */
 
 .scroll-bar {
-    -fx-background-color: transparent;
+    -fx-background-color: derive(-fx-bright, -15%);
     -fx-background-insets: 0;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: derive(-fx-bright, -15%);
+
 }
 
 .scroll-bar .track {
@@ -119,7 +156,7 @@
 }
 
 .scroll-bar:hover {
-    -fx-background-color: derive(-fx-bright, -1%);
+    -fx-background-color: derive(-fx-bright, -20%);
 }
 
 .scroll-bar .thumb {
@@ -146,6 +183,9 @@
 
 .scroll-pane {
     -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-box-border: transparent;
+    -fx-border-insets: 0;
 }
 
 /* COMPONENT SPECIFICS */
@@ -164,6 +204,10 @@
 #topbar .button:hover {
     -fx-background-color: -fx-bright;
     -fx-text-fill: -fx-dark;
+}
+
+#sidebar {
+    -fx-border-width: 0 1 0 0;
 }
 
 #sidebar .label {
@@ -210,121 +254,38 @@
     -fx-opacity: 1;
 }
 
-/*
-
-.h1 {
-    -fx-font-size: 26;
-    -fx-font-family: Roboto, sans-serif;
-}
-
-#topbarSearchTextField {
-    -fx-background-color: white;
-    -fx-padding: 0 0 0 15;
-    -fx-border-width: 0 1 0 0;
-    -fx-border-color: #EEE;
-}
-
-#sidebar,
-#emailDetail {
-    -fx-background-color: white;
-}
-#emailList {
-    -fx-background-color: #EEE;
-}
-
 #emailDetailVBox {
-    -fx-padding: 30;
-    -fx-background-color: white;
-}
-
-.button {
-    -fx-cursor: HAND;
-    -fx-background-color: #E5404C;
-    -fx-background-radius: 0;
-    -fx-text-fill: white;
-    -fx-padding: 10 20;
-}
-.button:hover {
-	-fx-background-color: derive(#E5404C, 20%);
-}
-.button:armed {
-	-fx-background-color: derive(#E5404C, -10%);
-}
-
-.text-field {
-	-fx-background-color: #FFF;
-	-fx-border-color: #CCC;
-	-fx-border-width: 0 0 1 0; 
-	-fx-padding: 0;
-}
-
-.text-area {
-    -fx-background-color: #FFF;
+    -fx-background-color: -fx-bright;
+    -fx-margin: -1;
+    -fx-border-width: 0;
     -fx-background-insets: 0;
-    -fx-background-radius: 0;
-    -fx-border-color: #CCC;
-    -fx-border-width: 0 0 0 0;
-    -fx-padding: 5;
-    -fx-effect: null;
+    -fx-border-insets: 0;
 }
 
-.text-area:focused {
-	-fx-background-radius: 0;
-	-fx-background-insets: 0;
+#emailDetailTagsList {
+    -fx-max-height: 20;
+    -fx-padding: 0 10;
 }
 
-.text-area .content {
-	-fx-background-radius: 0;
-    -fx-background-color: #FFF;
-    -fx-dropshadow: gaussian, red, 1, 1, 1;
+#emailDetailTagsList .list-cell {
+    -fx-padding: 0 0 0 1;
 }
 
-.text-area:focused {
-    -fx-background-color: #FFF;
-    -fx-background-insets: -0.4, 1, 2;
-    -fx-background-radius: 3.4, 2, 2;
-    -fx-prompt-text-fill: transparent;
-}
- 
-.text-area .content {
-    -fx-padding: 3 5 3 5;
-    -fx-cursor: text;
+#emailDetailTagsList .list-cell:selected {
+    -fx-background-color: -fx-bright;
 }
 
-
-.scroll-bar:horizontal .track,
-.scroll-bar:vertical .track{
-    -fx-background-color:transparent;
-    -fx-border-color:transparent;
-    -fx-background-radius: 0em;
-    -fx-border-radius:2em;
-    visibility: hidden;
+#emailDetailMeta {
+    -fx-padding: 10;
+    -fx-background-color: -fx-bright;
 }
 
-
-.scroll-bar:horizontal .increment-button ,
-.scroll-bar:horizontal .decrement-button {
-    -fx-background-color:transparent;
-    -fx-background-radius: 0em;
-    -fx-padding:0 0 10 0;
-
+#emailDetailSubject {
+    -fx-font-size: 26;
+    -fx-padding: 10;
 }
 
-.scroll-bar:horizontal .thumb,
-.scroll-bar:vertical .thumb {
-    -fx-background-color:derive(black,90%);
-    -fx-background-insets: 2, 0, 0;
-    -fx-background-radius: 2em;
+#emailDetailTop {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: derive(-fx-bright, -15%);
 }
-
-.scroll-bar .increment-button {
-  visibility: hidden;
-}
-
-.scroll-bar .decrement-button {
-  visibility: hidden;
-}
-
-.scroll-bar:vertical {
-  -fx-background-color: transparent;
-} */
