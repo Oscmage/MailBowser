@@ -42,6 +42,7 @@ public class TopbarPresenter implements IObserver, Initializable {
     @FXML private Button replyButton;
     @FXML private Button replyAllButton;
     @FXML private Button refetchButton;
+    @FXML private Button addTagButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,9 +64,13 @@ public class TopbarPresenter implements IObserver, Initializable {
     }
 
     @FXML
-    private void addTagOnAction(ActionEvent actionEvent) {
-        String text = addTagTextField.getText();
-        tagHandler.addTag(this.email, new Tag(text));
+    private void addTagButtonOnAction(ActionEvent actionEvent) {
+        System.out.println("Button clicked!");
+
+        // TODO: Add a popup with text input
+
+//        String text = addTagTextField.getText();
+//        tagHandler.addTag(this.email, new Tag(text));
     }
 
     @Override

@@ -23,6 +23,37 @@
     -fx-background-color: transparent;
 }
 
+/* BUTTONS */
+
+.button {
+    -fx-background-color: -fx-bright;
+    -fx-border-radius: 3em;
+    -fx-border-width: 2px;
+    -fx-border-color: -fx-dark;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3em;
+    -fx-text-fill: -fx-dark;
+}
+
+.button:hover {
+    -fx-background-color: -fx-dark;
+    -fx-text-fill: -fx-bright;
+    -fx-cursor: hand;
+}
+
+.button.naked {
+    -fx-background-color: transparent;
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-opacity: 0.5;
+}
+
+.button.naked:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-dark;
+    -fx-opacity: 1;
+}
+
 /* MENU BAR */
 
 .menu-bar {
@@ -69,27 +100,6 @@
     -fx-padding: 0;
 }
 
-
-
-
-
-/* BUTTONS */
-
-.button {
-    -fx-background-color: -fx-bright;
-    -fx-border-radius: 3em;
-    -fx-border-width: 2px;
-    -fx-border-color: -fx-dark;
-    -fx-background-insets: 0;
-    -fx-background-radius: 3em;
-    -fx-text-fill: -fx-dark;
-}
-
-.button:hover {
-    -fx-background-color: -fx-dark;
-    -fx-text-fill: -fx-bright;
-    -fx-cursor: hand;
-}
 /* LIST VIEWS */
 
 .list-view {
@@ -352,4 +362,23 @@
 #emailDetailTop {
     -fx-border-width: 0 0 1 0;
     -fx-border-color: derive(-fx-bright, -15%);
+}
+
+/* EMAIL LIST */
+
+.label.emailListItemSender,
+.label.emailListItemSent,
+.label.emailListItemTags {
+    -fx-font-size: 10;
+    -fx-text-fill: derive(-fx-bright, -30%);
+    -fx-padding: 0;
+}
+
+.label.emailListItemSubject {
+    -fx-font-weight: 700;
+}
+
+.label.emailListItemContent {
+    -fx-font-size: 12;
+    -fx-text-fill: derive(-fx-bright, -50%);
 }
