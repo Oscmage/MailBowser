@@ -1,8 +1,10 @@
 
 .root {
     -fx-font-size: 12;
-    -fx-font-family: Roboto, monotype;
-    -fx-background-color: white;
+    -fx-font-family: Roboto, sans-serif;
+    -fx-background-color: rgba(255,255,255,1);
+    -fx-dark: rgba(0,0,0,1);
+    -fx-bright: rgba(255,255,255,1);
 }
 
 .fontawesome {
@@ -18,7 +20,99 @@
 }
 
 .invisible {
-    -fx-background-color: rgba(0,0,0,0);
+    -fx-background-color: rgba(255,255,255,0);
+}
+
+/* BUTTONS */
+
+.button {
+    -fx-background-color: rgba(255,255,255,0);
+    -fx-border-radius: 3em;
+    -fx-border-width: 2px;
+    -fx-border-color: rgba(0,0,0,.67);
+}
+
+/* LIST VIEWS */
+
+.list-view {
+    -fx-background-color: rgba(255,255,255,1);
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-padding: 0;
+}
+
+.list-cell:odd {
+    -fx-background-color: rgba(255,255,255,1);
+}
+
+/* TEXT FIELD */
+
+.text-field {
+    -fx-background-color: -fx-bright;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3em;
+    -fx-padding: 1em;
+    -fx-max-height: 3em;
+    -fx-min-height: 3em;
+    -fx-text-fill: -fx-dark;
+    -fx-prompt-text-fill: derive(-fx-bright, -25%);
+    -fx-cursor: text;
+}
+
+.text-field:disabled {
+    -fx-opacity: 0.75;
+}
+
+/* SCROLL BAR */
+
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.scroll-bar .track {
+    -fx-border-width: 0, 1;
+    -fx-border-color: -fx-dark;
+}
+
+.scroll-bar .track-background {
+    -fx-border-width: 0, 1;
+    -fx-border-color: -fx-dark;
+}
+
+.scroll-bar:hover {
+    -fx-background-color: derive(-fx-bright, -1%);
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: -fx-dark;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+/* SCROLL PANE */
+
+.scroll-pane {
+    -fx-background-insets: 0;
+}
+
+/* COMPONENT SPECIFICS */
+
+#topbar {
+    -fx-background-color: -fx-dark;
+}
+
+#topbar .button {
+    -fx-border-color: -fx-bright;
+    -fx-text-fill: -fx-bright;
+    -fx-border-radius: 0;
+}
+
+#topbar .button.circle {
+    -fx-border-radius: 3em;
 }
 
 /*

@@ -9,15 +9,7 @@
     <children>
       <HBox alignment="CENTER_LEFT" maxWidth="420.0" spacing="10.0">
          <children>
-                <Button  id="newEmailButton" maxHeight="40.0" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" prefHeight="40.0" prefWidth="180.0" text="New Email" />
-                <TextField fx:id="searchField" layoutY="10.0" maxHeight="40.0" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" onAction="#searchFieldOnAction" prefHeight="40.0" prefWidth="220.0" promptText="Search here...">
-                    <opaqueInsets>
-                        <Insets />
-                    </opaqueInsets>
-               <HBox.margin>
-                  <Insets left="10.0" right="10.0" />
-               </HBox.margin>
-                </TextField>
+                <Button id="newEmailButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" prefHeight="40.0" prefWidth="180.0" text="&#xf067;" />
          </children>
          <opaqueInsets>
             <Insets />
@@ -32,7 +24,8 @@
                 <Button fx:id="forwardButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#forwardButtonOnAction" prefHeight="40.0" text="&#xf061;" />
                 <Button fx:id="replyButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyButtonOnAction" prefHeight="40.0" text="&#xf112;" />
                 <Button fx:id="replyAllButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyAllButtonOnAction" prefHeight="40.0" text="&#xf122;" />
-                <TextField fx:id="addTagTextField" maxHeight="40.0" minHeight="40.0" onAction="#addTagOnAction" prefHeight="40.0" promptText="Add new tag..." />
+                <TextField fx:id="searchField" onAction="#searchFieldOnAction" prefWidth="220.0" promptText="Search..." />
+                <!-- <TextField fx:id="addTagTextField" maxHeight="40.0" minHeight="40.0" onAction="#addTagOnAction" prefHeight="40.0" promptText="Add tag..." />-->
          </children>
       </HBox>
     </children>
