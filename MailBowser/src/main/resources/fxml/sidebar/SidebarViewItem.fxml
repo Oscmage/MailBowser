@@ -4,9 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="182.0" minHeight="-Infinity" minWidth="182.0" prefHeight="40.0" prefWidth="182.0" spacing="10.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="180.0" minHeight="-Infinity" minWidth="180.0" prefHeight="20.0" prefWidth="180.0" spacing="10.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="button" onAction="#removeTagFromSidebar" text="X" />
+      <Button fx:id="button" styleClass="fontawesome" onAction="#removeTagFromSidebar" text="&#xf00d;" />
       <Label fx:id="name" text="Label" />
    </children>
 </fx:root>

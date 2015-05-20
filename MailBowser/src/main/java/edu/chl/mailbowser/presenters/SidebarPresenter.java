@@ -28,7 +28,7 @@ public class SidebarPresenter implements IObserver, Initializable {
 
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
-    @FXML private ListView<SidebarViewItemPresenter> sidebarListView;
+    @FXML private ListView<SidebarViewItemPresenter> tagsList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,7 +53,7 @@ public class SidebarPresenter implements IObserver, Initializable {
     }
 
     public void updateView(ITag tag) {
-        ObservableList<SidebarViewItemPresenter> observableList = sidebarListView.getItems();
+        ObservableList<SidebarViewItemPresenter> observableList = tagsList.getItems();
 
         SidebarViewItemPresenter emailListViewItem = new SidebarViewItemPresenter((Tag)tag);
 
@@ -61,12 +61,12 @@ public class SidebarPresenter implements IObserver, Initializable {
             observableList.add(emailListViewItem);
         }
 
-        sidebarListView.setItems(observableList);
+        tagsList.setItems(observableList);
     }
 
     public void deleteTag(SidebarViewItemPresenter listItem) {
         tagHandler.removeTag(listItem.getTag());
-        sidebarListView.getItems().remove(listItem);
+        tagsList.getItems().remove(listItem);
     }
 
     /**
@@ -75,7 +75,7 @@ public class SidebarPresenter implements IObserver, Initializable {
      */
     public void onItemChanged(Event event) {
             EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_TAG,
-                    sidebarListView.getSelectionModel().getSelectedItem().getTag()));
+                    tagsList.getSelectionModel().getSelectedItem().getTag()));
 
     }
 
