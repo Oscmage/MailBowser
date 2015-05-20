@@ -1,18 +1,159 @@
+
+.root {
+    -fx-font-size: 12;
+    -fx-font-family: Roboto, sans-serif;
+    -fx-background-color: rgba(255,255,255,1);
+    -fx-dark: rgba(0,0,0,1);
+    -fx-bright: rgba(255,255,255,1);
+    -fx-base-color: rgba(250,70,43,1);
+}
+
 .fontawesome {
     -fx-font-family: FontAwesome;
 }
 
-/*
-
-.root {
-    -fx-font-size: 12;
-    -fx-font-family: Roboto, monotype;
-    -fx-background-color: white;
+.circle {
+    -fx-background-radius: 3em;
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+    -fx-min-height: 3em;
+    -fx-max-height: 3em;
 }
 
-* {
+.invisible {
+    -fx-background-color: transparent;
+}
+
+/* BUTTONS */
+
+.button {
+    -fx-background-color: -fx-bright;
+    -fx-border-radius: 3em;
+    -fx-border-width: 2px;
+    -fx-border-color: -fx-dark;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3em;
+    -fx-text-fill: -fx-dark;
+}
+
+.button:hover {
+    -fx-background-color: -fx-dark;
+    -fx-text-fill: -fx-bright;
+}
+
+/* LIST VIEWS */
+
+.list-view {
+    -fx-background-color: -fx-bright;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-view .list-cell,
+.list-view .list-cell:odd {
+    -fx-background-color: -fx-bright;
+    -fx-background-insets: 0;
+    -fx-padding: 10px;
+}
+
+.list-view .list-cell:hover,
+.list-view .list-cell:odd:hover {
+    -fx-background-color: derive(-fx-bright, -5%);
+    -fx-cursor: hand;
+}
+
+.list-view .list-cell:selected,
+.list-view .list-cell:odd:selected {
+    -fx-background-color: -fx-base-color;
+}
+
+.list-view .list-cell:selected .label,
+.list-view .list-cell:odd:selected .label {
+    -fx-text-fill: -fx-bright;
+}
+
+
+/* TEXT FIELD */
+
+.text-field {
+    -fx-background-color: -fx-bright;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3em;
+    -fx-padding: 1em;
+    -fx-max-height: 3em;
+    -fx-min-height: 3em;
+    -fx-text-fill: -fx-dark;
+    -fx-prompt-text-fill: derive(-fx-bright, -25%);
+    -fx-cursor: text;
+}
+
+.text-field:disabled {
+    -fx-opacity: 0.75;
+}
+
+/* SCROLL BAR */
+
+.scroll-bar {
+    -fx-background-color: transparent;
     -fx-background-insets: 0;
 }
+
+.scroll-bar .track {
+    -fx-opacity: 0;
+}
+
+.scroll-bar .track-background {
+    -fx-opacity: 0;
+}
+
+.scroll-bar:hover {
+    -fx-background-color: derive(-fx-bright, -1%);
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: -fx-dark;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: -fx-dark;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color: -fx-bright;
+    -fx-padding: 0 5;
+    -fx-shape: "";
+}
+
+/* SCROLL PANE */
+
+.scroll-pane {
+    -fx-background-insets: 0;
+}
+
+/* COMPONENT SPECIFICS */
+
+#topbar {
+    -fx-background-color: -fx-dark;
+}
+
+#topbar .button {
+    -fx-background-color: -fx-dark;
+    -fx-border-color: -fx-bright;
+    -fx-text-fill: -fx-bright;
+}
+
+#topbar .button:hover {
+    -fx-background-color: -fx-bright;
+    -fx-text-fill: -fx-dark;
+}
+
+/*
 
 .h1 {
     -fx-font-size: 26;
