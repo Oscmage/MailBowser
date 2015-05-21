@@ -1,7 +1,5 @@
 package edu.chl.mailbowser.account.handlers;
 
-import edu.chl.mailbowser.account.BackgroundFetching;
-import edu.chl.mailbowser.account.IBackgroundFetching;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.io.*;
