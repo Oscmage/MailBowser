@@ -13,6 +13,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#openAccountManager" text="Accounts..." />
                         <MenuItem mnemonicParsing="false" onAction="#onAction" text="Add Account" />
                         <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" onAction="#refetchMenuItemOnAction" text="Refetch" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">

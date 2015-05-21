@@ -61,6 +61,14 @@ public class AccountHandler implements IAccountHandler{
      * {@inheritDoc}
      */
     @Override
+    public void initRefetchingFromAllAccounts() {
+        accounts.forEach(IAccount::refetch);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean readAccounts(String filename) {
         IObjectReader<ArrayList<IAccount>> objectReader = new ObjectReader<>();
 
