@@ -25,7 +25,22 @@ public class MockEmail implements IEmail {
     }
 
     @Override
-    public List<IAddress> getReceivers() {
+    public List<IAddress> getTo() {
+        return null;
+    }
+
+    @Override
+    public List<IAddress> getCc() {
+        return null;
+    }
+
+    @Override
+    public List<IAddress> getBcc() {
+        return null;
+    }
+
+    @Override
+    public List<IAddress> getAllRecipients() {
         return null;
     }
 
@@ -55,12 +70,6 @@ public class MockEmail implements IEmail {
 
     }
 
-
-    @Override
-    public void setReceivers(List<IAddress> receivers) {
-
-    }
-
     @Override
     public void setSender(IAddress sender) {
         setSender = true;
@@ -68,11 +77,6 @@ public class MockEmail implements IEmail {
 
     @Override
     public void setSubject(String subject) {
-
-    }
-
-    @Override
-    public void setSent() {
 
     }
 
