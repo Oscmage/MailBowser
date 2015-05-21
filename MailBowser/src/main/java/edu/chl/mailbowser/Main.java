@@ -1,6 +1,7 @@
 package edu.chl.mailbowser;
 
-import edu.chl.mailbowser.account.BackgroundFetching;
+
+import edu.chl.mailbowser.account.IBackgroundFetching;
 import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import javafx.application.Application;
@@ -13,7 +14,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private static ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
-    private static IAccountHandler accountHandler= MainHandler.INSTANCE.getAccountHandler();
+    private static IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
+    private static IBackgroundFetching backgroundFetching = MainHandler.INSTANCE.getBackgroundFetching();
 
     @Override
     public void start(Stage mainStage) throws Exception {
@@ -27,10 +29,6 @@ public class Main extends Application {
         // Add fonts and styles to the scene
         scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
         scene.getStylesheets().add("css/style.css");
-        
-        Thread backgroundFetching = BackgroundFetching.getInstance();
-        backgroundFetching.setDaemon(true);
-        backgroundFetching.start();
 
         mainStage.setMinHeight(600);
         mainStage.setMinWidth(800);
@@ -42,8 +40,10 @@ public class Main extends Application {
     public static void main(String[] args) {
         // load serialized objects from disk
         load();
+        backgroundFetching.start();
         // used to launch a JavaFX application
         launch(args);
+        backgroundFetching.stop();
         // save serializable objects to disk
         save();
     }

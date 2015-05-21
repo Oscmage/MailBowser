@@ -1,38 +1,62 @@
 package edu.chl.mailbowser.account;
 
-import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.account.models.IAccount;
+import edu.chl.mailbowser.account.handlers.IAccountHandler;
 
-import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by jesper on 2015-05-07.
+ *
+ * A concrete implementation of IBackgroundHandler.
  */
-public class BackgroundFetching extends Thread {
-    private static BackgroundFetching instance = new BackgroundFetching();
+public class BackgroundFetching implements IBackgroundFetching {
+    private final int FETCH_INTERVAL = 30000;
 
-    private List<IAccount> accounts = MainHandler.INSTANCE.getAccountHandler().getAccounts();
+    private IAccountHandler accountHandler;
+    private Timer timer = new Timer(true);
 
-    private BackgroundFetching(){}
-
-    public static BackgroundFetching getInstance(){
-        return instance;
+    /**
+     * Creates a new background fetching with a specified account handler.
+     * On every timer interval initFetchingFromAllAccounts() gets called on the supplied account handler.
+     *
+     * @param accountHandler the account handler to use
+     */
+    public BackgroundFetching(IAccountHandler accountHandler) {
+        this.accountHandler = accountHandler;
     }
 
     /**
-     * Tells account to fetchs emails every 30 secounds.
+     * {@inheritDoc}
      */
     @Override
-    public void run() {
-        while (!this.isInterrupted()) {
-            for(IAccount account : accounts) {
-                account.fetch();
-            }
-            try {
-                this.sleep(30000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    public void start() {
+        System.out.println("BackgroundFetching: start()");
+        timer.schedule(new FetchTask(), 0, FETCH_INTERVAL);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stop() {
+        System.out.println("BackgroundFetching: stop()");
+        timer.cancel();
+    }
+
+    /**
+     * A timer task that inits fetching from all accounts in the account handler.
+     */
+    private class FetchTask extends TimerTask {
+        /**
+         * {@inheritDoc}
+         *
+         * This action simply initiates fetching from all the accounts in the account handler.
+         */
+        @Override
+        public void run() {
+            System.out.println("BackgroundFetching: FetchTask: run()");
+            accountHandler.initFetchingFromAllAccounts();
         }
     }
 }
