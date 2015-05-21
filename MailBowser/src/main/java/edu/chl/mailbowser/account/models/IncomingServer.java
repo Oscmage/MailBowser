@@ -18,6 +18,7 @@ import java.util.Properties;
  */
 public class IncomingServer extends MailServer implements IIncomingServer {
 
+    // this flag will be used to mark emails that have previously fetched
     private Flags processedFlag = new Flags("MailBowserProcessed");
 
     private transient Fetcher fetcher = null;
@@ -33,14 +34,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
     }
 
     /**
-     * Fetches all emails from the server, using the supplied username and password.
-     * callbacks onSuccess method will be called whenever a single email has been fetched.
-     *
-     * @param username the username to authenticate with
-     * @param password the password to authenticate with
-     * @param cleanFetch if true, the processed flag will be cleared from all emails on the server, and all emails
-     *                   will be fetched again. If false, only emails that haven't been fetched before will be fetched.
-     * @param callback the callback to use when an email has been fetched from the server
+     * {@inheritDoc}
      */
     @Override
     public void fetch(String username, String password, boolean cleanFetch, Callback<IEmail> callback) {
@@ -70,11 +64,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
     }
 
     /**
-     * Tests if a connection can be made to the mail server with the given login credentials.
-     *
-     * @param username the username to authenticate with
-     * @param password the password to authenticate with
-     * @return true if the connection is successful, otherwise false
+     * {@inheritDoc}
      */
     @Override
     public boolean testConnection(String username, String password) {
