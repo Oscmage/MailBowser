@@ -65,14 +65,14 @@ public class EmailDetailPresenter implements IObserver, Initializable {
         this.fromLabel.setText(email.getSender().getString());
 
         // Get strings from the receiver addresses
-        List<String> receivers = email.getReceivers().stream()
+        List<String> receivers = email.getTo().stream()
                 .map(IAddress::toString).collect(Collectors.toList());
         this.toLabel.setText(String.join(", ", receivers));
 
 //        // ...And do the same for CC
-//        List<String> carbonCopies = email.getReceivers().stream()
-//                .map(IAddress::toString).collect(Collectors.toList());
-//        this.toLabel.setText(String.join(", ", receivers));
+        List<String> carbonCopies = email.getCc().stream()
+                .map(IAddress::toString).collect(Collectors.toList());
+        this.ccLabel.setText(String.join(", ", carbonCopies));
 
         this.webView.getEngine().loadContent(email.getContent());
 

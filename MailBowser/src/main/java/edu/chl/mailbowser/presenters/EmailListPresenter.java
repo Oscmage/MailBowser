@@ -151,10 +151,12 @@ public class EmailListPresenter implements Initializable, IObserver {
                 Platform.runLater(
                         () -> clearEmails()
                 );
+                break;
             case SELECTED_TAG:
                 Platform.runLater(
                         () -> replaceListViewContent(new ArrayList<>(tagHandler.getEmails((ITag)evt.getValue())))
                 );
+                break;
         }
     }
 }

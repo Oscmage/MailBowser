@@ -33,7 +33,7 @@ public class EmailTest {
     @Test
     public void testGetJavaxMessage() throws Exception {
         Session s = Session.getInstance(new Properties());
-        Message m = email.getJavaxMessage(s);
+        Message m = email.getJavaMailMessage(s);
 
         assertEquals(m.getSubject(), "Subject");
         assertEquals(m.getContent(), "Content");
