@@ -2,6 +2,7 @@ package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.handlers.IAccountHandler;
+import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IAddress;
@@ -34,7 +35,9 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
     // Assign the fields from the view to variables via the fx:id attribute
     // Note that these variables belong to the javafx.scene.control package
-    @FXML private TextField receivers;
+    @FXML private TextField to;
+    @FXML private TextField cc;
+    @FXML private TextField bcc;
     @FXML private TextField subject;
     @FXML private TextArea content;
     @FXML private WebView markdown;
@@ -59,13 +62,17 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
     // This method is invoked when the send button is pressed, and is bound via the onAction attribute
     @FXML protected void sendButtonActionPerformed(ActionEvent event) {
-
-        // Declare receivers
-        List<IAddress> receivers = new ArrayList<IAddress>();
-        receivers.addAll(parseAddresses(this.receivers.getText()));
+        // Declare addresses
+        List<IAddress> toAddresses = parseAddresses(this.to.getText());
+        List<IAddress> ccAddresses = parseAddresses(this.cc.getText());
+        List<IAddress> bccAddresses = parseAddresses(this.bcc.getText());
 
         // Create a new email and send it
-        IEmail email = new Email(receivers, this.subject.getText(), html);
+        IEmail email = new Email.Builder(subject.getText(), html)
+                .to(toAddresses)
+                .cc(ccAddresses)
+                .bcc(bccAddresses)
+                .build();
 
         // TODO: Fix sender
         accountHandler.getAccounts().get(0).send(email);
@@ -76,7 +83,7 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
     }
 
     public void setReceivers(String value) {
-        receivers.textProperty().set(value);
+        to.textProperty().set(value);
     }
 
     public void setSubject(String value) {
