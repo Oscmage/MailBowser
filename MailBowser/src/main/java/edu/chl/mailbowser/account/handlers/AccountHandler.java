@@ -18,35 +18,30 @@ public class AccountHandler implements IAccountHandler{
     private ArrayList<IAccount> accounts = new ArrayList<>();
 
     /**
-     * Sets the account.
+     * Adds an account to the list of accounts.
      *
-     * @param account the account to use
+     * @param account the account to add
      */
-    @Override
-    public void setAccount(IAccount account) {
-        this.account = account;
-    }
-
     @Override
     public void addAccount(IAccount account) {
         accounts.add(account);
     }
 
     /**
-     * Returns the account
+     * Returns a list with all the added accounts
      *
-     * @return the account
+     * @return a list of accounts
      */
     @Override
-    public IAccount getAccount(IAccount account) {
-        return accounts.get(accounts.indexOf(account));
-    }
-
-    @Override
     public List<IAccount> getAccounts() {
-        return accounts;
+        return new ArrayList<>(accounts);
     }
 
+    /**
+     * Returns a list with the emails from all added accounts.
+     *
+     * @return a list of emails
+     */
     @Override
     public List<IEmail> getAllEmails() {
         List<IEmail> emails = new ArrayList<IEmail>();
@@ -59,27 +54,9 @@ public class AccountHandler implements IAccountHandler{
     }
 
     /**
-     * Reads an account from disk.
-     *
-     * @return false if no account is found, otherwise true
-     */
-    @Override
-    public boolean readAccount(String filename) {
-        IObjectReader<IAccount> objectReader = new ObjectReader<>();
-
-        try {
-            account = objectReader.read(filename);
-        } catch (ObjectReadException e) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Reads a list of accounts from disk.
      *
-     * @return false if no account is found, otherwise true
+     * @return false if no accounts are found, otherwise true
      */
     @Override
     public boolean readAccounts(String filename) {
@@ -95,18 +72,7 @@ public class AccountHandler implements IAccountHandler{
     }
 
     /**
-     * Writes the account to disk.
-     *
-     * @return true if the write was successful, otherwise false
-     */
-    @Override
-    public boolean writeAccount(String filename) {
-        IObjectWriter<IAccount> objectReaderWriter = new ObjectWriter<>();
-        return objectReaderWriter.write(account, filename);
-    }
-
-    /**
-     * Writes the list of accounts to disk.
+     * Writes the list of added accounts to disk.
      *
      * @return true if the write was successful, otherwise false
      */

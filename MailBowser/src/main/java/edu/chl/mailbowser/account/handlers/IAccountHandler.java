@@ -10,12 +10,8 @@ import java.util.List;
  */
 public interface IAccountHandler {
     void addAccount(IAccount account);
-    void setAccount(IAccount account);
-    IAccount getAccount(IAccount account);
     List<IAccount> getAccounts();
     List<IEmail> getAllEmails();
-    boolean readAccount(String filename);
     boolean readAccounts(String filename);
-    boolean writeAccount(String filename);
     boolean writeAccounts(String filename);
 }
