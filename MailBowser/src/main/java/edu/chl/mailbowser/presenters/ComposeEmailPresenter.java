@@ -29,6 +29,8 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
 
+    private String html = "";
+
     // Assign the fields from the view to variables via the fx:id attribute
     // Note that these variables belong to the javafx.scene.control package
     @FXML private TextField receivers;
@@ -61,13 +63,6 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
         List<IAddress> receivers = new ArrayList<IAddress>();
         receivers.addAll(parseAddresses(this.receivers.getText()));
 
-        //Convert markdown to html
-        String html = null;
-        try {
-            html = new Markdown4jProcessor().process(content.getText());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         // Create a new email and send it
         IEmail email = new Email(receivers, this.subject.getText(), html);
 
@@ -114,12 +109,13 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
     }
 
     public void onKeyTyped() {
-        String html = null;
         try {
             html = new Markdown4jProcessor().process(content.getText());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        markdown.getEngine().loadContent(html);
+
+        System.out.println(html);
+        markdown.getEngine().loadContent("<head><style>* {font-family: \"Arial\"}</style></head>" + html);
     }
 }
