@@ -8,9 +8,9 @@ import java.util.TimerTask;
 /**
  * Created by jesper on 2015-05-07.
  *
- * A concrete implementation of IBackgroundHandler.
+ * A concrete implementation of IBackgroundFetcher.
  */
-public class BackgroundFetching implements IBackgroundFetching {
+public class BackgroundFetcher implements IBackgroundFetcher {
     private final int FETCH_INTERVAL = 30000;
 
     private IAccountHandler accountHandler;
@@ -22,7 +22,7 @@ public class BackgroundFetching implements IBackgroundFetching {
      *
      * @param accountHandler the account handler to use
      */
-    public BackgroundFetching(IAccountHandler accountHandler) {
+    public BackgroundFetcher(IAccountHandler accountHandler) {
         this.accountHandler = accountHandler;
     }
 
@@ -31,7 +31,7 @@ public class BackgroundFetching implements IBackgroundFetching {
      */
     @Override
     public void start() {
-        System.out.println("BackgroundFetching: start()");
+        System.out.println("BackgroundFetcher: start()");
         timer.schedule(new FetchTask(), 0, FETCH_INTERVAL);
     }
 
@@ -40,7 +40,7 @@ public class BackgroundFetching implements IBackgroundFetching {
      */
     @Override
     public void stop() {
-        System.out.println("BackgroundFetching: stop()");
+        System.out.println("BackgroundFetcher: stop()");
         timer.cancel();
     }
 
@@ -55,7 +55,7 @@ public class BackgroundFetching implements IBackgroundFetching {
          */
         @Override
         public void run() {
-            System.out.println("BackgroundFetching: FetchTask: run()");
+            System.out.println("BackgroundFetcher: FetchTask: run()");
             accountHandler.initFetchingFromAllAccounts();
         }
     }
