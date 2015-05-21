@@ -62,17 +62,27 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
     // This method is invoked when the send button is pressed, and is bound via the onAction attribute
     @FXML protected void sendButtonActionPerformed(ActionEvent event) {
-        // Declare addresses
-        List<IAddress> toAddresses = parseAddresses(this.to.getText());
-        List<IAddress> ccAddresses = parseAddresses(this.cc.getText());
-        List<IAddress> bccAddresses = parseAddresses(this.bcc.getText());
+        // Start building an email
+        Email.Builder emailBuilder = new Email.Builder(subject.getText(), html);
 
-        // Create a new email and send it
-        IEmail email = new Email.Builder(subject.getText(), html)
-                .to(toAddresses)
-                .cc(ccAddresses)
-                .bcc(bccAddresses)
-                .build();
+        // Add to, cc and bcc if they are entered
+        if (!this.to.getText().isEmpty()) {
+            List<IAddress> toAddresses = parseAddresses(this.to.getText());
+            emailBuilder.to(toAddresses);
+        }
+
+        if (!this.cc.getText().isEmpty()) {
+            List<IAddress> ccAddresses = parseAddresses(this.cc.getText());
+            emailBuilder.cc(ccAddresses);
+        }
+
+        if (!this.bcc.getText().isEmpty()) {
+            List<IAddress> bccAddresses = parseAddresses(this.bcc.getText());
+            emailBuilder.bcc(bccAddresses);
+        }
+
+        // Build the email and send it
+        IEmail email = emailBuilder.build();
 
         // TODO: Fix sender
         accountHandler.getAccounts().get(0).send(email);
