@@ -50,12 +50,8 @@ public class Contact implements IContact {
     }
 
     @Override
-    public int compareTo(Object o) {
-        if(o instanceof String) {
-            String s = (String)o;
-            return getFullName().compareTo(s);
-        }
-        throw new IllegalArgumentException();
+    public int compareTo(IContact contact) {
+            return getFullName().compareTo(contact.getFullName()            );
     }
 
     @Override
