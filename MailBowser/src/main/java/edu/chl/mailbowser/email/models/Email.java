@@ -278,13 +278,6 @@ public class Email implements IEmail {
         this.subject = subject;
     }
 
-    /**
-     * Sets the isSent boolean to true and gives the sentDate the current date.
-     */
-    public void setSent(){
-        setSentDate();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

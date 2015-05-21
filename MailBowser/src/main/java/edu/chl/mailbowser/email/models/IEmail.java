@@ -23,5 +23,4 @@ public interface IEmail extends Searchable, Serializable, Comparable<IEmail> {
     void setContent(String content);
     void setSender(IAddress sender);
     void setSubject(String subject);
-    void setSent();
 }
