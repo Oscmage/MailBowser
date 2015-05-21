@@ -55,26 +55,16 @@ public class Main extends Application {
         boolean loadAccountsSuccessful = accountHandler.readAccounts("Accounts.ser");
         boolean loadTagHandlerSuccessful = tagHandler.readTags("Tags.ser");
 
-        // create a new account if no account was found on disk
         if (!loadAccountsSuccessful) {
-            System.out.println("load: failed to load accounts");
-
-            accountHandler.addAccount(new Account(
-                    new Address("mailbows3r@gmail.com"),
-                    "VG5!qBY&#f$QCmV", // It really doesn't get more Open Source™ than this
-                    MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
-                    MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL)
-            ));
-
+            System.out.println("load: failed to load accounts from Accounts.ser");
         } else {
-            System.out.println("load: loaded accounts from Accounts.ser");
-            System.out.println(accountHandler.getAccounts());
+            System.out.println("load: loaded accounts " + accountHandler.getAccounts());
         }
 
         if(!loadTagHandlerSuccessful){
-            System.out.println("load: failed to load TagHandler");
+            System.out.println("load: failed to load tags from Tags.ser");
         } else {
-            System.out.println("load: loaded TagHandler");
+            System.out.println("load: loaded tags " + tagHandler.getTags());
         }
     }
 

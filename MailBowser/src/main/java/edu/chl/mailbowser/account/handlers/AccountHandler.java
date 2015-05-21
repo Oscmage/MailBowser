@@ -14,7 +14,6 @@ import java.util.List;
  * A singleton for managing accounts.
  */
 public class AccountHandler implements IAccountHandler{
-    private IAccount account;
     private ArrayList<IAccount> accounts = new ArrayList<>();
 
     /**
