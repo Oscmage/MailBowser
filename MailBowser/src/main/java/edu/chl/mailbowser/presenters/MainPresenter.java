@@ -1,9 +1,11 @@
 package edu.chl.mailbowser.presenters;
 
+import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -58,5 +60,9 @@ public class MainPresenter implements IObserver, Initializable {
         if(evt.getType()==EventType.CLOSE_THIS){
             newStage.close();
         }
+    }
+
+    public void refetchMenuItemOnAction(ActionEvent actionEvent) {
+        MainHandler.INSTANCE.getAccountHandler().initRefetchingFromAllAccounts();
     }
 }
