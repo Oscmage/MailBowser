@@ -13,13 +13,14 @@ import java.util.List;
 public interface IEmail extends Searchable, Serializable, Comparable<IEmail> {
     javax.mail.Message getJavaMailMessage(Session session);
     IAddress getSender();
-    List<IAddress> getReceivers();
+    List<IAddress> getTo();
+    List<IAddress> getCc();
+    List<IAddress> getBcc();
     String getContent();
     String getSubject();
     Date getSentDate();
     Date getReceivedDate();
     void setContent(String content);
-    void setReceivers(List<IAddress> receivers);
     void setSender(IAddress sender);
     void setSubject(String subject);
     void setSent();
