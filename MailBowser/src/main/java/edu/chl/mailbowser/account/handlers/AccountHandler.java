@@ -4,7 +4,6 @@ import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.io.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

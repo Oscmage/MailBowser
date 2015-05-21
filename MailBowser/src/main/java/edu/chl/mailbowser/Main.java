@@ -1,10 +1,7 @@
 package edu.chl.mailbowser;
 
 import edu.chl.mailbowser.account.BackgroundFetching;
-import edu.chl.mailbowser.account.factories.MailServerFactory;
 import edu.chl.mailbowser.account.handlers.IAccountHandler;
-import edu.chl.mailbowser.account.models.Account;
-import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
