@@ -61,7 +61,7 @@ public class Address implements IAddress{
      * @return a copy of the javax.mail.InternetAddress object which holds the information
      */
     @Override
-    public InternetAddress getJavaxAddress() {
+    public InternetAddress getJavaMailAddress() {
         try {
             return new InternetAddress(this.address);
         } catch (AddressException e) {

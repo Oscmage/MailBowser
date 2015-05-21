@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 public interface IAddress extends Searchable, Serializable{
     String toString();
-    javax.mail.Address getJavaxAddress();
+    javax.mail.Address getJavaMailAddress();
     String getString();
     boolean equals(Object o);
     int hashCode();
