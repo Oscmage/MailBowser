@@ -65,7 +65,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
         this.fromLabel.setText(email.getSender().getString());
 
         // Get strings from the receiver addresses
-        List<String> receivers = email.getReceivers().stream()
+        List<String> receivers = email.getTo().stream()
                 .map(IAddress::toString).collect(Collectors.toList());
         this.toLabel.setText(String.join(", ", receivers));
 
