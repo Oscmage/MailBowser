@@ -16,6 +16,7 @@ public interface IEmail extends Searchable, Serializable, Comparable<IEmail> {
     List<IAddress> getTo();
     List<IAddress> getCc();
     List<IAddress> getBcc();
+    List<IAddress> getAllRecipients();
     String getContent();
     String getSubject();
     Date getSentDate();

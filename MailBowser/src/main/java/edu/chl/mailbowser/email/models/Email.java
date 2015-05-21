@@ -247,6 +247,15 @@ public class Email implements IEmail {
         return new ArrayList<>(this.bcc);
     }
 
+    @Override
+    public List<IAddress> getAllRecipients() {
+        List<IAddress> recipients = new ArrayList<>();
+        recipients.addAll(to);
+        recipients.addAll(cc);
+        recipients.addAll(bcc);
+        return recipients;
+    }
+
     public String getContent() {
         return content;
     }
