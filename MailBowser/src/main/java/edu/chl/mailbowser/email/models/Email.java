@@ -35,7 +35,6 @@ public class Email implements IEmail {
         this.recipients = receivers;
         this.subject = subject;
         this.content = content;
-
         this.createdDate = new Date();
         setLastEditedDate();
     }
