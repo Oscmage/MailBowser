@@ -15,7 +15,7 @@ public class MockEmail implements IEmail {
     public boolean setSender = false;
 
     @Override
-    public Message getJavaxMessage(Session session) {
+    public Message getJavaMailMessage(Session session) {
         return null;
     }
 

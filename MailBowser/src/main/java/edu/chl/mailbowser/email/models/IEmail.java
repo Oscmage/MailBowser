@@ -11,7 +11,7 @@ import java.util.List;
  * Created by OscarEvertsson on 10/04/15.
  */
 public interface IEmail extends Searchable, Serializable, Comparable<IEmail> {
-    javax.mail.Message getJavaxMessage(Session session);
+    javax.mail.Message getJavaMailMessage(Session session);
     IAddress getSender();
     List<IAddress> getReceivers();
     String getContent();

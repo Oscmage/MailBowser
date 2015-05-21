@@ -1,9 +1,6 @@
 package edu.chl.mailbowser.account.models;
 
 import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.event.Event;
-import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventType;
 
 import java.util.Properties;
 import javax.mail.*;
@@ -68,7 +65,7 @@ public class OutgoingServer extends MailServer implements IOutgoingServer {
 
             try {
                 // Try to send the mail
-                Transport.send(email.getJavaxMessage(session));
+                Transport.send(email.getJavaMailMessage(session));
                 callback.onSuccess(email);
             } catch (MessagingException e) {
                 callback.onFailure("Error sending email");
