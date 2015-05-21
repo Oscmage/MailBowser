@@ -116,20 +116,26 @@ public class Email implements IEmail {
         try {
             // add to
             javax.mail.Address[] to = message.getRecipients(Message.RecipientType.TO);
-            for (javax.mail.Address recipient : to) {
-                this.to.add(new Address(recipient));
+            if (to != null) {
+                for (javax.mail.Address recipient : to) {
+                    this.to.add(new Address(recipient));
+                }
             }
 
             // add cc
             javax.mail.Address[] cc = message.getRecipients(Message.RecipientType.CC);
-            for (javax.mail.Address recipient : cc) {
-                this.cc.add(new Address(recipient));
+            if (cc != null) {
+                for (javax.mail.Address recipient : cc) {
+                    this.cc.add(new Address(recipient));
+                }
             }
 
             // add bcc
             javax.mail.Address[] bcc = message.getRecipients(Message.RecipientType.BCC);
-            for (javax.mail.Address recipient : bcc) {
-                this.bcc.add(new Address(recipient));
+            if (bcc != null) {
+                for (javax.mail.Address recipient : bcc) {
+                    this.bcc.add(new Address(recipient));
+                }
             }
 
             // set subject, content and from
