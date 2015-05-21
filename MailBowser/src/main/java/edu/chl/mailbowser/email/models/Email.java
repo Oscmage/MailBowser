@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
  * This class represents an Email with sender, receivers, subject, content, createdDate, sentDate, lastEditedDate and isSent.
  */
 public class Email implements IEmail {
-    // TODO: add separate lists for the different recipient types: TO, CC, BCC. Constructors must also be updated.
-
     private IAddress sender;
     private String subject;
     private String content;
