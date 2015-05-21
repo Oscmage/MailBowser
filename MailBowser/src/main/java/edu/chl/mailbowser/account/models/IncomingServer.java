@@ -1,9 +1,7 @@
 package edu.chl.mailbowser.account.models;
 
-import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.tag.models.Tag;
 
 import javax.mail.*;
 import javax.mail.search.FlagTerm;
@@ -37,7 +35,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
      * {@inheritDoc}
      */
     @Override
-    public void fetch(String username, String password, boolean cleanFetch, Callback<IEmail> callback) {
+    public void fetch(String username, String password, boolean cleanFetch, Callback<Pair<IEmail, String>> callback) {
         System.out.println("IncomingServer: fetch(" + username + ", " + password + ", " + cleanFetch + ", " + callback);
 
         // this is to prevent multiple simultaneous fetch calls to the server
@@ -89,7 +87,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
      */
     private class Fetcher implements Runnable {
         // the onSuccess method on this callback is called whenever a new email is fetched from the server
-        private Callback<IEmail> callback;
+        private Callback<Pair<IEmail, String>> callback;
         // the onSuccess method on this callback is called when the fetching is done, and all emails have been fetched from the server
         private Callback<List<IEmail>> callbackDone;
 
@@ -108,7 +106,8 @@ public class IncomingServer extends MailServer implements IIncomingServer {
          * @param callback the callback to use whenever a new email is fetched
          * @param callbackDone the callback to use when the fetching is done
          */
-        public Fetcher(String username, String password, boolean clearProcessedFlag, Callback<IEmail> callback, Callback<List<IEmail>> callbackDone) {
+        public Fetcher(String username, String password, boolean clearProcessedFlag,
+                       Callback<Pair<IEmail, String>> callback, Callback<List<IEmail>> callbackDone) {
             this.username = username;
             this.password = password;
             this.clearProcessedFlag = clearProcessedFlag;
@@ -184,20 +183,17 @@ public class IncomingServer extends MailServer implements IIncomingServer {
                     folder.setFlags(messages, processedFlag, false);
                 }
 
-                // search for all messages where the processedFlag is not set
+                // search for all messages where the processedFlag is not set, and flag them with the processed flag
                 Message[] messages = folder.search(new FlagTerm(processedFlag, false));
+                folder.setFlags(messages, processedFlag, true);
 
-                // loop through all messages and create an email object for each one
-                // tag it with the name of its folder, and tell the callback that an email has been fetched
+                // loop through all messages and create an email object for each one. tell the callback that en
+                // email has been fetched, and from what folder it was fetched
                 for (Message message : messages) {
                     IEmail email = new Email(message);
+                    callback.onSuccess(new Pair<>(email, folder.getName()));
+
                     emails.add(email);
-
-                    message.setFlags(processedFlag, true);
-
-                    MainHandler.INSTANCE.getTagHandler().addTag(email, new Tag(folder.getName()));
-
-                    callback.onSuccess(email);
                 }
             }
 

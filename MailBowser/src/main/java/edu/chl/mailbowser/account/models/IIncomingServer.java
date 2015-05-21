@@ -18,9 +18,10 @@ public interface IIncomingServer extends Serializable {
      * @param password the password to authenticate with
      * @param cleanFetch if true, the processed flag will be cleared from all emails on the server, and all emails
      *                   will be fetched again. If false, only emails that haven't been fetched before will be fetched.
-     * @param callback the callback to use when an email has been fetched from the server
+     * @param callback the callback to use when an email has been fetched from the server. The first element of
+     *                 the pair will be the email that was fetched, and the second will be the name of the folder it was fetched from
      */
-    void fetch(String username, String password, boolean cleanFetch, Callback<IEmail> callback);
+    void fetch(String username, String password, boolean cleanFetch, Callback<Pair<IEmail, String>> callback);
 
     /**
      * Tests if a connection can be made to the mail server with the given login credentials.

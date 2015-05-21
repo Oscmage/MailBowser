@@ -1,10 +1,14 @@
 package edu.chl.mailbowser.account.models;
 
+import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
+import edu.chl.mailbowser.tag.models.ITag;
+import edu.chl.mailbowser.tag.models.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +19,9 @@ import java.util.List;
  * A model class for an email account. An account has an address, a password and two mail servers - an incoming and an outgoing.
  */
 public class Account implements IAccount {
+    // TODO: Remove the call to MainHandler and instead supply the tag handler in the constructor
+    private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
+
     private IAddress address;
     private String password;
 
@@ -185,15 +192,24 @@ public class Account implements IAccount {
      * regardless of whether they have been fetched before. If cleanFetch is not set, only emails that haven't
      * been fetched yet will be fetched from the server.
      *
+     * A callback will arrive from the incoming server whenever an email has been fetched. This method tags the email
+     * with the name of its folder.
+     *
      * @param cleanFetch if true, all emails will be fetched. if false, only emails that haven't been fetched before
      *                   will be fetched
      */
     private void initFetch(boolean cleanFetch) {
-        incomingServer.fetch(getUsername(), password, cleanFetch, new Callback<IEmail>() {
+        incomingServer.fetch(getUsername(), password, cleanFetch, new Callback<Pair<IEmail, String>>() {
             @Override
-            public void onSuccess(IEmail object) {
-                emails.add(object);
-                EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAIL, object));
+            public void onSuccess(Pair<IEmail, String> object) {
+                IEmail email = object.getFirst();
+                String folderName = object.getSecond();
+                ITag tag = new Tag(folderName);
+
+                emails.add(email);
+                tagHandler.addTag(email, tag);
+
+                EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAIL, email));
             }
 
             @Override
