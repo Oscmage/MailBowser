@@ -162,7 +162,7 @@ public class Account implements IAccount {
      */
     public void fetch() {
         System.out.println("Account: fetch()");
-        fetch(false);
+        initFetch(false);
     }
 
     public boolean testConnect(){
@@ -177,18 +177,18 @@ public class Account implements IAccount {
         System.out.println("Account: refetch()");
         emails = new ArrayList<>();
         EventBus.INSTANCE.publish(new Event(EventType.CLEAR_EMAILS, null));
-        fetch(true);
+        initFetch(true);
     }
 
     /**
-     * Fetches email from the server. If the cleanFetch flag is set, all mail from the server will be fetched,
+     * Initiate a fetch from the server. If the cleanFetch flag is set, all mail from the server will be fetched,
      * regardless of whether they have been fetched before. If cleanFetch is not set, only emails that haven't
      * been fetched yet will be fetched from the server.
      *
      * @param cleanFetch if true, all emails will be fetched. if false, only emails that haven't been fetched before
      *                   will be fetched
      */
-    private void fetch(boolean cleanFetch) {
+    private void initFetch(boolean cleanFetch) {
         incomingServer.fetch(getUsername(), password, cleanFetch, new Callback<IEmail>() {
             @Override
             public void onSuccess(IEmail object) {
