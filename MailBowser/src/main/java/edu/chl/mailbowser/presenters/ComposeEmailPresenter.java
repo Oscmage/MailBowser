@@ -125,7 +125,6 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
         html = EMAIL_CSS + html;
 
-        System.out.println(html);
         markdown.getEngine().loadContent(html);
     }
 }
