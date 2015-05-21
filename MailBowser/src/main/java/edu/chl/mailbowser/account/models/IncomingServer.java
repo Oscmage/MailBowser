@@ -102,22 +102,29 @@ public class IncomingServer extends MailServer implements IIncomingServer {
             props.setProperty("mail.store.protocol", "imaps");
 
             Session session = Session.getInstance(props, null);
+            Store store = null;
 
             try {
-                Store store = session.getStore();
+                store = session.getStore();
                 store.connect(getHostname(), username, password);
 
                 // start by getting the default (root) folder, and recursively work through all subfolders
                 Folder root = store.getDefaultFolder();
                 emails = recursiveFetch(root);
 
-                store.close();
-
                 callbackDone.onSuccess("Fetching is done");
             } catch (MessagingException e) {
                 System.out.println(e);
                 callback.onFailure("Failed to fetch email from server");
                 callbackDone.onFailure("Failed to fetch emails from server");
+            } finally {
+                if (store != null) {
+                    try {
+                        store.close();
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
 
