@@ -74,7 +74,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
 //                .map(IAddress::toString).collect(Collectors.toList());
 //        this.toLabel.setText(String.join(", ", receivers));
 
-        this.webView.getEngine().loadContent("<head><style>* {font-family: \"Arial\"}</style></head>" + email.getContent());
+        this.webView.getEngine().loadContent(email.getContent());
 
         replaceListViewContent(tagHandler.getTags(this.email));
         emailDetail.setOpacity(1);
