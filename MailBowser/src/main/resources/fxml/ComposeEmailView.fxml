@@ -55,6 +55,7 @@
         <TextField fx:id="to" prefHeight="40.0" promptText="To" styleClass="gridded" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
 
         <TextField fx:id="cc" prefHeight="40.0" promptText="Copy" styleClass="gridded" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+      <TextField fx:id="bcc" prefHeight="40.0" promptText="Blind Copy" styleClass="gridded" GridPane.rowIndex="3" />
 
         <TextField fx:id="subject" prefHeight="40.0" promptText="Subject" styleClass="gridded" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
 
@@ -65,7 +66,6 @@
                 <WebView fx:id="markdown" prefHeight="0.0" prefWidth="0.0" />
             </items>
         </SplitPane>
-      <TextField fx:id="bcc" prefHeight="40.0" promptText="Blind Copy" styleClass="gridded" GridPane.rowIndex="3" />
 
     </children>
 </fx:root>
