@@ -24,10 +24,6 @@ public class AccountHandler implements IAccountHandler{
     }
 
     /**
-     *
-     */
-
-    /**
      * {@inheritDoc}
      */
     @Override
