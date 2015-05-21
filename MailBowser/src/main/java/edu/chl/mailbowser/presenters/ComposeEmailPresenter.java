@@ -75,6 +75,10 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
         accountHandler.getAccount(accountHandler.getAccounts().get(0)).send(email);
     }
 
+    @FXML protected void openContactBook(ActionEvent event) {
+
+    }
+
     public void setReceivers(String value) {
         receivers.textProperty().set(value);
     }
