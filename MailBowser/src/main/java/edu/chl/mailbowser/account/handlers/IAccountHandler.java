@@ -33,6 +33,11 @@ public interface IAccountHandler {
     List<IEmail> getAllEmails();
 
     /**
+     * Initiates fetching from all accounts
+     */
+    void initFetchingFromAllAccounts();
+
+    /**
      * Reads a file from disk with IAccounts and adds them to this account handler.
      *
      * @param filename the file to look for accounts in
