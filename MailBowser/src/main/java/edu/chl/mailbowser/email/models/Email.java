@@ -31,23 +31,27 @@ public class Email implements IEmail {
         // mandatory fields
         private final String subject;
         private final String content;
-        private final IAddress sender;
 
         private Date sentDate;
         private Date receivedDate;
 
         // optional fields
+        private IAddress sender = null;
         private List<IAddress> to = new ArrayList<>();
         private List<IAddress> cc = new ArrayList<>();
         private List<IAddress> bcc = new ArrayList<>();
 
-        public Builder(String subject, String content, IAddress sender) {
+        public Builder(String subject, String content) {
             this.subject = subject;
             this.content = content;
-            this.sender = sender;
 
             this.sentDate = new Date();
             this.receivedDate = new Date();
+        }
+
+        public Builder sender(IAddress val) {
+            this.sender = val;
+            return this;
         }
 
         public Builder to(List<IAddress> val) {
