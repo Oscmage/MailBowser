@@ -17,7 +17,7 @@ public interface IIncomingServer extends Serializable {
      * @param username the username to authenticate with
      * @param password the password to authenticate with
      * @param cleanFetch if true, the processed flag will be cleared from all emails on the server, and all emails
-     *                   will be fetched again. If false, only emails that haven't been fetched before will be fetched.
+     *                   will be fetched again. If false, only emails that haven't been fetched before will be fetched
      * @param callback the callback to use when an email has been fetched from the server. The first element of
      *                 the pair will be the email that was fetched, and the second will be the name of the folder it was fetched from
      */
