@@ -93,9 +93,8 @@ public class AccountManagerPresenter implements Initializable {
         if(address.getText().equals("") || password.getText().equals("")) {
             System.out.println("Address or password field was empty. Aborting save.");
         } else {
-            IAccount account = accountHandler.getAccount(currentAccount);
-            account.setAddress(new Address(address.getText()));
-            account.setPassword(password.getText());
+            currentAccount.setAddress(new Address(address.getText()));
+            currentAccount.setPassword(password.getText());
         }
     }
 

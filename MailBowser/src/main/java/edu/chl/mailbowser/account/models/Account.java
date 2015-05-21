@@ -161,6 +161,7 @@ public class Account implements IAccount {
      * Fetches for new email.
      */
     public void fetch() {
+        System.out.println("Account: fetch()");
         fetch(false);
     }
 
@@ -173,6 +174,7 @@ public class Account implements IAccount {
      */
     @Override
     public void refetch() {
+        System.out.println("Account: refetch()");
         emails = new ArrayList<>();
         EventBus.INSTANCE.publish(new Event(EventType.CLEAR_EMAILS, null));
         fetch(true);
