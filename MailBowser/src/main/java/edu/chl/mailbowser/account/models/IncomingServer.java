@@ -34,17 +34,24 @@ public class IncomingServer extends MailServer implements IIncomingServer {
 
     /**
      * Fetches all emails from the server, using the supplied username and password.
-     *  @param username the username to authenticate with
+     * callbacks onSuccess method will be called whenever a single email has been fetched.
+     *
+     * @param username the username to authenticate with
      * @param password the password to authenticate with
-     * @param callback
+     * @param cleanFetch if true, the processed flag will be cleared from all emails on the server, and all emails
+     *                   will be fetched again. If false, only emails that haven't been fetched before will be fetched.
+     * @param callback the callback to use when an email has been fetched from the server
      */
     @Override
     public void fetch(String username, String password, boolean cleanFetch, Callback<IEmail> callback) {
         System.out.println("IncomingServer: fetch(" + username + ", " + password + ", " + cleanFetch + ", " + callback);
+
+        // this is to prevent multiple simultaneous fetch calls to the server
+        // when a fetch is initiated, fetcher gets a value. when the fetch is done, fetcher is set to null
         if (fetcher == null) {
-            fetcher = new Fetcher(username, password, cleanFetch, callback, new Callback<String>() {
+            fetcher = new Fetcher(username, password, cleanFetch, callback, new Callback<List<IEmail>>() {
                 @Override
-                public void onSuccess(String object) {
+                public void onSuccess(List<IEmail> object) {
                     System.out.println("Fetcher: onSuccess(" + object + ")");
                     fetcher = null;
                 }
@@ -56,10 +63,19 @@ public class IncomingServer extends MailServer implements IIncomingServer {
                     callback.onFailure(msg);
                 }
             });
+
+            // start the fetcher in a new thread to prevent GUI lockups
             new Thread(fetcher).start();
         }
     }
 
+    /**
+     * Tests if a connection can be made to the mail server with the given login credentials.
+     *
+     * @param username the username to authenticate with
+     * @param password the password to authenticate with
+     * @return true if the connection is successful, otherwise false
+     */
     @Override
     public boolean testConnection(String username, String password) {
         List<IEmail> emails;
@@ -78,26 +94,48 @@ public class IncomingServer extends MailServer implements IIncomingServer {
         return true;
     }
 
+    /**
+     * A class for fetching emails asynchronously.
+     */
     private class Fetcher implements Runnable {
+        // the onSuccess method on this callback is called whenever a new email is fetched from the server
         private Callback<IEmail> callback;
-        private Callback<String> callbackDone;
+        // the onSuccess method on this callback is called when the fetching is done, and all emails have been fetched from the server
+        private Callback<List<IEmail>> callbackDone;
+
         private String username;
         private String password;
         private boolean clearProcessedFlag;
 
-        public Fetcher(String username, String password, boolean clearProcessedFlag, Callback<IEmail> callback, Callback<String> callbackDone) {
+        /**
+         * Creates a new fetcher, but doesn't start it. To start the fetching use <code>new Thread(fetcher).start()</code>.
+         *
+         * @param username the username to use when connecting to the mail server
+         * @param password the password to use when connecting to the mail server
+         * @param clearProcessedFlag a flag indicating whether or not to clear the processed flag from the emails on the
+         *                           server. If true, all emails will be fetched from the server. If false, only emails
+         *                           that haven't been fetched before will be fetched.
+         * @param callback the callback to use whenever a new email is fetched
+         * @param callbackDone the callback to use when the fetching is done
+         */
+        public Fetcher(String username, String password, boolean clearProcessedFlag, Callback<IEmail> callback, Callback<List<IEmail>> callbackDone) {
             this.username = username;
             this.password = password;
             this.clearProcessedFlag = clearProcessedFlag;
             this.callback = callback;
-            this.callbackDone= callbackDone;
+            this.callbackDone = callbackDone;
         }
 
+        /**
+         * Executes a fetch in a new thread.
+         */
         @Override
         public void run() {
             System.out.println("Fetcher: run()");
+
             List<IEmail> emails;
 
+            // create a properties object, fill it with information, and use it to open a session to the mail server
             Properties props = new Properties();
             props.setProperty("mail.store.protocol", "imaps");
 
@@ -105,16 +143,17 @@ public class IncomingServer extends MailServer implements IIncomingServer {
             Store store = null;
 
             try {
+                // get a message store from the session, and connect to it using the given username and password
                 store = session.getStore();
                 store.connect(getHostname(), username, password);
 
-                // start by getting the default (root) folder, and recursively work through all subfolders
+                // start by getting the default (root) folder from the store, and recursively work through all subfolders
                 Folder root = store.getDefaultFolder();
                 emails = recursiveFetch(root);
 
-                callbackDone.onSuccess("Fetching is done");
+                callbackDone.onSuccess(emails);
             } catch (MessagingException e) {
-                System.out.println(e);
+                e.printStackTrace();
                 callback.onFailure("Failed to fetch email from server");
                 callbackDone.onFailure("Failed to fetch emails from server");
             } finally {
@@ -128,30 +167,38 @@ public class IncomingServer extends MailServer implements IIncomingServer {
             }
         }
 
+        /**
+         * A method that works through folders recursively, and fetches the emails in each folder.
+         *
+         * @param folder the folder to begin with
+         * @return a list of all emails contained in this folder and all of its subfolders
+         * @throws MessagingException
+         */
         private List<IEmail> recursiveFetch (Folder folder) throws MessagingException {
             List<IEmail> emails = new ArrayList<>();
 
+            // create a fetch profile that defines what information to get from the server.
             FetchProfile fetchProfile = new FetchProfile();
-
             fetchProfile.add(FetchProfile.Item.ENVELOPE);
             fetchProfile.add(FetchProfile.Item.FLAGS);
             fetchProfile.add(FetchProfile.Item.CONTENT_INFO);
             fetchProfile.add("X-mailer");
 
+            // if the folder holds messages, fetch them
             if ((folder.getType() & Folder.HOLDS_MESSAGES) == Folder.HOLDS_MESSAGES) {
                 folder.open(Folder.READ_WRITE);
 
+                // if the clearProcessedFlag is set, search for all emails flagged with the processedFlag and set it to false
                 if (clearProcessedFlag) {
                     Message[] messages = folder.search(new FlagTerm(processedFlag, true));
                     folder.setFlags(messages, processedFlag, false);
                 }
 
+                // search for all messages where the processedFlag is not set
                 Message[] messages = folder.search(new FlagTerm(processedFlag, false));
 
-                if (clearProcessedFlag) {
-                    folder.setFlags(messages, processedFlag, false);
-                }
-
+                // loop through all messages and create an email object for each one
+                // tag it with the name of its folder, and tell the callback that an email has been fetched
                 for (Message message : messages) {
                     IEmail email = new Email(message);
                     emails.add(email);
@@ -161,12 +208,12 @@ public class IncomingServer extends MailServer implements IIncomingServer {
                     MainHandler.INSTANCE.getTagHandler().addTag(email, new Tag(folder.getName()));
 
                     callback.onSuccess(email);
-                    //EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAIL, email));
                 }
             }
 
+            // if the folder holds folders, call recursiveFetch on each subfolder
             if ((folder.getType() & Folder.HOLDS_FOLDERS) == Folder.HOLDS_FOLDERS){
-                Folder [] folders = folder.list();
+                Folder[] folders = folder.list();
                 for (Folder subFolder : folders){
                     emails.addAll(recursiveFetch(subFolder));
                 }
