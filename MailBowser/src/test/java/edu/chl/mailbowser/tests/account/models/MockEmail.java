@@ -20,11 +20,6 @@ public class MockEmail implements IEmail {
     }
 
     @Override
-    public boolean isSent() {
-        return false;
-    }
-
-    @Override
     public IAddress getSender() {
         return null;
     }
@@ -54,35 +49,12 @@ public class MockEmail implements IEmail {
         return null;
     }
 
-    @Override
-    public Date getLastEditedDate() {
-        return null;
-    }
-
-    @Override
-    public Date getCreatedDate() {
-        return null;
-    }
-
-    @Override
-    public void setLastEditedDate() {
-
-    }
 
     @Override
     public void setContent(String content) {
 
     }
 
-    @Override
-    public void setCreatedDate(Date createdDate) {
-
-    }
-
-    @Override
-    public void setLastEditedDate(Date lastEditedDate) {
-
-    }
 
     @Override
     public void setReceivers(List<IAddress> receivers) {
