@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
  * Created by mats on 09/04/15.
  */
 public class ComposeEmailPresenter extends GridPane implements Initializable {
+    private static final String EMAIL_CSS = "<head><style>* {font-family: \"Arial\"}</style></head>";
 
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
 
@@ -115,7 +116,9 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
             e.printStackTrace();
         }
 
+        html = EMAIL_CSS + html;
+
         System.out.println(html);
-        markdown.getEngine().loadContent("<head><style>* {font-family: \"Arial\"}</style></head>" + html);
+        markdown.getEngine().loadContent(html);
     }
 }
