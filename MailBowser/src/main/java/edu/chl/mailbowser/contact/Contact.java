@@ -13,6 +13,16 @@ public class Contact implements IContact {
     private String lastName;
     private List<IAddress> emailAddresses;
 
+    /**
+     * Creates a new contact with no emailAddresses
+     * @param firstName Contacts first name
+     * @param lastName Contacts last name
+     */
+    public Contact (String firstName, String lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     @Override
     /**
      * @return the full name with the last name first and separated by semi-colon
@@ -56,7 +66,9 @@ public class Contact implements IContact {
 
     @Override
     public boolean matches(String query) {
-        return getFullName().matches(query);
+        if(query != null)
+            return getFullName().contains(query);
+        return false;
     }
 
     @Override
