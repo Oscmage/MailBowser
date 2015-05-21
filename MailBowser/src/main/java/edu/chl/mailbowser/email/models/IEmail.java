@@ -12,19 +12,13 @@ import java.util.List;
  */
 public interface IEmail extends Searchable, Serializable, Comparable<IEmail> {
     javax.mail.Message getJavaxMessage(Session session);
-    boolean isSent();
     IAddress getSender();
     List<IAddress> getReceivers();
     String getContent();
     String getSubject();
     Date getSentDate();
     Date getReceivedDate();
-    Date getLastEditedDate();
-    Date getCreatedDate();
-    void setLastEditedDate();
     void setContent(String content);
-    void setCreatedDate(Date createdDate);
-    void setLastEditedDate(Date lastEditedDate);
     void setReceivers(List<IAddress> receivers);
     void setSender(IAddress sender);
     void setSubject(String subject);

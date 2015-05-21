@@ -18,11 +18,8 @@ public class Email implements IEmail {
     private List<IAddress> recipients = new ArrayList<>();
     private String subject;
     private String content;
-    private Date createdDate;
     private Date sentDate;
     private Date receivedDate;
-    private Date lastEditedDate;
-    private boolean isSent;
 
     /**
      * Creates an email with the specified sender, receivers, subject and content.
@@ -31,12 +28,9 @@ public class Email implements IEmail {
      * @param content Sets the content for the email.
      */
     public Email(List<IAddress> receivers, String subject, String content){
-        this.isSent = false;
         this.recipients = receivers;
         this.subject = subject;
         this.content = content;
-        this.createdDate = new Date();
-        setLastEditedDate();
     }
 
     /**
@@ -61,7 +55,6 @@ public class Email implements IEmail {
      */
     public Email(Message message) {
         try {
-            this.isSent = false;
 
             // add recipients
             javax.mail.Address[] recipients = message.getAllRecipients();
@@ -154,10 +147,6 @@ public class Email implements IEmail {
         return javaxArray;
     }
 
-    public boolean isSent() {
-        return isSent;
-    }
-
     public IAddress getSender() {
         return sender;
     }
@@ -182,30 +171,11 @@ public class Email implements IEmail {
         return (Date)this.receivedDate.clone();
     }
 
-    public Date getLastEditedDate() {
-        return (Date)lastEditedDate.clone();
-    }
-
-    public Date getCreatedDate() {
-        return (Date)createdDate.clone();
-    }
-
-
-    public void setLastEditedDate(){
-        this.lastEditedDate = new Date();
-    }
 
     public void setContent(String content) {
         this.content = content;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public void setLastEditedDate(Date lastEditedDate) {
-        this.lastEditedDate = lastEditedDate;
-    }
 
     public void setReceivers(List<IAddress> receivers) {
         this.recipients = receivers;
@@ -227,7 +197,6 @@ public class Email implements IEmail {
      * Sets the isSent boolean to true and gives the sentDate the current date.
      */
     public void setSent(){
-        this.isSent = true;
         setSentDate();
     }
 
@@ -238,7 +207,6 @@ public class Email implements IEmail {
 
         Email email = (Email) o;
         //TODO: if not sent sendDate and receiveDate
-        if (isSent != email.isSent) return false;
         if (content != null ? !content.equals(email.content) : email.content != null) return false;
         if (receivedDate != null ? !receivedDate.equals(email.receivedDate) : email.receivedDate != null) return false;
         if (recipients != null ? !recipients.equals(email.recipients) : email.recipients != null) return false;
@@ -257,7 +225,6 @@ public class Email implements IEmail {
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (sentDate != null ? sentDate.hashCode() : 0);
         result = 31 * result + (receivedDate != null ? receivedDate.hashCode() : 0);
-        result = 31 * result + (isSent ? 1 : 0);
         return result;
     }
 
