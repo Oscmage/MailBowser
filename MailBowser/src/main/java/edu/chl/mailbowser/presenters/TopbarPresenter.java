@@ -120,7 +120,7 @@ public class TopbarPresenter implements IObserver, Initializable {
     @FXML private void replyAllButtonOnAction(ActionEvent actionEvent) {
         Stage mainStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
         String recipientsString = "";
-        List<IAddress> recipientsList = this.email.getReceivers();
+        List<IAddress> recipientsList = this.email.getAllRecipients();
         for (IAddress recipient : recipientsList) {
             if (recipientsString.length() == 0) {
                 recipientsString = recipient.getString();
