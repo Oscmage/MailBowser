@@ -5,7 +5,7 @@ package edu.chl.mailbowser.account;
  *
  * An interface for background fetchers.
  */
-public interface IBackgroundFetching {
+public interface IBackgroundFetcher {
     /**
      * Starts the background fetching process.
      */
