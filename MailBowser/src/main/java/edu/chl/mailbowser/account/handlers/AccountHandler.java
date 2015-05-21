@@ -4,49 +4,40 @@ import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.io.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by mats on 11/05/15.
  *
- * A singleton for managing accounts.
+ * A concrete implementation of IAccountHandler. This particular implementation stores the accounts in a list.
  */
 public class AccountHandler implements IAccountHandler{
-    private IAccount account;
-    private ArrayList<IAccount> accounts = new ArrayList<>();
+    private List<IAccount> accounts = new ArrayList<>();
 
     /**
-     * Sets the account.
-     *
-     * @param account the account to use
+     * {@inheritDoc}
      */
-    @Override
-    public void setAccount(IAccount account) {
-        this.account = account;
-    }
-
     @Override
     public void addAccount(IAccount account) {
         accounts.add(account);
     }
 
     /**
-     * Returns the account
      *
-     * @return the account
+     */
+
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public IAccount getAccount(IAccount account) {
-        return accounts.get(accounts.indexOf(account));
-    }
-
-    @Override
     public List<IAccount> getAccounts() {
-        return accounts;
+        return new ArrayList<>(accounts);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<IEmail> getAllEmails() {
         List<IEmail> emails = new ArrayList<IEmail>();
@@ -59,27 +50,15 @@ public class AccountHandler implements IAccountHandler{
     }
 
     /**
-     * Reads an account from disk.
-     *
-     * @return false if no account is found, otherwise true
+     * {@inheritDoc}
      */
     @Override
-    public boolean readAccount(String filename) {
-        IObjectReader<IAccount> objectReader = new ObjectReader<>();
-
-        try {
-            account = objectReader.read(filename);
-        } catch (ObjectReadException e) {
-            return false;
-        }
-
-        return true;
+    public void initFetchingFromAllAccounts() {
+        accounts.forEach(IAccount::fetch);
     }
 
     /**
-     * Reads a list of accounts from disk.
-     *
-     * @return false if no account is found, otherwise true
+     * {@inheritDoc}
      */
     @Override
     public boolean readAccounts(String filename) {
@@ -95,25 +74,12 @@ public class AccountHandler implements IAccountHandler{
     }
 
     /**
-     * Writes the account to disk.
-     *
-     * @return true if the write was successful, otherwise false
-     */
-    @Override
-    public boolean writeAccount(String filename) {
-        IObjectWriter<IAccount> objectReaderWriter = new ObjectWriter<>();
-        return objectReaderWriter.write(account, filename);
-    }
-
-    /**
-     * Writes the list of accounts to disk.
-     *
-     * @return true if the write was successful, otherwise false
+     * {@inheritDoc}
      */
     @Override
     public boolean writeAccounts(String filename) {
         IObjectWriter<ArrayList<IAccount>> objectReaderWriter = new ObjectWriter<>();
-        return objectReaderWriter.write(accounts, filename);
+        return objectReaderWriter.write((ArrayList<IAccount>) accounts, filename);
     }
 
 }

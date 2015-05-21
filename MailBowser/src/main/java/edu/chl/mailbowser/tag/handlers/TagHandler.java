@@ -21,7 +21,7 @@ public class TagHandler implements ITagHandler{
     private Map<IEmail,Set<ITag>> emails = new HashMap<>();
 
     /**
-     * Adds tag to an email.
+     * Adds the tag to the email and vice versa.
      * @param email
      * @param tag
      */
@@ -64,7 +64,7 @@ public class TagHandler implements ITagHandler{
     }
 
     /**
-     * returns the tag(s).
+     * Returns all the tag(s).
      * @return
      */
     @Override
@@ -73,7 +73,7 @@ public class TagHandler implements ITagHandler{
     }
 
     /**
-     * Removes a tag from the specified email.
+     * Removes the tag from the specified email.
      * @param email
      * @param tag
      */
@@ -99,7 +99,7 @@ public class TagHandler implements ITagHandler{
     }
 
     /**
-     * Removes the specified tag completly
+     * Removes the specified tag from all emails.
      * @param tag
      */
     @Override

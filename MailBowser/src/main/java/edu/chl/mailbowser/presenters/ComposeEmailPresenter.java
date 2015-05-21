@@ -72,7 +72,11 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
         IEmail email = new Email(receivers, this.subject.getText(), html);
 
         // TODO: Fix sender
-        accountHandler.getAccount(accountHandler.getAccounts().get(0)).send(email);
+        accountHandler.getAccounts().get(0).send(email);
+    }
+
+    @FXML protected void openContactBook(ActionEvent event) {
+
     }
 
     public void setReceivers(String value) {

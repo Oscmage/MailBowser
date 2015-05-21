@@ -1,8 +1,10 @@
 package edu.chl.mailbowser.email.views;
 
+import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.tag.handlers.TagHandler;
+import edu.chl.mailbowser.tag.models.ITag;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,7 +13,8 @@ import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by filip on 07/05/15.
@@ -45,10 +48,17 @@ public class EmailListViewItem extends FlowPane implements Initializable, Compar
         this.email = email;
 
         sender.setText(email.getSender().toString());
-        sent.setText(email.getSentDate().toString());
+        sent.setText(new SimpleDateFormat("yyyy-MM-dd").format(email.getSentDate()));
         subject.setText(email.getSubject());
-        content.setText(email.getContent());
-        // tags.setText(TagHandler.INSTANCE.getTags(email).toString());
+        content.setText(email.getContent().replaceAll("<[^>]*>", "").replace("\n", "").replace("\r", ""));
+
+        List<String> tagStrings = new ArrayList<String>();
+        Set<ITag> tagSet = MainHandler.INSTANCE.getTagHandler().getTags(email);
+        for(ITag tag : tagSet) {
+            tagStrings.add(tag.getName());
+        }
+        tags.setText(String.join(", ", tagStrings));
+
     }
 
     @Override

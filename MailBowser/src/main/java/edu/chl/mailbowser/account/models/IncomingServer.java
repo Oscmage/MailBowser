@@ -40,15 +40,18 @@ public class IncomingServer extends MailServer implements IIncomingServer {
      */
     @Override
     public void fetch(String username, String password, boolean cleanFetch, Callback<IEmail> callback) {
+        System.out.println("IncomingServer: fetch(" + username + ", " + password + ", " + cleanFetch + ", " + callback);
         if (fetcher == null) {
             fetcher = new Fetcher(username, password, cleanFetch, callback, new Callback<String>() {
                 @Override
                 public void onSuccess(String object) {
+                    System.out.println("Fetcher: onSuccess(" + object + ")");
                     fetcher = null;
                 }
 
                 @Override
                 public void onFailure(String msg) {
+                    System.out.println("Fetcher: onFailure(" + msg + ")");
                     fetcher = null;
                     callback.onFailure(msg);
                 }
@@ -92,6 +95,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
 
         @Override
         public void run() {
+            System.out.println("Fetcher: run()");
             List<IEmail> emails;
 
             Properties props = new Properties();
