@@ -10,15 +10,13 @@ import java.util.List;
 /**
  * Created by mats on 11/05/15.
  *
- * A singleton for managing accounts.
+ * A concrete implementation of IAccountHandler. This particular implementation stores the accounts in a list.
  */
 public class AccountHandler implements IAccountHandler{
-    private ArrayList<IAccount> accounts = new ArrayList<>();
+    private List<IAccount> accounts = new ArrayList<>();
 
     /**
-     * Adds an account to the list of accounts.
-     *
-     * @param account the account to add
+     * {@inheritDoc}
      */
     @Override
     public void addAccount(IAccount account) {
@@ -26,9 +24,7 @@ public class AccountHandler implements IAccountHandler{
     }
 
     /**
-     * Returns a list with all the added accounts
-     *
-     * @return a list of accounts
+     * {@inheritDoc}
      */
     @Override
     public List<IAccount> getAccounts() {
@@ -36,9 +32,7 @@ public class AccountHandler implements IAccountHandler{
     }
 
     /**
-     * Returns a list with the emails from all added accounts.
-     *
-     * @return a list of emails
+     * {@inheritDoc}
      */
     @Override
     public List<IEmail> getAllEmails() {
@@ -52,9 +46,7 @@ public class AccountHandler implements IAccountHandler{
     }
 
     /**
-     * Reads a list of accounts from disk.
-     *
-     * @return false if no accounts are found, otherwise true
+     * {@inheritDoc}
      */
     @Override
     public boolean readAccounts(String filename) {
@@ -70,14 +62,12 @@ public class AccountHandler implements IAccountHandler{
     }
 
     /**
-     * Writes the list of added accounts to disk.
-     *
-     * @return true if the write was successful, otherwise false
+     * {@inheritDoc}
      */
     @Override
     public boolean writeAccounts(String filename) {
         IObjectWriter<ArrayList<IAccount>> objectReaderWriter = new ObjectWriter<>();
-        return objectReaderWriter.write(accounts, filename);
+        return objectReaderWriter.write((ArrayList<IAccount>) accounts, filename);
     }
 
 }
