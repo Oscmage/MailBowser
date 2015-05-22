@@ -19,6 +19,13 @@ public interface IAccountHandler {
     void addAccount(IAccount account);
 
     /**
+     * Removes an account to the account handler.
+     *
+     * @param account the account to remove
+     */
+    void removeAccount(IAccount account);
+
+    /**
      * Returns all the accounts that have been added to this account handler.
      *
      * @return a list of accounts

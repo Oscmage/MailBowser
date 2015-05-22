@@ -2,6 +2,9 @@ package edu.chl.mailbowser.account.handlers;
 
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.io.*;
 
 import java.util.ArrayList;
@@ -21,6 +24,16 @@ public class AccountHandler implements IAccountHandler{
     @Override
     public void addAccount(IAccount account) {
         accounts.add(account);
+        EventBus.INSTANCE.publish(new Event(EventType.ADD_ACCOUNT, account));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeAccount(IAccount account) {
+        accounts.remove(account);
+        EventBus.INSTANCE.publish(new Event(EventType.REMOVE_ACCOUNT, account));
     }
 
     /**
