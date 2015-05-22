@@ -155,42 +155,57 @@ public class Email implements IEmail {
         }
     }
 
-    private static String recursiveGetText(Part p) throws MessagingException, IOException {
-        if (p.isMimeType("text/*")) {
-            String s = (String) p.getContent();
-            return s;
-        }
+    /**
+     * Recursively works through all parts of a message, and look for the content.
+     *
+     * @param p the message part to start from
+     * @return the content of a message. If something goes wrong, an empty string is returned.
+     */
+    private static String recursiveGetText(Part p) {
+        try {
+            // if the mime type is text/*, just get the content of the part an return it.
+            if (p.isMimeType("text/*")) {
+                String s = (String) p.getContent();
+                return s;
+            }
 
-        if (p.isMimeType("multipart/alternative")) {
-            // prefer html text over plain text
-            Multipart mp = (Multipart) p.getContent();
-            String text = null;
-            for (int i = 0; i < mp.getCount(); i++) {
-                Part bp = mp.getBodyPart(i);
-                if (bp.isMimeType("text/plain")) {
-                    if (text == null) {
-                        text = recursiveGetText(bp);
+            // if the mime type is multipart/alternative, the part contains other parts. call recursiveGetText on each
+            // of the parts contained in the part. prefer text/html before text/plain.
+            if (p.isMimeType("multipart/alternative")) {
+                // prefer html text over plain text
+                Multipart mp = (Multipart) p.getContent();
+                String text = null;
+                for (int i = 0; i < mp.getCount(); i++) {
+                    Part bp = mp.getBodyPart(i);
+                    if (bp.isMimeType("text/plain")) {
+                        if (text == null) {
+                            text = recursiveGetText(bp);
+                        }
+                    } else if (bp.isMimeType("text/html")) {
+                        String s = recursiveGetText(bp);
+                        if (s != null) {
+                            return s;
+                        }
+                    } else {
+                        return recursiveGetText(bp);
                     }
-                } else if (bp.isMimeType("text/html")) {
-                    String s = recursiveGetText(bp);
-                    if (s != null) {
+                }
+                return text;
+            } else if (p.isMimeType("multipart/*")) {
+                Multipart mp = (Multipart) p.getContent();
+                for (int i = 0; i < mp.getCount(); i++) {
+                    String s = recursiveGetText(mp.getBodyPart(i));
+                    if (s != null)
                         return s;
-                    }
-                } else {
-                    return recursiveGetText(bp);
                 }
             }
-            return text;
-        } else if (p.isMimeType("multipart/*")) {
-            Multipart mp = (Multipart) p.getContent();
-            for (int i = 0; i < mp.getCount(); i++) {
-                String s = recursiveGetText(mp.getBodyPart(i));
-                if (s != null)
-                    return s;
-            }
+        } catch (IOException | MessagingException e) {
+            e.printStackTrace();
+            // if any error occurs, just return an empty string
+            return "";
         }
 
-        return null;
+        return "";
     }
 
     /**
