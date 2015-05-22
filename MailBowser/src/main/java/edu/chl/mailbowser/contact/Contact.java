@@ -23,6 +23,10 @@ public class Contact implements IContact {
         this.lastName = lastName;
     }
 
+    public Contact (){
+
+    }
+
     @Override
     /**
      * @return the full name with the last name first and separated by semi-colon
@@ -52,6 +56,16 @@ public class Contact implements IContact {
     @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public void addAddress(IAddress address) {
+        emailAddresses.add(address);
+    }
+
+    @Override
+    public void addAllAddresses(List<IAddress> addresses) {
+        emailAddresses.addAll(addresses);
     }
 
     @Override
