@@ -17,7 +17,7 @@ import java.util.Properties;
 public class IncomingServer extends MailServer implements IIncomingServer {
 
     // this flag will be used to mark emails that have previously fetched
-    private Flags processedFlag = new Flags("MailBowserProcessed");
+    private static final Flags PROCESSED_FLAG = new Flags("MailBowserProcessed");
 
     private transient Fetcher fetcher = null;
 
@@ -116,7 +116,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
         }
 
         /**
-         * Executes a fetch in a new thread.
+         * Starts the fetching process
          */
         @Override
         public void run() {
@@ -181,14 +181,14 @@ public class IncomingServer extends MailServer implements IIncomingServer {
                 try {
                     folder.open(Folder.READ_WRITE);
 
-                    // if the clearProcessedFlag is set, search for all emails flagged with the processedFlag and set it to false
+                    // if the clearProcessedFlag is set, search for all emails flagged with the processed flag and set it to false
                     if (clearProcessedFlag) {
                         clearProcessedFlag(folder);
                     }
 
-                    // search for all messages where the processedFlag is not set, and flag them with the processed flag
-                    Message[] messages = folder.search(new FlagTerm(processedFlag, false));
-                    folder.setFlags(messages, processedFlag, true);
+                    // search for all messages where the processed flag is not set, and flag them with the processed flag
+                    Message[] messages = folder.search(new FlagTerm(PROCESSED_FLAG, false));
+                    folder.setFlags(messages, PROCESSED_FLAG, true);
 
                     // loop through all messages and create an email object for each one. tell the callback that an
                     // email has been fetched, and from what folder it was fetched
@@ -238,8 +238,8 @@ public class IncomingServer extends MailServer implements IIncomingServer {
          * @throws MessagingException when something goes wrong with the connection to the remote folder
          */
         private void clearProcessedFlag(Folder folder) throws MessagingException {
-            Message[] messages = folder.search(new FlagTerm(processedFlag, true));
-            folder.setFlags(messages, processedFlag, false);
+            Message[] messages = folder.search(new FlagTerm(PROCESSED_FLAG, true));
+            folder.setFlags(messages, PROCESSED_FLAG, false);
         }
     }
 }
