@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.ContactBookPresenter">
    <children>
@@ -16,6 +16,17 @@
           <RowConstraints maxHeight="370.0" minHeight="10.0" prefHeight="364.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Button fx:id="addContactButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addContactButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="&#xf067;" />
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
             <SplitPane dividerPositions="0.29797979797979796" prefHeight="329.0" prefWidth="600.0" GridPane.rowIndex="1">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="392.0" prefWidth="201.0">
@@ -30,7 +41,6 @@
                   </AnchorPane>
               </items>
             </SplitPane>
-            <Button fx:id="addContactButton" mnemonicParsing="false" onAction="#addContactButtonOnAction" styleClass="fontawesome, circle" text="&#xf067;"/>
          </children>
       </GridPane>
    </children>

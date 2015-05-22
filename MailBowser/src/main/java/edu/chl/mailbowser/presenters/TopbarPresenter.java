@@ -140,6 +140,7 @@ public class TopbarPresenter implements IObserver, Initializable {
         newStage.setTitle("Contact Book");
 
         Scene scene = new Scene(node, node.prefWidth(0), node.prefHeight(0));
+        scene.getStylesheets().add("css/style.css");
 
         newStage.setScene(scene);
         newStage.show();
