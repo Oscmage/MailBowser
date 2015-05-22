@@ -135,6 +135,7 @@ public class TopbarPresenter implements IObserver, Initializable {
      * @param actionEvent
      */
     public void openContactBookButtonOnAction(ActionEvent actionEvent) throws IOException {
+        System.out.println("Shululu");
         Stage newStage = new Stage();
         Parent node = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ContactBookView.fxml"));
         newStage.setTitle("Contact Book");
