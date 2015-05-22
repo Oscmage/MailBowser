@@ -10,6 +10,7 @@ import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObservable;
 import edu.chl.mailbowser.event.IObserver;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -30,9 +31,10 @@ import java.util.ResourceBundle;
 /**
  * Created by filip on 19/05/15.
  */
-public class AccountManagerPresenter implements Initializable {
+public class AccountManagerPresenter implements Initializable, IObserver {
 
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
+
     private List<IAccount> accounts;
     private IAccount currentAccount;
 
@@ -46,6 +48,8 @@ public class AccountManagerPresenter implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        EventBus.INSTANCE.register(this);
+        
         accounts = accountHandler.getAccounts();
         currentAccount = accounts.get(0);
 
@@ -121,6 +125,38 @@ public class AccountManagerPresenter implements Initializable {
         } else {
             System.out.println("You need at least one account. Aborting deletion.");
         }
+    }
+
+    /**
+     * Adds an account to the list of accounts in this view.
+     *
+     * @param account the account to add
+     */
+    public void addAccountToList(IAccount account) {
+        accounts.add(account);
+    }
+
+    /**
+     * Remvoes an account from the list of accounts in this view.
+     *
+     * @param account the account to remove
+     */
+    public void removeAccountFromList(IAccount account) {
+        accounts.remove(account);
+    }
+
+    @Override
+    public void onEvent(IEvent evt) {
+        Platform.runLater(() -> {
+            switch (evt.getType()) {
+                case ADD_ACCOUNT:
+                    addAccountToList((IAccount) evt);
+                    break;
+                case REMOVE_ACCOUNT:
+                    removeAccountFromList((IAccount) evt);
+                    break;
+            }
+        });
     }
 
     class ServerType {
