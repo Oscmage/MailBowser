@@ -33,17 +33,6 @@ public class MainPresenter implements IObserver, Initializable {
         EventBus.INSTANCE.register(this);
     }
 
-    public void onAction() throws IOException {
-        newStage = new Stage();
-        Parent node = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AddAccountView.fxml"));
-        newStage.setTitle("Add Account");
-        
-        Scene scene = new Scene(node, node.prefWidth(0), node.prefHeight(0));
-
-        newStage.setScene(scene);
-        newStage.show();
-    }
-
     public void openAccountManager() throws IOException {
 
         Parent fxml = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AccountManager.fxml"));

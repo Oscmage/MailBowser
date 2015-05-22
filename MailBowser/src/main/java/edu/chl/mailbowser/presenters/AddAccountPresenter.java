@@ -1,47 +1,73 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.factories.MailServerTypes;
-import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.account.models.Account;
+import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.Address;
-import edu.chl.mailbowser.email.models.IAddress;
-import edu.chl.mailbowser.event.Event;
-import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventType;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
- * Created by jesper on 2015-05-18.
+ * Created by mats on 22/05/15.
  */
-public class AddAccountPresenter {
+public class AddAccountPresenter extends GridPane implements Initializable {
 
-    private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
+    @FXML private TextField usernameField;
+    @FXML private TextField passwordField;
+    @FXML private ChoiceBox<MailServerTypes> accountTypeChoiceBox;
 
-    @FXML private TextField addressField;
-    @FXML private PasswordField passwordField;
-    @FXML private Button addAccountButton;
-    @FXML private Label errorLabel;
+    /**
+     * Initializes a create account view.
+     */
+    public AddAccountPresenter() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AddAccountView.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
 
-
-    public void onMouseClicked(){
-        IAddress address = new Address(addressField.getText());
-        Account account = new Account(address
-                ,passwordField.getText(),
-                MailServerTypes.createIncomingServer(MailServerTypes.Type.GMAIL),
-                MailServerTypes.createOutgoingServer(MailServerTypes.Type.GMAIL));
-        if(!account.testConnect()){
-            errorLabel.setText("Could not connect to server");
-        }else if(accountHandler.getAccounts().contains(account)) {
-            errorLabel.setText("This account already exists");
-        } else {
-            accountHandler.addAccount(account);
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            throw new IllegalStateException(e.getMessage(), e.getCause());
         }
-        EventBus.INSTANCE.publish(new Event(EventType.CLOSE_THIS,this));
+
+        setupAccountTypeChoiceBox();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {}
+
+    private void setupAccountTypeChoiceBox() {
+        ObservableList<MailServerTypes> observableList = FXCollections.observableArrayList();
+        observableList.add(MailServerTypes.GMAIL);
+        accountTypeChoiceBox.setItems(observableList);
+        accountTypeChoiceBox.getSelectionModel().select(0);
+    }
+
+    /**
+     * Creates a new account with the information supplied in the view and returns it.
+     *
+     * @return the created account
+     */
+    public IAccount createAccount() {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        MailServerTypes serverType = accountTypeChoiceBox.getSelectionModel().getSelectedItem();
+
+        return new Account(
+                new Address(username),
+                password,
+                serverType.createIncomingServer(),
+                serverType.createOutgoingServer()
+        );
     }
 }
