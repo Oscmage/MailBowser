@@ -8,16 +8,12 @@ import edu.chl.mailbowser.account.models.*;
  * A factory class for creating configured MailServer objects.
  */
 public enum MailServerFactory {
-    GMAIL;
-
-    public String getName() {
-        switch (this) {
-            case GMAIL:
-                return "Gmail";
-            default:
-                return "";
+    GMAIL {
+        @Override
+        public String toString() {
+            return "Gmail";
         }
-    }
+    };
 
     /**
      * Creates a new pre-configured mail server for sending email.
