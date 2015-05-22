@@ -31,4 +31,18 @@ public interface IIncomingServer extends Serializable {
      * @return true if the connection is successful, otherwise false
      */
     boolean testConnection(String username, String password);
+
+    /**
+     * Returns the hostname for this mail server.
+     *
+     * @return the hostname for this mail server
+     */
+    String getHostname();
+
+    /**
+     * Returns the post for this mail server.
+     *
+     * @return the hostname for this mail server
+     */
+    String getPort();
 }

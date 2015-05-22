@@ -17,7 +17,7 @@ public class BackgroundFetcher implements IBackgroundFetcher {
     private Timer timer = new Timer(true);
 
     /**
-     * Creates a new background fetching with a specified account handler.
+     * Creates a new background fetcher with a specified account handler.
      * On every timer interval initFetchingFromAllAccounts() gets called on the supplied account handler.
      *
      * @param accountHandler the account handler to use
