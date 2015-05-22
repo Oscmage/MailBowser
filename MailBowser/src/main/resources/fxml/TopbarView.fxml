@@ -9,7 +9,7 @@
     <children>
       <HBox alignment="CENTER_LEFT" maxWidth="420.0" spacing="10.0">
          <children>
-                <Button id="newEmailButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" prefHeight="40.0" prefWidth="180.0" text="&#xf067;" />
+                <Button id="newEmailButton" maxHeight="40.0" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" prefHeight="40.0" prefWidth="180.0" styleClass="fontawesome, circle" text="" />
          </children>
          <opaqueInsets>
             <Insets />
@@ -18,12 +18,13 @@
             <Insets />
          </HBox.margin>
       </HBox>
-          <Button fx:id="refetchButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#refetchButtonOnAction" prefHeight="40.0" text="&#xf019;" />
+          <Button fx:id="refetchButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#refetchButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
+          <Button fx:id="openContactBookButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openContactBookButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="&#xf02d;" />
       <HBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="10.0" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
          <children>
-                <Button fx:id="forwardButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#forwardButtonOnAction" prefHeight="40.0" text="&#xf061;" />
-                <Button fx:id="replyButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyButtonOnAction" prefHeight="40.0" text="&#xf112;" />
-                <Button fx:id="replyAllButton" styleClass="fontawesome, circle" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyAllButtonOnAction" prefHeight="40.0" text="&#xf122;" />
+                <Button fx:id="forwardButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#forwardButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
+                <Button fx:id="replyButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
+                <Button fx:id="replyAllButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyAllButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
                 <TextField fx:id="searchField" onAction="#searchFieldOnAction" prefWidth="220.0" promptText="Search..." />
                 <!-- <TextField fx:id="addTagTextField" maxHeight="40.0" minHeight="40.0" onAction="#addTagOnAction" prefHeight="40.0" promptText="Add tag..." />-->
          </children>

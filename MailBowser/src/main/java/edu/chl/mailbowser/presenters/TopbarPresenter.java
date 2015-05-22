@@ -11,13 +11,16 @@ import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -124,6 +127,22 @@ public class TopbarPresenter implements IObserver, Initializable {
             }
         }
         openComposeEmailWindow(mainStage,recipientsString,"Re: " + this.email.getSubject(),this.email.getContent());
+    }
+
+    /**
+     * This method is invoked when the openContactBookButton is pressed.
+     *
+     * @param actionEvent
+     */
+    public void openContactBookButtonOnAction(ActionEvent actionEvent) throws IOException {
+        Stage newStage = new Stage();
+        Parent node = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ContactBookView.fxml"));
+        newStage.setTitle("Contact Book");
+
+        Scene scene = new Scene(node, node.prefWidth(0), node.prefHeight(0));
+
+        newStage.setScene(scene);
+        newStage.show();
     }
 }
 
