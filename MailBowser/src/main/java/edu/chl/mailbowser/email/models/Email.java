@@ -140,11 +140,7 @@ public class Email implements IEmail {
 
             // set subject, content and from
             this.subject = message.getSubject();
-            try {
-                this.content = recursiveGetText(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            this.content = recursiveGetText(message);
             this.sender = new Address(message.getFrom()[0]);
 
             // set dates
