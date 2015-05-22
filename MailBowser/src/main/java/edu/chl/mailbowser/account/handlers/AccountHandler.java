@@ -71,6 +71,8 @@ public class AccountHandler implements IAccountHandler{
         try {
             accounts = objectReader.read(filename);
         } catch (ObjectReadException e) {
+            // initiate accounts to a new empty ArrayList to make sure that no corrupt data has been loaded
+            accounts = new ArrayList<>();
             return false;
         }
 
