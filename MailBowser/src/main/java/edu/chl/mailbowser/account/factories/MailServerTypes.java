@@ -7,7 +7,7 @@ import edu.chl.mailbowser.account.models.*;
  *
  * A factory class for creating configured MailServer objects.
  */
-public enum MailServerFactory {
+public enum MailServerTypes {
     GMAIL {
         @Override
         public String toString() {

@@ -1,7 +1,7 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.account.factories.MailServerFactory;
+import edu.chl.mailbowser.account.factories.MailServerTypes;
 import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.email.models.Address;
@@ -33,8 +33,8 @@ public class AddAccountPresenter {
         IAddress address = new Address(addressField.getText());
         Account account = new Account(address
                 ,passwordField.getText(),
-                MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
-                MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL));
+                MailServerTypes.createIncomingServer(MailServerTypes.Type.GMAIL),
+                MailServerTypes.createOutgoingServer(MailServerTypes.Type.GMAIL));
         if(!account.testConnect()){
             errorLabel.setText("Could not connect to server");
         }else if(accountHandler.getAccounts().contains(account)) {
