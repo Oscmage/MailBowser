@@ -20,4 +20,14 @@ public class MockInServer implements IIncomingServer {
     public boolean testConnection(String username, String password) {
         return false;
     }
+
+    @Override
+    public String getHostname() {
+        return null;
+    }
+
+    @Override
+    public String getPort() {
+        return null;
+    }
 }
