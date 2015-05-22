@@ -205,7 +205,7 @@ public class Email implements IEmail {
         try {
             msg.setFrom(this.sender.getJavaMailAddress());
             msg.setSubject(this.subject);
-            msg.setContent(this.content, "text/html");
+            msg.setContent(this.content, "text/html; charset=utf-8");
             msg.setSentDate(new Date());
 
             // add recipients of all three different types
