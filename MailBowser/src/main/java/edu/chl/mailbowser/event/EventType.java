@@ -7,6 +7,7 @@ package edu.chl.mailbowser.event;
  */
 public enum EventType {
     ADD_ACCOUNT,
+    REMOVE_ACCOUNT,
     SELECTED_EMAIL,
     ADD_TAG,
     REMOVE_TAG,
