@@ -1,39 +1,33 @@
 package edu.chl.mailbowser.account.factories;
 
-import edu.chl.mailbowser.account.models.IIncomingServer;
-import edu.chl.mailbowser.account.models.IOutgoingServer;
-import edu.chl.mailbowser.account.models.IncomingServer;
-import edu.chl.mailbowser.account.models.OutgoingServer;
+import edu.chl.mailbowser.account.models.*;
 
 /**
  * Created by mats on 16/04/15.
  *
  * A factory class for creating configured MailServer objects.
  */
-public class MailServerFactory {
+public enum MailServerFactory {
+    GMAIL;
 
-    /**
-     * Types of pre-defined mail servers.
-     */
-    public enum Type {
-        GMAIL
+    public String getName() {
+        switch (this) {
+            case GMAIL:
+                return "Gmail";
+            default:
+                return "";
+        }
     }
-
-    /*
-     * We define a private constructor to prevent other classes from creating objects of this class.
-     */
-    private MailServerFactory() {}
 
     /**
      * Creates a new pre-configured mail server for sending email.
      *
-     * @param serverType the type of server to create
      * @return the created mail server
      */
-    public static IOutgoingServer createOutgoingServer(Type serverType) {
+    public IOutgoingServer createOutgoingServer() {
         IOutgoingServer server = null;
 
-        switch (serverType) {
+        switch (this) {
             case GMAIL:
                 server = new OutgoingServer("smtp.gmail.com", "587");
                 break;
@@ -47,13 +41,12 @@ public class MailServerFactory {
     /**
      * Creates a new pre-configured mail server for receiving email.
      *
-     * @param serverType the type of server to create
      * @return the created mail server
      */
-    public static IIncomingServer createIncomingServer(Type serverType) {
+    public IIncomingServer createIncomingServer() {
         IIncomingServer server = null;
 
-        switch (serverType) {
+        switch (this) {
             case GMAIL:
                 server = new IncomingServer("imap.gmail.com", "993");
                 break;
