@@ -163,49 +163,83 @@ public class IncomingServer extends MailServer implements IIncomingServer {
          * @return a list of all emails contained in this folder and all of its subfolders
          * @throws MessagingException
          */
-        private List<IEmail> recursiveFetch (Folder folder) throws MessagingException {
+        private List<IEmail> recursiveFetch (Folder folder) {
             List<IEmail> emails = new ArrayList<>();
 
-            // create a fetch profile that defines what information to get from the server.
-            FetchProfile fetchProfile = new FetchProfile();
-            fetchProfile.add(FetchProfile.Item.ENVELOPE);
-            fetchProfile.add(FetchProfile.Item.FLAGS);
-            fetchProfile.add(FetchProfile.Item.CONTENT_INFO);
-            fetchProfile.add("X-mailer");
+            // a folder can be of two types - HOLDS_MESSAGES and HOLDS_FOLDERS. depending on what type the folder is,
+            // different actions are performed. a single folder can be of both types
+            int folderType;
+            try {
+                folderType = folder.getType();
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                return new ArrayList<>();
+            }
 
             // if the folder holds messages, fetch them
-            if ((folder.getType() & Folder.HOLDS_MESSAGES) == Folder.HOLDS_MESSAGES) {
-                folder.open(Folder.READ_WRITE);
+            if ((folderType & Folder.HOLDS_MESSAGES) == Folder.HOLDS_MESSAGES) {
+                try {
+                    folder.open(Folder.READ_WRITE);
 
-                // if the clearProcessedFlag is set, search for all emails flagged with the processedFlag and set it to false
-                if (clearProcessedFlag) {
-                    Message[] messages = folder.search(new FlagTerm(processedFlag, true));
-                    folder.setFlags(messages, processedFlag, false);
-                }
+                    // if the clearProcessedFlag is set, search for all emails flagged with the processedFlag and set it to false
+                    if (clearProcessedFlag) {
+                        clearProcessedFlag(folder);
+                    }
 
-                // search for all messages where the processedFlag is not set, and flag them with the processed flag
-                Message[] messages = folder.search(new FlagTerm(processedFlag, false));
-                folder.setFlags(messages, processedFlag, true);
+                    // search for all messages where the processedFlag is not set, and flag them with the processed flag
+                    Message[] messages = folder.search(new FlagTerm(processedFlag, false));
+                    folder.setFlags(messages, processedFlag, true);
 
-                // loop through all messages and create an email object for each one. tell the callback that en
-                // email has been fetched, and from what folder it was fetched
-                for (Message message : messages) {
-                    IEmail email = new Email(message);
-                    callback.onSuccess(new Pair<>(email, folder.getName()));
+                    // loop through all messages and create an email object for each one. tell the callback that an
+                    // email has been fetched, and from what folder it was fetched
+                    for (Message message : messages) {
+                        IEmail email = new Email(message);
+                        callback.onSuccess(new Pair<>(email, folder.getName()));
 
-                    emails.add(email);
+                        // add the email to the list of emails that will be returned in the final callback
+                        emails.add(email);
+                    }
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                    return new ArrayList<>();
+                } finally {
+                    try {
+                        folder.close(false);
+                    } catch (MessagingException e) {
+                        // the folder is closed even if an exception occurs, so we don't have do take any action
+                        e.printStackTrace();
+                    }
                 }
             }
 
             // if the folder holds folders, call recursiveFetch on each subfolder
-            if ((folder.getType() & Folder.HOLDS_FOLDERS) == Folder.HOLDS_FOLDERS){
-                Folder[] folders = folder.list();
+            if ((folderType & Folder.HOLDS_FOLDERS) == Folder.HOLDS_FOLDERS){
+                Folder[] folders;
+                try {
+                    folders = folder.list();
+                } catch (MessagingException e) {
+                    // if something goes wrong, set folders to an empty array
+                    folders = new Folder[0];
+                    e.printStackTrace();
+                }
+
                 for (Folder subFolder : folders){
                     emails.addAll(recursiveFetch(subFolder));
                 }
             }
 
             return emails;
+        }
+
+        /**
+         * Finds all emails that are flagged with the processed flag and removes the flag from them.
+         *
+         * @param folder the folder to search in
+         * @throws MessagingException when something goes wrong with the connection to the remote folder
+         */
+        private void clearProcessedFlag(Folder folder) throws MessagingException {
+            Message[] messages = folder.search(new FlagTerm(processedFlag, true));
+            folder.setFlags(messages, processedFlag, false);
         }
     }
 }
