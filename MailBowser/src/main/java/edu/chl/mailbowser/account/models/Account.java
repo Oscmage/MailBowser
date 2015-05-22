@@ -219,6 +219,12 @@ public class Account implements IAccount {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * An object is equal to this account if the object is an account, and its tag handler, address, password,
+     * incomingServer, outgoingServer and emails are the same.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -237,6 +243,11 @@ public class Account implements IAccount {
 
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * A hash code is built using the tag handler, address, password, incoming server, outgoing server and emails.
+     */
     @Override
     public int hashCode() {
         int result = tagHandler != null ? tagHandler.hashCode() : 0;
