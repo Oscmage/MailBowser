@@ -116,7 +116,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
         }
 
         /**
-         * Executes a fetch in a new thread.
+         * Starts the fetching process
          */
         @Override
         public void run() {
