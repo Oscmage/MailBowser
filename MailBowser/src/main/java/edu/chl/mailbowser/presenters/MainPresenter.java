@@ -34,6 +34,13 @@ public class MainPresenter implements IObserver, Initializable {
         EventBus.INSTANCE.register(this);
     }
 
+    private Stage getNewCenteredStage(){
+        Stage stage = new Stage();
+        stage.setY(100);
+        stage.setX(100);
+        return stage;
+    }
+
     public void openAccountManager() throws IOException {
 
         Parent fxml = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AccountManager.fxml"));
@@ -105,7 +112,7 @@ public class MainPresenter implements IObserver, Initializable {
                 recipients += ", " + recipient.getString();
             }
         }
-        openComposeEmailWindow(root, recipients,"Re: " + email.getSubject(), email.getContent());
+        openComposeEmailWindow(root, recipients, "Re: " + email.getSubject(), email.getContent());
     }
 
     @FXML
@@ -115,9 +122,27 @@ public class MainPresenter implements IObserver, Initializable {
 
     @FXML
     private void newEmailMenuItemOnAction(ActionEvent actionEvent) {
-        Stage root = new Stage();
-        root.setX(300);
-        root.setY(300);
-        openComposeEmailWindow(root,"","","");
+        openComposeEmailWindow(getNewCenteredStage(), "", "", "");
+    }
+
+    
+    @FXML
+    private void addTagMenuItemOnAction(ActionEvent actionEvent) {
+
+    }
+    @FXML
+    private void forwardMenuItemOnAction(ActionEvent actionEvent) {
+        openComposeEmailWindow(getNewCenteredStage(), "", "Fw: " + email.getSubject(), email.getContent());
+    }
+    @FXML
+    private void replyMenuItemOnAction(ActionEvent actionEvent) {
+    }
+    @FXML
+    private void replyAllMenuItemOnAction(ActionEvent actionEvent) {
+        replyAll(new Stage());
+    }
+    @FXML
+    private void closeMenuItemOnAction(ActionEvent actionEvent) {
+        //TODO close everything
     }
 }
