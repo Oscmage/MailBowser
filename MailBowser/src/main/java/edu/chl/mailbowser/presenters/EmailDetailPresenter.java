@@ -74,7 +74,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
 
         this.webView.getEngine().loadContent(email.getContent());
 
-        replaceListViewContent(tagHandler.getTags(this.email));
+        replaceListViewContent(tagHandler.getTagsWith(this.email));
         emailDetail.setOpacity(1);
     }
 
@@ -102,7 +102,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
             case REMOVE_TAG:
                 break;
             case ADD_TAG:
-                replaceListViewContent(tagHandler.getTags(this.email));
+                replaceListViewContent(tagHandler.getTagsWith(this.email));
                 break;
             case GUI_REMOVE_TAG:
                 ITag tag = (ITag) evt.getValue();

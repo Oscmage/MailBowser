@@ -88,7 +88,7 @@ public class SidebarPresenter implements IObserver, Initializable {
         switch (evt.getType()) {
             case FETCH_EMAIL:
                 Platform.runLater(
-                        () -> updateView(tagHandler.getTags((IEmail)evt.getValue()))
+                        () -> updateView(tagHandler.getTagsWith((IEmail)evt.getValue()))
                 );
                 break;
             case ADD_TAG:
