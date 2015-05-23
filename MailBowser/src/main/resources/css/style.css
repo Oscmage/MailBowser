@@ -33,12 +33,17 @@
     -fx-background-insets: 0;
     -fx-background-radius: 3em;
     -fx-text-fill: -fx-dark;
+    -fx-opacity: 1;
 }
 
 .button:hover {
     -fx-background-color: -fx-dark;
     -fx-text-fill: -fx-bright;
     -fx-cursor: hand;
+}
+
+.button:disabled {
+    -fx-opacity: 0.5;
 }
 
 .button.naked {
@@ -360,6 +365,11 @@
     -fx-background-color: transparent;
     -fx-border-width: 0;
     -fx-padding: 0;
+    -fx-opacity: 0.0;
+}
+
+#sidebar .list-view .list-cell:hover .button,
+#sidebar .list-view:focused .list-cell:hover .button {
     -fx-opacity: 0.5;
 }
 
@@ -369,7 +379,8 @@
     -fx-opacity: 0.75;
 }
 
-#sidebar .list-view .list-cell .button:hover {
+#sidebar .list-view .list-cell .button:hover,
+#sidebar .list-view .list-cell:hover .button:hover {
     -fx-opacity: 1;
     -fx-text-fill: -fx-dark;
 }
@@ -377,6 +388,16 @@
 #sidebar .list-view .list-cell:selected .button:hover {
     -fx-text-fill: -fx-bright;
     -fx-opacity: 1;
+}
+
+#sidebar .list-view .list-cell .button:disabled,
+#sidebar .list-view:focused .list-cell .button:disabled {
+    -fx-opacity: 0;
+}
+
+#sidebar .list-view .list-cell:selected .button:disabled,
+#sidebar .list-view:focused .list-cell:selected .button:disabled {
+    -fx-opacity: 0;
 }
 
 #emailDetailVBox {

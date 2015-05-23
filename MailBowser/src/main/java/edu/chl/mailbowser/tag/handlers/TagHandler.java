@@ -18,7 +18,6 @@ import java.util.Set;
  */
 public class TagHandler implements ITagHandler{
 
-
     //IMPORTANT! Name is based on From key to value
     private Map<ITag,Set<IEmail>> mapFromTagsToEmails = new HashMap<>();
     private Map<IEmail,Set<ITag>> mapFromEmailsToTags = new HashMap<>();
@@ -52,7 +51,10 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public Set<IEmail> getEmailsWith(ITag tag){
-        return new HashSet<>(mapFromTagsToEmails.get(tag));
+        if(!mapFromTagsToEmails.get(tag).isEmpty()) {
+            return new HashSet<>(mapFromTagsToEmails.get(tag));
+        }
+        return new HashSet<>();
     }
 
     /**
@@ -62,7 +64,7 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public Set<ITag> getTagsWith(IEmail email){
-        if(mapFromEmailsToTags.get(email) != null) {
+        if(!mapFromEmailsToTags.get(email).isEmpty()) {
             return new HashSet<>(mapFromEmailsToTags.get(email));
         }
         return new HashSet<>();

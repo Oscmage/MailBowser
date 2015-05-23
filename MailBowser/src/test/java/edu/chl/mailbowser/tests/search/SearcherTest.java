@@ -2,7 +2,6 @@ package edu.chl.mailbowser.tests.search;
 
 import edu.chl.mailbowser.search.Searcher;
 import edu.chl.mailbowser.tag.models.Tag;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +19,11 @@ public class SearcherTest {
 
     @Before
     public void setUp() throws Exception {
+
+        //Creates a new HashSet
         set = new HashSet<>();
+
+        //Adds some tags
         set.add(new Tag("abc"));
         set.add(new Tag("123"));
         set.add(new Tag("abc123"));

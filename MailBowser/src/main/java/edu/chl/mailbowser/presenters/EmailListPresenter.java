@@ -21,10 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -153,7 +150,11 @@ public class EmailListPresenter implements Initializable, IObserver {
                 clearEmails();
                 break;
             case SELECTED_TAG:
-                replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith((ITag)evt.getValue())));
+                if(evt.getValue() != null) {
+                    replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith((ITag) evt.getValue())));
+                } else {
+                    replaceListViewContent(new ArrayList<>(accountHandler.getAllEmails()));
+                }
                 break;
         }
     }
