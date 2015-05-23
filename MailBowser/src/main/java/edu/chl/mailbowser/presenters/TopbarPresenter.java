@@ -56,9 +56,9 @@ public class TopbarPresenter implements IObserver, Initializable {
     }
 
     @FXML
-    public void tagButtonOnAction(ActionEvent event) {
-        Stage root = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-        AddTagPresenter addTagPresenter = new AddTagPresenter(root, email);
+    public void tagButtonOnAction(ActionEvent actionEvent) {
+        Stage root = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
+        AddTagPresenter addTagPresenter = new AddTagPresenter(email);
 
         Stage addTagStage = new Stage();
         addTagStage.setTitle("Add tag...");
@@ -68,11 +68,10 @@ public class TopbarPresenter implements IObserver, Initializable {
 
         addTagStage.setScene(new Scene(addTagPresenter, 300, 200));
         addTagStage.show();
-
     }
 
     @FXML
-    public void searchFieldOnAction(ActionEvent event) {
+    public void searchFieldOnAction(ActionEvent actionEvent) {
         String text = searchField.getText();
         EventBus.INSTANCE.publish(new Event(EventType.SEARCH, text));
     }
@@ -85,26 +84,26 @@ public class TopbarPresenter implements IObserver, Initializable {
     }
 
     @FXML
-    public void newButtonOnAction(ActionEvent event) {
-        Stage root = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+    public void newButtonOnAction(ActionEvent actionEvent) {
+        Stage root = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
         openComposeEmailWindow(root, "", "", "");
     }
 
     @FXML
-    public void forwardButtonOnAction(ActionEvent event) {
-        Stage root = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+    public void forwardButtonOnAction(ActionEvent actionEvent) {
+        Stage root = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
         openComposeEmailWindow(root, "", "Fw: " + email.getSubject(), email.getContent());
     }
 
     @FXML
-    public void replyButtonOnAction(ActionEvent event) {
-        Stage root = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+    public void replyButtonOnAction(ActionEvent actionEvent) {
+        Stage root = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
         openComposeEmailWindow(root, email.getSender().getString(), "Re: " + email.getSubject(), email.getContent());
     }
 
     @FXML
-    public void replyAllButtonOnAction(ActionEvent event) {
-        Stage root = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+    public void replyAllButtonOnAction(ActionEvent actionEvent) {
+        Stage root = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
         String recipients = "";
         List<IAddress> recipientsList = this.email.getAllRecipients();
         for (IAddress recipient : recipientsList) {
@@ -118,16 +117,16 @@ public class TopbarPresenter implements IObserver, Initializable {
     }
 
     @Override
-    public void onEvent(IEvent evt) {
+    public void onEvent(IEvent event) {
         Platform.runLater( // JavaFX can get thread problems otherwise
-                () -> handleEvent(evt)
+                () -> handleEvent(event)
         );
     }
 
-    private void handleEvent(IEvent evt){
-        switch (evt.getType()) {
+    private void handleEvent(IEvent event){
+        switch (event.getType()) {
             case SELECTED_EMAIL:
-                this.email = (IEmail) evt.getValue();
+                this.email = (IEmail) event.getValue();
                 break;
         }
     }
