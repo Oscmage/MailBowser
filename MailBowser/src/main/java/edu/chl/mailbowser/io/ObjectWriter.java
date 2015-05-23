@@ -2,8 +2,6 @@ package edu.chl.mailbowser.io;
 
 import java.io.*;
 
-import static edu.chl.mailbowser.io.IOUtils.closeStream;
-
 /**
  * Created by mats on 11/05/15.
  *
@@ -31,8 +29,8 @@ public class ObjectWriter<T extends Serializable> implements IObjectWriter<T> {
         } catch (IOException | NullPointerException e) {
             success = false;
         } finally {
-            closeStream(fileOutputStream);
-            closeStream(objectOutputStream);
+            IOUtils.closeStream(fileOutputStream);
+            IOUtils.closeStream(objectOutputStream);
         }
 
         return success;
