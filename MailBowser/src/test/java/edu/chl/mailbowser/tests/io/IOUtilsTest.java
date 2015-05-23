@@ -14,7 +14,7 @@ public class IOUtilsTest {
     public void testCloseStream() throws Exception {
         MockStream stream = new MockStream();
         IOUtils.closeStream(stream);
-        assertTrue(stream.closed);
+        assertTrue(stream.closed); //Did stream really close?
 
         Exception e = null;
         try {
