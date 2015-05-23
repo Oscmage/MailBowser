@@ -26,7 +26,7 @@ public class TagHandlerTest {
     @Test
     public void testEmptyTagsMap() {
         // Is it empty?
-        assertTrue(tagHandler.getTags(new MockEmail()).isEmpty());
+        assertTrue(tagHandler.getTagsWith(new MockEmail()).isEmpty());
     }
 
     @Test
@@ -36,8 +36,8 @@ public class TagHandlerTest {
 
         tagHandler.addTag(e1, t1);
 
-        assertEquals(tagHandler.getEmails(t1).toArray()[0], e1);
-        assertEquals(tagHandler.getTags(e1).toArray()[0], t1);
+        assertEquals(tagHandler.getEmailsWith(t1).toArray()[0], e1);
+        assertEquals(tagHandler.getTagsWith(e1).toArray()[0], t1);
     }
 
     @Test
@@ -49,8 +49,8 @@ public class TagHandlerTest {
         // Single email with multiple tags?
         tagHandler.addTag(e1, t2);
         tagHandler.addTag(e1, t1);
-        assertTrue(tagHandler.getTags(e1).contains(t1));
-        assertTrue(tagHandler.getTags(e1).contains(t2));
+        assertTrue(tagHandler.getTagsWith(e1).contains(t1));
+        assertTrue(tagHandler.getTagsWith(e1).contains(t2));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class TagHandlerTest {
 
         tagHandler.addTag(e1, t1);
         tagHandler.eraseTag(t1);
-        assertTrue(tagHandler.getTags(e1).isEmpty());
+        assertTrue(tagHandler.getTagsWith(e1).isEmpty());
     }
 
 }
