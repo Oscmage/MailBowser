@@ -11,7 +11,7 @@ import java.util.List;
 public class Contact implements IContact {
     private String firstName;
     private String lastName;
-    private List<IAddress> emailAddresses;
+    private List<IAddress> emailAddresses = new ArrayList<>();
 
     /**
      * Creates a new contact with no emailAddresses
@@ -23,6 +23,9 @@ public class Contact implements IContact {
         this.lastName = lastName;
     }
 
+    public Contact (){
+
+    }
 
     /**
      * @return the full name with the last name first and separated by semi-colon
@@ -57,6 +60,16 @@ public class Contact implements IContact {
     }
 
     @Override
+    public void addAddress(IAddress address) {
+        emailAddresses.add(address);
+    }
+
+    @Override
+    public void addAllAddresses(List<IAddress> addresses) {
+        emailAddresses.addAll(addresses);
+    }
+
+    @Override
     public List<IAddress> getEmailAddresses() {
         return new ArrayList<IAddress>(emailAddresses);
     }
@@ -68,7 +81,9 @@ public class Contact implements IContact {
 
     @Override
     public boolean matches(String query) {
-        return getFullName().matches(query);
+        if(query != null)
+            return getFullName().contains(query);
+        return false;
     }
 
     @Override

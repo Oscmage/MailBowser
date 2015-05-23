@@ -455,4 +455,31 @@
     -fx-text-fill: derive(-fx-bright, -50%);
 }
 
-/* COMPOSE EMAIL VIEW */
+/* MENU BAR */
+
+.menuBar {
+    -fx-background-color: -fx-dark;
+    -fx-padding: 10;
+}
+
+.menuBar .button {
+    -fx-background-color: -fx-dark;
+    -fx-border-color: -fx-bright;
+    -fx-text-fill: -fx-bright;
+}
+
+.menuBar .button:hover {
+    -fx-background-color: -fx-bright;
+    -fx-text-fill: -fx-dark;
+}
+
+.inlineMenuBar {
+    -fx-padding: 10;
+}
+
+/* FORMS */
+
+.form {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+}

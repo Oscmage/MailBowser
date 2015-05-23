@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,11 +21,11 @@ import java.util.ResourceBundle;
 /**
  * Created by mats on 22/05/15.
  */
-public class AddAccountPresenter extends GridPane implements Initializable {
+public class AddAccountPresenter extends VBox implements Initializable {
 
-    @FXML private TextField usernameField;
-    @FXML private TextField passwordField;
-    @FXML private ChoiceBox<MailServerTypes> accountTypeChoiceBox;
+    @FXML protected TextField usernameField;
+    @FXML protected TextField passwordField;
+    @FXML protected ChoiceBox<MailServerTypes> accountTypeChoiceBox;
 
     /**
      * Initializes a create account view.

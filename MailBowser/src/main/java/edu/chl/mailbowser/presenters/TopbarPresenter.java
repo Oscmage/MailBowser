@@ -9,8 +9,10 @@ import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -18,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -60,8 +63,6 @@ public class TopbarPresenter implements Initializable, IObserver{
                     .forEach(s -> s.setDisable(false));
         }
     }
-
-
 
     @FXML
     public void tagButtonOnAction(ActionEvent actionEvent) {
@@ -117,7 +118,6 @@ public class TopbarPresenter implements Initializable, IObserver{
         EventBus.INSTANCE.publish(new Event(EventType.DELETE_EMAIL, email));
     }
 
-
     @Override
     public void onEvent(IEvent event) {
         Platform.runLater( // JavaFX can get thread problems otherwise
@@ -134,6 +134,25 @@ public class TopbarPresenter implements Initializable, IObserver{
         showOrHideButtons();
     }
 
+    /**
+     * This method is invoked when the openContactBookButton is pressed.
+     *
+     * @param actionEvent
+     */
+    public void openContactBookButtonOnAction(ActionEvent actionEvent) throws IOException {
+        Stage newStage = new Stage();
+        Parent node = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ContactBookView.fxml"));
+        newStage.setTitle("Contact Book");
+
+        Scene scene = new Scene(node, 400, 300);
+        scene.getStylesheets().add("css/style.css");
+
+        newStage.setMinWidth(400.0);
+        newStage.setMinHeight(300.0);
+
+        newStage.setScene(scene);
+        newStage.show();
+    }
 }
 
 

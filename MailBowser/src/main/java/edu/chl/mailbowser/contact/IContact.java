@@ -14,5 +14,7 @@ public interface IContact extends Comparable<IContact>, Searchable {
     String getLastName();
     void setFirstName(String firstName);
     void setLastName(String lastName);
+    void addAddress(IAddress address);
+    void addAllAddresses(List<IAddress> addresses);
     List<IAddress> getEmailAddresses();
 }
