@@ -21,5 +21,9 @@ public enum EventType {
     SEARCH,
     CLOSE_THIS,
     GUI_REMOVE_TAG,
-    DELETE_TAG
+    DELETE_TAG,
+    NEW_EMAIL,
+    REPLY,
+    REPLY_ALL,
+    FORWARD
 }

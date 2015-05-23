@@ -3,7 +3,6 @@ package edu.chl.mailbowser.presenters;
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.account.models.IAccount;
-import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.*;
 import javafx.application.Platform;
@@ -23,17 +22,19 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class TopbarPresenter implements IObserver, Initializable {
+public class TopbarPresenter implements Initializable, IObserver{
 
     private IEmail email;
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
 
     @FXML protected TextField addTagTextField;
     @FXML protected TextField searchField;
+
     @FXML protected HBox actionButtons;
     @FXML protected Button forwardButton;
     @FXML protected Button replyButton;
     @FXML protected Button replyAllButton;
+
     @FXML protected Button fetchButton;
     @FXML protected Button addTagButton;
 
@@ -58,19 +59,7 @@ public class TopbarPresenter implements IObserver, Initializable {
         }
     }
 
-    private void openComposeEmailWindow(Stage root, String recipient, String subject, String content) {
-        ComposeEmailPresenter composeEmailPresenter = new ComposeEmailPresenter(recipient, subject, content);
 
-        // create a new stage
-        Stage newEmailStage = new Stage();
-        newEmailStage.setTitle("New Email...");
-        newEmailStage.setX(root.getX()+50);
-        newEmailStage.setY(root.getY()+50);
-
-        // add the component to the stage
-        newEmailStage.setScene(new Scene(composeEmailPresenter));
-        newEmailStage.show();
-    }
 
     @FXML
     public void tagButtonOnAction(ActionEvent actionEvent) {
@@ -88,49 +77,40 @@ public class TopbarPresenter implements IObserver, Initializable {
     }
 
     @FXML
-    public void searchFieldOnAction(ActionEvent actionEvent) {
+    private void searchFieldOnAction(ActionEvent actionEvent) {
         String text = searchField.getText();
         EventBus.INSTANCE.publish(new Event(EventType.SEARCH, text));
     }
 
     @FXML
-    public void fetchButtonOnAction(ActionEvent actionEvent) {
+    private void fetchButtonOnAction(ActionEvent actionEvent) {
         for(IAccount account : accountHandler.getAccounts()) {
             account.fetch();
         }
     }
 
     @FXML
-    public void newButtonOnAction(ActionEvent actionEvent) {
+    private void newButtonOnAction(ActionEvent actionEvent) {
         Stage root = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
-        openComposeEmailWindow(root, "", "", "");
+        EventBus.INSTANCE.publish(new Event(EventType.NEW_EMAIL,root));
     }
 
     @FXML
-    public void forwardButtonOnAction(ActionEvent actionEvent) {
+    private void forwardButtonOnAction(ActionEvent actionEvent) {
         Stage root = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
-        openComposeEmailWindow(root, "", "Fw: " + email.getSubject(), email.getContent());
+        EventBus.INSTANCE.publish(new Event(EventType.FORWARD,root));
     }
 
     @FXML
-    public void replyButtonOnAction(ActionEvent actionEvent) {
+    private void replyButtonOnAction(ActionEvent actionEvent) {
         Stage root = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
-        openComposeEmailWindow(root, email.getSender().getString(), "Re: " + email.getSubject(), email.getContent());
+        EventBus.INSTANCE.publish(new Event(EventType.REPLY,root));
     }
 
     @FXML
-    public void replyAllButtonOnAction(ActionEvent actionEvent) {
+    private void replyAllButtonOnAction(ActionEvent actionEvent) {
         Stage root = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
-        String recipients = "";
-        List<IAddress> recipientsList = this.email.getAllRecipients();
-        for (IAddress recipient : recipientsList) {
-            if (recipients.length() == 0) {
-                recipients = recipient.getString();
-            } else {
-                recipients += ", " + recipient.getString();
-            }
-        }
-        openComposeEmailWindow(root, recipients,"Re: " + email.getSubject(), email.getContent());
+        EventBus.INSTANCE.publish(new Event(EventType.REPLY_ALL, root));
     }
 
     @Override
