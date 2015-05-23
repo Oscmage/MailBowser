@@ -9,7 +9,10 @@
     <children>
         <HBox alignment="CENTER_LEFT" maxWidth="420.0" spacing="10.0">
             <children>
-                <Button id="newEmailButton" maxHeight="40.0" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="40.0" prefWidth="180.0" styleClass="fontawesome, circle" text="" />
+                <Button id="newEmailButton" maxHeight="40.0" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="40.0" prefWidth="180.0" styleClass="fontawesome, circle" text="">
+               <tooltip>
+                  <Tooltip text="New email..." />
+               </tooltip></Button>
             </children>
             <opaqueInsets>
                 <Insets />
@@ -18,13 +21,28 @@
                 <Insets />
             </HBox.margin>
         </HBox>
-        <Button fx:id="fetchButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#fetchButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
-        <HBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="10.0" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
+        <Button fx:id="fetchButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#fetchButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="">
+         <tooltip>
+            <Tooltip text="Fetch new email" />
+         </tooltip></Button>
+        <HBox fx:id="actionButtons" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="10.0" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
             <children>
-                <Button fx:id="addTagButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#tagButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
-                <Button fx:id="forwardButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#forwardButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
-                <Button fx:id="replyButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
-                <Button fx:id="replyAllButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyAllButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
+                <Button fx:id="addTagButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#tagButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="">
+               <tooltip>
+                  <Tooltip text="Add a new tag to the currently selected email..." />
+               </tooltip></Button>
+                <Button fx:id="forwardButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#forwardButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="">
+               <tooltip>
+                  <Tooltip text="Forward the email " />
+               </tooltip></Button>
+                <Button fx:id="replyButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="">
+               <tooltip>
+                  <Tooltip text="Reply the email" />
+               </tooltip></Button>
+                <Button fx:id="replyAllButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyAllButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="">
+               <tooltip>
+                  <Tooltip text="Reply all " />
+               </tooltip></Button>
                 <TextField fx:id="searchField" onAction="#searchFieldOnAction" prefWidth="220.0" promptText="Search..." />
                 <!-- <TextField fx:id="addTagTextField" maxHeight="40.0" minHeight="40.0" onAction="#addTagOnAction" prefHeight="40.0" promptText="Add tag..." />-->
             </children>
