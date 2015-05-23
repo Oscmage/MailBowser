@@ -18,6 +18,8 @@ import java.util.Set;
  */
 public class TagHandler implements ITagHandler{
 
+
+    //IMPORTANT! Name is based on From key to value
     private Map<ITag,Set<IEmail>> mapFromTagsToEmails = new HashMap<>();
     private Map<IEmail,Set<ITag>> mapFromEmailsToTags = new HashMap<>();
 
@@ -30,15 +32,15 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public synchronized void addTag(IEmail email, ITag tag){
-        if (!mapFromTagsToEmails.containsKey(tag)) {
-            mapFromTagsToEmails.put(tag, new HashSet<>());
+        if (!mapFromTagsToEmails.containsKey(tag)) { //If key doesn't exists
+            mapFromTagsToEmails.put(tag, new HashSet<>()); //Create key with empty set
         }
-        mapFromTagsToEmails.get(tag).add(email);
+        mapFromTagsToEmails.get(tag).add(email); // Add the value to the set
 
-        if (!mapFromEmailsToTags.containsKey(email)) {
-            mapFromEmailsToTags.put(email, new HashSet<>());
+        if (!mapFromEmailsToTags.containsKey(email)) { //If key doesn't exists
+            mapFromEmailsToTags.put(email, new HashSet<>()); //Create key with empty set
         }
-        mapFromEmailsToTags.get(email).add(tag);
+        mapFromEmailsToTags.get(email).add(tag); // Add the value to the set
 
         EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG, tag));
     }
@@ -82,19 +84,19 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public synchronized void removeTagFromEmail(IEmail email,ITag tag){
-        if (mapFromEmailsToTags.containsKey(email)) {
-            Set<ITag> tagSet = mapFromEmailsToTags.get(email);
-            tagSet.remove(tag);
-            if (tagSet.isEmpty()) {
-                mapFromEmailsToTags.remove(email);
+        if (mapFromEmailsToTags.containsKey(email)) { //If key exists
+            Set<ITag> tagSet = mapFromEmailsToTags.get(email); //Get set for the key
+            tagSet.remove(tag); // Remove the tag from the set
+            if (tagSet.isEmpty()) { //If set is empty
+                mapFromEmailsToTags.remove(email); //Remove the key
             }
         }
 
-        if (mapFromTagsToEmails.containsKey(tag)) {
-            Set<IEmail> emailSet = mapFromTagsToEmails.get(tag);
-            emailSet.remove(email);
-            if (emailSet.isEmpty()) {
-                mapFromTagsToEmails.remove(tag);
+        if (mapFromTagsToEmails.containsKey(tag)) { // If key exists
+            Set<IEmail> emailSet = mapFromTagsToEmails.get(tag); // Get set for the key
+            emailSet.remove(email); // Remove the email from the set
+            if (emailSet.isEmpty()) { //If set is empty
+                mapFromTagsToEmails.remove(tag); // Remove the key
             }
         }
 
@@ -107,13 +109,13 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public synchronized void eraseTag(ITag tag) {
-        Set<IEmail> emailSet = mapFromTagsToEmails.remove(tag);
+        Set<IEmail> emailSet = mapFromTagsToEmails.remove(tag); //Gets the Set of emails belong to the tag.
 
-        for (IEmail email : emailSet) { 
-            Set <ITag> tagSet = mapFromEmailsToTags.get(email);
-            tagSet.remove(tag);
+        for (IEmail email : emailSet) { //Loop through each email in the set
+            Set <ITag> tagSet = mapFromEmailsToTags.get(email); //Get the tagSet for the email
+            tagSet.remove(tag); //Remove the tag from the set.
 
-            if (tagSet.isEmpty()) {
+            if (tagSet.isEmpty()) { //If the email only had this tag
                 mapFromEmailsToTags.remove(email);
             }
         }
@@ -130,16 +132,17 @@ public class TagHandler implements ITagHandler{
         IObjectReader<HashMap> objectReader = new ObjectReader<>();
 
         try{
-            mapFromTagsToEmails = objectReader.read(filename);
+            mapFromTagsToEmails = objectReader.read(filename); //Try to read from disk
         }catch (ObjectReadException e){
             return false;
         }
         Set<ITag> tempTags = mapFromTagsToEmails.keySet();
 
-        for (ITag tag: tempTags){
-            Set<IEmail> emails = mapFromTagsToEmails.get(tag);
-            for (IEmail email: emails){
-                addTag(email,tag);
+        // Rebuilds the mapFromEmailsToTags NOT vice versa!
+        for (ITag tag: tempTags){ //Loop through all tags
+            Set<IEmail> emails = mapFromTagsToEmails.get(tag); // Get every Set of emails for each tag
+            for (IEmail email: emails){ //Loop through each email
+                addTag(email,tag); //Add the tag to each email.
             }
         }
         return true;
