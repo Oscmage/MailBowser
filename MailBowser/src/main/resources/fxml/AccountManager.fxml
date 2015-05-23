@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox stylesheets="@../css/style.css" prefHeight="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.AccountManagerPresenter">
+   <children>
+      <VBox>
+         <children>
+            <ListView fx:id="accountsList" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <HBox spacing="5.0">
+               <children>
+                  <Button fx:id="addAccountButton" maxHeight="40.0" maxWidth="92.5" minHeight="40.0" minWidth="92.5" mnemonicParsing="false" onAction="#addAccountButtonOnAction" prefWidth="92.5" text="Add" />
+                  <Button fx:id="deleteAccountButton" maxHeight="40.0" maxWidth="92.5" minHeight="40.0" minWidth="92.5" mnemonicParsing="false" onAction="#deleteAccountButtonOnAction" prefWidth="92.5" text="Delete" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox HBox.hgrow="ALWAYS">
+         <children>
+            <Pane fx:id="rightHandPane" prefHeight="256.0" prefWidth="200.0" />
+            <HBox alignment="CENTER_RIGHT" spacing="5.0">
+               <children>
+                  <Button fx:id="saveAccountButton" alignment="CENTER" maxHeight="40.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" onAction="#saveAccountButtonOnAction" prefHeight="40.0" text="Save" VBox.vgrow="NEVER" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>

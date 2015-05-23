@@ -1,6 +1,7 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.MainHandler;
+import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.email.views.EmailListViewItem;
 import edu.chl.mailbowser.event.EventBus;
@@ -8,6 +9,8 @@ import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.search.Searcher;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
+import edu.chl.mailbowser.tag.models.ITag;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,6 +31,9 @@ import java.util.stream.Collectors;
  * Created by filip on 04/05/15.
  */
 public class EmailListPresenter implements Initializable, IObserver {
+
+    private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
+    private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
     // this list holds all EmailListViewItems. when you add an item to this list, emailListListView will update
     // itself automatically
@@ -39,7 +46,9 @@ public class EmailListPresenter implements Initializable, IObserver {
     // OK, do not get frightened. Read it like so: "An email-list ListView."
     @FXML protected ListView<EmailListViewItem> emailListListView;
 
-    private boolean searchActivated = false;
+    // this flag determines whether or not to update the list view when a FETCH_EMAIL event comes in. it is set to
+    // false when you search
+    private boolean updateListOnIncomingEmail = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,7 +56,7 @@ public class EmailListPresenter implements Initializable, IObserver {
 
         emailListListView.setItems(sortedObservableEmailList);
 
-        replaceListViewContent(AccountHandler.getInstance().getAccount().getEmails());
+        replaceListViewContent(accountHandler.getAllEmails());
     }
 
     /**
@@ -81,15 +90,15 @@ public class EmailListPresenter implements Initializable, IObserver {
      * @param query the query to search for
      */
     private void search(String query) {
-        List<IEmail> emails = AccountHandler.getInstance().getAccount().getEmails();
+        List<IEmail> emails = accountHandler.getAllEmails();
 
         if (!query.equals("")) {
-            searchActivated = true;
+            updateListOnIncomingEmail = false;
             List<IEmail> matchingEmails = Searcher.search(emails, query);
             System.out.println("matching emails: " + matchingEmails.size());
             replaceListViewContent(matchingEmails);
         } else {
-            searchActivated = false;
+            updateListOnIncomingEmail = true;
             replaceListViewContent(emails);
         }
     }
@@ -100,7 +109,7 @@ public class EmailListPresenter implements Initializable, IObserver {
      * @param email the fetched email
      */
     private void fetchEmail(IEmail email) {
-        if (!searchActivated) {
+        if (updateListOnIncomingEmail) {
             addEmailToListView(email);
         }
     }
@@ -127,21 +136,25 @@ public class EmailListPresenter implements Initializable, IObserver {
      */
     @Override
     public void onEvent(IEvent evt) {
+        Platform.runLater( // JavaFX can get thread problems otherwise
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt){
         switch (evt.getType()) {
             case FETCH_EMAIL:
-                Platform.runLater(
-                        () -> fetchEmail((IEmail) evt.getValue())
-                );
+                fetchEmail((IEmail) evt.getValue());
                 break;
             case SEARCH:
-                Platform.runLater(
-                        () -> search((String) evt.getValue())
-                );
+                search((String) evt.getValue());
                 break;
             case CLEAR_EMAILS:
-                Platform.runLater(
-                        () -> clearEmails()
-                );
+                clearEmails();
+                break;
+            case SELECTED_TAG:
+                replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith((ITag)evt.getValue())));
+                break;
         }
     }
 }

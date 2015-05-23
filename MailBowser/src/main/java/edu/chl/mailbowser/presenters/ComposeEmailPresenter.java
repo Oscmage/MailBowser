@@ -1,30 +1,25 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.account.handlers.AccountHandler;
+import edu.chl.mailbowser.MainHandler;
+import edu.chl.mailbowser.account.handlers.IAccountHandler;
+import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.Address;
-import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.Email;
+import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
-import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
-
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.InputMethodEvent;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import org.markdown4j.Markdown4jProcessor;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,10 +27,17 @@ import java.util.ResourceBundle;
  * Created by mats on 09/04/15.
  */
 public class ComposeEmailPresenter extends GridPane implements Initializable {
+    private static final String EMAIL_CSS = "<head><style>* {font-family: \"Arial\"}</style></head>";
+
+    private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
+
+    private String html = "";
 
     // Assign the fields from the view to variables via the fx:id attribute
     // Note that these variables belong to the javafx.scene.control package
-    @FXML private TextField receivers;
+    @FXML private TextField to;
+    @FXML private TextField cc;
+    @FXML private TextField bcc;
     @FXML private TextField subject;
     @FXML private TextArea content;
     @FXML private WebView markdown;
@@ -60,25 +62,38 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
     // This method is invoked when the send button is pressed, and is bound via the onAction attribute
     @FXML protected void sendButtonActionPerformed(ActionEvent event) {
+        // Start building an email
+        Email.Builder emailBuilder = new Email.Builder(subject.getText(), html);
 
-        // Declare receivers
-        List<IAddress> receivers = new ArrayList<IAddress>();
-        receivers.addAll(parseAddresses(this.receivers.getText()));
-
-        //Convert markdown to html
-        String html = null;
-        try {
-            html = new Markdown4jProcessor().process(content.getText());
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Add to, cc and bcc if they are entered
+        if (!this.to.getText().isEmpty()) {
+            List<IAddress> toAddresses = parseAddresses(this.to.getText());
+            emailBuilder.to(toAddresses);
         }
-        // Create a new email and send it
-        IEmail email = new Email(receivers, this.subject.getText(), html);
-        AccountHandler.getInstance().getAccount().send(email);
+
+        if (!this.cc.getText().isEmpty()) {
+            List<IAddress> ccAddresses = parseAddresses(this.cc.getText());
+            emailBuilder.cc(ccAddresses);
+        }
+
+        if (!this.bcc.getText().isEmpty()) {
+            List<IAddress> bccAddresses = parseAddresses(this.bcc.getText());
+            emailBuilder.bcc(bccAddresses);
+        }
+
+        // Build the email and send it
+        IEmail email = emailBuilder.build();
+
+        // TODO: Fix sender
+        accountHandler.getAccounts().get(0).send(email);
+    }
+
+    @FXML protected void openContactBook(ActionEvent event) {
+
     }
 
     public void setReceivers(String value) {
-        receivers.textProperty().set(value);
+        to.textProperty().set(value);
     }
 
     public void setSubject(String value) {
@@ -112,12 +127,14 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
     }
 
     public void onKeyTyped() {
-        String html = null;
         try {
             html = new Markdown4jProcessor().process(content.getText());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        html = EMAIL_CSS + html;
+
         markdown.getEngine().loadContent(html);
     }
 }

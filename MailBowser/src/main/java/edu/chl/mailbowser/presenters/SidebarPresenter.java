@@ -1,12 +1,12 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.email.models.Email;
+import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
-import edu.chl.mailbowser.tag.handlers.TagHandler;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.models.Tag;
 import javafx.application.Platform;
@@ -25,12 +25,18 @@ import java.util.Set;
  */
 public class SidebarPresenter implements IObserver, Initializable {
 
-    @FXML private ListView<SidebarViewItemPresenter> sidebarListView;
+    private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
+
+    @FXML private ListView<SidebarViewItemPresenter> tagsList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
-        Set<ITag> tags = TagHandler.getInstance().getTags();
+        updateView();
+    }
+
+    public void updateView() {
+        Set<ITag> tags = tagHandler.getTags();
 
         for(ITag tag : tags) {
             updateView(tag);
@@ -46,7 +52,7 @@ public class SidebarPresenter implements IObserver, Initializable {
     }
 
     public void updateView(ITag tag) {
-        ObservableList<SidebarViewItemPresenter> observableList = sidebarListView.getItems();
+        ObservableList<SidebarViewItemPresenter> observableList = tagsList.getItems();
 
         SidebarViewItemPresenter emailListViewItem = new SidebarViewItemPresenter((Tag)tag);
 
@@ -54,32 +60,47 @@ public class SidebarPresenter implements IObserver, Initializable {
             observableList.add(emailListViewItem);
         }
 
-        sidebarListView.setItems(observableList);
+        tagsList.setItems(observableList);
+    }
+
+    public void deleteTag(SidebarViewItemPresenter listItem) {
+        tagHandler.eraseTag(listItem.getTag());
+        tagsList.getItems().remove(listItem);
+    }
+
+    @FXML
+    public void addNewTag() {
+
     }
 
     /**
-     * If the current selected item is "All emails"(index 0) the method sends an event with null
-     * since All emails isn't a tag.
-     * Otherwise the method sends an event with the chosen tag.
+     * Sends an event with the chosen listItem's tag.
      * @param event
      */
     public void onItemChanged(Event event) {
-        if(sidebarListView.getSelectionModel().getSelectedIndex() != 0) {
-            EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_TAG, null));
-        } else {
             EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_TAG,
-                    sidebarListView.getSelectionModel().getSelectedItem()));
-        }
+                    tagsList.getSelectionModel().getSelectedItem().getTag()));
+
     }
 
     @Override
     public void onEvent(IEvent evt) {
+        Platform.runLater( // JavaFX can get thread problems otherwise
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt){
         switch (evt.getType()) {
             case FETCH_EMAIL:
-                Platform.runLater(
-                        () -> updateView(TagHandler.getInstance().getTags((IEmail)evt.getValue()))
-                );
-
+                updateView(tagHandler.getTagsWith((IEmail)evt.getValue()));
+                break;
+            case ADD_TAG:
+                updateView((ITag)evt.getValue());
+                break;
+            case DELETE_TAG:
+                deleteTag((SidebarViewItemPresenter)evt.getValue());
+                break;
         }
     }
 

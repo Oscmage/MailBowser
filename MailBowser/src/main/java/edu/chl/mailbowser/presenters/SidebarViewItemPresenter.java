@@ -1,13 +1,18 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.email.models.Email;
+
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.tag.models.Tag;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 
 
 import java.io.IOException;
@@ -17,7 +22,7 @@ import java.util.ResourceBundle;
 /**
  * Created by filip on 07/05/15.
  */
-public class SidebarViewItemPresenter extends FlowPane implements Initializable {
+public class SidebarViewItemPresenter extends HBox implements Initializable {
 
     private Tag tag;
 
@@ -52,6 +57,11 @@ public class SidebarViewItemPresenter extends FlowPane implements Initializable 
 
     public Tag getTag() {
         return this.tag;
+    }
+
+
+    @FXML private void removeTagFromSidebar(ActionEvent event) {
+        EventBus.INSTANCE.publish(new Event(EventType.DELETE_TAG, this));
     }
 
     public boolean equals(Object o) {

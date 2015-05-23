@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.web.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<ScrollPane id="emailDetailScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="407.0" prefViewportHeight="521.0" prefWidth="494.0" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.EmailDetailPresenter">
-    <content>
-        <VBox id="emailDetailVBox" spacing="30.0">
-            <children>
-                <GridPane id="emailLetterMetaDataGridPane" VBox.vgrow="NEVER">
+
+  <VBox fx:id="emailDetail" id="emailDetailVBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.EmailDetailPresenter">
+      <children>
+      <VBox id="emailDetailTop">
+         <children>
+                <GridPane id="emailDetailMeta" maxWidth="1.7976931348623157E308" prefWidth="1.0E7" VBox.vgrow="SOMETIMES">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="331.0" minWidth="10.0" prefWidth="250.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="248.0" />
@@ -18,24 +20,28 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <VBox AnchorPane.leftAnchor="0.0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="NEVER" HBox.hgrow="ALWAYS">
+                        <VBox maxWidth="1.7976931348623157E308" AnchorPane.leftAnchor="0.0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="NEVER" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label text="From" />
-                                <Label id="emailLetterMetaDataFromLabel" fx:id="fromLabel" text="Nisse Svensson &lt;nisse.svensson@gmail.com&gt;" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS" />
+                                <Label maxWidth="1.7976931348623157E308" text="From" />
+                                <Label id="emailLetterMetaDataFromLabel" fx:id="fromLabel" maxWidth="1.7976931348623157E308" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS" />
+                                <Label maxWidth="1.7976931348623157E308" text="To" />
+                                <Label id="emailLetterMetaDataFromLabel" fx:id="toLabel" maxWidth="1.7976931348623157E308" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS" />
+                                <Label maxWidth="1.7976931348623157E308" text="Cc" />
+                                <Label id="emailLetterMetaDataFromLabel" fx:id="ccLabel" maxWidth="1.7976931348623157E308" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS" />
                             </children>
                         </VBox>
-                        <VBox alignment="TOP_RIGHT" AnchorPane.rightAnchor="0.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="NEVER">
+                        <VBox alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" AnchorPane.rightAnchor="0.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="NEVER">
                             <children>
                                 <Label text="Received" />
-                                <Label id="emailLetterMetaDataReceivedLabel" fx:id="receivedDateLabel" text="11:35" textAlignment="RIGHT" wrapText="true" VBox.vgrow="ALWAYS" />
+                                <Label id="emailLetterMetaDataReceivedLabel" fx:id="receivedDateLabel" textAlignment="RIGHT" wrapText="true" VBox.vgrow="ALWAYS" />
                             </children>
                         </VBox>
                     </children>
                 </GridPane>
-                <Label fx:id="subjectLabel" styleClass="h1" text="What a wonderful headline" />
-            <ListView fx:id="tagListView" maxHeight="40.0" minHeight="70.0" orientation="HORIZONTAL" prefHeight="114.0" prefWidth="492.0" />
-            <WebView fx:id="webView" prefHeight="281.0" prefWidth="497.0" />
-            </children>
-        </VBox>
-    </content>
-</ScrollPane>
+            <ListView id="emailDetailTagsList" fx:id="tagListView" orientation="HORIZONTAL" VBox.vgrow="NEVER" />
+                <Label id="emailDetailSubject" fx:id="subjectLabel" styleClass="h1" wrapText="true" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+      <WebView id="webView" fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
+      </children>
+  </VBox>
