@@ -21,18 +21,19 @@ public class TagTest {
 
     @Test
     public void testEquals() throws Exception {
-        assertTrue(tag.equals(tag));
-        assertFalse(tag.equals(null));
-        assertFalse(tag.equals(new Object()));
-        assertFalse(tag.equals(10));
-        assertTrue(tag.equals(new Tag(s)));
-        assertFalse(tag.equals(s));
+        assertTrue(tag.equals(tag)); //Tests if same object returns true
+        assertFalse(tag.equals(null)); //Tests if null return false
+        assertFalse(tag.equals(new Object())); //Tests if a tag equals a new object
+        assertFalse(tag.equals(10)); //Tests if a tag equals the int 10
+        assertTrue(tag.equals(new Tag(s))); //Tests if a tag equals another tag if they got the same name
+        assertFalse(tag.equals(s)); //Tests if a tag equals a string with the same name as the tag
     }
 
     @Test
     public void testHashCode() throws Exception {
-        assertTrue(tag.hashCode() == tag.hashCode());
-        assertFalse(tag.hashCode() == s.hashCode());
+        assertTrue(tag.hashCode() == tag.hashCode()); // Tests if hashCode returns the same value with the same object
+        assertFalse(tag.hashCode() == s.hashCode()); // Tests if hashCode returns the same value for the tag and
+                                                    // a string with the same name as the tag.
     }
 
     @Test
