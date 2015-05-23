@@ -25,5 +25,7 @@ public enum EventType {
     NEW_EMAIL,
     REPLY,
     REPLY_ALL,
-    FORWARD
+    FORWARD,
+    EMAILDETAILPRESENTER_READY,
+
 }

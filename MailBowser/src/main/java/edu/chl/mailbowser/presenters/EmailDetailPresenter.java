@@ -3,9 +3,7 @@ package edu.chl.mailbowser.presenters;
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IAddress;
-import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.IEvent;
-import edu.chl.mailbowser.event.IObserver;
+import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.views.TagListItemPresenter;
@@ -55,6 +53,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
         EventBus.INSTANCE.register(this);
         tagListView.setItems(observableTagList);
         emailDetail.setOpacity(0.5);
+        EventBus.INSTANCE.publish(new Event(EventType.EMAILDETAILPRESENTER_READY,new Object()));
     }
 
     private void updateView() {
