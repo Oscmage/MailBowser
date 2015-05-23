@@ -7,7 +7,6 @@ import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
-import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.models.Tag;
 import javafx.application.Platform;
@@ -15,14 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Popup;
-import javafx.stage.PopupWindow;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -72,7 +64,7 @@ public class SidebarPresenter implements IObserver, Initializable {
     }
 
     public void deleteTag(SidebarViewItemPresenter listItem) {
-        tagHandler.removeTag(listItem.getTag());
+        tagHandler.eraseTag(listItem.getTag());
         tagsList.getItems().remove(listItem);
     }
 
@@ -93,21 +85,21 @@ public class SidebarPresenter implements IObserver, Initializable {
 
     @Override
     public void onEvent(IEvent evt) {
+        Platform.runLater( // JavaFX can get thread problems otherwise
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt){
         switch (evt.getType()) {
             case FETCH_EMAIL:
-                Platform.runLater(
-                        () -> updateView(tagHandler.getTags((IEmail)evt.getValue()))
-                );
+                updateView(tagHandler.getTagsWith((IEmail)evt.getValue()));
                 break;
             case ADD_TAG:
-                Platform.runLater(
-                        () -> updateView((ITag)evt.getValue())
-                );
+                updateView((ITag)evt.getValue());
                 break;
             case DELETE_TAG:
-                Platform.runLater(
-                        () -> deleteTag((SidebarViewItemPresenter)evt.getValue())
-                );
+                deleteTag((SidebarViewItemPresenter)evt.getValue());
                 break;
         }
     }

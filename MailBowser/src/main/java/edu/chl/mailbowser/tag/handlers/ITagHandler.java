@@ -11,11 +11,11 @@ import java.util.Set;
  */
 public interface ITagHandler extends Serializable {
     void addTag(IEmail email, ITag tag);
-    Set<IEmail> getEmails(ITag tag);
-    Set<ITag> getTags(IEmail email);
+    Set<IEmail> getEmailsWith(ITag tag);
+    Set<ITag> getTagsWith(IEmail email);
     Set<ITag> getTags();
-    void removeTag(IEmail email,ITag tag);
-    void removeTag(ITag tag);
+    void removeTagFromEmail(IEmail email,ITag tag);
+    void eraseTag(ITag tag);
     boolean readTags(String filename);
     boolean writeTags(String filename);
 }

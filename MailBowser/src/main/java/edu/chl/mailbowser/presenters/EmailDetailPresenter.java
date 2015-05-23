@@ -17,13 +17,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -76,7 +74,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
 
         this.webView.getEngine().loadContent(email.getContent());
 
-        replaceListViewContent(tagHandler.getTags(this.email));
+        replaceListViewContent(tagHandler.getTagsWith(this.email));
         emailDetail.setOpacity(1);
     }
 
@@ -90,7 +88,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
 
     @Override
     public void onEvent(IEvent evt) {
-        Platform.runLater(
+        Platform.runLater( //JavaFX can get thread problems otherwise
                 () -> handleEvent(evt)
         );
     }
@@ -104,11 +102,11 @@ public class EmailDetailPresenter implements IObserver, Initializable {
             case REMOVE_TAG:
                 break;
             case ADD_TAG:
-                replaceListViewContent(tagHandler.getTags(this.email));
+                replaceListViewContent(tagHandler.getTagsWith(this.email));
                 break;
             case GUI_REMOVE_TAG:
                 ITag tag = (ITag) evt.getValue();
-                tagHandler.removeTag(this.email, tag);
+                tagHandler.removeTagFromEmail(this.email, tag);
                 updateView();
                 break;
         }

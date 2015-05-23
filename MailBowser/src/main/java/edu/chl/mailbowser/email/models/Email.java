@@ -245,6 +245,7 @@ public class Email implements IEmail {
         return recipients.toArray(new javax.mail.Address[addresses.size()]);
     }
 
+    @Override
     public IAddress getSender() {
         return sender;
     }
@@ -273,27 +274,32 @@ public class Email implements IEmail {
         return recipients;
     }
 
+    @Override
     public String getContent() {
         return content;
     }
 
+    @Override
     public String getSubject() {
         return subject;
     }
 
+    @Override
     public Date getSentDate() {
         return (Date)sentDate.clone();
     }
 
+    @Override
     public Date getReceivedDate(){
         return (Date)this.receivedDate.clone();
     }
 
-
+    @Override
     public void setContent(String content) {
         this.content = content;
     }
 
+    @Override
     public void setSender(IAddress sender) {
         this.sender = sender;
     }
@@ -302,6 +308,7 @@ public class Email implements IEmail {
         this.sentDate = new Date();
     }
 
+    @Override
     public void setSubject(String subject) {
         this.subject = subject;
     }
