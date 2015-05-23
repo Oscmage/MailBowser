@@ -379,7 +379,8 @@
     -fx-opacity: 0.75;
 }
 
-#sidebar .list-view .list-cell .button:hover {
+#sidebar .list-view .list-cell .button:hover,
+#sidebar .list-view .list-cell:hover .button:hover {
     -fx-opacity: 1;
     -fx-text-fill: -fx-dark;
 }
