@@ -21,10 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -136,26 +133,24 @@ public class EmailListPresenter implements Initializable, IObserver {
      */
     @Override
     public void onEvent(IEvent evt) {
+        Platform.runLater( // JavaFX can get thread problems otherwise
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt){
         switch (evt.getType()) {
             case FETCH_EMAIL:
-                Platform.runLater(
-                        () -> fetchEmail((IEmail) evt.getValue())
-                );
+                fetchEmail((IEmail) evt.getValue());
                 break;
             case SEARCH:
-                Platform.runLater(
-                        () -> search((String) evt.getValue())
-                );
+                search((String) evt.getValue());
                 break;
             case CLEAR_EMAILS:
-                Platform.runLater(
-                        () -> clearEmails()
-                );
+                clearEmails();
                 break;
             case SELECTED_TAG:
-                Platform.runLater(
-                        () -> replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith((ITag)evt.getValue())))
-                );
+                replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith((ITag) evt.getValue())));
                 break;
         }
     }

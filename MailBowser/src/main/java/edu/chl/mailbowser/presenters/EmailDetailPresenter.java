@@ -88,7 +88,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
 
     @Override
     public void onEvent(IEvent evt) {
-        Platform.runLater(
+        Platform.runLater( //JavaFX can get thread problems otherwise
                 () -> handleEvent(evt)
         );
     }
@@ -102,7 +102,9 @@ public class EmailDetailPresenter implements IObserver, Initializable {
             case REMOVE_TAG:
                 break;
             case ADD_TAG:
-                replaceListViewContent(tagHandler.getTagsWith(this.email));
+                if(email != null) {
+                    replaceListViewContent(tagHandler.getTagsWith(this.email));
+                }
                 break;
             case GUI_REMOVE_TAG:
                 ITag tag = (ITag) evt.getValue();
