@@ -2,7 +2,6 @@ package edu.chl.mailbowser.email.models;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import java.io.Serializable;
 
 /**
  * Created by OscarEvertsson on 07/04/15.
@@ -61,7 +60,7 @@ public class Address implements IAddress{
      * @return a copy of the javax.mail.InternetAddress object which holds the information
      */
     @Override
-    public InternetAddress getJavaxAddress() {
+    public InternetAddress getJavaMailAddress() {
         try {
             return new InternetAddress(this.address);
         } catch (AddressException e) {
@@ -107,6 +106,7 @@ public class Address implements IAddress{
      * Returns a hashcode for the object.
      * @return
      */
+    @Override
     public int hashCode(){
         return address.hashCode()*13;
     }

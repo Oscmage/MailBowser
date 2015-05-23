@@ -10,14 +10,14 @@ public class EventBusTest implements IObserver {
     @Test
     public void testPublish() throws Exception {
         Object o = new Object();
-        EventBus.INSTANCE.register(this);
-        EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS, o));
-        assertTrue(e.getType()==EventType.FETCH_EMAILS);
-        assertTrue(e.getValue()==o);
+        EventBus.INSTANCE.register(this); //Register as listener to the EventBus
+        EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS, o)); //Publishes a event
+        assertTrue(e.getType()==EventType.FETCH_EMAILS); //Same event type as sent?
+        assertTrue(e.getValue()==o); //Same value as sent?
     }
 
     @Override
-    public void onEvent(IEvent evt) {
+    public void onEvent(IEvent evt) { //Method to receive events that gets published
         e = evt;
     }
 }

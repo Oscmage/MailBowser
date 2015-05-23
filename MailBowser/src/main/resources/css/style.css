@@ -23,6 +23,42 @@
     -fx-background-color: transparent;
 }
 
+/* BUTTONS */
+
+.button {
+    -fx-background-color: -fx-bright;
+    -fx-border-radius: 3em;
+    -fx-border-width: 2px;
+    -fx-border-color: -fx-dark;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3em;
+    -fx-text-fill: -fx-dark;
+    -fx-opacity: 1;
+}
+
+.button:hover {
+    -fx-background-color: -fx-dark;
+    -fx-text-fill: -fx-bright;
+    -fx-cursor: hand;
+}
+
+.button:disabled {
+    -fx-opacity: 0.5;
+}
+
+.button.naked {
+    -fx-background-color: transparent;
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-opacity: 0.5;
+}
+
+.button.naked:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-dark;
+    -fx-opacity: 1;
+}
+
 /* MENU BAR */
 
 .menu-bar {
@@ -69,27 +105,6 @@
     -fx-padding: 0;
 }
 
-
-
-
-
-/* BUTTONS */
-
-.button {
-    -fx-background-color: -fx-bright;
-    -fx-border-radius: 3em;
-    -fx-border-width: 2px;
-    -fx-border-color: -fx-dark;
-    -fx-background-insets: 0;
-    -fx-background-radius: 3em;
-    -fx-text-fill: -fx-dark;
-}
-
-.button:hover {
-    -fx-background-color: -fx-dark;
-    -fx-text-fill: -fx-bright;
-    -fx-cursor: hand;
-}
 /* LIST VIEWS */
 
 .list-view {
@@ -126,6 +141,7 @@
 .list-view .list-cell:filled:odd:selected .label {
     -fx-text-fill: -fx-bright;
 }
+
 
 /* TAG */
 
@@ -172,13 +188,13 @@
     -fx-background-color: transparent;
 }
 
-/* TEXT FIELD */
+/* TEXT FIELD AND TEXT AREA */
 
 .text-field {
     -fx-background-color: -fx-bright;
     -fx-background-insets: 0;
     -fx-background-radius: 3em;
-    -fx-padding: 1em;
+    -fx-height: 3em;
     -fx-max-height: 3em;
     -fx-min-height: 3em;
     -fx-text-fill: -fx-dark;
@@ -188,6 +204,56 @@
 
 .text-field:disabled {
     -fx-opacity: 0.75;
+}
+
+.text-field.gridded {
+    -fx-background-radius: 0;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: derive(-fx-bright, -15%);
+}
+
+.text-area {
+    -fx-background-color: -fx-bright, -fx-bright;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+    -fx-prompt-text-fill: -fx-dark;
+}
+
+.text-area .content {
+    -fx-padding: 10;
+    -fx-cursor: text;
+    -fx-background-color: -fx-bright;
+}
+
+.text-area:focused {
+    -fx-background-color: -fx-bright;
+    -fx-focus-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-prompt-text-fill: transparent;
+}
+
+.text-area:focused .content {
+    -fx-border-width: 0;
+    -fx-background-color: -fx-bright;
+}
+
+/* SPLIT PANE */
+
+.split-pane {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.split-pane *.split-pane-divider {
+    -fx-padding: 0 2 0 2;
+    -fx-border-width: 0;
+    -fx-border-color:  transparent;
+    -fx-background-color: -fx-dark;
+    -fx-background-insets: 0;
 }
 
 /* SCROLL BAR */
@@ -299,6 +365,11 @@
     -fx-background-color: transparent;
     -fx-border-width: 0;
     -fx-padding: 0;
+    -fx-opacity: 0.0;
+}
+
+#sidebar .list-view .list-cell:hover .button,
+#sidebar .list-view:focused .list-cell:hover .button {
     -fx-opacity: 0.5;
 }
 
@@ -308,7 +379,8 @@
     -fx-opacity: 0.75;
 }
 
-#sidebar .list-view .list-cell .button:hover {
+#sidebar .list-view .list-cell .button:hover,
+#sidebar .list-view .list-cell:hover .button:hover {
     -fx-opacity: 1;
     -fx-text-fill: -fx-dark;
 }
@@ -316,6 +388,16 @@
 #sidebar .list-view .list-cell:selected .button:hover {
     -fx-text-fill: -fx-bright;
     -fx-opacity: 1;
+}
+
+#sidebar .list-view .list-cell .button:disabled,
+#sidebar .list-view:focused .list-cell .button:disabled {
+    -fx-opacity: 0;
+}
+
+#sidebar .list-view .list-cell:selected .button:disabled,
+#sidebar .list-view:focused .list-cell:selected .button:disabled {
+    -fx-opacity: 0;
 }
 
 #emailDetailVBox {
@@ -353,3 +435,24 @@
     -fx-border-width: 0 0 1 0;
     -fx-border-color: derive(-fx-bright, -15%);
 }
+
+/* EMAIL LIST */
+
+.label.emailListItemSender,
+.label.emailListItemSent,
+.label.emailListItemTags {
+    -fx-font-size: 10;
+    -fx-text-fill: derive(-fx-bright, -30%);
+    -fx-padding: 0;
+}
+
+.label.emailListItemSubject {
+    -fx-font-weight: 700;
+}
+
+.label.emailListItemContent {
+    -fx-font-size: 12;
+    -fx-text-fill: derive(-fx-bright, -50%);
+}
+
+/* COMPOSE EMAIL VIEW */

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<fx:root type="javafx.scene.layout.VBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="tagTextField" />
+       <HBox alignment="CENTER">
+           <children>
+               <Button fx:id="cancelbutton" onAction="#cancelButtonOnAction" mnemonicParsing="false" text="Cancel" />
+               <Button fx:id="tagButton" onAction="#tagButtonOnAction" mnemonicParsing="false" text="Add tag" />
+           </children>
+       </HBox>
+
+   </children>
+</fx:root>

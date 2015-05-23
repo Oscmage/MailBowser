@@ -32,34 +32,77 @@ public class EmailTest {
 
     @Test
     public void testGetJavaxMessage() throws Exception {
-        Session s = Session.getInstance(new Properties());
-        Message m = email.getJavaxMessage(s);
+        Session s = Session.getInstance(new Properties()); //JavaMail class
+        Message m = email.getJavaMailMessage(s); //JavaMail class
 
+        //Subject is the same?
         assertEquals(m.getSubject(), "Subject");
+
+        //Content is the same?
         assertEquals(m.getContent(), "Content");
+
+        //From length equals 1?
         assertEquals(m.getFrom().length, 1);
+
+        //Creates a new InternetAddress with the same string
         assertEquals(m.getFrom()[0], new InternetAddress("mailbows3r@gmail.com"));
+
+        //recipients should be equals to 1
         assertEquals(m.getRecipients(Message.RecipientType.TO).length, 1);
+
+        //Creates a InternetAddress with the same address
         assertEquals(m.getRecipients(Message.RecipientType.TO)[0], new InternetAddress("address@hotmail.com"));
     }
 
     @Test
     public void testMatches() throws Exception {
+
+        //Same string but no caps
         assertTrue(email.matches("subject"));
+
+        //Same string with all caps
         assertTrue(email.matches("SUBJECT"));
+
+        //Same string but no caps
         assertTrue(email.matches("content"));
+
+        //Same string but all caps
         assertTrue(email.matches("CONTENT"));
+
+        //Same string
         assertTrue(email.matches("mailbows3r@gmail.com"));
+
+        //Same string all caps
         assertTrue(email.matches("MAILBOWS3R@GMAIL.COM"));
+
+        //Same string
         assertTrue(email.matches("address@hotmail.com"));
+
+        //Same string all caps
         assertTrue(email.matches("ADDRESS@HOTMAIL.COM"));
+
+        //Part of subject
         assertTrue(email.matches("ubje"));
+
+        //Part of content
         assertTrue(email.matches("nten"));
+
+        //Part of address
         assertTrue(email.matches("bows"));
+
+        //Part of address
         assertTrue(email.matches("hotm"));
+
+        //Random string
         assertFalse(email.matches("abcdefg"));
+
+        //Random string caps
         assertFalse(email.matches("ABCDEFG"));
+
+        //Null
         assertFalse(email.matches(null));
+
+        //Empty string
         assertTrue(email.matches(""));
     }
 }

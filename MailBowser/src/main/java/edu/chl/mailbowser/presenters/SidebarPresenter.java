@@ -1,16 +1,17 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
+import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
-import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.models.Tag;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -18,6 +19,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -27,75 +30,90 @@ import java.util.Set;
 public class SidebarPresenter implements IObserver, Initializable {
 
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
+    private IAccountHandler accountsHandler = MainHandler.INSTANCE.getAccountHandler();
 
     @FXML private ListView<SidebarViewItemPresenter> tagsList;
+    private ObservableList<SidebarViewItemPresenter> observableTagsList = FXCollections.observableList(new ArrayList<>());
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
-        updateView();
-    }
 
-    public void updateView() {
-        Set<ITag> tags = tagHandler.getTags();
+        observableTagsList.add(new SidebarViewItemPresenter("All emails"));
 
-        for(ITag tag : tags) {
-            updateView(tag);
+        for(ITag tag : tagHandler.getTags()) {
+            observableTagsList.add(new SidebarViewItemPresenter((Tag)tag));
         }
+
+        updateTagsList();
     }
 
-    public void updateView(Set<ITag> tags) {
+    private void updateTagsList() {
+        for(SidebarViewItemPresenter item : observableTagsList) {
+            updateTagsList(item);
+        }
+        tagsList.setItems(observableTagsList);
+    }
+
+    private void updateTagsList(Set<ITag> tags) {
         if (!tags.isEmpty()) {
             for (ITag tag : tags) {
-                updateView(tag);
+                updateTagsList(tag);
             }
         }
+        tagsList.setItems(observableTagsList);
     }
 
-    public void updateView(ITag tag) {
-        ObservableList<SidebarViewItemPresenter> observableList = tagsList.getItems();
-
-        SidebarViewItemPresenter emailListViewItem = new SidebarViewItemPresenter((Tag)tag);
-
-        if(!observableList.contains(emailListViewItem)) {
-            observableList.add(emailListViewItem);
+    private void updateTagsList(SidebarViewItemPresenter item) {
+        if(!observableTagsList.contains(item)) {
+            observableTagsList.add(item);
         }
-
-        tagsList.setItems(observableList);
     }
 
-    public void deleteTag(SidebarViewItemPresenter listItem) {
-        tagHandler.removeTag(listItem.getTag());
+    private void updateTagsList(ITag tag) {
+        SidebarViewItemPresenter item = new SidebarViewItemPresenter((Tag)tag);
+        if(!observableTagsList.contains(item)) {
+            observableTagsList.add(item);
+        }
+        tagsList.setItems(observableTagsList);
+    }
+
+    private void deleteTag(SidebarViewItemPresenter listItem) {
+        tagHandler.eraseTag(listItem.getTag());
         tagsList.getItems().remove(listItem);
+    }
+
+    @FXML
+    public void addNewTag() {
+
     }
 
     /**
      * Sends an event with the chosen listItem's tag.
      * @param event
      */
-    public void onItemChanged(Event event) {
+    public void selectedTag(Event event) {
             EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_TAG,
                     tagsList.getSelectionModel().getSelectedItem().getTag()));
-
     }
 
     @Override
     public void onEvent(IEvent evt) {
+        Platform.runLater( // JavaFX can get thread problems otherwise
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt){
         switch (evt.getType()) {
             case FETCH_EMAIL:
-                Platform.runLater(
-                        () -> updateView(tagHandler.getTags((IEmail)evt.getValue()))
-                );
+                updateTagsList(tagHandler.getTagsWith((IEmail) evt.getValue()));
                 break;
             case ADD_TAG:
-                Platform.runLater(
-                        () -> updateView((ITag)evt.getValue())
-                );
+                updateTagsList((ITag) evt.getValue());
                 break;
             case DELETE_TAG:
-                Platform.runLater(
-                        () -> deleteTag((SidebarViewItemPresenter)evt.getValue())
-                );
+                deleteTag((SidebarViewItemPresenter)evt.getValue());
                 break;
         }
     }

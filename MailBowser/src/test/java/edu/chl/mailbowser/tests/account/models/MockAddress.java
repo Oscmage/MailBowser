@@ -9,7 +9,7 @@ import javax.mail.Address;
  */
 public class MockAddress implements IAddress {
     @Override
-    public Address getJavaxAddress() {
+    public Address getJavaMailAddress() {
         return null;
     }
 
