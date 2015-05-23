@@ -46,7 +46,9 @@ public class EmailListPresenter implements Initializable, IObserver {
     // OK, do not get frightened. Read it like so: "An email-list ListView."
     @FXML protected ListView<EmailListViewItem> emailListListView;
 
-    private boolean searchActivated = false;
+    // this flag determines whether or not to update the list view when a FETCH_EMAIL event comes in. it is set to
+    // false when you search
+    private boolean updateListOnIncomingEmail = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -91,12 +93,12 @@ public class EmailListPresenter implements Initializable, IObserver {
         List<IEmail> emails = accountHandler.getAllEmails();
 
         if (!query.equals("")) {
-            searchActivated = true;
+            updateListOnIncomingEmail = false;
             List<IEmail> matchingEmails = Searcher.search(emails, query);
             System.out.println("matching emails: " + matchingEmails.size());
             replaceListViewContent(matchingEmails);
         } else {
-            searchActivated = false;
+            updateListOnIncomingEmail = true;
             replaceListViewContent(emails);
         }
     }
@@ -107,7 +109,7 @@ public class EmailListPresenter implements Initializable, IObserver {
      * @param email the fetched email
      */
     private void fetchEmail(IEmail email) {
-        if (!searchActivated) {
+        if (updateListOnIncomingEmail) {
             addEmailToListView(email);
         }
     }
@@ -149,10 +151,12 @@ public class EmailListPresenter implements Initializable, IObserver {
                 Platform.runLater(
                         () -> clearEmails()
                 );
+                break;
             case SELECTED_TAG:
                 Platform.runLater(
                         () -> replaceListViewContent(new ArrayList<>(tagHandler.getEmails((ITag)evt.getValue())))
                 );
+                break;
         }
     }
 }

@@ -11,16 +11,17 @@ import java.util.List;
  * Created by OscarEvertsson on 10/04/15.
  */
 public interface IEmail extends Searchable, Serializable, Comparable<IEmail> {
-    javax.mail.Message getJavaxMessage(Session session);
+    javax.mail.Message getJavaMailMessage(Session session);
     IAddress getSender();
-    List<IAddress> getReceivers();
+    List<IAddress> getTo();
+    List<IAddress> getCc();
+    List<IAddress> getBcc();
+    List<IAddress> getAllRecipients();
     String getContent();
     String getSubject();
     Date getSentDate();
     Date getReceivedDate();
     void setContent(String content);
-    void setReceivers(List<IAddress> receivers);
     void setSender(IAddress sender);
     void setSubject(String subject);
-    void setSent();
 }

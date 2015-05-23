@@ -1,9 +1,6 @@
 package edu.chl.mailbowser.account.models;
 
 import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.event.Event;
-import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventType;
 
 import java.util.Properties;
 import javax.mail.*;
@@ -34,16 +31,29 @@ public class OutgoingServer extends MailServer implements IOutgoingServer {
      */
     @Override
     public void send(IEmail email, String username, String password, Callback<IEmail> callback) {
+        // create a new sender object with the all the info, and start it in a new thread to prevent GUI lockups
         Sender sender = new Sender(email, username, password, callback);
         new Thread(sender).start();
     }
 
+    /**
+     * A class for sending emails asynchronously
+     */
     private class Sender implements Runnable {
         private IEmail email;
         private String username;
         private String password;
+
         private Callback<IEmail> callback;
 
+        /**
+         * Creates a new sender, but doesn't start it. To start the sending use <code>new Thread(sender).start()</code>.
+         *
+         * @param email the email to send
+         * @param username the username to use when connecting to the mail server
+         * @param password the password to use when connecting to the mail server
+         * @param callback the callback to use when the sending is done
+         */
         private Sender(IEmail email, String username, String password, Callback<IEmail> callback) {
             this.email = email;
             this.username = username;
@@ -51,8 +61,12 @@ public class OutgoingServer extends MailServer implements IOutgoingServer {
             this.callback = callback;
         }
 
+        /**
+         * Starts the sending process
+         */
         @Override
         public void run() {
+            // create a properties object, fill it with information, and use it to open a session to the mail server
             Properties props = new Properties();
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.starttls.enable", "true");
@@ -66,11 +80,12 @@ public class OutgoingServer extends MailServer implements IOutgoingServer {
                         }
                     });
 
+            // try to send the email
             try {
-                // Try to send the mail
-                Transport.send(email.getJavaxMessage(session));
+                Transport.send(email.getJavaMailMessage(session));
                 callback.onSuccess(email);
             } catch (MessagingException e) {
+                e.printStackTrace();
                 callback.onFailure("Error sending email");
             }
         }

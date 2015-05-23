@@ -41,7 +41,7 @@ public class TopbarPresenter implements IObserver, Initializable {
     @FXML private Button forwardButton;
     @FXML private Button replyButton;
     @FXML private Button replyAllButton;
-    @FXML private Button refetchButton;
+    @FXML private Button fetchButton;
     @FXML private Button addTagButton;
 
     @Override
@@ -98,9 +98,9 @@ public class TopbarPresenter implements IObserver, Initializable {
 
     // This method is invoked when the "Refetch"-button is pressed, ans id bound via the onAction attribute
     @FXML
-    private void refetchButtonOnAction(ActionEvent actionEvent) {
+    private void fetchButtonOnAction(ActionEvent actionEvent) {
         for(IAccount account : accountHandler.getAccounts()) {
-            account.refetch();
+            account.fetch();
         }
     }
 
@@ -120,7 +120,7 @@ public class TopbarPresenter implements IObserver, Initializable {
     @FXML private void replyAllButtonOnAction(ActionEvent actionEvent) {
         Stage mainStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
         String recipientsString = "";
-        List<IAddress> recipientsList = this.email.getReceivers();
+        List<IAddress> recipientsList = this.email.getAllRecipients();
         for (IAddress recipient : recipientsList) {
             if (recipientsString.length() == 0) {
                 recipientsString = recipient.getString();

@@ -14,4 +14,14 @@ public class MockOutServer implements IOutgoingServer {
     public void send(IEmail email, String username, String password, Callback<IEmail> callback) {
         called=true;
     }
+
+    @Override
+    public String getHostname() {
+        return null;
+    }
+
+    @Override
+    public String getPort() {
+        return null;
+    }
 }

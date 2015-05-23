@@ -24,6 +24,10 @@
                             <children>
                                 <Label maxWidth="1.7976931348623157E308" text="From" />
                                 <Label id="emailLetterMetaDataFromLabel" fx:id="fromLabel" maxWidth="1.7976931348623157E308" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS" />
+                                <Label maxWidth="1.7976931348623157E308" text="To" />
+                                <Label id="emailLetterMetaDataFromLabel" fx:id="toLabel" maxWidth="1.7976931348623157E308" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS" />
+                                <Label maxWidth="1.7976931348623157E308" text="Cc" />
+                                <Label id="emailLetterMetaDataFromLabel" fx:id="ccLabel" maxWidth="1.7976931348623157E308" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS" />
                             </children>
                         </VBox>
                         <VBox alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" AnchorPane.rightAnchor="0.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="NEVER">
