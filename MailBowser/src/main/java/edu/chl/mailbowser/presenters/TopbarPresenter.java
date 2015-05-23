@@ -28,13 +28,13 @@ public class TopbarPresenter implements IObserver, Initializable {
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
 
-    @FXML private TextField addTagTextField;
-    @FXML private TextField searchField;
-    @FXML private Button forwardButton;
-    @FXML private Button replyButton;
-    @FXML private Button replyAllButton;
-    @FXML private Button fetchButton;
-    @FXML private Button addTagButton;
+    @FXML protected TextField addTagTextField;
+    @FXML protected TextField searchField;
+    @FXML protected Button forwardButton;
+    @FXML protected Button replyButton;
+    @FXML protected Button replyAllButton;
+    @FXML protected Button fetchButton;
+    @FXML protected Button addTagButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,21 +69,6 @@ public class TopbarPresenter implements IObserver, Initializable {
         addTagStage.setScene(new Scene(addTagPresenter, 300, 200));
         addTagStage.show();
 
-    }
-
-    @Override
-    public void onEvent(IEvent evt) {
-        Platform.runLater( // JavaFX can get thread problems otherwise
-                () -> handleEvent(evt)
-        );
-    }
-
-    private void handleEvent(IEvent evt){
-        switch (evt.getType()) {
-            case SELECTED_EMAIL:
-                this.email = (IEmail) evt.getValue();
-                break;
-        }
     }
 
     @FXML
@@ -130,6 +115,21 @@ public class TopbarPresenter implements IObserver, Initializable {
             }
         }
         openComposeEmailWindow(root, recipients,"Re: " + email.getSubject(), email.getContent());
+    }
+
+    @Override
+    public void onEvent(IEvent evt) {
+        Platform.runLater( // JavaFX can get thread problems otherwise
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt){
+        switch (evt.getType()) {
+            case SELECTED_EMAIL:
+                this.email = (IEmail) evt.getValue();
+                break;
+        }
     }
 
 }
