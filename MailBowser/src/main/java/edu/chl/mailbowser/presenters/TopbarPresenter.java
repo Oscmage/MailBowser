@@ -147,6 +147,9 @@ public class TopbarPresenter implements Initializable, IObserver{
         Scene scene = new Scene(node, 400, 300);
         scene.getStylesheets().add("css/style.css");
 
+        newStage.setMinWidth(400.0);
+        newStage.setMinHeight(300.0);
+
         newStage.setScene(scene);
         newStage.show();
     }
