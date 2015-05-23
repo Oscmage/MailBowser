@@ -1,14 +1,14 @@
 package edu.chl.mailbowser.tests.tag.handlers;
 
-import edu.chl.mailbowser.tests.account.models.MockEmail;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.tag.handlers.TagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import edu.chl.mailbowser.tests.account.models.MockEmail;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -59,7 +59,7 @@ public class TagHandlerTest {
         ITag t1 = new MockTag();
 
         tagHandler.addTag(e1, t1);
-        tagHandler.removeTag(t1);
+        tagHandler.eraseTag(t1);
         assertTrue(tagHandler.getTags(e1).isEmpty());
     }
 
