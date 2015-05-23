@@ -30,14 +30,14 @@ import java.util.ResourceBundle;
  * Created by jesper on 2015-05-22.
  */
 public class ContactBookPresenter implements Initializable{
-    @FXML private ListView<ContactListViewItem> contactList;
-    @FXML private Button saveButton;
-    @FXML private Button addButton;
-    @FXML private Button deleteButton;
-    @FXML private Button addNewAddressButton;
-    @FXML private TextField lastNameField;
-    @FXML private TextField firstNameField;
-    @FXML private GridPane gridPane;
+    @FXML protected ListView<ContactListViewItem> contactList;
+    @FXML protected Button saveButton;
+    @FXML protected Button addButton;
+    @FXML protected Button deleteButton;
+    @FXML protected Button addNewAddressButton;
+    @FXML protected TextField lastNameField;
+    @FXML protected TextField firstNameField;
+    @FXML protected GridPane gridPane;
 
     private final int ORIGINAL_INDEX = 1;
 

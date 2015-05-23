@@ -1,91 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane prefHeight="492.0" prefWidth="506.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.ContactBookPresenter">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.ContactBookPresenter">
    <children>
-      <HBox layoutY="39.0" prefHeight="454.0" prefWidth="506.0">
+      <HBox>
          <children>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="254.0">
+            <ListView fx:id="contactList" onMouseClicked="#contactListOnMouseClicked" prefHeight="300" HBox.hgrow="ALWAYS" />
+
+            <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <ListView fx:id="contactList" onMouseClicked="#contactListOnMouseClicked" prefHeight="349.0" prefWidth="237.0" />
-                  <HBox prefHeight="104.0" prefWidth="237.0" spacing="5.0">
+                  <GridPane fx:id="gridPane" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button fx:id="addContactButton" mnemonicParsing="false" onAction="#addContactButtonOnAction" prefHeight="25.0" prefWidth="115.0" text="Add" />
-                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefHeight="25.0" prefWidth="118.0" text="Delete" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="55.0" text="Last name" GridPane.halignment="RIGHT" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="55.0" text="First name" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                        <TextField fx:id="lastNameField" prefHeight="25.0" prefWidth="68.0" GridPane.columnIndex="1" />
+                        <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
+
+                  </GridPane>
+
+                  <HBox alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="NEVER">
+                     <children>
+                        <Button fx:id="addNewAddressButton" mnemonicParsing="false" onAction="#addNewAddressButtonOnAction" styleClass="circle, fontawesome" text="" />
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonOnAction" styleClass="circle, fontawesome" text="" />
+                     </children>
                   </HBox>
-               </children>
-            </VBox>
-            <VBox prefHeight="471.0" prefWidth="250.0">
-               <children>
-                  <Pane prefHeight="388.0" prefWidth="250.0">
-                     <children>
-                        <ScrollPane layoutX="-2.0" prefHeight="349.0" prefViewportHeight="325.0" prefViewportWidth="265.0" prefWidth="254.0">
-                           <content>
-                              <GridPane fx:id="gridPane" hgap="10.0" layoutX="-3.0" layoutY="3.0" prefHeight="331.0" prefWidth="252.0" vgap="10.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="55.0" text="Last name" GridPane.halignment="RIGHT">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="55.0" text="First name" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <TextField fx:id="lastNameField" prefHeight="25.0" prefWidth="68.0" GridPane.columnIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                    <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" right="5.0" top="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
-                              </GridPane>
-                           </content>
-                        </ScrollPane>
-                     </children>
-                  </Pane>
-                  <HBox alignment="TOP_RIGHT" prefHeight="144.0" prefWidth="250.0" spacing="5.0">
-                     <children>
-                        <Button fx:id="addNewAddressButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#addNewAddressButtonOnAction" text="Add new address" />
-                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonOnAction" text="Save" />
-                     </children>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </HBox>
+
                </children>
             </VBox>
          </children>
       </HBox>
-      <HBox layoutX="3.0" layoutY="2.0" prefHeight="35.0" prefWidth="497.0" spacing="5.0">
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
+      <HBox id="topbar" VBox.vgrow="NEVER">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button fx:id="addContactButton" mnemonicParsing="false" onAction="#addContactButtonOnAction" prefHeight="25.0" prefWidth="115.0" styleClass="circle, fontawesome" text="&#xf234;" />
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonOnAction" styleClass="circle, fontawesome" text="&#xf235;" />
+               </children>
+            </HBox>
+         </children>
       </HBox>
    </children>
-</Pane>
+</VBox>

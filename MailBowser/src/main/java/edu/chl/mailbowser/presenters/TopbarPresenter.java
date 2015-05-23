@@ -64,8 +64,6 @@ public class TopbarPresenter implements Initializable, IObserver{
         }
     }
 
-
-
     @FXML
     public void tagButtonOnAction(ActionEvent actionEvent) {
         Stage root = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
@@ -120,7 +118,6 @@ public class TopbarPresenter implements Initializable, IObserver{
         EventBus.INSTANCE.publish(new Event(EventType.DELETE_EMAIL, email));
     }
 
-
     @Override
     public void onEvent(IEvent event) {
         Platform.runLater( // JavaFX can get thread problems otherwise
@@ -143,12 +140,11 @@ public class TopbarPresenter implements Initializable, IObserver{
      * @param actionEvent
      */
     public void openContactBookButtonOnAction(ActionEvent actionEvent) throws IOException {
-        System.out.println("Shululu");
         Stage newStage = new Stage();
         Parent node = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ContactBookView.fxml"));
         newStage.setTitle("Contact Book");
 
-        Scene scene = new Scene(node, node.prefWidth(0), node.prefHeight(0));
+        Scene scene = new Scene(node, 400, 300);
         scene.getStylesheets().add("css/style.css");
 
         newStage.setScene(scene);
