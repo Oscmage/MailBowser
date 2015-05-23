@@ -168,15 +168,19 @@ public class AccountManagerPresenter implements Initializable, IObserver {
      */
     @Override
     public void onEvent(IEvent evt) {
-        Platform.runLater(() -> {
-            switch (evt.getType()) {
-                case ADD_ACCOUNT:
-                    addAccountToList((IAccount) evt.getValue());
-                    break;
-                case REMOVE_ACCOUNT:
-                    removeAccountFromList((IAccount) evt.getValue());
-                    break;
-            }
-        });
+        Platform.runLater( //JavaFX can get thread problems otherwise
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt) {
+        switch (evt.getType()) {
+            case ADD_ACCOUNT:
+                addAccountToList((IAccount) evt.getValue());
+                break;
+            case REMOVE_ACCOUNT:
+                removeAccountFromList((IAccount) evt.getValue());
+                break;
+        }
     }
 }

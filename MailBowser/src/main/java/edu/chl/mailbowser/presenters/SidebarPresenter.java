@@ -85,21 +85,21 @@ public class SidebarPresenter implements IObserver, Initializable {
 
     @Override
     public void onEvent(IEvent evt) {
+        Platform.runLater( // JavaFX can get thread problems otherwise
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt){
         switch (evt.getType()) {
             case FETCH_EMAIL:
-                Platform.runLater(
-                        () -> updateView(tagHandler.getTagsWith((IEmail)evt.getValue()))
-                );
+                updateView(tagHandler.getTagsWith((IEmail)evt.getValue()));
                 break;
             case ADD_TAG:
-                Platform.runLater(
-                        () -> updateView((ITag)evt.getValue())
-                );
+                updateView((ITag)evt.getValue());
                 break;
             case DELETE_TAG:
-                Platform.runLater(
-                        () -> deleteTag((SidebarViewItemPresenter)evt.getValue())
-                );
+                deleteTag((SidebarViewItemPresenter)evt.getValue());
                 break;
         }
     }
