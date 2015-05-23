@@ -5,14 +5,13 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <Pane prefHeight="492.0" prefWidth="506.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.ContactBookPresenter">
    <children>
       <HBox layoutY="39.0" prefHeight="454.0" prefWidth="506.0">
          <children>
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="254.0">
                <children>
-                  <ListView fx:id="contactList" prefHeight="349.0" prefWidth="237.0" />
+                  <ListView fx:id="contactList" onMouseClicked="#contactListOnMouseClicked" prefHeight="349.0" prefWidth="237.0" />
                   <HBox prefHeight="104.0" prefWidth="237.0" spacing="5.0">
                      <children>
                         <Button fx:id="addContactButton" mnemonicParsing="false" onAction="#addContactButtonOnAction" prefHeight="25.0" prefWidth="115.0" text="Add" />

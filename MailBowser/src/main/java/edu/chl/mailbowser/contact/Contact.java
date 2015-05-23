@@ -11,7 +11,7 @@ import java.util.List;
 public class Contact implements IContact {
     private String firstName;
     private String lastName;
-    private List<IAddress> emailAddresses;
+    private List<IAddress> emailAddresses = new ArrayList<>();
 
     /**
      * Creates a new contact with no emailAddresses

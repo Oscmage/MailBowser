@@ -6,24 +6,23 @@ import edu.chl.mailbowser.contact.IContact;
 import edu.chl.mailbowser.contact.IContactBook;
 import edu.chl.mailbowser.contact.views.ContactListViewItem;
 import edu.chl.mailbowser.email.models.Address;
+import edu.chl.mailbowser.email.models.IAddress;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-import java.awt.*;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 
@@ -40,9 +39,11 @@ public class ContactBookPresenter implements Initializable{
     @FXML private TextField firstNameField;
     @FXML private GridPane gridPane;
 
+    private final int ORIGINAL_INDEX = 1;
+
     private List<TextField> addresses = new ArrayList<>();
 
-    private int newAddressIndex = 1;
+    private int newAddressIndex = ORIGINAL_INDEX;
 
     private ObservableList<ContactListViewItem> contactListItems = FXCollections.observableArrayList();
 
@@ -66,23 +67,49 @@ public class ContactBookPresenter implements Initializable{
 
     public void saveButtonOnAction(ActionEvent actionEvent) {
         selectedContact = contactList.getSelectionModel().getSelectedItem();
-        selectedContact.getContact().setFirstName(firstNameField.getText());
-        selectedContact.getContact().setLastName(lastNameField.getText());
-        for(TextField textField : addresses){
-            selectedContact.getContact().addAddress(new Address(textField.getText()));
+        if(selectedContact != null) {
+            selectedContact.getContact().setFirstName(firstNameField.getText());
+            selectedContact.getContact().setLastName(lastNameField.getText());
+            for (TextField textField : addresses) {
+                selectedContact.getContact().addAddress(new Address(textField.getText()));
+            }
         }
     }
 
     public void addNewAddressButtonOnAction(ActionEvent actionEvent) {
-        TextField newTextField = new TextField();
-        Label newLabel = new Label("Address" + (newAddressIndex));
-        newAddressIndex++;
-        gridPane.addRow(newAddressIndex, newLabel, newTextField);
-        addresses.add(newTextField);
+        addAddressField();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         contactList.setItems(contactListItems);
     }
+
+    public void contactListOnMouseClicked(Event event) {
+        selectedContact = contactList.getSelectionModel().getSelectedItem();
+        
+        addresses.clear();
+        newAddressIndex = ORIGINAL_INDEX;
+        lastNameField.setText(selectedContact.getContact().getLastName());
+        firstNameField.setText(selectedContact.getContact().getFirstName());
+        for (IAddress address : selectedContact.getContact().getEmailAddresses()) {
+            addAddressField(address);
+        }
+    }
+
+    private void addAddressField(IAddress address){
+        TextField newTextField = new TextField();
+        Label newLabel = new Label("Address " + (newAddressIndex));
+        newAddressIndex++;
+        if(address != null) {
+            newTextField.setText(address.getString());
+        }
+        gridPane.addRow(newAddressIndex, newLabel, newTextField);
+        addresses.add(newTextField);
+    }
+
+    private void addAddressField(){
+        addAddressField((IAddress)null);
+    }
+
 }
