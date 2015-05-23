@@ -6,13 +6,11 @@ import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.*;
-import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -23,6 +21,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class TopbarPresenter implements IObserver, Initializable {
 
@@ -31,6 +30,7 @@ public class TopbarPresenter implements IObserver, Initializable {
 
     @FXML protected TextField addTagTextField;
     @FXML protected TextField searchField;
+    @FXML protected HBox actionButtons;
     @FXML protected Button forwardButton;
     @FXML protected Button replyButton;
     @FXML protected Button replyAllButton;
@@ -40,6 +40,22 @@ public class TopbarPresenter implements IObserver, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
+        showOrHideButtons();
+    }
+
+    private void showOrHideButtons() {
+        List<Node> buttons = actionButtons.getChildren().stream()
+                .filter(t -> t.getClass() == Button.class)
+                .map(o -> (Button) o)
+                .collect(Collectors.toList());
+
+        if(email == null) {
+            buttons.stream()
+                    .forEach(s -> s.setDisable(true));
+        } else {
+            buttons.stream()
+                    .forEach(s -> s.setDisable(false));
+        }
     }
 
     private void openComposeEmailWindow(Stage root, String recipient, String subject, String content) {
@@ -130,6 +146,7 @@ public class TopbarPresenter implements IObserver, Initializable {
                 this.email = (IEmail) event.getValue();
                 break;
         }
+        showOrHideButtons();
     }
 
 }

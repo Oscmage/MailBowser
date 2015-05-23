@@ -19,7 +19,7 @@
             </HBox.margin>
         </HBox>
         <Button fx:id="fetchButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#fetchButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
-        <HBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="10.0" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
+        <HBox fx:id="actionButtons" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="10.0" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
             <children>
                 <Button fx:id="addTagButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#tagButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
                 <Button fx:id="forwardButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#forwardButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
