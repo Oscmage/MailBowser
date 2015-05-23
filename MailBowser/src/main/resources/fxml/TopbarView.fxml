@@ -7,30 +7,30 @@
 
 <HBox id="topbar" alignment="CENTER_LEFT" maxHeight="60.0" maxWidth="1.7976931348623157E308" prefHeight="60.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.TopbarPresenter">
     <children>
-      <HBox alignment="CENTER_LEFT" maxWidth="420.0" spacing="10.0">
-         <children>
-                <Button id="newEmailButton" maxHeight="40.0" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#newEmailButtonActionPerformed" prefHeight="40.0" prefWidth="180.0" styleClass="fontawesome, circle" text="" />
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <HBox.margin>
-            <Insets />
-         </HBox.margin>
-      </HBox>
-          <Button fx:id="fetchButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#fetchButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
-      <HBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="10.0" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
-         <children>
-             <Button fx:id="addTagButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#addTagButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
+        <HBox alignment="CENTER_LEFT" maxWidth="420.0" spacing="10.0">
+            <children>
+                <Button id="newEmailButton" maxHeight="40.0" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#newButtonOnAction" prefHeight="40.0" prefWidth="180.0" styleClass="fontawesome, circle" text="" />
+            </children>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <HBox.margin>
+                <Insets />
+            </HBox.margin>
+        </HBox>
+        <Button fx:id="fetchButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#fetchButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
+        <HBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="10.0" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
+            <children>
+                <Button fx:id="addTagButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#tagButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
                 <Button fx:id="forwardButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#forwardButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
                 <Button fx:id="replyButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
                 <Button fx:id="replyAllButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#replyAllButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
                 <TextField fx:id="searchField" onAction="#searchFieldOnAction" prefWidth="220.0" promptText="Search..." />
                 <!-- <TextField fx:id="addTagTextField" maxHeight="40.0" minHeight="40.0" onAction="#addTagOnAction" prefHeight="40.0" promptText="Add tag..." />-->
-         </children>
-      </HBox>
+            </children>
+        </HBox>
     </children>
-   <padding>
-      <Insets left="10.0" right="10.0" />
-   </padding>
+    <padding>
+        <Insets left="10.0" right="10.0" />
+    </padding>
 </HBox>
