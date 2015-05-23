@@ -54,6 +54,10 @@ public class MainPresenter implements IObserver, Initializable {
         accountManager = new Stage();
         accountManager.setTitle("Account Manager");
         accountManager.setScene(new Scene(fxml, 400, 300));
+
+        accountManager.setMinWidth(400.0);
+        accountManager.setMinHeight(300.0);
+
         accountManager.show();
     }
 

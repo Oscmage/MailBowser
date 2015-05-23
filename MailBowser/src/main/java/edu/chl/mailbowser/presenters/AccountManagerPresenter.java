@@ -15,7 +15,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.List;
@@ -45,11 +47,11 @@ public class AccountManagerPresenter implements Initializable, IObserver {
 
     private IAccount selectedAccount;
 
-    @FXML public Button addAccountButton;
-    @FXML public Button deleteAccountButton;
-    @FXML public Button saveAccountButton;
+    @FXML protected Button addAccountButton;
+    @FXML protected Button deleteAccountButton;
+    @FXML protected Button saveAccountButton;
 
-    @FXML public Pane rightHandPane;
+    @FXML public ScrollPane accountForm;
 
     /**
      * Initializes the account manager. Registers to the event bus and updates all views to show current data.
@@ -98,10 +100,7 @@ public class AccountManagerPresenter implements Initializable, IObserver {
      * @param account the account to create an edit view for
      */
     public void showEditAccountView(IAccount account) {
-        ObservableList<Node> children = rightHandPane.getChildren();
-        children.clear();
-        editAccountView = new EditAccountPresenter(account);
-        children.add(editAccountView);
+        accountForm.setContent(new EditAccountPresenter(account));
         currentMode = Mode.EDIT;
     }
 
@@ -109,10 +108,7 @@ public class AccountManagerPresenter implements Initializable, IObserver {
      * Switches to the add account view in the right hand pane.
      */
     public void showAddAccountView() {
-        ObservableList<Node> children = rightHandPane.getChildren();
-        children.clear();
-        addAccountView = new AddAccountPresenter();
-        children.add(addAccountView);
+        accountForm.setContent(new AddAccountPresenter());
         currentMode = Mode.ADD;
     }
 

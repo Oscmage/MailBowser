@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,16 +18,16 @@ import java.util.ResourceBundle;
 /**
  * Created by mats on 22/05/15.
  */
-public class EditAccountPresenter extends GridPane implements Initializable {
+public class EditAccountPresenter extends VBox implements Initializable {
 
     private IAccount account;
 
-    @FXML private TextField usernameField;
-    @FXML private TextField passwordField;
-    @FXML private TextField incomingServerUrlField;
-    @FXML private TextField incomingServerPortField;
-    @FXML private TextField outgoingServerUrlField;
-    @FXML private TextField outgoingServerPortField;
+    @FXML protected TextField usernameField;
+    @FXML protected TextField passwordField;
+    @FXML protected TextField incomingServerUrlField;
+    @FXML protected TextField incomingServerPortField;
+    @FXML protected TextField outgoingServerUrlField;
+    @FXML protected TextField outgoingServerPortField;
 
     /**
      * Initializes an edit account view with a specified account.
