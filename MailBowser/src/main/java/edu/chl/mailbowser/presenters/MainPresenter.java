@@ -3,9 +3,8 @@ package edu.chl.mailbowser.presenters;
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.IEvent;
-import edu.chl.mailbowser.event.IObserver;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +17,8 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by filip on 04/05/15.
@@ -27,7 +27,9 @@ public class MainPresenter implements IObserver, Initializable {
     @FXML MenuItem addAccountMenuItem;
     Stage newStage;
     Stage accountManager;
+    Stage root;
     private IEmail email;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -49,17 +51,30 @@ public class MainPresenter implements IObserver, Initializable {
         accountManager.setTitle("Account Manager");
         accountManager.setScene(new Scene(fxml, 400, 300));
         accountManager.show();
-
     }
 
-    private void openComposeEmailWindow(Stage root, String recipient, String subject, String content) {
-        ComposeEmailPresenter composeEmailPresenter = new ComposeEmailPresenter(recipient, subject, content);
+    private void openComposeEmailWindow(List<IAddress> recipients, String subject, String content) {
+        String recipientsString = "";
+        java.util.List<IAddress> recipientsList = this.email.getAllRecipients();
+        for (IAddress recipient : recipientsList) {
+            if (recipientsString.length() == 0) {
+                recipientsString = recipient.getString();
+            } else {
+                recipientsString += ", " + recipient.getString();
+            }
+        }
+        openComposeEmailWindow(recipientsString, "Re: " + email.getSubject(), email.getContent());
+    }
+
+    private void openComposeEmailWindow(String recipients, String subject, String content) {
+        ComposeEmailPresenter composeEmailPresenter = new ComposeEmailPresenter(recipients, subject, content);
 
         // create a new stage
         Stage newEmailStage = new Stage();
         newEmailStage.setTitle("New Email...");
-        newEmailStage.setX(root.getX()+50);
+
         newEmailStage.setY(root.getY() + 50);
+        newEmailStage.setX(root.getX() + 50);
 
         // add the component to the stage
         newEmailStage.setScene(new Scene(composeEmailPresenter));
@@ -75,44 +90,36 @@ public class MainPresenter implements IObserver, Initializable {
 
     private void handleEvent(IEvent evt){
         switch (evt.getType()) {
+            case FXML_LOADED:
+                root = (Stage)evt.getValue();
+                break;
             case SELECTED_EMAIL:
-                this.email = (IEmail) evt.getValue();
+                email = (IEmail)evt.getValue();
                 break;
             case CLOSE_THIS:
                 newStage.close();
                 break;
-            case NEW_EMAIL:
-                Stage stage1 = (Stage) evt.getValue();
-                openComposeEmailWindow(stage1,"","","");
+            case OPEN_COMPOSE_EMAIL_WINDOW:
+                email = (IEmail)evt.getValue();
+                openComposeEmailWindow("", "", "");
                 break;
-            case REPLY:
-                Stage stage2 = (Stage) evt.getValue();
-                openComposeEmailWindow(stage2, email.getSender().getString(),
-                        "Re: " + email.getSubject(), email.getContent());
+            case OPEN_COMPOSE_EMAIL_WINDOW_REPLY:
+                email = (IEmail)evt.getValue();
+                openComposeEmailWindow(email.getSender().getString(),
+                        "Re: " + email.getSubject(), "");
                 break;
-            case REPLY_ALL:
-                Stage stage3 = (Stage) evt.getValue();
-                replyAll(stage3);
+            case OPEN_COMPOSE_EMAIL_WINDOW_REPLY_ALL:
+                email = (IEmail)evt.getValue();
+                openComposeEmailWindow(email.getAllRecipients(), "Re: " + email.getSubject(), "");
                 break;
-            case FORWARD:
-                Stage stage4 = (Stage) evt.getValue();
-                openComposeEmailWindow(stage4, "", "Fw: " + email.getSubject(), email.getContent());
+            case OPEN_COMPOSE_EMAIL_WINDOW_FORWARD:
+                email = (IEmail)evt.getValue();
+                openComposeEmailWindow("", "Fw: " + email.getSubject(), email.getContent());
                 break;
+            case DELETE_EMAIL:
+
         }
 
-    }
-
-    private void replyAll(Stage root){
-        String recipients = "";
-        java.util.List<IAddress> recipientsList = this.email.getAllRecipients();
-        for (IAddress recipient : recipientsList) {
-            if (recipients.length() == 0) {
-                recipients = recipient.getString();
-            } else {
-                recipients += ", " + recipient.getString();
-            }
-        }
-        openComposeEmailWindow(root, recipients, "Re: " + email.getSubject(), email.getContent());
     }
 
     @FXML
@@ -122,27 +129,24 @@ public class MainPresenter implements IObserver, Initializable {
 
     @FXML
     private void newEmailMenuItemOnAction(ActionEvent actionEvent) {
-        openComposeEmailWindow(getNewCenteredStage(), "", "", "");
+        EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.OPEN_COMPOSE_EMAIL_WINDOW, email));
     }
 
-    
     @FXML
     private void addTagMenuItemOnAction(ActionEvent actionEvent) {
-
     }
+
     @FXML
     private void forwardMenuItemOnAction(ActionEvent actionEvent) {
-        openComposeEmailWindow(getNewCenteredStage(), "", "Fw: " + email.getSubject(), email.getContent());
+        EventBus.INSTANCE.publish(new Event(EventType.OPEN_COMPOSE_EMAIL_WINDOW_FORWARD, email));
     }
     @FXML
     private void replyMenuItemOnAction(ActionEvent actionEvent) {
-        openComposeEmailWindow(getNewCenteredStage(), email.getSender().getString(),
-                "Re: " + email.getSubject(), email.getContent());
-
+        EventBus.INSTANCE.publish(new Event(EventType.OPEN_COMPOSE_EMAIL_WINDOW_REPLY, email));
     }
     @FXML
     private void replyAllMenuItemOnAction(ActionEvent actionEvent) {
-        replyAll(new Stage());
+        EventBus.INSTANCE.publish(new Event(EventType.OPEN_COMPOSE_EMAIL_WINDOW_REPLY_ALL, email));
     }
     @FXML
     private void closeMenuItemOnAction(ActionEvent actionEvent) {

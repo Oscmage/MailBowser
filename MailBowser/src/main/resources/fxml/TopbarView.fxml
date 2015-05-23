@@ -43,6 +43,7 @@
                <tooltip>
                   <Tooltip text="Reply all " />
                </tooltip></Button>
+                <Button fx:id="deleteButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="&#xf00d;" />
                 <TextField fx:id="searchField" onAction="#searchFieldOnAction" prefWidth="220.0" promptText="Search..." />
                 <!-- <TextField fx:id="addTagTextField" maxHeight="40.0" minHeight="40.0" onAction="#addTagOnAction" prefHeight="40.0" promptText="Add tag..." />-->
             </children>

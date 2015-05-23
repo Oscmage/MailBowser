@@ -3,6 +3,9 @@ package edu.chl.mailbowser;
 
 import edu.chl.mailbowser.account.IBackgroundFetcher;
 import edu.chl.mailbowser.account.handlers.IAccountHandler;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +25,9 @@ public class Main extends Application {
         Font.loadFont(getClass().getClassLoader().getResource("fonts/fontawesome.ttf").toExternalForm(), 16);
 
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/MainView.fxml"));
+
+        EventBus.INSTANCE.publish(new Event(EventType.FXML_LOADED, mainStage));
+
         mainStage.setTitle("MailBowser");
 
         Scene scene = new Scene(root, 960, 600);
