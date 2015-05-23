@@ -12,9 +12,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -25,7 +27,6 @@ import java.util.ResourceBundle;
 public class TopbarPresenter implements IObserver, Initializable {
 
     private IEmail email;
-    private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
 
     @FXML protected TextField addTagTextField;
