@@ -33,12 +33,17 @@
     -fx-background-insets: 0;
     -fx-background-radius: 3em;
     -fx-text-fill: -fx-dark;
+    -fx-opacity: 1;
 }
 
 .button:hover {
     -fx-background-color: -fx-dark;
     -fx-text-fill: -fx-bright;
     -fx-cursor: hand;
+}
+
+.button:disabled {
+    -fx-opacity: 0.5;
 }
 
 .button.naked {
