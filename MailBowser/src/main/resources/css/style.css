@@ -365,6 +365,11 @@
     -fx-background-color: transparent;
     -fx-border-width: 0;
     -fx-padding: 0;
+    -fx-opacity: 0.0;
+}
+
+#sidebar .list-view .list-cell:hover .button,
+#sidebar .list-view:focused .list-cell:hover .button {
     -fx-opacity: 0.5;
 }
 
@@ -382,6 +387,16 @@
 #sidebar .list-view .list-cell:selected .button:hover {
     -fx-text-fill: -fx-bright;
     -fx-opacity: 1;
+}
+
+#sidebar .list-view .list-cell .button:disabled,
+#sidebar .list-view:focused .list-cell .button:disabled {
+    -fx-opacity: 0;
+}
+
+#sidebar .list-view .list-cell:selected .button:disabled,
+#sidebar .list-view:focused .list-cell:selected .button:disabled {
+    -fx-opacity: 0;
 }
 
 #emailDetailVBox {

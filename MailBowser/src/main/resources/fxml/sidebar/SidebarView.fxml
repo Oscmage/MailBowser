@@ -12,8 +12,6 @@
             <Button styleClass="fontawesome, naked" text="&#xf067;" HBox.hgrow="NEVER" onAction="#addNewTag" />
          </children>
       </HBox>
-      <ListView fx:id="tagsList" editable="true" minWidth="200.0" onKeyPressed="#onItemChanged" onMouseClicked="#onItemChanged" prefWidth="200.0" VBox.vgrow="NEVER" />
-      <Label text="Accounts" VBox.vgrow="NEVER" />
-      <TreeView fx:id="accountsList" prefWidth="200.0" VBox.vgrow="NEVER" />
+      <ListView fx:id="tagsList" editable="true" minWidth="200.0" onKeyPressed="#selectedTag" onMouseClicked="#selectedTag" prefWidth="200.0" VBox.vgrow="NEVER" />
    </children>
 </VBox>
