@@ -14,28 +14,31 @@ import java.util.Set;
 
 /**
  * Created by OscarEvertsson on 29/04/15.
+ * TagHandler handles adding and removing tags from emails and vice versa.
  */
 public class TagHandler implements ITagHandler{
 
-    private Map<ITag,Set<IEmail>> tags = new HashMap<>();
-    private Map<IEmail,Set<ITag>> emails = new HashMap<>();
+    private Map<ITag,Set<IEmail>> mapFromTagsToEmails = new HashMap<>();
+    private Map<IEmail,Set<ITag>> mapFromEmailsToTags = new HashMap<>();
 
     /**
      * Adds the tag to the email and vice versa.
+     * Synchronized since we're reAdding everything on startup and
+     * during that time you could possible add a tag at the same time.
      * @param email
      * @param tag
      */
     @Override
     public synchronized void addTag(IEmail email, ITag tag){
-        if (!tags.containsKey(tag)) {
-            tags.put(tag, new HashSet<>());
+        if (!mapFromTagsToEmails.containsKey(tag)) {
+            mapFromTagsToEmails.put(tag, new HashSet<>());
         }
-        tags.get(tag).add(email);
+        mapFromTagsToEmails.get(tag).add(email);
 
-        if (!emails.containsKey(email)) {
-            emails.put(email, new HashSet<>());
+        if (!mapFromEmailsToTags.containsKey(email)) {
+            mapFromEmailsToTags.put(email, new HashSet<>());
         }
-        emails.get(email).add(tag);
+        mapFromEmailsToTags.get(email).add(tag);
 
         EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG, tag));
     }
@@ -46,8 +49,8 @@ public class TagHandler implements ITagHandler{
      * @return
      */
     @Override
-    public Set<IEmail> getEmails(ITag tag){
-        return new HashSet<>(tags.get(tag));
+    public Set<IEmail> getEmailsWith(ITag tag){
+        return new HashSet<>(mapFromTagsToEmails.get(tag));
     }
 
     /**
@@ -56,9 +59,9 @@ public class TagHandler implements ITagHandler{
      * @return
      */
     @Override
-    public Set<ITag> getTags(IEmail email){
-        if(emails.get(email) != null) {
-            return new HashSet<>(emails.get(email));
+    public Set<ITag> getTagsWith(IEmail email){
+        if(mapFromEmailsToTags.get(email) != null) {
+            return new HashSet<>(mapFromEmailsToTags.get(email));
         }
         return new HashSet<>();
     }
@@ -69,29 +72,29 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public Set<ITag> getTags(){
-        return tags.keySet();
+        return mapFromTagsToEmails.keySet();
     }
 
     /**
-     * Removes the tag from the specified email.
+     * Removes the tag from the specified email(from both maps.).
      * @param email
      * @param tag
      */
     @Override
-    public synchronized void removeTag(IEmail email,ITag tag){
-        if (emails.containsKey(email)) {
-            Set<ITag> tagSet = emails.get(email);
+    public synchronized void removeTagFromEmail(IEmail email,ITag tag){
+        if (mapFromEmailsToTags.containsKey(email)) {
+            Set<ITag> tagSet = mapFromEmailsToTags.get(email);
             tagSet.remove(tag);
             if (tagSet.isEmpty()) {
-                emails.remove(email);
+                mapFromEmailsToTags.remove(email);
             }
         }
 
-        if (tags.containsKey(tag)) {
-            Set<IEmail> emailSet = tags.get(tag);
+        if (mapFromTagsToEmails.containsKey(tag)) {
+            Set<IEmail> emailSet = mapFromTagsToEmails.get(tag);
             emailSet.remove(email);
             if (emailSet.isEmpty()) {
-                tags.remove(tag);
+                mapFromTagsToEmails.remove(tag);
             }
         }
 
@@ -99,42 +102,42 @@ public class TagHandler implements ITagHandler{
     }
 
     /**
-     * Removes the specified tag from all emails.
+     * Removes the specified tag from all mapFromEmailsToTags and mapFromTagsToEmails.
      * @param tag
      */
     @Override
-    public synchronized void removeTag(ITag tag) {
-        Set<IEmail> emailSet = tags.remove(tag);
+    public synchronized void eraseTag(ITag tag) {
+        Set<IEmail> emailSet = mapFromTagsToEmails.remove(tag);
 
         for (IEmail email : emailSet) { 
-            Set <ITag> tagSet = emails.get(email);
+            Set <ITag> tagSet = mapFromEmailsToTags.get(email);
             tagSet.remove(tag);
 
             if (tagSet.isEmpty()) {
-                emails.remove(email);
+                mapFromEmailsToTags.remove(email);
             }
         }
     }
 
     /**
-     * Reads in the tags HashMap from disk
-     * Then builds the emails HashMap from tags
+     * Reads in the mapFromTagsToEmails HashMaps from disk
+     * Then builds the mapFromEmailsToTags HashMap from mapFromTagsToEmails
      * @param filename location of the file
-     * @return true if the reading of tags was successful
+     * @return true if the reading of mapFromTagsToEmails was successful
      */
     @Override
     public boolean readTags(String filename){
         IObjectReader<HashMap> objectReader = new ObjectReader<>();
 
         try{
-            tags = objectReader.read(filename);
+            mapFromTagsToEmails = objectReader.read(filename);
         }catch (ObjectReadException e){
             return false;
         }
-        Set<ITag> tempTags = tags.keySet();
+        Set<ITag> tempTags = mapFromTagsToEmails.keySet();
 
         for (ITag tag: tempTags){
-            Set<IEmail> emails = tags.get(tag);
+            Set<IEmail> emails = mapFromTagsToEmails.get(tag);
             for (IEmail email: emails){
                 addTag(email,tag);
             }
@@ -143,13 +146,13 @@ public class TagHandler implements ITagHandler{
     }
 
     /**
-     * Writes the tags HashMap to disk
+     * Writes the mapFromTagsToEmails HashMap to disk
      * @param filename the location of the file
      * @return return true on success
      */
     @Override
     public boolean writeTags(String filename){
         IObjectWriter<HashMap> objectReaderWriter = new ObjectWriter<>();
-        return objectReaderWriter.write((HashMap)tags, filename);
+        return objectReaderWriter.write((HashMap) mapFromTagsToEmails, filename);
     }
 }
