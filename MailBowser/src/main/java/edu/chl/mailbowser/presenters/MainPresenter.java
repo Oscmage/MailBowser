@@ -98,6 +98,8 @@ public class MainPresenter implements IObserver, Initializable {
                 Stage stage4 = (Stage) evt.getValue();
                 openComposeEmailWindow(stage4, "", "Fw: " + email.getSubject(), email.getContent());
                 break;
+            case DELETE_EMAIL:
+
         }
 
     }

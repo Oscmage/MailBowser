@@ -5,6 +5,9 @@ import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.*;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
+import edu.chl.mailbowser.tag.models.ITag;
+import edu.chl.mailbowser.tag.models.Tag;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +29,7 @@ public class TopbarPresenter implements Initializable, IObserver{
 
     private IEmail email;
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
+    private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
     @FXML protected TextField addTagTextField;
     @FXML protected TextField searchField;
@@ -112,6 +116,12 @@ public class TopbarPresenter implements Initializable, IObserver{
         Stage root = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
         EventBus.INSTANCE.publish(new Event(EventType.REPLY_ALL, root));
     }
+
+    @FXML
+    private void deleteButtonOnAction(ActionEvent actionEvent) {
+        EventBus.INSTANCE.publish(new Event(EventType.DELETE_EMAIL, email));
+    }
+
 
     @Override
     public void onEvent(IEvent event) {
