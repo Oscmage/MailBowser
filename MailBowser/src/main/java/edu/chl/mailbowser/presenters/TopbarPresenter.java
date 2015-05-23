@@ -6,6 +6,9 @@ import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.*;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
+import edu.chl.mailbowser.tag.models.ITag;
+import edu.chl.mailbowser.tag.models.Tag;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,6 +30,7 @@ public class TopbarPresenter implements IObserver, Initializable {
 
     private IEmail email;
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
+    private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
     @FXML protected TextField addTagTextField;
     @FXML protected TextField searchField;
@@ -132,6 +136,7 @@ public class TopbarPresenter implements IObserver, Initializable {
         }
         openComposeEmailWindow(root, recipients,"Re: " + email.getSubject(), email.getContent());
     }
+
 
     @Override
     public void onEvent(IEvent event) {
