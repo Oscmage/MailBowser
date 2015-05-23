@@ -21,10 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -46,7 +43,9 @@ public class EmailListPresenter implements Initializable, IObserver {
     // OK, do not get frightened. Read it like so: "An email-list ListView."
     @FXML protected ListView<EmailListViewItem> emailListListView;
 
-    private boolean searchActivated = false;
+    // this flag determines whether or not to update the list view when a FETCH_EMAIL event comes in. it is set to
+    // false when you search
+    private boolean updateListOnIncomingEmail = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -91,12 +90,12 @@ public class EmailListPresenter implements Initializable, IObserver {
         List<IEmail> emails = accountHandler.getAllEmails();
 
         if (!query.equals("")) {
-            searchActivated = true;
+            updateListOnIncomingEmail = false;
             List<IEmail> matchingEmails = Searcher.search(emails, query);
             System.out.println("matching emails: " + matchingEmails.size());
             replaceListViewContent(matchingEmails);
         } else {
-            searchActivated = false;
+            updateListOnIncomingEmail = true;
             replaceListViewContent(emails);
         }
     }
@@ -107,7 +106,7 @@ public class EmailListPresenter implements Initializable, IObserver {
      * @param email the fetched email
      */
     private void fetchEmail(IEmail email) {
-        if (!searchActivated) {
+        if (updateListOnIncomingEmail) {
             addEmailToListView(email);
         }
     }
@@ -134,25 +133,25 @@ public class EmailListPresenter implements Initializable, IObserver {
      */
     @Override
     public void onEvent(IEvent evt) {
+        Platform.runLater( // JavaFX can get thread problems otherwise
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt){
         switch (evt.getType()) {
             case FETCH_EMAIL:
-                Platform.runLater(
-                        () -> fetchEmail((IEmail) evt.getValue())
-                );
+                fetchEmail((IEmail) evt.getValue());
                 break;
             case SEARCH:
-                Platform.runLater(
-                        () -> search((String) evt.getValue())
-                );
+                search((String) evt.getValue());
                 break;
             case CLEAR_EMAILS:
-                Platform.runLater(
-                        () -> clearEmails()
-                );
+                clearEmails();
+                break;
             case SELECTED_TAG:
-                Platform.runLater(
-                        () -> replaceListViewContent(new ArrayList<>(tagHandler.getEmails((ITag)evt.getValue())))
-                );
+                replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith((ITag) evt.getValue())));
+                break;
         }
     }
 }

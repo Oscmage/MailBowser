@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<fx:root maxHeight="80.0" minHeight="80.0" minWidth="220.0" prefHeight="80.0" prefWidth="220.0" type="javafx.scene.layout.FlowPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="70.0" minHeight="70.0" minWidth="220.0" prefHeight="70.0" prefWidth="220.0" type="javafx.scene.layout.FlowPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="sender" maxHeight="20.0" maxWidth="110.0" minHeight="20.0" minWidth="110.0" prefHeight="20.0" prefWidth="110.0" text="Senders" textOverrun="CLIP" />
-      <Label fx:id="sent" maxHeight="20.0" maxWidth="110.0" minHeight="20.0" minWidth="110.0" prefHeight="20.0" prefWidth="110.0" text="Sent" textAlignment="RIGHT" textOverrun="CLIP" />
-      <Label fx:id="subject" maxHeight="20.0" maxWidth="220.0" minHeight="20.0" minWidth="220.0" prefHeight="20.0" prefWidth="220.0" text="Subject" textOverrun="CLIP" />
-      <Label fx:id="content" maxHeight="20.0" maxWidth="220.0" minHeight="20.0" minWidth="220.0" prefHeight="20.0" prefWidth="220.0" text="Content" textOverrun="CLIP" />
-      <Label fx:id="tags" maxHeight="20.0" maxWidth="220.0" minHeight="20.0" minWidth="220.0" prefHeight="20.0" prefWidth="220.0" text="Tags" textOverrun="CLIP" />
+      <Label fx:id="sender" maxHeight="15.0" maxWidth="105.0" minHeight="15.0" minWidth="105.0" prefHeight="15.0" prefWidth="105.0" styleClass="emailListItemSender" text="Senders" textOverrun="ELLIPSIS" />
+      <Label fx:id="sent" alignment="CENTER_RIGHT" maxHeight="15.0" maxWidth="105.0" minHeight="15.0" minWidth="105.0" prefHeight="15.0" prefWidth="105.0" styleClass="emailListItemSent" text="Sent" textOverrun="ELLIPSIS" />
+      <Label fx:id="subject" maxHeight="20.0" maxWidth="210.0" minHeight="20.0" minWidth="210.0" prefHeight="20.0" prefWidth="210.0" styleClass="emailListItemSubject" text="Subject" textOverrun="ELLIPSIS" />
+      <Label fx:id="content" maxHeight="20.0" maxWidth="210.0" minHeight="20.0" minWidth="210.0" prefHeight="20.0" prefWidth="210.0" styleClass="emailListItemContent" textOverrun="ELLIPSIS" wrapText="true" />
+      <Label maxHeight="15.0" maxWidth="15.0" minHeight="15.0" minWidth="15.0" prefHeight="15.0" prefWidth="15.0" styleClass="fontawesome, emailListItemTags" text="&#xf02b;" textOverrun="CLIP" />
+      <Label fx:id="tags" maxHeight="15.0" maxWidth="195.0" minHeight="15.0" minWidth="195.0" prefHeight="15.0" prefWidth="195.0" styleClass="emailListItemTags" text="Tags" textOverrun="ELLIPSIS" />
    </children>
+   <padding>
+      <Insets right="10.0" />
+   </padding>
 </fx:root>

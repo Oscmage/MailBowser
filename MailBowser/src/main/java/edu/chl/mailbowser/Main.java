@@ -1,10 +1,8 @@
 package edu.chl.mailbowser;
 
-import edu.chl.mailbowser.account.BackgroundFetching;
-import edu.chl.mailbowser.account.factories.MailServerFactory;
+
+import edu.chl.mailbowser.account.IBackgroundFetcher;
 import edu.chl.mailbowser.account.handlers.IAccountHandler;
-import edu.chl.mailbowser.account.models.Account;
-import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +14,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private static ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
-    private static IAccountHandler accountHandler= MainHandler.INSTANCE.getAccountHandler();
+    private static IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
+    private static IBackgroundFetcher backgroundFetching = MainHandler.INSTANCE.getBackgroundFetching();
 
     @Override
     public void start(Stage mainStage) throws Exception {
@@ -30,10 +29,9 @@ public class Main extends Application {
         // Add fonts and styles to the scene
         scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
         scene.getStylesheets().add("css/style.css");
-        
-        Thread backgroundFetching = BackgroundFetching.getInstance();
-        backgroundFetching.setDaemon(true);
-        backgroundFetching.start();
+
+        mainStage.setMinHeight(600);
+        mainStage.setMinWidth(800);
 
         mainStage.setScene(scene);
         mainStage.show();
@@ -42,8 +40,10 @@ public class Main extends Application {
     public static void main(String[] args) {
         // load serialized objects from disk
         load();
+        backgroundFetching.start();
         // used to launch a JavaFX application
         launch(args);
+        backgroundFetching.stop();
         // save serializable objects to disk
         save();
     }
@@ -52,26 +52,16 @@ public class Main extends Application {
         boolean loadAccountsSuccessful = accountHandler.readAccounts("Accounts.ser");
         boolean loadTagHandlerSuccessful = tagHandler.readTags("Tags.ser");
 
-        // create a new account if no account was found on disk
         if (!loadAccountsSuccessful) {
-            System.out.println("load: failed to load accounts");
-
-            accountHandler.addAccount(new Account(
-                    new Address("mailbows3r@gmail.com"),
-                    "VG5!qBY&#f$QCmV", // It really doesn't get more Open Source™ than this
-                    MailServerFactory.createIncomingServer(MailServerFactory.Type.GMAIL),
-                    MailServerFactory.createOutgoingServer(MailServerFactory.Type.GMAIL)
-            ));
-
+            System.out.println("load: failed to load accounts from Accounts.ser");
         } else {
-            System.out.println("load: loaded accounts from Accounts.ser");
-            System.out.println(accountHandler.getAccounts());
+            System.out.println("load: loaded accounts " + accountHandler.getAccounts());
         }
 
         if(!loadTagHandlerSuccessful){
-            System.out.println("load: failed to load TagHandler");
+            System.out.println("load: failed to load tags from Tags.ser");
         } else {
-            System.out.println("load: loaded TagHandler");
+            System.out.println("load: loaded tags " + tagHandler.getTags());
         }
     }
 

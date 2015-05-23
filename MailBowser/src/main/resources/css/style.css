@@ -2,7 +2,6 @@
 .root {
     -fx-font-size: 12;
     -fx-font-family: Roboto, sans-serif;
-    -fx-background-color: rgba(255,255,255,1);
     -fx-dark: rgba(0,0,0,1);
     -fx-bright: rgba(255,255,255,1);
     -fx-base-color: rgba(250,70,43,1);
@@ -42,6 +41,65 @@
     -fx-cursor: hand;
 }
 
+.button.naked {
+    -fx-background-color: transparent;
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-opacity: 0.5;
+}
+
+.button.naked:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-dark;
+    -fx-opacity: 1;
+}
+
+/* MENU BAR */
+
+.menu-bar {
+    -fx-background-color: -fx-bright;
+}
+
+.menu-button {
+    -fx-text-fill: -fx-dark;
+}
+
+.menu-button:hover {
+    -fx-background-color: derive(-fx-bright, -10%);
+}
+
+.menu-button:hover .label {
+    -fx-text-fill: -fx-dark;
+}
+
+.menu-button:showing,
+.menu-button:showing:hover {
+    -fx-background-color: derive(-fx-bright, -15%);
+}
+
+.menu-button:showing .label,
+.menu-button:showing:hover .label {
+    -fx-text-fill: -fx-dark;
+}
+
+.menu-button:showing .menu-item .label {
+    -fx-text-fill: -fx-dark;
+}
+
+.menu-button:showing .menu-item {
+    -fx-background-color: -fx-bright;
+    -fx-padding: 5 10;
+}
+
+.menu-button:showing .menu-item:hover {
+    -fx-background-color: derive(-fx-bright, -15%);
+}
+
+.context-menu {
+    -fx-border-width: 0 1 1 1;
+    -fx-padding: 0;
+}
+
 /* LIST VIEWS */
 
 .list-view {
@@ -78,6 +136,7 @@
 .list-view .list-cell:filled:odd:selected .label {
     -fx-text-fill: -fx-bright;
 }
+
 
 /* TAG */
 
@@ -117,15 +176,20 @@
 
 .tree-view {
     -fx-background-insets: 0;
+    -fx-background-color: transparent;
 }
 
-/* TEXT FIELD */
+.tree-cell {
+    -fx-background-color: transparent;
+}
+
+/* TEXT FIELD AND TEXT AREA */
 
 .text-field {
     -fx-background-color: -fx-bright;
     -fx-background-insets: 0;
     -fx-background-radius: 3em;
-    -fx-padding: 1em;
+    -fx-height: 3em;
     -fx-max-height: 3em;
     -fx-min-height: 3em;
     -fx-text-fill: -fx-dark;
@@ -135,6 +199,56 @@
 
 .text-field:disabled {
     -fx-opacity: 0.75;
+}
+
+.text-field.gridded {
+    -fx-background-radius: 0;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: derive(-fx-bright, -15%);
+}
+
+.text-area {
+    -fx-background-color: -fx-bright, -fx-bright;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+    -fx-prompt-text-fill: -fx-dark;
+}
+
+.text-area .content {
+    -fx-padding: 10;
+    -fx-cursor: text;
+    -fx-background-color: -fx-bright;
+}
+
+.text-area:focused {
+    -fx-background-color: -fx-bright;
+    -fx-focus-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-prompt-text-fill: transparent;
+}
+
+.text-area:focused .content {
+    -fx-border-width: 0;
+    -fx-background-color: -fx-bright;
+}
+
+/* SPLIT PANE */
+
+.split-pane {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.split-pane *.split-pane-divider {
+    -fx-padding: 0 2 0 2;
+    -fx-border-width: 0;
+    -fx-border-color:  transparent;
+    -fx-background-color: -fx-dark;
+    -fx-background-insets: 0;
 }
 
 /* SCROLL BAR */
@@ -208,6 +322,7 @@
 
 #sidebar {
     -fx-border-width: 0 1 0 0;
+    -fx-background-color: derive(-fx-bright, -15%);
 }
 
 #sidebar .label {
@@ -216,10 +331,20 @@
 
 #sidebar .list-view {
     -fx-background-insets: 0;
+    -fx-background-color: transparent;
 }
 
 #sidebar .list-view .list-cell {
-    -fx-padding: 5;
+     -fx-padding: 5;
+     -fx-background-color: transparent;
+ }
+
+#sidebar .list-view .list-cell:filled:hover {
+    -fx-background-color: derive(-fx-bright, -10%);
+}
+
+#sidebar .list-view .list-cell:filled:selected {
+    -fx-background-color: -fx-base-color;
 }
 
 #sidebar .list-view .list-cell .label {
@@ -289,3 +414,24 @@
     -fx-border-width: 0 0 1 0;
     -fx-border-color: derive(-fx-bright, -15%);
 }
+
+/* EMAIL LIST */
+
+.label.emailListItemSender,
+.label.emailListItemSent,
+.label.emailListItemTags {
+    -fx-font-size: 10;
+    -fx-text-fill: derive(-fx-bright, -30%);
+    -fx-padding: 0;
+}
+
+.label.emailListItemSubject {
+    -fx-font-weight: 700;
+}
+
+.label.emailListItemContent {
+    -fx-font-size: 12;
+    -fx-text-fill: derive(-fx-bright, -50%);
+}
+
+/* COMPOSE EMAIL VIEW */

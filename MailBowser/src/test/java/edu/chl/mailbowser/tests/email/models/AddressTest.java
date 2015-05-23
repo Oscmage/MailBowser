@@ -24,8 +24,8 @@ public class AddressTest {
 
     @Test
     public void testGetJavaxAddress() throws Exception {
-        assertTrue(address.getJavaxAddress().getAddress().equals(s1));
-        assertEquals(address.getJavaxAddress(), new InternetAddress(s1));
+        assertTrue(address.getJavaMailAddress().getAddress().equals(s1));
+        assertEquals(address.getJavaMailAddress(), new InternetAddress(s1));
     }
 
     @Test
