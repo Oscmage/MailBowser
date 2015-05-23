@@ -4,6 +4,7 @@ import edu.chl.mailbowser.tag.models.ITag;
 
 /**
  * Created by filip on 19/05/15.
+ * Mock class for Tag
  */
 public class MockTag implements ITag {
 
