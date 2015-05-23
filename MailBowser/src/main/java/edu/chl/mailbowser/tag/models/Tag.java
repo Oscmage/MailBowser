@@ -11,6 +11,7 @@ public class Tag implements ITag {
      * Creates a Tag with the specified name.
      * @param name Creates a tag with the specified name.
      */
+
     public Tag(String name) {
         this.name = name.toLowerCase();
     }
@@ -55,6 +56,7 @@ public class Tag implements ITag {
      * Returns the hashCode value for this tag.
      * @return
      */
+    @Override
     public int hashCode() {
         return name.hashCode()*11;
     }

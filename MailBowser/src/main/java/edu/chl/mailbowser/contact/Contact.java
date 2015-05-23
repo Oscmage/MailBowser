@@ -23,18 +23,20 @@ public class Contact implements IContact {
         this.lastName = lastName;
     }
 
-    @Override
+
     /**
      * @return the full name with the last name first and separated by semi-colon
      */
+    @Override
     public String getFullName() {
         return lastName+";"+firstName;
     }
 
-    @Override
+
     /**
      * @return the last name of the contact
      */
+    @Override
     public String getFirstName() {
         return firstName;
     }

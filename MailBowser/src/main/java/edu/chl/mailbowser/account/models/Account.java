@@ -139,6 +139,7 @@ public class Account implements IAccount {
      *
      * @return a list of all emails that belong to this account
      */
+    @Override
     public List<IEmail> getEmails() {
         return emails;
     }
@@ -167,11 +168,13 @@ public class Account implements IAccount {
     /**
      * Fetches for new email.
      */
+    @Override
     public void fetch() {
         System.out.println("Account: fetch()");
         initFetch(false);
     }
 
+    @Override
     public boolean testConnect(){
         return incomingServer.testConnection(getUsername(),getPassword());
     }
