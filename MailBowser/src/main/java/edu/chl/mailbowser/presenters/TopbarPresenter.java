@@ -1,6 +1,5 @@
 package edu.chl.mailbowser.presenters;
 
-
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.account.models.IAccount;
@@ -8,7 +7,6 @@ import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
-import edu.chl.mailbowser.tag.models.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,28 +14,21 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-/**
- * Created by filip on 04/05/15.
- */
 public class TopbarPresenter implements IObserver, Initializable {
 
     private IEmail email;
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
 
-    public TopbarPresenter(){
-        EventBus.INSTANCE.register(this);
-    }
-
     @FXML private TextField addTagTextField;
     @FXML private TextField searchField;
-
     @FXML private Button forwardButton;
     @FXML private Button replyButton;
     @FXML private Button replyAllButton;
@@ -46,17 +37,17 @@ public class TopbarPresenter implements IObserver, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        EventBus.INSTANCE.register(this);
     }
 
-    private void openComposeEmailWindow(Stage parentStage, String recipient, String subject, String content) {
-        // create the component
+    private void openComposeEmailWindow(Stage root, String recipient, String subject, String content) {
         ComposeEmailPresenter composeEmailPresenter = new ComposeEmailPresenter(recipient, subject, content);
 
         // create a new stage
         Stage newEmailStage = new Stage();
         newEmailStage.setTitle("New Email...");
-        newEmailStage.setX(parentStage.getX()+50);
-        newEmailStage.setY(parentStage.getY()+50);
+        newEmailStage.setX(root.getX()+50);
+        newEmailStage.setY(root.getY()+50);
 
         // add the component to the stage
         newEmailStage.setScene(new Scene(composeEmailPresenter));
@@ -64,13 +55,64 @@ public class TopbarPresenter implements IObserver, Initializable {
     }
 
     @FXML
-    private void addTagButtonOnAction(ActionEvent actionEvent) {
-        System.out.println("Button clicked!");
+    public void tagButtonOnAction(ActionEvent event) {
+        Stage root = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+        AddTagPresenter addTagPresenter = new AddTagPresenter(root, email);
 
-        // TODO: Add a popup with text input
+        Stage addTagStage = new Stage();
+        addTagStage.setTitle("Add tag...");
 
-//        String text = addTagTextField.getText();
-//        tagHandler.addTag(this.email, new Tag(text));
+        addTagStage.initModality(Modality.APPLICATION_MODAL);
+        addTagStage.initOwner(root);
+
+        addTagStage.setScene(new Scene(addTagPresenter, 300, 200));
+        addTagStage.show();
+    }
+
+    @FXML
+    public void searchFieldOnAction(ActionEvent event) {
+        String text = searchField.getText();
+        EventBus.INSTANCE.publish(new Event(EventType.SEARCH, text));
+    }
+
+    @FXML
+    public void fetchButtonOnAction(ActionEvent actionEvent) {
+        for(IAccount account : accountHandler.getAccounts()) {
+            account.fetch();
+        }
+    }
+
+    @FXML
+    public void newButtonOnAction(ActionEvent event) {
+        Stage root = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+        openComposeEmailWindow(root, "", "", "");
+    }
+
+    @FXML
+    public void forwardButtonOnAction(ActionEvent event) {
+        Stage root = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+        openComposeEmailWindow(root, "", "Fw: " + email.getSubject(), email.getContent());
+    }
+
+    @FXML
+    public void replyButtonOnAction(ActionEvent event) {
+        Stage root = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+        openComposeEmailWindow(root, email.getSender().getString(), "Re: " + email.getSubject(), email.getContent());
+    }
+
+    @FXML
+    public void replyAllButtonOnAction(ActionEvent event) {
+        Stage root = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+        String recipients = "";
+        List<IAddress> recipientsList = this.email.getAllRecipients();
+        for (IAddress recipient : recipientsList) {
+            if (recipients.length() == 0) {
+                recipients = recipient.getString();
+            } else {
+                recipients += ", " + recipient.getString();
+            }
+        }
+        openComposeEmailWindow(root, recipients,"Re: " + email.getSubject(), email.getContent());
     }
 
     @Override
@@ -82,54 +124,6 @@ public class TopbarPresenter implements IObserver, Initializable {
         }
     }
 
-    // This method is invoked when the "New Email"-button is pressed, and is bound via the onAction attribute
-    @FXML
-    private void newEmailButtonActionPerformed(ActionEvent event) {
-        // Get the parent stage, simply to position our newly created window related to it
-        Stage mainStage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-        openComposeEmailWindow(mainStage, "", "", "");
-    }
-
-    @FXML
-    private void searchFieldOnAction(ActionEvent event) {
-        String text = searchField.getText();
-        EventBus.INSTANCE.publish(new Event(EventType.SEARCH, text));
-    }
-
-    // This method is invoked when the "Refetch"-button is pressed, ans id bound via the onAction attribute
-    @FXML
-    private void fetchButtonOnAction(ActionEvent actionEvent) {
-        for(IAccount account : accountHandler.getAccounts()) {
-            account.fetch();
-        }
-    }
-
-    @FXML
-    private void forwardButtonOnAction(ActionEvent actionEvent) {
-        Stage mainStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
-        openComposeEmailWindow(mainStage, "", "Fw: " + email.getSubject(), this.email.getContent());
-    }
-
-    @FXML
-    private void replyButtonOnAction(ActionEvent actionEvent) {
-        Stage mainStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
-        openComposeEmailWindow(mainStage, this.email.getSender().getString(), "Re: " + this.email.getSubject(),
-                this.email.getContent());
-    }
-
-    @FXML private void replyAllButtonOnAction(ActionEvent actionEvent) {
-        Stage mainStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
-        String recipientsString = "";
-        List<IAddress> recipientsList = this.email.getAllRecipients();
-        for (IAddress recipient : recipientsList) {
-            if (recipientsString.length() == 0) {
-                recipientsString = recipient.getString();
-            } else {
-                recipientsString += ", " + recipient.getString();
-            }
-        }
-        openComposeEmailWindow(mainStage,recipientsString,"Re: " + this.email.getSubject(),this.email.getContent());
-    }
 }
 
 
