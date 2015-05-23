@@ -26,8 +26,8 @@ public class SidebarViewItemPresenter extends HBox implements Initializable {
 
     private Tag tag;
 
-    @FXML private Label name;
-    @FXML private Button button;
+    @FXML protected Label name;
+    @FXML protected Button button;
 
     public SidebarViewItemPresenter() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/sidebar/SidebarViewItem.fxml"));
@@ -50,31 +50,60 @@ public class SidebarViewItemPresenter extends HBox implements Initializable {
         name.setText(tag.getName());
     }
 
+    public SidebarViewItemPresenter(String string) {
+        this();
+        name.setText(string);
+        button.setDisable(true);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
     public Tag getTag() {
-        return this.tag;
+        if(tag != null) {
+            return tag;
+        }
+        return null;
+    }
+
+    public String getName() {
+        if(tag != null) {
+            return tag.getName();
+        }
+        return name.getText();
     }
 
 
-    @FXML private void removeTagFromSidebar(ActionEvent event) {
+    @FXML
+    protected void removeTagFromSidebar(ActionEvent event) {
         EventBus.INSTANCE.publish(new Event(EventType.DELETE_TAG, this));
     }
 
     public boolean equals(Object o) {
         if(o instanceof SidebarViewItemPresenter) {
-            return this.tag.equals(
-                    ((SidebarViewItemPresenter)o).getTag()
-            );
+            if(tag != null) {
+                return this.tag.equals(
+                        ((SidebarViewItemPresenter)o).getTag()
+                );
+            } else {
+                return name.getText().equals(
+                        ((SidebarViewItemPresenter)o).getName()
+                );
+            }
+
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return this.tag.hashCode();
+        if(tag != null) {
+            return this.tag.hashCode();
+        } else {
+            return getName().hashCode();
+        }
+
     }
 }

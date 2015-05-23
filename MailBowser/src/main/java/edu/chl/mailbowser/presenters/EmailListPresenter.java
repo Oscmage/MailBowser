@@ -150,7 +150,11 @@ public class EmailListPresenter implements Initializable, IObserver {
                 clearEmails();
                 break;
             case SELECTED_TAG:
-                replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith((ITag) evt.getValue())));
+                if(evt.getValue() != null) {
+                    replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith((ITag) evt.getValue())));
+                } else {
+                    replaceListViewContent(new ArrayList<>(accountHandler.getAllEmails()));
+                }
                 break;
         }
     }

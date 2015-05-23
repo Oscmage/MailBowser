@@ -67,7 +67,6 @@ public class TagHandler implements ITagHandler{
         if(!mapFromEmailsToTags.get(email).isEmpty()) {
             return new HashSet<>(mapFromEmailsToTags.get(email));
         }
-        System.out.println("Emails not found");
         return new HashSet<>();
     }
 
