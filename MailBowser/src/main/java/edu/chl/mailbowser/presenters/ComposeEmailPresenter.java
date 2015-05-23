@@ -11,10 +11,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.markdown4j.Markdown4jProcessor;
 
 import java.io.IOException;
@@ -35,12 +39,13 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
     // Assign the fields from the view to variables via the fx:id attribute
     // Note that these variables belong to the javafx.scene.control package
-    @FXML private TextField to;
-    @FXML private TextField cc;
-    @FXML private TextField bcc;
-    @FXML private TextField subject;
-    @FXML private TextArea content;
-    @FXML private WebView markdown;
+    @FXML protected TextField to;
+    @FXML protected TextField cc;
+    @FXML protected TextField bcc;
+    @FXML protected TextField subject;
+    @FXML protected TextArea content;
+    @FXML protected WebView markdown;
+    @FXML protected Parent root;
 
     public ComposeEmailPresenter(String recipients, String subject, String content) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ComposeEmailView.fxml"));
@@ -58,6 +63,7 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
         setReceivers(recipients);
         setSubject(subject);
         setContent(content);
+
     }
 
     // This method is invoked when the send button is pressed, and is bound via the onAction attribute
