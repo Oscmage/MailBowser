@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 
 import java.net.URL;
@@ -37,7 +38,7 @@ public class ContactBookPresenter implements Initializable{
     @FXML protected Button addNewAddressButton;
     @FXML protected TextField lastNameField;
     @FXML protected TextField firstNameField;
-    @FXML protected GridPane gridPane;
+    @FXML protected VBox contactForm;
 
     private final int ORIGINAL_INDEX = 1;
 
@@ -104,7 +105,7 @@ public class ContactBookPresenter implements Initializable{
         if(address != null) {
             newTextField.setText(address.getString());
         }
-        gridPane.addRow(newAddressIndex, newLabel, newTextField);
+        contactForm.getChildren().addAll(newLabel, newTextField);
         addresses.add(newTextField);
     }
 
