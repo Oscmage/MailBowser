@@ -136,6 +136,9 @@ public class MainPresenter implements IObserver, Initializable {
     }
     @FXML
     private void replyMenuItemOnAction(ActionEvent actionEvent) {
+        openComposeEmailWindow(getNewCenteredStage(), email.getSender().getString(),
+                "Re: " + email.getSubject(), email.getContent());
+
     }
     @FXML
     private void replyAllMenuItemOnAction(ActionEvent actionEvent) {
