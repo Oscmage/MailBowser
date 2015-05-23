@@ -20,15 +20,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
  * Created by filip on 04/05/15.
  */
-public class EmailListPresenter implements Initializable, IObserver {
+public class EmailListPresenter implements Initializable, IObserver, ActionListener {
 
+    private javax.swing.Timer t = new Timer(5000,this);
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
@@ -54,7 +61,11 @@ public class EmailListPresenter implements Initializable, IObserver {
         emailListListView.setItems(sortedObservableEmailList);
 
         replaceListViewContent(accountHandler.getAllEmails());
+
+        this.emailListListView.getSelectionModel().selectFirst();
+
     }
+
 
     /**
      * Replaces all items in emailListListView with new list items for the given emails
@@ -140,6 +151,10 @@ public class EmailListPresenter implements Initializable, IObserver {
 
     private void handleEvent(IEvent evt){
         switch (evt.getType()) {
+            case EMAILDETAILPRESENTER_READY:
+                IEmail email = this.emailListListView.getSelectionModel().getSelectedItem().getEmail();
+                EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_EMAIL,email));
+                break;
             case FETCH_EMAIL:
                 fetchEmail((IEmail) evt.getValue());
                 break;
@@ -157,5 +172,12 @@ public class EmailListPresenter implements Initializable, IObserver {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_EMAIL,
+                this.emailListListView.getSelectionModel().getSelectedItem().getEmail()));
+        t.stop();
     }
 }
