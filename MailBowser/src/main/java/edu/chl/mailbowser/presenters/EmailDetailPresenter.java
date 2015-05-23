@@ -88,7 +88,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
 
     @Override
     public void onEvent(IEvent evt) {
-        Platform.runLater(
+        Platform.runLater( //JavaFX can get thread problems otherwise
                 () -> handleEvent(evt)
         );
     }

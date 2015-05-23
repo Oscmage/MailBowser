@@ -8,7 +8,7 @@ import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
-import edu.chl.mailbowser.tag.models.Tag;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -75,6 +75,12 @@ public class TopbarPresenter implements IObserver, Initializable {
 
     @Override
     public void onEvent(IEvent evt) {
+        Platform.runLater( // JavaFX can get thread problems otherwise
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt){
         switch (evt.getType()) {
             case SELECTED_EMAIL:
                 this.email = (IEmail) evt.getValue();
