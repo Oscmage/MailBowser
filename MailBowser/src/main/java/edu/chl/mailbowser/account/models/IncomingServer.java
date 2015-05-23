@@ -150,6 +150,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
                     try {
                         store.close();
                     } catch (MessagingException e) {
+                        // the folder is closed even if an exception occurs, so we don't have do take any action
                         e.printStackTrace();
                     }
                 }
