@@ -5,12 +5,12 @@
 <?import java.lang.*?>
 
 <fx:root styleClass="form" stylesheets="@../css/style.css" type="javafx.scene.layout.VBox" minWidth="220.0" maxWidth="220.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
-<children>
-    <Label text="Username" />
-    <TextField fx:id="usernameField" />
-    <Label text="Password" />
-    <TextField fx:id="passwordField" />
-    <Label text="Incoming server" />
-    <ChoiceBox fx:id="accountTypeChoiceBox" minWidth="200.0" />
-</children>
+    <children>
+        <Label text="Username" />
+        <TextField fx:id="usernameField" />
+        <Label text="Password" />
+        <TextField fx:id="passwordField" />
+        <Label text="Incoming server" />
+        <ChoiceBox fx:id="accountTypeChoiceBox" minWidth="200.0" />
+    </children>
 </fx:root>
