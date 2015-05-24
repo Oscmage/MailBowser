@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
-import static edu.chl.mailbowser.io.IOUtils.closeStream;
-
 /**
  * Created by mats on 11/05/15.
  *
@@ -30,8 +28,8 @@ public class ObjectReader<T extends Serializable> implements IObjectReader<T> {
         } catch (IOException | ClassNotFoundException | NullPointerException e) {
             throw new ObjectReadException(e.getMessage(), e.getCause());
         } finally {
-            closeStream(fileInputStream);
-            closeStream(objectInputStream);
+            IOUtils.closeStream(fileInputStream);
+            IOUtils.closeStream(objectInputStream);
         }
 
         return object;

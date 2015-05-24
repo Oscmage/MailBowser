@@ -1,5 +1,6 @@
 package edu.chl.mailbowser.contact;
 
+import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.search.Searcher;
 
 import java.util.Set;

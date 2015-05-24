@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.ContactBookPresenter">
+   <children>
+      <HBox maxHeight="1.7976931348623157E308" styleClass="menuBar" VBox.vgrow="NEVER">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button fx:id="addContactButton" mnemonicParsing="false" onAction="#addContactButtonOnAction" styleClass="circle, fontawesome" text="" />
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonOnAction" styleClass="circle, fontawesome" text="" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="NEVER">
+               <children>
+                  <Button fx:id="addNewAddressButton" mnemonicParsing="false" onAction="#addNewAddressButtonOnAction" styleClass="circle, fontawesome" text="&#xf0fe;" />
+                  <Button fx:id="removeAddressButton" mnemonicParsing="false" onAction="#addNewAddressButtonOnAction" styleClass="circle, fontawesome" text="&#xf146;" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonOnAction" styleClass="circle, fontawesome" text="" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+         <children>
+            <ListView fx:id="contactList" onMouseClicked="#contactListOnMouseClicked" prefHeight="300" HBox.hgrow="ALWAYS" />
+            <ScrollPane hbarPolicy="NEVER" minWidth="200.0" maxWidth="200.0" prefViewportWidth="200.0" HBox.hgrow="ALWAYS">
+               <content>
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox fx:id="contactForm" spacing="10.0" minWidth="180.0" styleClass="form" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label text="First name" />
+                              <TextField fx:id="firstNameField" />
+                              <Label text="Last name" />
+                              <TextField fx:id="lastNameField" />
+                           </children>
+                        </VBox>
+
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </HBox>
+   </children>
+</VBox>

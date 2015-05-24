@@ -43,6 +43,10 @@ public class MainPresenter implements IObserver, Initializable {
         return stage;
     }
 
+    private void openAddTagWindow() {
+
+    }
+
     public void openAccountManager() throws IOException {
 
         Parent fxml = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AccountManager.fxml"));
@@ -50,6 +54,10 @@ public class MainPresenter implements IObserver, Initializable {
         accountManager = new Stage();
         accountManager.setTitle("Account Manager");
         accountManager.setScene(new Scene(fxml, 400, 300));
+
+        accountManager.setMinWidth(400.0);
+        accountManager.setMinHeight(300.0);
+
         accountManager.show();
     }
 
@@ -119,7 +127,6 @@ public class MainPresenter implements IObserver, Initializable {
             case DELETE_EMAIL:
 
         }
-
     }
 
     @FXML
