@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.io;
 
-import com.sun.xml.internal.bind.v2.TODO;
+
 
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -18,8 +18,8 @@ public class SecureObjectWriter<T extends Serializable> extends ObjectWriter<T> 
     @Override
     public boolean write(T object, String destination){
         File fileIn;
-        FileInputStream fileInputStream;
-        ObjectInputStream objectInputStream;
+        FileInputStream fileInputStream = null;
+        ObjectInputStream objectInputStream = null;
 
         PrivateKey privateKey = null;
         PublicKey publicKey = null;
@@ -45,11 +45,8 @@ public class SecureObjectWriter<T extends Serializable> extends ObjectWriter<T> 
             KeyPairGenerator keyPairGenerator = null;
             KeyPair keyPair;
             try {
-                keyPairGenerator = KeyPairGenerator.getInstance("DSA", "SUN");
+                keyPairGenerator = KeyPairGenerator.getInstance("RSA");
             } catch (NoSuchAlgorithmException e) {
-                //TODO: Handel
-                e.printStackTrace();
-            } catch (NoSuchProviderException e) {
                 //TODO: Handel
                 e.printStackTrace();
             }
@@ -60,7 +57,7 @@ public class SecureObjectWriter<T extends Serializable> extends ObjectWriter<T> 
             }
             Cipher cipher = null;
             try {
-                cipher = Cipher.getInstance("DSA");
+                cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             } catch (NoSuchAlgorithmException e) {
                 //TODO: Handel
                 e.printStackTrace();
@@ -69,7 +66,7 @@ public class SecureObjectWriter<T extends Serializable> extends ObjectWriter<T> 
                 e.printStackTrace();
             }
 
-            if (publicKey != null){
+            if (privateKey != null){
                 try {
                     cipher.init(Cipher.ENCRYPT_MODE, publicKey);
                 } catch (InvalidKeyException e) {
@@ -78,18 +75,24 @@ public class SecureObjectWriter<T extends Serializable> extends ObjectWriter<T> 
                 }
             }
 
-            try {
-                SealedObject encryptedObject = new SealedObject(byteStream,cipher);
-            } catch (IllegalBlockSizeException e) {
-                //TODO:Handel
-                e.printStackTrace();
+            if(cipher != null) {
+                try {
+                    SealedObject encryptedObject = new SealedObject(byteStream, cipher);
+                } catch (IllegalBlockSizeException e) {
+                    //TODO:Handel
+                    e.printStackTrace();
+                }
             }
 
+            fileInputStream.close();
+            objectInputStream.close();
             fileOutputStream.close();
             objectOutputStream.close();
         } catch (IOException | NullPointerException e) {
             success = false;
         } finally {
+            closeStream(fileInputStream);
+            closeStream(objectInputStream);
             closeStream(fileOutputStream);
             closeStream(objectOutputStream);
         }
