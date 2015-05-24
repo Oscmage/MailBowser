@@ -97,7 +97,7 @@ public class AccountHandler implements IAccountHandler{
      */
     @Override
     public boolean writeAccounts(String filename) {
-        IObjectWriter<ArrayList<IAccount>> objectReaderWriter = new ObjectWriter<>();
+        IObjectWriter<ArrayList<IAccount>> objectReaderWriter = new SecureObjectWriter<>();
         return objectReaderWriter.write((ArrayList<IAccount>) accounts, filename);
     }
 
