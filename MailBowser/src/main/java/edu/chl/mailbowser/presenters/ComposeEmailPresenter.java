@@ -2,7 +2,6 @@ package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.handlers.IAccountHandler;
-import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IAddress;
@@ -12,13 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.markdown4j.Markdown4jProcessor;
 
 import java.io.IOException;
@@ -92,6 +89,9 @@ public class ComposeEmailPresenter extends GridPane implements Initializable {
 
         // TODO: Fix sender
         accountHandler.getAccounts().get(0).send(email);
+
+        Stage stage = (Stage) this.getScene().getWindow();
+        stage.close();
     }
 
     @FXML protected void openContactBook(ActionEvent event) {
