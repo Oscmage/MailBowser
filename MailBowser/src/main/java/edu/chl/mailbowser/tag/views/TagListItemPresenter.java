@@ -81,12 +81,4 @@ public class TagListItemPresenter extends HBox implements Initializable{
 
     }
 
-    /**
-     * Publishes a new event to the EventBus with the tag from the gui listItem.
-     * @param event
-     */
-    @FXML private void removeTagFromEmail(ActionEvent event) {
-        EventBus.INSTANCE.publish(new Event(EventType.GUI_REMOVE_TAG,this.tag));
-    }
-
 }

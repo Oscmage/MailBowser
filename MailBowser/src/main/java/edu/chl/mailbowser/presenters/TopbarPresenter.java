@@ -127,7 +127,7 @@ public class TopbarPresenter implements Initializable, IObserver{
 
     private void handleEvent(IEvent event){
         switch (event.getType()) {
-            case SELECTED_EMAIL:
+            case SELECT_EMAIL:
                 this.email = (IEmail) event.getValue();
                 break;
         }

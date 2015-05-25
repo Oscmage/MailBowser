@@ -20,7 +20,6 @@ import javafx.scene.control.ListView;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -93,7 +92,7 @@ public class SidebarPresenter implements IObserver, Initializable {
      * @param event
      */
     public void selectedTag(Event event) {
-            EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_TAG,
+            EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECT_TAG,
                     tagsList.getSelectionModel().getSelectedItem().getTag()));
     }
 
@@ -106,14 +105,14 @@ public class SidebarPresenter implements IObserver, Initializable {
 
     private void handleEvent(IEvent evt){
         switch (evt.getType()) {
-            case FETCH_EMAIL:
+            case FETCHED_EMAIL:
                 updateTagsList(tagHandler.getTagsWith((IEmail) evt.getValue()));
                 break;
-            case ADD_TAG:
+            case ADD_TAG_TO_EMAIL:
                 updateTagsList((ITag) evt.getValue());
                 break;
             case DELETE_TAG:
-                deleteTag((SidebarViewItemPresenter)evt.getValue());
+                deleteTag((SidebarViewItemPresenter) evt.getValue());
                 break;
         }
     }

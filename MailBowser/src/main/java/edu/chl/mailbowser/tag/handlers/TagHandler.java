@@ -41,7 +41,7 @@ public class TagHandler implements ITagHandler{
         }
         mapFromEmailsToTags.get(email).add(tag); // Add the value to the set
 
-        EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG, tag));
+        EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG_TO_EMAIL, tag));
     }
 
     /**
@@ -102,7 +102,7 @@ public class TagHandler implements ITagHandler{
             }
         }
 
-        EventBus.INSTANCE.publish(new Event(EventType.REMOVE_TAG,tag));
+        EventBus.INSTANCE.publish(new Event(EventType.REMOVE_TAG_FROM_EMAIL,tag));
     }
 
     /**

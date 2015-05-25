@@ -13,6 +13,8 @@ import edu.chl.mailbowser.search.Searcher;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -33,9 +35,8 @@ import java.util.stream.Collectors;
 /**
  * Created by filip on 04/05/15.
  */
-public class EmailListPresenter implements Initializable, IObserver, ActionListener {
+public class EmailListPresenter implements Initializable, IObserver {
 
-    private javax.swing.Timer t = new Timer(5000,this);
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
@@ -50,7 +51,7 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
     // OK, do not get frightened. Read it like so: "An email-list ListView."
     @FXML protected ListView<EmailListViewItem> emailListListView;
 
-    // this flag determines whether or not to update the list view when a FETCH_EMAIL event comes in. it is set to
+    // this flag determines whether or not to update the list view when a FETCHED_EMAIL event comes in. it is set to
     // false when you search
     private boolean updateListOnIncomingEmail = true;
 
@@ -64,9 +65,13 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
 
         if(observableEmailList.size() != 0) {
             this.emailListListView.getSelectionModel().selectFirst();
-            EventBus.INSTANCE.publish(new Event(EventType.SELECTED_EMAIL,
+            EventBus.INSTANCE.publish(new Event(EventType.SELECT_EMAIL,
                     this.emailListListView.getSelectionModel().getSelectedItem().getEmail()));
         }
+
+        emailListListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            EventBus.INSTANCE.publish(new Event(EventType.SELECT_EMAIL, newValue));
+        });
 
     }
 
@@ -77,10 +82,10 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
      * @param emails the new emails to show in the list
      */
     private void replaceListViewContent(List<IEmail> emails) {
-        observableEmailList.setAll(emails.stream()
-                        .map(EmailListViewItem::new)
-                        .collect(Collectors.toList())
-        );
+//        observableEmailList.setAll(emails.stream()
+//                        .map(email -> (new EmailListViewItem(email)))
+//                        .collect(Collectors.toList())
+//        );
     }
 
     /**
@@ -134,16 +139,6 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
     }
 
     /**
-     * Sends an event when a different email is selected.
-     * @param evt
-     */
-    public void onItemChanged(javafx.event.Event evt) {
-        EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(
-                EventType.SELECTED_EMAIL, this.emailListListView.getSelectionModel().getSelectedItem().getEmail()
-        ));
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -155,7 +150,7 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
 
     private void handleEvent(IEvent evt){
         switch (evt.getType()) {
-            case FETCH_EMAIL:
+            case FETCHED_EMAIL:
                 fetchEmail((IEmail) evt.getValue());
                 break;
             case SEARCH:
@@ -164,7 +159,7 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
             case CLEAR_EMAILS:
                 clearEmails();
                 break;
-            case SELECTED_TAG:
+            case SELECT_TAG:
                 if(evt.getValue() != null) {
                     replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith((ITag) evt.getValue())));
                 } else {
@@ -172,12 +167,5 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
                 }
                 break;
         }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_EMAIL,
-                this.emailListListView.getSelectionModel().getSelectedItem().getEmail()));
-        t.stop();
     }
 }

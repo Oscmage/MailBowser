@@ -213,12 +213,12 @@ public class Account implements IAccount {
                 emails.add(email);
                 tagHandler.addTag(email, tag);
 
-                EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAIL, email));
+                EventBus.INSTANCE.publish(new Event(EventType.FETCHED_EMAIL, email));
             }
 
             @Override
             public void onFailure(String msg) {
-                EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS_FAIL, msg));
+                EventBus.INSTANCE.publish(new Event(EventType.FETCHED_ALL_EMAILS_FAILED, msg));
             }
         });
     }

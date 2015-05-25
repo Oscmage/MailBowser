@@ -93,21 +93,16 @@ public class EmailDetailPresenter implements IObserver, Initializable {
 
     private void handleEvent(IEvent evt) {
         switch (evt.getType()) {
-            case SELECTED_EMAIL:
+            case SELECT_EMAIL:
                 this.email = (Email) evt.getValue();
                 updateView();
                 break;
-            case REMOVE_TAG:
+            case REMOVE_TAG_FROM_EMAIL:
                 break;
-            case ADD_TAG:
+            case ADD_TAG_TO_EMAIL:
                 if(email != null) {
                     replaceListViewContent(tagHandler.getTagsWith(this.email));
                 }
-                break;
-            case GUI_REMOVE_TAG:
-                ITag tag = (ITag) evt.getValue();
-                tagHandler.removeTagFromEmail(this.email, tag);
-                updateView();
                 break;
         }
     }

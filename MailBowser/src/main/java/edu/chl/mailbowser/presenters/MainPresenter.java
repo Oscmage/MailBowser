@@ -14,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -24,41 +23,27 @@ import java.util.ResourceBundle;
  * Created by filip on 04/05/15.
  */
 public class MainPresenter implements IObserver, Initializable {
-    @FXML MenuItem addAccountMenuItem;
-    Stage newStage;
-    Stage accountManager;
-    Stage root;
     private IEmail email;
-
+    public Stage root;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
     }
 
-    private Stage getNewCenteredStage(){
+    private void openWindow(Parent scene, String title, double sizeX, double sizeY, double posX, double posY) {
         Stage stage = new Stage();
-        stage.setY(100);
-        stage.setX(100);
-        return stage;
-    }
-
-    private void openAddTagWindow() {
-
+        stage.setScene(new Scene(scene, sizeX, sizeY));
+        stage.setTitle(title);
+        stage.setMinWidth(sizeX);
+        stage.setMinHeight(sizeY);
+        stage.show();
     }
 
     public void openAccountManager() throws IOException {
+        Parent scene = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AccountManager.fxml"));
+        openWindow(scene, "Account Manager", 400, 300, 50, 50);
 
-        Parent fxml = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AccountManager.fxml"));
-
-        accountManager = new Stage();
-        accountManager.setTitle("Account Manager");
-        accountManager.setScene(new Scene(fxml, 400, 300));
-
-        accountManager.setMinWidth(400.0);
-        accountManager.setMinHeight(300.0);
-
-        accountManager.show();
     }
 
     private void openComposeEmailWindow(List<IAddress> recipients, String subject, String content) {
@@ -76,17 +61,7 @@ public class MainPresenter implements IObserver, Initializable {
 
     private void openComposeEmailWindow(String recipients, String subject, String content) {
         ComposeEmailPresenter composeEmailPresenter = new ComposeEmailPresenter(recipients, subject, content);
-
-        // create a new stage
-        Stage newEmailStage = new Stage();
-        newEmailStage.setTitle("New Email...");
-
-        newEmailStage.setY(root.getY() + 50);
-        newEmailStage.setX(root.getX() + 50);
-
-        // add the component to the stage
-        newEmailStage.setScene(new Scene(composeEmailPresenter));
-        newEmailStage.show();
+        openWindow(composeEmailPresenter, "New Email...", 768, 480, 50, 50);
     }
 
     @Override
@@ -101,11 +76,8 @@ public class MainPresenter implements IObserver, Initializable {
             case FXML_LOADED:
                 root = (Stage)evt.getValue();
                 break;
-            case SELECTED_EMAIL:
+            case SELECT_EMAIL:
                 email = (IEmail)evt.getValue();
-                break;
-            case CLOSE_THIS:
-                newStage.close();
                 break;
             case OPEN_COMPOSE_EMAIL_WINDOW:
                 email = (IEmail)evt.getValue();
