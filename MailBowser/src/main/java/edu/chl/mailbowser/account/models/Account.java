@@ -10,6 +10,7 @@ import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.models.Tag;
 
+import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +31,16 @@ public class Account implements IAccount {
 
     private List<IEmail> emails = new ArrayList<>();
 
+    //Keys to encrypt and decrypt password
+    private PrivateKey privatePasswordKey = null;
+    private PublicKey publicPasswordKey = null;
+
     public Account(IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer) {
         address = newAddress;
         password = newPassword;
         incomingServer = newIncomingServer;
         outgoingServer = newOutgoingServer;
+        generateKeys();
     }
 
     /**
@@ -260,5 +266,32 @@ public class Account implements IAccount {
         result = 31 * result + (outgoingServer != null ? outgoingServer.hashCode() : 0);
         result = 31 * result + (emails != null ? emails.hashCode() : 0);
         return result;
+    }
+
+    private void generateKeys(){
+        //Generate keys to encrypt
+        KeyPairGenerator keyPairGenerator = null;
+        KeyPair keyPair;
+        try {
+            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        } catch (NoSuchAlgorithmException e) {
+            //TODO: Handel
+            e.printStackTrace();
+        }
+        if (keyPairGenerator != null) {
+            keyPair = keyPairGenerator.generateKeyPair();
+            privatePasswordKey = keyPair.getPrivate();
+            publicPasswordKey = keyPair.getPublic();
+        }
+    }
+
+    @Override
+    public PrivateKey getPrivatePasswordKey() {
+        return privatePasswordKey;
+    }
+
+    @Override
+    public PublicKey getPublicPasswordKey() {
+        return publicPasswordKey;
     }
 }

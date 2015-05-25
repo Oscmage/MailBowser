@@ -4,6 +4,8 @@ import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 
 import java.io.Serializable;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.List;
 
 /**
@@ -24,4 +26,6 @@ public interface IAccount extends Serializable {
     List<IEmail> getEmails();
     void refetch();
     boolean testConnect();
+    PublicKey getPublicPasswordKey();
+    PrivateKey getPrivatePasswordKey();
 }
