@@ -243,7 +243,7 @@ public class MainPresenter implements IObserver, Initializable {
 
     @FXML
     private void deleteMenuItemOnAction(ActionEvent actionEvent) {
-        EventBus.INSTANCE.publish(new Event(EventType.DELETE_EMAIL, email));
+        EventBus.INSTANCE.publish(new Event(EventType.MARK_EMAIL_AS_DELETED, email));
     }
 
 
