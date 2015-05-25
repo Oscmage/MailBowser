@@ -1,7 +1,7 @@
-package edu.chl.mailbowser.email.views;
+package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.tag.models.ITag;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * Created by filip on 07/05/15.
  */
-public class EmailListViewItem extends FlowPane implements Initializable, Comparable {
+public class EmailListItemPresenter extends FlowPane implements Initializable, Comparable {
 
     private IEmail email;
 
@@ -30,7 +30,7 @@ public class EmailListViewItem extends FlowPane implements Initializable, Compar
     @FXML private Label content;
     @FXML private Label tags;
 
-    public EmailListViewItem() {
+    public EmailListItemPresenter() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EmailListViewItem.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -43,7 +43,7 @@ public class EmailListViewItem extends FlowPane implements Initializable, Compar
 
     }
 
-    public EmailListViewItem(IEmail email) {
+    public EmailListItemPresenter(IEmail email) {
         this();
 
         this.email = email;
@@ -73,16 +73,16 @@ public class EmailListViewItem extends FlowPane implements Initializable, Compar
 
     @Override
     public int compareTo(Object o) {
-        if (o instanceof EmailListViewItem) {
-            EmailListViewItem e = (EmailListViewItem) o;
+        if (o instanceof EmailListItemPresenter) {
+            EmailListItemPresenter e = (EmailListItemPresenter) o;
             return this.getEmail().compareTo(e.getEmail());
         }
         return 0;
     }
     public boolean equals(Object o) {
-        if(o instanceof EmailListViewItem) {
+        if(o instanceof EmailListItemPresenter) {
             return this.email.equals(
-                    ((EmailListViewItem)o).getEmail()
+                    ((EmailListItemPresenter)o).getEmail()
             );
         }
         return false;

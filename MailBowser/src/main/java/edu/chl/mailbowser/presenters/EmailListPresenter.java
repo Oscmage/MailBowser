@@ -2,8 +2,7 @@ package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.IAccountHandler;
-import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.email.views.EmailListViewItem;
+import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
@@ -41,14 +40,14 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
 
     // this list holds all EmailListViewItems. when you add an item to this list, emailListListView will update
     // itself automatically
-    @FXML private ObservableList<EmailListViewItem> observableEmailList = FXCollections.observableArrayList();
+    @FXML private ObservableList<EmailListItemPresenter> observableEmailList = FXCollections.observableArrayList();
 
-    // a wrapper for observableEmailList that automatically sorts the items using the compareTo method in EmailListViewItem
-    @FXML private SortedList<EmailListViewItem> sortedObservableEmailList = new SortedList<>(observableEmailList,
-            Comparator.<EmailListViewItem>naturalOrder());
+    // a wrapper for observableEmailList that automatically sorts the items using the compareTo method in EmailListItemPresenter
+    @FXML private SortedList<EmailListItemPresenter> sortedObservableEmailList = new SortedList<>(observableEmailList,
+            Comparator.<EmailListItemPresenter>naturalOrder());
 
     // OK, do not get frightened. Read it like so: "An email-list ListView."
-    @FXML protected ListView<EmailListViewItem> emailListListView;
+    @FXML protected ListView<EmailListItemPresenter> emailListListView;
 
     // this flag determines whether or not to update the list view when a FETCH_EMAIL event comes in. it is set to
     // false when you search
@@ -74,7 +73,7 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
      */
     private void replaceListViewContent(List<IEmail> emails) {
         observableEmailList.setAll(emails.stream()
-                        .map(EmailListViewItem::new)
+                        .map(EmailListItemPresenter::new)
                         .collect(Collectors.toList())
         );
     }
@@ -85,9 +84,9 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
      * @param email
      */
     private void addEmailToListView(IEmail email) {
-        EmailListViewItem emailListViewItem = new EmailListViewItem(email);
-        if (!observableEmailList.contains(emailListViewItem)) {
-            observableEmailList.addAll(emailListViewItem);
+        EmailListItemPresenter emailListItemPresenter = new EmailListItemPresenter(email);
+        if (!observableEmailList.contains(emailListItemPresenter)) {
+            observableEmailList.addAll(emailListItemPresenter);
         }
     }
 

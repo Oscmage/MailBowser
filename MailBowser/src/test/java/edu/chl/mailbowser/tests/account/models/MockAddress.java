@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.tests.account.models;
 
-import edu.chl.mailbowser.email.models.IAddress;
+import edu.chl.mailbowser.email.IAddress;
 
 import javax.mail.Address;
 

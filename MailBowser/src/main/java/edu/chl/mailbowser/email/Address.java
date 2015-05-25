@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.email.models;
+package edu.chl.mailbowser.email;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;

@@ -2,7 +2,7 @@ package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.IAccountHandler;
-import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;

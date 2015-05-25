@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.tag.handlers;
 
-import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;

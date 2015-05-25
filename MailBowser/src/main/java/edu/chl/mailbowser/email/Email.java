@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.email.models;
+package edu.chl.mailbowser.email;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMessage;
@@ -118,7 +118,7 @@ public class Email implements IEmail {
             javax.mail.Address[] to = message.getRecipients(Message.RecipientType.TO);
             if (to != null) {
                 for (javax.mail.Address recipient : to) {
-                    this.to.add(new Address(recipient));
+                    this.to.add(new edu.chl.mailbowser.email.Address(recipient));
                 }
             }
 
@@ -126,7 +126,7 @@ public class Email implements IEmail {
             javax.mail.Address[] cc = message.getRecipients(Message.RecipientType.CC);
             if (cc != null) {
                 for (javax.mail.Address recipient : cc) {
-                    this.cc.add(new Address(recipient));
+                    this.cc.add(new edu.chl.mailbowser.email.Address(recipient));
                 }
             }
 
@@ -134,14 +134,14 @@ public class Email implements IEmail {
             javax.mail.Address[] bcc = message.getRecipients(Message.RecipientType.BCC);
             if (bcc != null) {
                 for (javax.mail.Address recipient : bcc) {
-                    this.bcc.add(new Address(recipient));
+                    this.bcc.add(new edu.chl.mailbowser.email.Address(recipient));
                 }
             }
 
             // set subject, content and from
             this.subject = message.getSubject();
             this.content = recursiveGetText(message);
-            this.sender = new Address(message.getFrom()[0]);
+            this.sender = new edu.chl.mailbowser.email.Address(message.getFrom()[0]);
 
             // set dates
             this.sentDate = message.getSentDate();

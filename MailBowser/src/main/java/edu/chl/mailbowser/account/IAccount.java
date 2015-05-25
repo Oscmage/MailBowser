@@ -1,7 +1,7 @@
 package edu.chl.mailbowser.account;
 
-import edu.chl.mailbowser.email.models.IAddress;
-import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.email.IAddress;
+import edu.chl.mailbowser.email.IEmail;
 
 import java.io.Serializable;
 import java.util.List;

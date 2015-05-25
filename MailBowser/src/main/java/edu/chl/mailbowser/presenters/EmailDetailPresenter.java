@@ -1,8 +1,8 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.email.models.Email;
-import edu.chl.mailbowser.email.models.IAddress;
+import edu.chl.mailbowser.email.Email;
+import edu.chl.mailbowser.email.IAddress;
 import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.ITag;

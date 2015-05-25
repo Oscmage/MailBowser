@@ -3,7 +3,7 @@ package edu.chl.mailbowser.presenters;
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.IAccountHandler;
 import edu.chl.mailbowser.account.IAccount;
-import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import javafx.application.Platform;

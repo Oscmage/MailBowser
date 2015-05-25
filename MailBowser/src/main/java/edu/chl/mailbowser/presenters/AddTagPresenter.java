@@ -1,15 +1,13 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;

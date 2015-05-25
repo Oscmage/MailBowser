@@ -1,7 +1,7 @@
 package edu.chl.mailbowser.tests.presenters;
 
-import edu.chl.mailbowser.email.models.Address;
-import edu.chl.mailbowser.email.models.IAddress;
+import edu.chl.mailbowser.email.Address;
+import edu.chl.mailbowser.email.IAddress;
 import edu.chl.mailbowser.presenters.ComposeEmailPresenter;
 import org.junit.Test;
 
