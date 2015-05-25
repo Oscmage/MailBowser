@@ -7,6 +7,7 @@ import edu.chl.mailbowser.email.views.EmailListViewItem;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
+import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.search.Searcher;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
@@ -15,7 +16,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
@@ -62,7 +62,11 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
 
         replaceListViewContent(accountHandler.getAllEmails());
 
-        this.emailListListView.getSelectionModel().selectFirst();
+        if(observableEmailList.size() != 0) {
+            this.emailListListView.getSelectionModel().selectFirst();
+            EventBus.INSTANCE.publish(new Event(EventType.SELECTED_EMAIL,
+                    this.emailListListView.getSelectionModel().getSelectedItem().getEmail()));
+        }
 
     }
 
@@ -151,10 +155,6 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
 
     private void handleEvent(IEvent evt){
         switch (evt.getType()) {
-            case EMAILDETAILPRESENTER_READY:
-                IEmail email = this.emailListListView.getSelectionModel().getSelectedItem().getEmail();
-                EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(EventType.SELECTED_EMAIL,email));
-                break;
             case FETCH_EMAIL:
                 fetchEmail((IEmail) evt.getValue());
                 break;
