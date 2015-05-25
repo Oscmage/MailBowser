@@ -2,6 +2,9 @@ package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.Tag;
 import javafx.event.ActionEvent;
@@ -56,7 +59,7 @@ public class AddTagPresenter extends VBox implements Initializable {
     @FXML
     public void tagButtonOnAction(ActionEvent actionEvent) {
         if(!tagTextField.getText().equals("")) {
-            tagHandler.addTag(email, new Tag(tagTextField.getText()));
+            EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG_TO_EMAIL, tagTextField.getText()));
             closeWindow();
         }
     }

@@ -70,7 +70,9 @@ public class EmailListPresenter implements Initializable, IObserver {
         }
 
         emailListListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            EventBus.INSTANCE.publish(new Event(EventType.SELECT_EMAIL, newValue));
+            if(newValue != null) {
+                EventBus.INSTANCE.publish(new Event(EventType.SELECT_EMAIL, newValue.getEmail()));
+            }
         });
 
     }

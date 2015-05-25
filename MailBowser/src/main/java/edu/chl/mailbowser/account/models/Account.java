@@ -211,7 +211,7 @@ public class Account implements IAccount {
                 ITag tag = new Tag(folderName);
 
                 emails.add(email);
-                tagHandler.addTag(email, tag);
+                tagHandler.addTagToEmail(email, tag);
 
                 EventBus.INSTANCE.publish(new Event(EventType.FETCHED_EMAIL, email));
             }

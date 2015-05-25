@@ -5,6 +5,8 @@ import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.*;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
+import edu.chl.mailbowser.tag.models.ITag;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,8 +25,11 @@ import java.util.ResourceBundle;
  * Created by filip on 04/05/15.
  */
 public class MainPresenter implements IObserver, Initializable {
+
+    ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
+
     private IEmail email;
-    public Stage root;
+    private Stage root;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -76,6 +81,10 @@ public class MainPresenter implements IObserver, Initializable {
             case FXML_LOADED:
                 root = (Stage)evt.getValue();
                 break;
+            case ADD_TAG_TO_EMAIL:
+                tagHandler.addTagToEmail(email, (ITag)evt.getValue());
+            case REMOVE_TAG_FROM_EMAIL:
+                tagHandler.removeTagFromEmail(email, (ITag)evt.getValue());
             case SELECT_EMAIL:
                 email = (IEmail)evt.getValue();
                 break;
@@ -97,7 +106,6 @@ public class MainPresenter implements IObserver, Initializable {
                 openComposeEmailWindow("", "Fw: " + email.getSubject(), email.getContent());
                 break;
             case DELETE_EMAIL:
-
         }
     }
 
