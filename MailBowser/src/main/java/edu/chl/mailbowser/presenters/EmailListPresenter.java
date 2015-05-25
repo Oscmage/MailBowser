@@ -82,10 +82,10 @@ public class EmailListPresenter implements Initializable, IObserver {
      * @param emails the new emails to show in the list
      */
     private void replaceListViewContent(List<IEmail> emails) {
-//        observableEmailList.setAll(emails.stream()
-//                        .map(email -> (new EmailListViewItem(email)))
-//                        .collect(Collectors.toList())
-//        );
+        observableEmailList.setAll(emails.stream()
+                        .map(email -> (new EmailListViewItem(email)))
+                        .collect(Collectors.toList())
+        );
     }
 
     /**

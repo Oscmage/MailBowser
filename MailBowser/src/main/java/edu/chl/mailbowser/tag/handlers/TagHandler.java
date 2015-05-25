@@ -51,7 +51,7 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public Set<IEmail> getEmailsWith(ITag tag){
-        if(!mapFromTagsToEmails.get(tag).isEmpty()) {
+        if(mapFromTagsToEmails.get(tag) != null) {
             return new HashSet<>(mapFromTagsToEmails.get(tag));
         }
         return new HashSet<>();
@@ -64,7 +64,7 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public Set<ITag> getTagsWith(IEmail email){
-        if(!mapFromEmailsToTags.get(email).isEmpty()) {
+        if(mapFromEmailsToTags.get(email) != null) {
             return new HashSet<>(mapFromEmailsToTags.get(email));
         }
         return new HashSet<>();
