@@ -3,7 +3,6 @@ package edu.chl.mailbowser.presenters;
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -12,9 +11,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -24,27 +23,63 @@ import java.util.ResourceBundle;
  * Created by filip on 04/05/15.
  */
 public class MainPresenter implements IObserver, Initializable {
-    @FXML MenuItem addAccountMenuItem;
+
+
+    @FXML private MenuItem deleteMenuItem;
+    @FXML private MenuItem addTagMenuItem;
+    @FXML private MenuItem forwardMenuItem;
+    @FXML private MenuItem replyMenuItem;
+    @FXML private MenuItem replyAllMenuItem;
+    @FXML private MenuItem fetchMenuItem;
+    @FXML private MenuItem refetchMenuItem;
     Stage newStage;
     Stage accountManager;
     Stage root;
+
     private IEmail email;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
+        showOrHideMenuOptions();
     }
 
-    private Stage getNewCenteredStage(){
-        Stage stage = new Stage();
-        stage.setY(100);
-        stage.setX(100);
-        return stage;
+
+    private void showOrHideMenuOptions(){
+        if(MainHandler.INSTANCE.getAccountHandler().getAccounts().size() != 0){
+            if(this.email != null) {
+                enableMenuItemsThatNeedASelectedEmail(false);
+            } else {
+                enableMenuItemsThatNeedASelectedEmail(true);
+            }
+            enableAnyTypeOfFetch(false);
+        } else {
+            enableAnyTypeOfFetch(true);
+            enableMenuItemsThatNeedASelectedEmail(true);
+        }
     }
 
-    private void openAddTagWindow() {
+    /**
+     * Disables or enables the file menu options for:
+     * addTag
+     * forward
+     * reply
+     * replyAll
+     * delete
+     * @param b
+     */
+    private void enableMenuItemsThatNeedASelectedEmail(boolean b){
+        addTagMenuItem.setDisable(b);
+        forwardMenuItem.setDisable(b);
+        replyMenuItem.setDisable(b);
+        replyAllMenuItem.setDisable(b);
+        deleteMenuItem.setDisable(b);
+    }
 
+    private void enableAnyTypeOfFetch(Boolean b) {
+        refetchMenuItem.setDisable(b);
+        fetchMenuItem.setDisable(b);
     }
 
     public void openAccountManager() throws IOException {
@@ -130,6 +165,11 @@ public class MainPresenter implements IObserver, Initializable {
     }
 
     @FXML
+    private void fetchMenuItemOnAction(ActionEvent actionEvent) {
+        MainHandler.INSTANCE.getAccountHandler().initFetchingFromAllAccounts();
+    }
+
+    @FXML
     private void refetchMenuItemOnAction(ActionEvent actionEvent) {
         MainHandler.INSTANCE.getAccountHandler().initRefetchingFromAllAccounts();
     }
@@ -141,6 +181,7 @@ public class MainPresenter implements IObserver, Initializable {
 
     @FXML
     private void addTagMenuItemOnAction(ActionEvent actionEvent) {
+        //TODO solve when events refactoring handled.
     }
 
     @FXML
@@ -157,6 +198,18 @@ public class MainPresenter implements IObserver, Initializable {
     }
     @FXML
     private void closeMenuItemOnAction(ActionEvent actionEvent) {
-        //TODO close everything
+        Platform.exit();
     }
+
+    @FXML
+    private void openContactBookMenuItemOnAction(ActionEvent actionEvent) {
+        //TODO solve when events refactoring handled.
+    }
+
+    @FXML
+    private void deleteMenuItemOnAction(ActionEvent actionEvent) {
+        EventBus.INSTANCE.publish(new Event(EventType.DELETE_EMAIL, email));
+    }
+
+
 }
