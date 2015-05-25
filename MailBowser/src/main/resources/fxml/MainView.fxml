@@ -12,16 +12,19 @@
                 <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
                     <items>
                         <MenuItem fx:id="accountMenuItem" mnemonicParsing="false" onAction="#openAccountManager" text="Accounts..." />
-                  <MenuItem fx:id="newEmailMenuItem" mnemonicParsing="false" onAction="#newEmailMenuItemOnAction" text="New Email">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="N" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
+                  <MenuItem fx:id="openContactBookMenuItem" mnemonicParsing="false" onAction="#openContactBookMenuItemOnAction" text="Open contact book..." />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="addTagMenuItem" mnemonicParsing="false" onAction="#addTagMenuItemOnAction" text="Add Tag" />
+                  <MenuItem fx:id="fetchMenuItem" mnemonicParsing="false" onAction="#fetchMenuItemOnAction" text="Fetch" />
                   <MenuItem fx:id="forwardMenuItem" mnemonicParsing="false" onAction="#forwardMenuItemOnAction" text="Forward">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="F" control="UP" meta="DOWN" shift="DOWN" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem fx:id="fetchMenuItem" mnemonicParsing="false" onAction="#fetchMenuItemOnAction" text="Fetch" />
+                  <MenuItem fx:id="newEmailMenuItem" mnemonicParsing="false" onAction="#newEmailMenuItemOnAction" text="New Email">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                        <MenuItem fx:id="refetchMenuItem" mnemonicParsing="false" onAction="#refetchMenuItemOnAction" text="Refetch" />
                   <MenuItem fx:id="replyMenuItem" mnemonicParsing="false" onAction="#replyMenuItemOnAction" text="Reply">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="R" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
@@ -30,8 +33,7 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="R" control="UP" meta="DOWN" shift="DOWN" shortcut="UP" />
                      </accelerator></MenuItem>
-                        <MenuItem fx:id="refetchMenuItem" mnemonicParsing="false" onAction="#refetchMenuItemOnAction" text="Refetch" />
-                  <MenuItem fx:id="openContactBookMenuItem" mnemonicParsing="false" onAction="#openContactBookMenuItemOnAction" text="Open contact book..." />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeMenuItemOnAction" text="Quit MailBowser">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Q" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
