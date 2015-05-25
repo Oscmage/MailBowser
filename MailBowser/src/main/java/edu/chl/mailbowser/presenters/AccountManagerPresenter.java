@@ -37,9 +37,6 @@ public class AccountManagerPresenter implements Initializable, IObserver {
     }
     private Mode currentMode;
 
-    private EditAccountPresenter editAccountView;
-    private AddAccountPresenter addAccountView;
-
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
 
     @FXML private ListView<IAccount> accountsList;
@@ -116,11 +113,14 @@ public class AccountManagerPresenter implements Initializable, IObserver {
     protected void saveAccountButtonOnAction(ActionEvent actionEvent) {
         switch (currentMode) {
             case ADD:
-                IAccount account = addAccountView.createAccount();
+                AddAccountPresenter addAccountPresenter = (AddAccountPresenter) accountForm.getContent();
+                IAccount account = addAccountPresenter.createAccount();
                 accountHandler.addAccount(account);
                 break;
             case EDIT:
-                editAccountView.updateAccountInfo();
+                EditAccountPresenter editAccountPresenter = (EditAccountPresenter) accountForm.getContent();
+                editAccountPresenter.updateAccountInfo();
+                editAccountPresenter.updateAccountInfo();
                 break;
         }
     }
