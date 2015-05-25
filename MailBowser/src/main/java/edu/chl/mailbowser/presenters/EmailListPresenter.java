@@ -137,7 +137,7 @@ public class EmailListPresenter implements Initializable, IObserver, ActionListe
      * Sends an event when a different email is selected.
      * @param evt
      */
-    public void onItemChanged(Event evt) {
+    public void onItemChanged(javafx.event.Event evt) {
         EventBus.INSTANCE.publish(new edu.chl.mailbowser.event.Event(
                 EventType.SELECTED_EMAIL, this.emailListListView.getSelectionModel().getSelectedItem().getEmail()
         ));
