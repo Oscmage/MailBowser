@@ -11,7 +11,7 @@ import java.util.TreeSet;
  */
 public class ContactBook implements IContactBook{
 
-    private Set<IContact> contacts = new TreeSet<IContact>();
+    private Set<IContact> contacts = new TreeSet<>();
 
     @Override
     public void addContact(IContact contact) {
