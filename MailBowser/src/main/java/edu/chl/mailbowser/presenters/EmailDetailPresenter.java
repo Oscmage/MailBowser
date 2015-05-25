@@ -53,7 +53,6 @@ public class EmailDetailPresenter implements IObserver, Initializable {
         EventBus.INSTANCE.register(this);
         tagListView.setItems(observableTagList);
         emailDetail.setOpacity(0.5);
-        EventBus.INSTANCE.publish(new Event(EventType.EMAILDETAILPRESENTER_READY,new Object()));
     }
 
     private void updateView() {
