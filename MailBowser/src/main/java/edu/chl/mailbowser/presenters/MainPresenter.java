@@ -46,17 +46,26 @@ public class MainPresenter implements IObserver, Initializable {
     }
 
 
+    /**
+     * Displays or hides the menu options in file/edit depending on whether an account and email exists.
+     *
+     * If an account doesn't exist disableAnyTypeOfFetch and
+     * DisableMenuItemsThatNeedASelectedEmail both with the boolean value true.
+     *
+     * If an account exists fetch is enabled.
+     * If also there's a email selected disableMenuItemsThatNeedASelectedEmail is set to false otherwise true.
+     */
     private void showOrHideMenuOptions(){
-        if(MainHandler.INSTANCE.getAccountHandler().getAccounts().size() != 0){
-            if(this.email != null) {
-                enableMenuItemsThatNeedASelectedEmail(false);
+        if(MainHandler.INSTANCE.getAccountHandler().getAccounts().size() != 0){ // If atleast one account exists
+            if(this.email != null) { // If there's an email currently selected
+                disableMenuItemsThatNeedASelectedEmail(false); //Disable forward, reply etc
             } else {
-                enableMenuItemsThatNeedASelectedEmail(true);
+                disableMenuItemsThatNeedASelectedEmail(true); //Enable forward, reply etc.
             }
-            enableAnyTypeOfFetch(false);
+            disableAnyTypeOfFetch(false); //If account exist fetch and refetch should be possible
         } else {
-            enableAnyTypeOfFetch(true);
-            enableMenuItemsThatNeedASelectedEmail(true);
+            disableAnyTypeOfFetch(true);
+            disableMenuItemsThatNeedASelectedEmail(true);
         }
     }
 
@@ -67,9 +76,9 @@ public class MainPresenter implements IObserver, Initializable {
      * reply
      * replyAll
      * delete
-     * @param b
+     * @param b if set true you will disable.
      */
-    private void enableMenuItemsThatNeedASelectedEmail(boolean b){
+    private void disableMenuItemsThatNeedASelectedEmail(boolean b){
         addTagMenuItem.setDisable(b);
         forwardMenuItem.setDisable(b);
         replyMenuItem.setDisable(b);
@@ -77,11 +86,19 @@ public class MainPresenter implements IObserver, Initializable {
         deleteMenuItem.setDisable(b);
     }
 
-    private void enableAnyTypeOfFetch(Boolean b) {
+    /**
+     * Disables any type of fetching if set true.
+     * @param b
+     */
+    private void disableAnyTypeOfFetch(boolean b) {
         refetchMenuItem.setDisable(b);
         fetchMenuItem.setDisable(b);
     }
 
+    /**
+     * Creates a new Account Manager window
+     * @throws IOException
+     */
     public void openAccountManager() throws IOException {
 
         Parent fxml = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AccountManager.fxml"));
@@ -95,6 +112,7 @@ public class MainPresenter implements IObserver, Initializable {
 
         accountManager.show();
     }
+
 
     private void openComposeEmailWindow(List<IAddress> recipients, String subject, String content) {
         String recipientsString = "";
@@ -138,6 +156,10 @@ public class MainPresenter implements IObserver, Initializable {
                 break;
             case SELECTED_EMAIL:
                 email = (IEmail)evt.getValue();
+                showOrHideMenuOptions();
+                break;
+            case ADD_ACCOUNT:
+                showOrHideMenuOptions();
                 break;
             case CLOSE_THIS:
                 newStage.close();
