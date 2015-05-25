@@ -66,17 +66,7 @@ public class TopbarPresenter implements Initializable, IObserver{
 
     @FXML
     public void tagButtonOnAction(ActionEvent actionEvent) {
-        Stage root = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
-        AddTagPresenter addTagPresenter = new AddTagPresenter(email);
-
-        Stage addTagStage = new Stage();
-        addTagStage.setTitle("Add tag...");
-
-        addTagStage.initModality(Modality.APPLICATION_MODAL);
-        addTagStage.initOwner(root);
-
-        addTagStage.setScene(new Scene(addTagPresenter, 300, 200));
-        addTagStage.show();
+        EventBus.INSTANCE.publish(new Event(EventType.OPEN_ADD_TAG_WINDOW, null));
     }
 
     @FXML
@@ -127,7 +117,7 @@ public class TopbarPresenter implements Initializable, IObserver{
 
     private void handleEvent(IEvent event){
         switch (event.getType()) {
-            case SELECTED_EMAIL:
+            case SELECT_EMAIL:
                 this.email = (IEmail) event.getValue();
                 break;
         }
