@@ -1,0 +1,35 @@
+# Meeting Agenda
+
+Date: 2015-05-25
+
+Facilitator: Oscar Evertsson
+
+Participants: Mats Högberg, Oscar Evertsson, Jesper Jaxing, Filip Hallqvist
+  
+## Objectives
+
+* Confirm deadlines and setup goals
+* Report progress
+
+## Reports
+
+* The group created a massive todo-list and worked its way 65% through it. 
+* This includes design, documentation, contact book functionality, security enhancements and overall code improvement.
+* Everyone has also worked on SDD and RAD 
+
+## Discussion items
+
+* Event bus
+* SDD and RAD
+
+## Outcomes and assignments
+
+* We will make sure that the uppermost presenter handles and directs events, and free nested child controllers from responsibility.
+* Everyone will continue crossing items off of the todo-list and work even harder as it's the last week!
+
+### Unsolved issues
+* -
+
+### Next meeting
+
+2015-05-28 09:00-10:00
