@@ -25,7 +25,7 @@
             <children>
                 <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                    <children>
-                       <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sendButtonActionPerformed" prefHeight="40.0" prefWidth="250.0" text="">
+                       <Button fx:id="sendButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sendButtonActionPerformed" prefHeight="40.0" prefWidth="250.0" text="">
                            <cursor>
                                <Cursor fx:constant="HAND" />
                            </cursor>
