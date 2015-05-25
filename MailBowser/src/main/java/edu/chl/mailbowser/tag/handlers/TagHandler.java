@@ -161,7 +161,7 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public boolean writeTags(String filename){
-        IObjectWriter<HashMap> objectReaderWriter = new SecureObjectWriter<>();
+        IObjectWriter<HashMap> objectReaderWriter = new ObjectWriter<>();
         return objectReaderWriter.write((HashMap) mapFromTagsToEmails, filename);
     }
 }
