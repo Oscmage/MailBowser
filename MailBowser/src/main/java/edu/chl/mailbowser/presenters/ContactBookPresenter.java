@@ -4,7 +4,6 @@ import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.contact.Contact;
 import edu.chl.mailbowser.contact.IContact;
 import edu.chl.mailbowser.contact.IContactBook;
-import edu.chl.mailbowser.contact.views.ContactListViewItem;
 import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.email.models.IAddress;
 import javafx.collections.FXCollections;
@@ -17,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 
@@ -31,7 +29,7 @@ import java.util.ResourceBundle;
  * Created by jesper on 2015-05-22.
  */
 public class ContactBookPresenter implements Initializable{
-    @FXML protected ListView<ContactListViewItem> contactList;
+    @FXML protected ListView<ContactListItemPresenter> contactList;
     @FXML protected Button saveButton;
     @FXML protected Button addButton;
     @FXML protected Button deleteButton;
@@ -46,16 +44,16 @@ public class ContactBookPresenter implements Initializable{
 
     private int newAddressIndex = ORIGINAL_INDEX;
 
-    private ObservableList<ContactListViewItem> contactListItems = FXCollections.observableArrayList();
+    private ObservableList<ContactListItemPresenter> contactListItems = FXCollections.observableArrayList();
 
     private IContactBook contactBook = MainHandler.INSTANCE.getContactBook();
-    private ContactListViewItem selectedContact;
+    private ContactListItemPresenter selectedContact;
 
     @FXML
     public void addContactButtonOnAction(ActionEvent actionEvent) {
         IContact newContact = new Contact();
         contactBook.addContact(newContact);
-        contactListItems.add(new ContactListViewItem(newContact));
+        contactListItems.add(new ContactListItemPresenter(newContact));
     }
 
     public void deleteButtonOnAction(ActionEvent actionEvent) {

@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.contact.views;
+package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.contact.Contact;
 import edu.chl.mailbowser.contact.IContact;
@@ -14,13 +14,15 @@ import java.util.ResourceBundle;
 
 /**
  * Created by jesper on 2015-05-22.
+ *
+ * ContactListItemPresenter
  */
-public class ContactListViewItem extends FlowPane{
+public class ContactListItemPresenter extends FlowPane{
     @FXML private Label nameLabel;
 
     private IContact contact;
 
-    public ContactListViewItem (IContact contact){
+    public ContactListItemPresenter(IContact contact){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ContactListViewItem.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
