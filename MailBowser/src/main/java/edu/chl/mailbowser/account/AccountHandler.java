@@ -1,6 +1,5 @@
-package edu.chl.mailbowser.account.handlers;
+package edu.chl.mailbowser.account;
 
-import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;

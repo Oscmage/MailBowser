@@ -1,14 +1,13 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.account.models.IAccount;
-import edu.chl.mailbowser.account.models.IncomingServer;
-import edu.chl.mailbowser.account.models.OutgoingServer;
+import edu.chl.mailbowser.account.IAccount;
+import edu.chl.mailbowser.account.IncomingServer;
+import edu.chl.mailbowser.account.OutgoingServer;
 import edu.chl.mailbowser.email.models.Address;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;

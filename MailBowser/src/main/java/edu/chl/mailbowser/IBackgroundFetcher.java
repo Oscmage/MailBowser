@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.account;
+package edu.chl.mailbowser;
 
 /**
  * Created by jesper on 21/05/15.

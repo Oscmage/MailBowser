@@ -1,7 +1,9 @@
-package edu.chl.mailbowser.account.models;
+package edu.chl.mailbowser.account;
 
 import edu.chl.mailbowser.email.models.Email;
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.utils.Callback;
+import edu.chl.mailbowser.utils.Pair;
 
 import javax.mail.*;
 import javax.mail.search.FlagTerm;

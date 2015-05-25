@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.account.models;
+package edu.chl.mailbowser.utils;
 
 /**
  * Created by mats on 07/05/15.

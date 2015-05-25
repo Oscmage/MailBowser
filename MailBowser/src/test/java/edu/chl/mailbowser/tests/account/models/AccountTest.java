@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.tests.account.models;
 
-import edu.chl.mailbowser.account.models.Account;
+import edu.chl.mailbowser.account.Account;
 import org.junit.Before;
 import org.junit.Test;
 

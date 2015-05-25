@@ -1,6 +1,8 @@
-package edu.chl.mailbowser.account.models;
+package edu.chl.mailbowser.account;
 
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.utils.Callback;
+import edu.chl.mailbowser.utils.Pair;
 
 import java.io.Serializable;
 

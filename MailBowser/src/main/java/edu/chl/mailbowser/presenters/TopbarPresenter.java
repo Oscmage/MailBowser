@@ -1,8 +1,8 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.account.handlers.IAccountHandler;
-import edu.chl.mailbowser.account.models.IAccount;
+import edu.chl.mailbowser.account.IAccountHandler;
+import edu.chl.mailbowser.account.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;

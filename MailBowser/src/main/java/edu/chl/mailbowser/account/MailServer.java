@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.account.models;
+package edu.chl.mailbowser.account;
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
-package edu.chl.mailbowser.account;
+package edu.chl.mailbowser;
 
-import edu.chl.mailbowser.account.handlers.IAccountHandler;
+import edu.chl.mailbowser.account.IAccountHandler;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -11,8 +11,7 @@ import java.util.TimerTask;
  * A concrete implementation of IBackgroundFetcher.
  */
 public class BackgroundFetcher implements IBackgroundFetcher {
-    private final int FETCH_INTERVAL = 30000;
-
+    private int fetchInterval;
     private IAccountHandler accountHandler;
     private Timer timer = new Timer(true);
 
@@ -20,9 +19,11 @@ public class BackgroundFetcher implements IBackgroundFetcher {
      * Creates a new background fetcher with a specified account handler.
      * On every timer interval initFetchingFromAllAccounts() gets called on the supplied account handler.
      *
+     * @param fetchInterval the number of milliseconds to wait between each fetch
      * @param accountHandler the account handler to use
      */
-    public BackgroundFetcher(IAccountHandler accountHandler) {
+    public BackgroundFetcher(int fetchInterval, IAccountHandler accountHandler) {
+        this.fetchInterval = fetchInterval;
         this.accountHandler = accountHandler;
     }
 
@@ -32,7 +33,7 @@ public class BackgroundFetcher implements IBackgroundFetcher {
     @Override
     public void start() {
         System.out.println("BackgroundFetcher: start()");
-        timer.schedule(new FetchTask(), 0, FETCH_INTERVAL);
+        timer.schedule(new FetchTask(), 0, fetchInterval);
     }
 
     /**

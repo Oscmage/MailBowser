@@ -1,7 +1,7 @@
 package edu.chl.mailbowser.tests.account.models;
 
-import edu.chl.mailbowser.account.models.Callback;
-import edu.chl.mailbowser.account.models.IOutgoingServer;
+import edu.chl.mailbowser.utils.Callback;
+import edu.chl.mailbowser.account.IOutgoingServer;
 import edu.chl.mailbowser.email.models.IEmail;
 
 /**

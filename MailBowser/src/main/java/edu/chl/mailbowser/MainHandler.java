@@ -1,9 +1,7 @@
 package edu.chl.mailbowser;
 
-import edu.chl.mailbowser.account.BackgroundFetcher;
-import edu.chl.mailbowser.account.IBackgroundFetcher;
-import edu.chl.mailbowser.account.handlers.AccountHandler;
-import edu.chl.mailbowser.account.handlers.IAccountHandler;
+import edu.chl.mailbowser.account.AccountHandler;
+import edu.chl.mailbowser.account.IAccountHandler;
 import edu.chl.mailbowser.contact.ContactBook;
 import edu.chl.mailbowser.contact.IContactBook;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
@@ -15,10 +13,12 @@ import edu.chl.mailbowser.tag.handlers.TagHandler;
 public enum MainHandler {
     INSTANCE;
 
+    private static final int FETCH_INTERVAL = 30000;
+
     private ITagHandler tagHandler = new TagHandler();
     private IAccountHandler accountHandler = new AccountHandler();
     private IContactBook contactBook = new ContactBook();
-    private IBackgroundFetcher backgroundFetching = new BackgroundFetcher(accountHandler);
+    private IBackgroundFetcher backgroundFetcher = new BackgroundFetcher(FETCH_INTERVAL, accountHandler);
 
     public ITagHandler getTagHandler(){
         return this.tagHandler;
@@ -32,7 +32,7 @@ public enum MainHandler {
         return this.contactBook;
     }
 
-    public IBackgroundFetcher getBackgroundFetching() {
-        return this.backgroundFetching;
+    public IBackgroundFetcher getBackgroundFetcher() {
+        return this.backgroundFetcher;
     }
 }

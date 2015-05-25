@@ -1,7 +1,7 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.account.handlers.IAccountHandler;
+import edu.chl.mailbowser.account.IAccountHandler;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
@@ -20,7 +20,6 @@ import javafx.scene.control.ListView;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 

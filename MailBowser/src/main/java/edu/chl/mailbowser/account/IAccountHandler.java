@@ -1,6 +1,6 @@
-package edu.chl.mailbowser.account.handlers;
+package edu.chl.mailbowser.account;
 
-import edu.chl.mailbowser.account.models.IAccount;
+import edu.chl.mailbowser.account.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
 
 import java.util.List;

@@ -1,8 +1,7 @@
 package edu.chl.mailbowser;
 
 
-import edu.chl.mailbowser.account.IBackgroundFetcher;
-import edu.chl.mailbowser.account.handlers.IAccountHandler;
+import edu.chl.mailbowser.account.IAccountHandler;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
@@ -18,7 +17,7 @@ public class Main extends Application {
 
     private static ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
     private static IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
-    private static IBackgroundFetcher backgroundFetching = MainHandler.INSTANCE.getBackgroundFetching();
+    private static IBackgroundFetcher backgroundFetcher = MainHandler.INSTANCE.getBackgroundFetcher();
 
     @Override
     public void start(Stage mainStage) throws Exception {
@@ -46,10 +45,10 @@ public class Main extends Application {
     public static void main(String[] args) {
         // load serialized objects from disk
         load();
-        backgroundFetching.start();
+        backgroundFetcher.start();
         // used to launch a JavaFX application
         launch(args);
-        backgroundFetching.stop();
+        backgroundFetcher.stop();
         // save serializable objects to disk
         save();
     }
