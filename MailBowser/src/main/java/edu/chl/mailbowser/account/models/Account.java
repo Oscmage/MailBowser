@@ -9,6 +9,7 @@ import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.models.Tag;
+import edu.chl.mailbowser.utils.Crypto;
 
 import java.security.*;
 import java.util.ArrayList;
@@ -24,23 +25,21 @@ public class Account implements IAccount {
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
     private IAddress address;
-    private String password;
+
+    private static final String KEY = "%*tR7sfa";
+    private byte[] password;
 
     private IIncomingServer incomingServer;
     private IOutgoingServer outgoingServer;
 
     private List<IEmail> emails = new ArrayList<>();
 
-    //Keys to encrypt and decrypt password
-    private PrivateKey privatePasswordKey = null;
-    private PublicKey publicPasswordKey = null;
 
     public Account(IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer) {
         address = newAddress;
-        password = newPassword;
+        setPassword(newPassword);
         incomingServer = newIncomingServer;
         outgoingServer = newOutgoingServer;
-        generateKeys();
     }
 
     /**
@@ -71,7 +70,7 @@ public class Account implements IAccount {
      */
     @Override
     public void setPassword(String password) {
-        this.password = password;
+        this.password = Crypto.encryptString(password, KEY);
     }
 
     /**
@@ -79,7 +78,7 @@ public class Account implements IAccount {
      */
     @Override
     public String getPassword() {
-        return password;
+        return Crypto.decryptByteArray(password, KEY);
     }
 
     /**
@@ -158,7 +157,7 @@ public class Account implements IAccount {
     @Override
     public void send(IEmail email) {
         email.setSender(address);
-        outgoingServer.send(email, getUsername(), password, new Callback<IEmail>() {
+        outgoingServer.send(email, getUsername(), getPassword(), new Callback<IEmail>() {
             @Override
             public void onSuccess(IEmail object) {
                 EventBus.INSTANCE.publish(new Event(EventType.SEND_EMAIL, object));
@@ -208,7 +207,7 @@ public class Account implements IAccount {
      *                   will be fetched
      */
     private void initFetch(boolean cleanFetch) {
-        incomingServer.fetch(getUsername(), password, cleanFetch, new Callback<Pair<IEmail, String>>() {
+        incomingServer.fetch(getUsername(), getPassword(), cleanFetch, new Callback<Pair<IEmail, String>>() {
             @Override
             public void onSuccess(Pair<IEmail, String> object) {
                 IEmail email = object.getFirst();
@@ -268,30 +267,5 @@ public class Account implements IAccount {
         return result;
     }
 
-    private void generateKeys(){
-        //Generate keys to encrypt
-        KeyPairGenerator keyPairGenerator = null;
-        KeyPair keyPair;
-        try {
-            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        } catch (NoSuchAlgorithmException e) {
-            //TODO: Handel
-            e.printStackTrace();
-        }
-        if (keyPairGenerator != null) {
-            keyPair = keyPairGenerator.generateKeyPair();
-            privatePasswordKey = keyPair.getPrivate();
-            publicPasswordKey = keyPair.getPublic();
-        }
-    }
 
-    @Override
-    public PrivateKey getPrivatePasswordKey() {
-        return privatePasswordKey;
-    }
-
-    @Override
-    public PublicKey getPublicPasswordKey() {
-        return publicPasswordKey;
-    }
 }

@@ -26,6 +26,4 @@ public interface IAccount extends Serializable {
     List<IEmail> getEmails();
     void refetch();
     boolean testConnect();
-    PublicKey getPublicPasswordKey();
-    PrivateKey getPrivatePasswordKey();
 }
