@@ -37,12 +37,12 @@ public class Crypto {
 
         try {
             Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, key);
+            cipher.init(Cipher.DECRYPT_MODE, key);
             return new String(cipher.doFinal(byteArray));
         } catch (IllegalBlockSizeException | InvalidKeyException |
                 BadPaddingException | NoSuchAlgorithmException |
                 NoSuchPaddingException e) {
-            throw new IllegalArgumentException(e.getCause());
+            throw new IllegalArgumentException(e);
         }
     }
 }

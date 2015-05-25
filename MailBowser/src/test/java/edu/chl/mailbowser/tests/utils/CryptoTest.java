@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 public class CryptoTest {
 
     @Test
-    public void testEncryptDecrypt() throws Exception {
+    public void testDecryptEncryptDecrypt() throws Exception {
         String key = "12345678";
         String testText = "Hej";
         byte[] encrypted = Crypto.encryptString(testText, key);
@@ -16,5 +16,4 @@ public class CryptoTest {
         assertEquals(testText,result);
 
     }
-
 }
