@@ -21,9 +21,6 @@ import java.util.stream.Collectors;
 
 public class TopbarPresenter implements Initializable, IObserver{
 
-    private IEmail email;
-    private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
-
     @FXML protected TextField addTagTextField;
     @FXML protected TextField searchField;
 
@@ -62,46 +59,44 @@ public class TopbarPresenter implements Initializable, IObserver{
     }
 
     @FXML
-    private void searchFieldOnAction(ActionEvent actionEvent) {
+    protected void searchFieldOnAction(ActionEvent actionEvent) {
         String text = searchField.getText();
         EventBus.INSTANCE.publish(new Event(EventType.SEARCH, text));
     }
 
     @FXML
-    private void fetchButtonOnAction(ActionEvent actionEvent) {
-        for(IAccount account : accountHandler.getAccounts()) {
-            account.fetch();
-        }
+    protected void fetchButtonOnAction(ActionEvent actionEvent) {
+        EventBus.INSTANCE.publish(new Event(EventType.FETCH_ALL_EMAILS, null));
     }
 
     @FXML
-    private void newButtonOnAction(ActionEvent actionEvent) {
+    protected void newButtonOnAction(ActionEvent actionEvent) {
         EventBus.INSTANCE.publish(new Event(EventType.OPEN_COMPOSE_EMAIL_WINDOW, null));
     }
 
     @FXML
-    private void forwardButtonOnAction(ActionEvent actionEvent) {
-        EventBus.INSTANCE.publish(new Event(EventType.OPEN_COMPOSE_EMAIL_WINDOW_FORWARD, email));
+    protected void forwardButtonOnAction(ActionEvent actionEvent) {
+        EventBus.INSTANCE.publish(new Event(EventType.OPEN_COMPOSE_EMAIL_WINDOW_FORWARD, null));
     }
 
     @FXML
-    private void replyButtonOnAction(ActionEvent actionEvent) {
-        EventBus.INSTANCE.publish(new Event(EventType.OPEN_COMPOSE_EMAIL_WINDOW_REPLY, email));
+    protected void replyButtonOnAction(ActionEvent actionEvent) {
+        EventBus.INSTANCE.publish(new Event(EventType.OPEN_COMPOSE_EMAIL_WINDOW_REPLY, null));
     }
 
     @FXML
-    private void replyAllButtonOnAction(ActionEvent actionEvent) {
-        EventBus.INSTANCE.publish(new Event(EventType.OPEN_COMPOSE_EMAIL_WINDOW_REPLY_ALL, email));
+    protected void replyAllButtonOnAction(ActionEvent actionEvent) {
+        EventBus.INSTANCE.publish(new Event(EventType.OPEN_COMPOSE_EMAIL_WINDOW_REPLY_ALL, null));
     }
 
     @FXML
-    private void deleteButtonOnAction(ActionEvent actionEvent) {
-        EventBus.INSTANCE.publish(new Event(EventType.MARK_EMAIL_AS_DELETED, email));
+    protected void deleteButtonOnAction(ActionEvent actionEvent) {
+        EventBus.INSTANCE.publish(new Event(EventType.MARK_EMAIL_AS_DELETED, null));
     }
 
     @FXML
-    public void openContactBookButtonOnAction(ActionEvent actionEvent) {
-        EventBus.INSTANCE.publish(new Event(EventType.OPEN_CONTACT_BOOK, email));
+    protected void openContactBookButtonOnAction(ActionEvent actionEvent) {
+        EventBus.INSTANCE.publish(new Event(EventType.OPEN_CONTACT_BOOK, null));
     }
 
     @Override
