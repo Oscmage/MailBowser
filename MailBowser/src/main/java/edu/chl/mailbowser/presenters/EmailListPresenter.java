@@ -2,6 +2,7 @@ package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.handlers.IAccountHandler;
+import edu.chl.mailbowser.account.models.Pair;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.email.views.EmailListViewItem;
 import edu.chl.mailbowser.event.EventBus;
@@ -26,10 +27,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -157,6 +155,10 @@ public class EmailListPresenter implements Initializable, IObserver {
                 break;
             case SEARCH:
                 search((String) evt.getValue());
+                break;
+            case REMOVED_TAG_FROM_EMAIL:
+                Pair<IEmail, ITag> pair = (Pair<IEmail, ITag>)evt.getValue();
+                replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith(pair.getSecond())));
                 break;
             case CLEAR_EMAILS:
                 clearEmails();

@@ -95,6 +95,9 @@ public class SidebarPresenter implements IObserver, Initializable {
             case ADDED_TAG_TO_EMAIL:
                 updateView(tagHandler.getTags());
                 break;
+            case REMOVED_TAG_FROM_EMAIL:
+                updateView(tagHandler.getTags());
+                break;
             case DELETED_TAG:
                 updateView(tagHandler.getTags());
                 break;

@@ -1,12 +1,14 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
+import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
+import edu.chl.mailbowser.tag.models.Tag;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,6 +30,7 @@ import java.util.ResourceBundle;
 public class MainPresenter implements IObserver, Initializable {
 
     ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
+    IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
 
     private IEmail email;
     private Stage root;
@@ -36,18 +40,26 @@ public class MainPresenter implements IObserver, Initializable {
         EventBus.INSTANCE.register(this);
     }
 
-    private void openWindow(Parent scene, String title, double sizeX, double sizeY, double posX, double posY) {
+    private void openWindow(Parent scene, String title, double sizeX, double sizeY, double posX, double posY, boolean isModal) {
         Stage stage = new Stage();
         stage.setScene(new Scene(scene, sizeX, sizeY));
         stage.setTitle(title);
         stage.setMinWidth(sizeX);
         stage.setMinHeight(sizeY);
+        if(isModal) {
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(root);
+        }
         stage.show();
+    }
+
+    private void openAddTagWindow() {
+        openWindow(new AddTagPresenter(), "Add tag...", 200, 100, 100, 100, true);
     }
 
     public void openAccountManager() throws IOException {
         Parent scene = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AccountManager.fxml"));
-        openWindow(scene, "Account Manager", 400, 300, 50, 50);
+        openWindow(scene, "Account Manager", 400, 300, 50, 50, false);
 
     }
 
@@ -66,7 +78,7 @@ public class MainPresenter implements IObserver, Initializable {
 
     private void openComposeEmailWindow(String recipients, String subject, String content) {
         ComposeEmailPresenter composeEmailPresenter = new ComposeEmailPresenter(recipients, subject, content);
-        openWindow(composeEmailPresenter, "New Email...", 768, 480, 50, 50);
+        openWindow(composeEmailPresenter, "New Email...", 768, 480, 50, 50, false);
     }
 
     @Override
@@ -85,7 +97,7 @@ public class MainPresenter implements IObserver, Initializable {
                 tagHandler.addTagToEmail(email, (ITag)evt.getValue());
                 break;
             case REMOVE_TAG_FROM_EMAIL:
-                tagHandler.removeTagFromEmail(email, (ITag)evt.getValue());
+                tagHandler.removeTagFromEmail(email, (ITag) evt.getValue());
                 break;
             case SELECT_EMAIL:
                 email = (IEmail)evt.getValue();
@@ -107,7 +119,12 @@ public class MainPresenter implements IObserver, Initializable {
                 email = (IEmail)evt.getValue();
                 openComposeEmailWindow("", "Fw: " + email.getSubject(), email.getContent());
                 break;
+            case OPEN_ADD_TAG_WINDOW:
+                openAddTagWindow();
             case DELETE_EMAIL:
+                tagHandler.getTagsWith(email).stream().forEach(t -> tagHandler.removeTagFromEmail(email, t));
+                tagHandler.addTagToEmail(email, new Tag("Deleted"));
+                break;
         }
     }
 
