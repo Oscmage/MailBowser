@@ -1,16 +1,12 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.contact.Contact;
 import edu.chl.mailbowser.contact.IContact;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * Created by jesper on 2015-05-22.
