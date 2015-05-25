@@ -59,7 +59,7 @@ public class AddTagPresenter extends VBox implements Initializable {
     @FXML
     public void tagButtonOnAction(ActionEvent actionEvent) {
         if(!tagTextField.getText().equals("")) {
-            EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG_TO_EMAIL, tagTextField.getText()));
+            EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG_TO_EMAIL, new Tag(tagTextField.getText())));
             closeWindow();
         }
     }

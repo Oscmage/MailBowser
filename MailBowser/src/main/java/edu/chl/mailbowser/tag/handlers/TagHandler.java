@@ -103,7 +103,7 @@ public class TagHandler implements ITagHandler{
             }
         }
 
-        EventBus.INSTANCE.publish(new Event(EventType.REMOVE_TAG_FROM_EMAIL,tag));
+        EventBus.INSTANCE.publish(new Event(EventType.REMOVED_TAG_FROM_EMAIL, new Pair<>(email, tag)));
     }
 
     /**

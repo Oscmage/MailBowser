@@ -91,14 +91,17 @@ public class EmailDetailPresenter implements IObserver, Initializable {
     }
 
     private void handleEvent(IEvent evt) {
+        IEmail email;
         switch (evt.getType()) {
             case SELECT_EMAIL:
                 updateView((IEmail)evt.getValue());
                 break;
-            case REMOVE_TAG_FROM_EMAIL:
+            case REMOVED_TAG_FROM_EMAIL:
+                email = (IEmail)((Pair)evt.getValue()).getFirst();
+                updateView(email);
                 break;
             case ADDED_TAG_TO_EMAIL:
-                IEmail email = (IEmail)((Pair)evt.getValue()).getFirst();
+                email = (IEmail)((Pair)evt.getValue()).getFirst();
                 updateView(email);
                 break;
         }

@@ -83,8 +83,10 @@ public class MainPresenter implements IObserver, Initializable {
                 break;
             case ADD_TAG_TO_EMAIL:
                 tagHandler.addTagToEmail(email, (ITag)evt.getValue());
+                break;
             case REMOVE_TAG_FROM_EMAIL:
                 tagHandler.removeTagFromEmail(email, (ITag)evt.getValue());
+                break;
             case SELECT_EMAIL:
                 email = (IEmail)evt.getValue();
                 break;
