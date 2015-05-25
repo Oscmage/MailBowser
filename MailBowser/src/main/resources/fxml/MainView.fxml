@@ -21,6 +21,7 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="F" control="UP" meta="DOWN" shift="DOWN" shortcut="UP" />
                      </accelerator></MenuItem>
+                  <MenuItem fx:id="fetchMenuItem" mnemonicParsing="false" onAction="#fetchMenuItemOnAction" text="Fetch" />
                   <MenuItem fx:id="replyMenuItem" mnemonicParsing="false" onAction="#replyMenuItemOnAction" text="Reply">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="R" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
@@ -39,7 +40,10 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false" onAction="#deleteMenuItemOnAction" text="Delete">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="D" control="UP" meta="DOWN" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
