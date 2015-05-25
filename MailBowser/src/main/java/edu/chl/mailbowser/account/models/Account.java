@@ -156,6 +156,7 @@ public class Account implements IAccount {
             @Override
             public void onSuccess(IEmail object) {
                 EventBus.INSTANCE.publish(new Event(EventType.SEND_EMAIL, object));
+                fetch();
             }
 
             @Override
