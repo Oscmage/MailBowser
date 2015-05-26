@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.tests.account.models;
+package edu.chl.mailbowser.tests.account;
 
 import edu.chl.mailbowser.email.IAddress;
 import edu.chl.mailbowser.email.IEmail;
@@ -12,7 +12,7 @@ import java.util.List;
  * Created by jesper on 2015-05-12.
  */
 public class MockEmail implements IEmail {
-    public boolean setSender = false;
+    public boolean setSenderCalled = false;
 
     @Override
     public Message getJavaMailMessage(Session session) {
@@ -66,7 +66,7 @@ public class MockEmail implements IEmail {
 
     @Override
     public void setSender(IAddress sender) {
-        setSender = true;
+        setSenderCalled = true;
     }
 
     @Override

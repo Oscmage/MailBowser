@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.tests.account.models;
+package edu.chl.mailbowser.tests.account;
 
 import edu.chl.mailbowser.utils.Callback;
 import edu.chl.mailbowser.account.IIncomingServer;
@@ -8,16 +8,18 @@ import edu.chl.mailbowser.email.IEmail;
 /**
  * Created by jesper on 2015-05-11.
  */
-public class MockInServer implements IIncomingServer {
-    public boolean called = false;
+public class MockIncomingServer implements IIncomingServer {
+    public boolean fetchCalled = false;
+    public boolean testConnectionCalled = false;
 
     @Override
     public void fetch(String username, String Password, boolean cleanFetch, Callback<Pair<IEmail, String>> callback) {
-        called = true;
+        fetchCalled = true;
     }
 
     @Override
     public boolean testConnection(String username, String password) {
+        testConnectionCalled = true;
         return false;
     }
 
