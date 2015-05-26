@@ -34,7 +34,7 @@ public class TagHandlerTest {
         IEmail e1 = new MockEmail();
         ITag t1 = new MockTag();
 
-        tagHandler.addTag(e1, t1);
+        tagHandler.addTagToEmail(e1, t1);
 
         assertEquals(tagHandler.getEmailsWith(t1).toArray()[0], e1);
         assertEquals(tagHandler.getTagsWith(e1).toArray()[0], t1);
@@ -47,8 +47,8 @@ public class TagHandlerTest {
         ITag t2 = new MockTag();
 
         // Single email with multiple tags?
-        tagHandler.addTag(e1, t2);
-        tagHandler.addTag(e1, t1);
+        tagHandler.addTagToEmail(e1, t2);
+        tagHandler.addTagToEmail(e1, t1);
         assertTrue(tagHandler.getTagsWith(e1).contains(t1));
         assertTrue(tagHandler.getTagsWith(e1).contains(t2));
     }
@@ -58,7 +58,7 @@ public class TagHandlerTest {
         IEmail e1 = new MockEmail();
         ITag t1 = new MockTag();
 
-        tagHandler.addTag(e1, t1);
+        tagHandler.addTagToEmail(e1, t1);
         tagHandler.eraseTag(t1);
         assertTrue(tagHandler.getTagsWith(e1).isEmpty());
     }

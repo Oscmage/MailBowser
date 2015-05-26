@@ -31,7 +31,6 @@ public class TagListItemPresenter extends HBox implements Initializable{
      */
     public TagListItemPresenter(ITag tag) {
         this();
-
         this.tag = tag;
         name.setText(this.tag.getName());
     }
@@ -45,11 +44,15 @@ public class TagListItemPresenter extends HBox implements Initializable{
         fxmlLoader.setController(this);
 
         try {
-
             fxmlLoader.load();
         } catch (IOException e) {
             System.out.println(e);
         }
+    }
+
+    @FXML
+    public void removeTagFromEmail() {
+        EventBus.INSTANCE.publish(new Event(EventType.REMOVE_TAG_FROM_EMAIL, tag));
     }
 
     /**
@@ -79,14 +82,6 @@ public class TagListItemPresenter extends HBox implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-    }
-
-    /**
-     * Publishes a new event to the EventBus with the tag from the gui listItem.
-     * @param event
-     */
-    @FXML private void removeTagFromEmail(ActionEvent event) {
-        EventBus.INSTANCE.publish(new Event(EventType.GUI_REMOVE_TAG,this.tag));
     }
 
 }

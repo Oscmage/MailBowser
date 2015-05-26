@@ -1,5 +1,6 @@
 package edu.chl.mailbowser.tag.handlers;
 
+import edu.chl.mailbowser.account.models.Pair;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
@@ -34,7 +35,7 @@ public class TagHandler implements ITagHandler{
      * @param tag
      */
     @Override
-    public synchronized void addTag(IEmail email, ITag tag){
+    public synchronized void addTagToEmail(IEmail email, ITag tag){
         if (!mapFromTagsToEmails.containsKey(tag)) { //If key doesn't exists
             mapFromTagsToEmails.put(tag, new HashSet<>()); //Create key with empty set
         }
@@ -45,7 +46,7 @@ public class TagHandler implements ITagHandler{
         }
         mapFromEmailsToTags.get(email).add(tag); // Add the value to the set
 
-        EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG, tag));
+        EventBus.INSTANCE.publish(new Event(EventType.ADDED_TAG_TO_EMAIL, new Pair<>(email, tag)));
     }
 
     /**
@@ -55,7 +56,7 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public Set<IEmail> getEmailsWith(ITag tag){
-        if(!mapFromTagsToEmails.get(tag).isEmpty()) {
+        if(mapFromTagsToEmails.get(tag) != null) {
             return new HashSet<>(mapFromTagsToEmails.get(tag));
         }
         return new HashSet<>();
@@ -68,7 +69,7 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public Set<ITag> getTagsWith(IEmail email){
-        if(!mapFromEmailsToTags.get(email).isEmpty()) {
+        if(mapFromEmailsToTags.get(email) != null) {
             return new HashSet<>(mapFromEmailsToTags.get(email));
         }
         return new HashSet<>();
@@ -106,7 +107,7 @@ public class TagHandler implements ITagHandler{
             }
         }
 
-        EventBus.INSTANCE.publish(new Event(EventType.REMOVE_TAG,tag));
+        EventBus.INSTANCE.publish(new Event(EventType.REMOVED_TAG_FROM_EMAIL, new Pair<>(email, tag)));
     }
 
     /**
@@ -148,7 +149,7 @@ public class TagHandler implements ITagHandler{
         for (ITag tag: tempTags){ //Loop through all tags
             Set<IEmail> emails = mapFromTagsToEmails.get(tag); // Get every Set of emails for each tag
             for (IEmail email: emails){ //Loop through each email
-                addTag(email,tag); //Add the tag to each email.
+                addTagToEmail(email, tag); //Add the tag to each email.
             }
         }
         return true;
