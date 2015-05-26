@@ -10,6 +10,7 @@
 <?import edu.chl.mailbowser.presenters.tag.TagList?>
 <?import edu.chl.mailbowser.presenters.TopbarPresenter?>
 <?import edu.chl.mailbowser.presenters.tag.TagList.Type?>
+<?import edu.chl.mailbowser.presenters.SidebarPresenter?>
 <VBox minHeight="600.0" minWidth="960.0" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.MainPresenter">
     <children>
         <MenuBar>
@@ -63,16 +64,7 @@
         <TopbarPresenter />
         <HBox VBox.vgrow="ALWAYS">
             <children>
-                <VBox fx:id="sidebar" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-                    <children>
-                        <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER">
-                            <children>
-                                <Label maxWidth="1.7976931348623157E308" text="Tags" HBox.hgrow="ALWAYS" />
-                                <Button styleClass="fontawesome, naked" text="&#xf067;" HBox.hgrow="NEVER" />
-                            </children>
-                        </HBox>
-                    </children>
-                </VBox>
+                <SidebarPresenter minWidth="200.0" maxWidth="200.0" />
                 <EmailList />
                 <EmailDetail />
             </children>
