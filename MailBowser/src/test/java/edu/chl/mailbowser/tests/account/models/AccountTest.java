@@ -25,7 +25,15 @@ public class AccountTest {
 
     @Test
     public void testSend() throws Exception {
+        //Tries to send an email
         account.send(email);
+        assertTrue(outgoingServer.called);
+        assertTrue(email.setSender);
+
+        outgoingServer.called = false;
+        email.setSender = false;
+        //Tries to send null
+        account.send(null);
         assertTrue(outgoingServer.called);
         assertTrue(email.setSender);
     }
