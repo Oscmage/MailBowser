@@ -127,6 +127,14 @@ public class Account implements IAccount {
      * {@inheritDoc}
      */
     @Override
+    public ITagHandler getTagHandler() {
+        return tagHandler;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setAddress(IAddress address) {
         this.address = address;
     }
