@@ -35,6 +35,11 @@ public class Tag implements ITag {
         return this.name;
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
     /**
      * Returns true if the object is a tag + has the same name (String).
      */
@@ -65,5 +70,10 @@ public class Tag implements ITag {
     @Override
     public boolean matches(String query) {
         return query != null && name.startsWith(query.toLowerCase());
+    }
+
+    @Override
+    public int compareTo(ITag o) {
+        return name.compareTo(o.getName());
     }
 }
