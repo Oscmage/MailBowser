@@ -41,6 +41,11 @@ public class Email implements IEmail {
         private List<IAddress> cc = new ArrayList<>();
         private List<IAddress> bcc = new ArrayList<>();
 
+        /**
+         * Builder constructor initiates the builder with the fields mandatory when creating an email
+         * @param subject is a mandatory field used to build email
+         * @param content is a mandatory field used to build email
+         */
         public Builder(String subject, String content) {
             this.subject = (subject == null) ? "" : subject;
             this.content = (content == null) ? "" : content;
@@ -69,6 +74,10 @@ public class Email implements IEmail {
             return this;
         }
 
+        /**
+         * Buildes a email with this builder
+         * @return an {@link edu.chl.mailbowser.email.Email} built with the fields of this builder
+         */
         public Email build() {
             return new Email(this);
         }
@@ -204,12 +213,7 @@ public class Email implements IEmail {
         return "";
     }
 
-    /**
-     * Returns this email represented as a javax.mail.Message object.
-     *
-     * @param session the session to use when creating the new message object
-     * @return an javax.mail.Message object representing this email.
-     */
+
     @Override
     public Message getJavaMailMessage(Session session) {
         MimeMessage msg = new MimeMessage(session);
@@ -224,7 +228,6 @@ public class Email implements IEmail {
             msg.addRecipients(Message.RecipientType.CC, getJavaxRecipients(cc));
             msg.addRecipients(Message.RecipientType.BCC, getJavaxRecipients(bcc));
         } catch (MessagingException e) {
-            // TODO handle this exception.
             throw new IllegalArgumentException("Invalid session");
         }
         return msg;
@@ -236,6 +239,7 @@ public class Email implements IEmail {
      * @return
      */
     private static javax.mail.Address[] getJavaxRecipients(List<IAddress> addresses) {
+        //We use stream to iterat over all recipients and call getJavaMailAddress
         List<javax.mail.Address> recipients = addresses
                 .stream()
                 .map(IAddress::getJavaMailAddress)
@@ -268,9 +272,9 @@ public class Email implements IEmail {
     @Override
     public List<IAddress> getAllRecipients() {
         List<IAddress> recipients = new ArrayList<>();
-        recipients.addAll(to);
-        recipients.addAll(cc);
-        recipients.addAll(bcc);
+        recipients.addAll(getTo());
+        recipients.addAll(getCc());
+        recipients.addAll(getBcc());
         return recipients;
     }
 
