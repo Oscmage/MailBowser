@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import edu.chl.mailbowser.presenters.EmailDetailPresenter?>
 <VBox minHeight="600.0" minWidth="960.0" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.MainPresenter">
     <children>
         <MenuBar>
@@ -60,7 +61,7 @@
             <children>
                 <fx:include source="sidebar/SidebarView.fxml" />
                 <fx:include source="EmailListView.fxml" />
-                <fx:include source="EmailDetailView.fxml" />
+                <EmailDetailPresenter />
             </children>
         </HBox>
     </children>

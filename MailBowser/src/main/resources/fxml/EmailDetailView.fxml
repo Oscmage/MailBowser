@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 
 
-  <VBox fx:id="emailDetail" id="emailDetailVBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.EmailDetailPresenter">
+  <fx:root type="javafx.scene.layout.VBox" fx:id="emailDetail" id="emailDetailVBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
       <children>
       <VBox id="emailDetailTop">
          <children>
@@ -44,4 +44,4 @@
       </VBox>
       <WebView id="webView" fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
       </children>
-  </VBox>
+  </fx:root>

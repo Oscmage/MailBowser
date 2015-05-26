@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -18,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -28,7 +30,7 @@ import java.util.stream.Collectors;
  * Created by filip on 04/05/15.
  */
 
-public class EmailDetailPresenter implements IObserver, Initializable {
+public class EmailDetailPresenter extends VBox implements IObserver {
 
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
@@ -38,19 +40,31 @@ public class EmailDetailPresenter implements IObserver, Initializable {
     @FXML protected Label ccLabel;
     @FXML protected Label receivedDateLabel;
     @FXML protected WebView webView;
-
     @FXML protected VBox emailDetail;
-
-    @FXML private ObservableList<HBox> observableTagList = FXCollections.observableArrayList();
+    @FXML protected ObservableList<HBox> observableTagList = FXCollections.observableArrayList();
     @FXML protected ListView<HBox> tagListView;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public EmailDetailPresenter() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EmailDetailView.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            throw new IllegalStateException(e.getMessage(), e.getCause());
+        }
+
         EventBus.INSTANCE.register(this);
         tagListView.setItems(observableTagList);
         emailDetail.setOpacity(0.5);
     }
 
+    /**
+     * Updates the view based on what email is passed as parameter.
+     *
+     * @param email
+     */
     private void updateView(IEmail email) {
         subjectLabel.setText(email.getSubject());
         receivedDateLabel.setText(email.getReceivedDate().toString());
@@ -61,7 +75,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
                 .map(IAddress::toString).collect(Collectors.toList());
         this.toLabel.setText(String.join(", ", receivers));
 
-//        // ...And do the same for CC
+        // ...And do the same for CC
         List<String> carbonCopies = email.getCc().stream()
                 .map(IAddress::toString).collect(Collectors.toList());
         this.ccLabel.setText(String.join(", ", carbonCopies));
@@ -72,6 +86,11 @@ public class EmailDetailPresenter implements IObserver, Initializable {
         emailDetail.setOpacity(1);
     }
 
+    /**
+     * Updates the list of tags with the tags passed as parameter.
+     *
+     * @param tags
+     */
     private void updateTagsList(Set<ITag> tags) {
         observableTagList.setAll(
                 tags.stream()
