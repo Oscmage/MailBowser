@@ -101,9 +101,32 @@ public class AccountManagerPresenter implements Initializable, IObserver {
     /**
      * Switches to the add account view in the right hand pane.
      */
-    public void showAddAccountView() {
+    private void showAddAccountView() {
         accountForm.setContent(new AddAccountPresenter());
         currentMode = Mode.ADD;
+    }
+
+    /**
+     * Adds an account to the list of accounts in this view.
+     *
+     * @param account the account to add
+     */
+    public void addAccountToList(IAccount account) {
+        accountsListItems.add(account);
+    }
+
+    /**
+     * Remvoes an account from the list of accounts in this view.
+     *
+     * @param account the account to remove
+     */
+    public void removeAccountFromList(IAccount account) {
+        accountsListItems.remove(account);
+
+        // if there are no accounts left, show the add account view
+        if (accountsListItems.size() == 0) {
+            showAddAccountView();
+        }
     }
 
     @FXML
@@ -131,29 +154,6 @@ public class AccountManagerPresenter implements Initializable, IObserver {
     @FXML
     protected void deleteAccountButtonOnAction(ActionEvent actionEvent) {
         accountHandler.removeAccount(selectedAccount);
-    }
-
-    /**
-     * Adds an account to the list of accounts in this view.
-     *
-     * @param account the account to add
-     */
-    public void addAccountToList(IAccount account) {
-        accountsListItems.add(account);
-    }
-
-    /**
-     * Remvoes an account from the list of accounts in this view.
-     *
-     * @param account the account to remove
-     */
-    public void removeAccountFromList(IAccount account) {
-        accountsListItems.remove(account);
-
-        // if there are no accounts left, show the add account view
-        if (accountsListItems.size() == 0) {
-            showAddAccountView();
-        }
     }
 
     /**
