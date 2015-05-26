@@ -56,6 +56,13 @@ public interface IAccount extends Serializable {
     Set<IEmail> getEmails();
 
     /**
+     * Returns this accounts tag handler.
+     *
+     * @return this accounts tag handler
+     */
+    ITagHandler getTagHandler();
+
+    /**
      * Sets the address that is associated with this account.
      *
      * @param address the address to use
