@@ -202,7 +202,7 @@ public class MainPresenter implements IObserver, Initializable {
                 openAddTagWindow();
                 break;
             case MARK_EMAIL_AS_DELETED:
-                tagHandler.getTagsWith(email).stream().forEach(t -> tagHandler.removeTagFromEmail(email, t));
+                tagHandler.getTagsWithEmail(email).stream().forEach(t -> tagHandler.removeTagFromEmail(email, t));
                 tagHandler.addTagToEmail(email, new Tag("Deleted"));
                 break;
         }
