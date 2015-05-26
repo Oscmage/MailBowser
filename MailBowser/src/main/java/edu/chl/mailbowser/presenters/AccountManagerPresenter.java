@@ -11,11 +11,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,7 +26,7 @@ import java.util.ResourceBundle;
 /**
  * Created by filip on 19/05/15.
  */
-public class AccountManagerPresenter implements Initializable, IObserver {
+public class AccountManagerPresenter extends VBox implements IObserver {
 
     /**
      * An enum for keeping track of what view is being shown.
@@ -33,28 +36,27 @@ public class AccountManagerPresenter implements Initializable, IObserver {
         EDIT
     }
     private Mode currentMode;
-
-    private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
-
-    @FXML private ListView<IAccount> accountsList;
     private ObservableList<IAccount> accountsListItems = FXCollections.observableArrayList();
-
+    private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
     private IAccount selectedAccount;
 
     @FXML protected Button addAccountButton;
     @FXML protected Button deleteAccountButton;
     @FXML protected Button saveAccountButton;
+    @FXML protected ScrollPane accountForm;
+    @FXML protected ListView<IAccount> accountsList;
 
-    @FXML public ScrollPane accountForm;
+    public AccountManagerPresenter() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AccountManager.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
 
-    /**
-     * Initializes the account manager. Registers to the event bus and updates all views to show current data.
-     *
-     * @param location {@inheritDoc}
-     * @param resources {@inheritDoc}
-     */
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
         EventBus.INSTANCE.register(this);
 
         initializeAccountsList();
@@ -63,7 +65,6 @@ public class AccountManagerPresenter implements Initializable, IObserver {
         if (accountsListItems.size() > 0) {
             selectedAccount = accountsListItems.get(0);
             showEditAccountView(selectedAccount);
-            //updateView();
         } else {
             showAddAccountView();
         }
@@ -72,7 +73,7 @@ public class AccountManagerPresenter implements Initializable, IObserver {
     /**
      * Initializes the list of accounts. Gets all accounts from the account handler and puts them in the list.
      */
-    public void initializeAccountsList() {
+    private void initializeAccountsList() {
         accountsList.setItems(accountsListItems);
 
         List<IAccount> accounts = accountHandler.getAccounts();
@@ -93,7 +94,7 @@ public class AccountManagerPresenter implements Initializable, IObserver {
      *
      * @param account the account to create an edit view for
      */
-    public void showEditAccountView(IAccount account) {
+    private void showEditAccountView(IAccount account) {
         accountForm.setContent(new EditAccountPresenter(account));
         currentMode = Mode.EDIT;
     }
@@ -111,7 +112,7 @@ public class AccountManagerPresenter implements Initializable, IObserver {
      *
      * @param account the account to add
      */
-    public void addAccountToList(IAccount account) {
+    private void addAccountToList(IAccount account) {
         accountsListItems.add(account);
     }
 
@@ -120,7 +121,7 @@ public class AccountManagerPresenter implements Initializable, IObserver {
      *
      * @param account the account to remove
      */
-    public void removeAccountFromList(IAccount account) {
+    private void removeAccountFromList(IAccount account) {
         accountsListItems.remove(account);
 
         // if there are no accounts left, show the add account view
@@ -129,6 +130,11 @@ public class AccountManagerPresenter implements Initializable, IObserver {
         }
     }
 
+    /**
+     * Invoked when the "save"-button is clicked.
+     *
+     * @param actionEvent
+     */
     @FXML
     protected void saveAccountButtonOnAction(ActionEvent actionEvent) {
         switch (currentMode) {
@@ -145,12 +151,22 @@ public class AccountManagerPresenter implements Initializable, IObserver {
         }
     }
 
+    /**
+     * Invoked when the "add account"-button is clicked.
+     *
+     * @param actionEvent
+     */
     @FXML
     protected void addAccountButtonOnAction(ActionEvent actionEvent) {
         accountsList.getSelectionModel().clearSelection();
         showAddAccountView();
     }
 
+    /**
+     * Invoked when the "Delete account"-button is clicked.
+     *
+     * @param actionEvent
+     */
     @FXML
     protected void deleteAccountButtonOnAction(ActionEvent actionEvent) {
         accountHandler.removeAccount(selectedAccount);
