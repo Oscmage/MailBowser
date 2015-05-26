@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.tests.tag.models;
 
-import edu.chl.mailbowser.tag.models.Tag;
+import edu.chl.mailbowser.tag.Tag;
 import org.junit.Before;
 import org.junit.Test;
 

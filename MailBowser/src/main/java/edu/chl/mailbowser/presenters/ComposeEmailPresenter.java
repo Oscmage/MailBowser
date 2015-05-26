@@ -1,12 +1,12 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.account.handlers.IAccountHandler;
+import edu.chl.mailbowser.main.MainHandler;
+import edu.chl.mailbowser.account.IAccountHandler;
+import edu.chl.mailbowser.email.Address;
+import edu.chl.mailbowser.email.Email;
+import edu.chl.mailbowser.email.IAddress;
+import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.contact.IContact;
-import edu.chl.mailbowser.email.models.Address;
-import edu.chl.mailbowser.email.models.Email;
-import edu.chl.mailbowser.email.models.IAddress;
-import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;

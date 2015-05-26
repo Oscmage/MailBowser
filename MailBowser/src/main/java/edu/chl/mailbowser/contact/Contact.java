@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.contact;
 
-import edu.chl.mailbowser.email.models.IAddress;
+import edu.chl.mailbowser.email.IAddress;
 
 import java.util.ArrayList;
 import java.util.List;

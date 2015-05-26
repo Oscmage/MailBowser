@@ -1,7 +1,7 @@
 package edu.chl.mailbowser.tests.account.models;
 
-import edu.chl.mailbowser.email.models.IAddress;
-import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.email.IAddress;
+import edu.chl.mailbowser.email.IEmail;
 
 import javax.mail.Message;
 import javax.mail.Session;

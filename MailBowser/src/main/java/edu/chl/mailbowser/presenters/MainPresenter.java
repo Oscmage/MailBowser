@@ -1,13 +1,14 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.account.handlers.IAccountHandler;
-import edu.chl.mailbowser.email.models.IAddress;
-import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.main.MainHandler;
+import edu.chl.mailbowser.account.IAccountHandler;
+import edu.chl.mailbowser.email.IAddress;
+import edu.chl.mailbowser.email.IEmail;
+import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.*;
-import edu.chl.mailbowser.tag.handlers.ITagHandler;
-import edu.chl.mailbowser.tag.models.ITag;
-import edu.chl.mailbowser.tag.models.Tag;
+import edu.chl.mailbowser.tag.ITagHandler;
+import edu.chl.mailbowser.tag.ITag;
+import edu.chl.mailbowser.tag.Tag;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -64,7 +65,7 @@ public class MainPresenter implements IObserver, Initializable {
      * If also there's a email selected disableMenuItemsThatNeedASelectedEmail is set to false otherwise true.
      */
     private void showOrHideMenuOptions(){
-        if(MainHandler.INSTANCE.getAccountHandler().getAccounts().size() != 0){ // If atleast one account exists
+        if(accountHandler.getAccounts().size() != 0){ // If atleast one account exists
             if(this.email != null) { // If there's an email currently selected
                 disableMenuItemsThatNeedASelectedEmail(false); //Disable forward, reply etc
             } else {
@@ -209,12 +210,12 @@ public class MainPresenter implements IObserver, Initializable {
 
     @FXML
     private void fetchMenuItemOnAction(ActionEvent actionEvent) {
-        MainHandler.INSTANCE.getAccountHandler().initFetchingFromAllAccounts();
+        accountHandler.initFetchingFromAllAccounts();
     }
 
     @FXML
     private void refetchMenuItemOnAction(ActionEvent actionEvent) {
-        MainHandler.INSTANCE.getAccountHandler().initRefetchingFromAllAccounts();
+        accountHandler.initRefetchingFromAllAccounts();
     }
 
     @FXML
