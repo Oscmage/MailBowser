@@ -9,16 +9,14 @@ public class Tag implements ITag {
 
     /**
      * Creates a Tag with the specified name.
-     * @param name Creates a tag with the specified name.
      */
-
     public Tag(String name) {
         this.name = name.toLowerCase();
     }
 
+
     /**
-     * Changes the name of the tag to the specified string.
-     * @param name
+     * {@inheritDoc}
      */
     @Override
     public void setTagName(String name) {
@@ -26,8 +24,7 @@ public class Tag implements ITag {
     }
 
     /**
-     * Returns a string for the Tag's name.
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public String getName() {
@@ -35,9 +32,7 @@ public class Tag implements ITag {
     }
 
     /**
-     * Returns true if the object is a Tag and has the same name(String).
-     * @param o
-     * @return
+     * Returns true if the object is a tag + has the same name (String).
      */
     @Override
     public boolean equals(Object o) {
@@ -53,8 +48,7 @@ public class Tag implements ITag {
     }
 
     /**
-     * Returns the hashCode value for this tag.
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public int hashCode() {
@@ -62,10 +56,7 @@ public class Tag implements ITag {
     }
 
     /**
-     * Checks whether or not this tag matches a given string.
-     *
-     * @param query the string to match against
-     * @return true if the tag name begins with str, false otherwise
+     * Checks whether or not this tag matches the given string.
      */
     @Override
     public boolean matches(String query) {
