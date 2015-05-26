@@ -3,7 +3,7 @@ package edu.chl.mailbowser.tests.tag.handlers;
 import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.tag.TagHandler;
 import edu.chl.mailbowser.tag.ITag;
-import edu.chl.mailbowser.tests.account.MockEmail;
+import edu.chl.mailbowser.tests.mock.MockEmail;
 import org.junit.Before;
 import org.junit.Test;
 

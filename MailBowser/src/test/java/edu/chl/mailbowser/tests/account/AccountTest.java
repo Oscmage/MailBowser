@@ -2,6 +2,7 @@ package edu.chl.mailbowser.tests.account;
 
 import edu.chl.mailbowser.account.Account;
 import edu.chl.mailbowser.account.IAccount;
+import edu.chl.mailbowser.tests.mock.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,27 +12,36 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AccountTest {
-    Account account;
+    private Account account;
 
-    MockAddress address;
-    MockIncomingServer incomingServer;
-    MockOutgoingServer outgoingServer;
-    MockEmail email;
-    MockTagHandler tagHandler;
+    private MockAddress address;
+    private String password;
+    private MockIncomingServer incomingServer;
+    private MockOutgoingServer outgoingServer;
+    private MockEmail email;
+    private MockTagHandler tagHandler;
 
     @Before
     public void setUp() {
         // setup mock objects and create an account to perform tests on
         address = new MockAddress();
+        password = "password";
         incomingServer = new MockIncomingServer();
         outgoingServer = new MockOutgoingServer();
         email = new MockEmail();
         tagHandler = new MockTagHandler();
-        account = new Account(address, "", incomingServer, outgoingServer, tagHandler);
+        account = new Account(address, password, incomingServer, outgoingServer, tagHandler);
     }
 
     @Test
     public void testConstructor() throws Exception {
+        // tests if all values are set correctly
+        assertEquals(account.getAddress(), address);
+        assertEquals(account.getPassword(), password);
+        assertEquals(account.getIncomingServer(), incomingServer);
+        assertEquals(account.getOutgoingServer(), outgoingServer);
+        assertEquals(account.getTagHandler(), tagHandler);
+
         // tests if IllegalArgumentException is thrown when creating an account with address null
         boolean exceptionThrown = false;
         try {
@@ -122,7 +132,7 @@ public class AccountTest {
         assertEquals(account, account);
 
         // tests if an account is equal to an identical account
-        IAccount a1 = new Account(address, "", incomingServer, outgoingServer, tagHandler);
+        IAccount a1 = new Account(address, password, incomingServer, outgoingServer, tagHandler);
         assertEquals(account, a1);
 
         // tests if an account to another account when all that differs is the password
@@ -139,7 +149,7 @@ public class AccountTest {
         assertEquals(account.hashCode(), account.hashCode());
 
         // tests if an accounts hash code is equal to the hash code of an identical account
-        IAccount a1 = new Account(address, "", incomingServer, outgoingServer, tagHandler);
+        IAccount a1 = new Account(address, password, incomingServer, outgoingServer, tagHandler);
         assertEquals(account.hashCode(), a1.hashCode());
 
         // tests if an accounts hash code is equal to another accounts hash code when all that differs is the password

@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.tests.account;
+package edu.chl.mailbowser.tests.mock;
 
 import edu.chl.mailbowser.utils.Callback;
 import edu.chl.mailbowser.account.IOutgoingServer;
