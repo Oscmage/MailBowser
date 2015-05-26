@@ -46,7 +46,7 @@ public enum MainHandler {
     public void saveComponents() {
         tagHandler.writeTags("Tags.ser");
         accountHandler.writeAccounts("Accounts.ser");
-        //contactBook.writeContacts("Contacts.ser");
+        contactBook.writeContacts("Contacts.ser");
     }
 
     /**
@@ -57,6 +57,6 @@ public enum MainHandler {
     public void loadComponents() {
         tagHandler.readTags("Tags.ser");
         accountHandler.readAccounts("Accounts.ser", tagHandler);
-        //contactBook.readContacts("Contacts.ser");
+        contactBook.readContacts("Contacts.ser");
     }
 }

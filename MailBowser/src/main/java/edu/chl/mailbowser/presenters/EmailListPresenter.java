@@ -20,9 +20,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
-
 import java.net.URL;
-import java.util.*;
+import java.util.Comparator;
+import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -76,7 +78,7 @@ public class EmailListPresenter implements Initializable, IObserver {
      *
      * @param emails the new emails to show in the list
      */
-    private void replaceListViewContent(List<IEmail> emails) {
+    private void replaceListViewContent(Set<IEmail> emails) {
         observableEmailList.setAll(emails.stream()
                         .map(EmailListItemPresenter::new)
                         .collect(Collectors.toList())
@@ -102,11 +104,11 @@ public class EmailListPresenter implements Initializable, IObserver {
      * @param query the query to search for
      */
     private void search(String query) {
-        List<IEmail> emails = accountHandler.getAllEmails();
+        Set<IEmail> emails = accountHandler.getAllEmails();
 
         if (!query.equals("")) {
             updateListOnIncomingEmail = false;
-            List<IEmail> matchingEmails = Searcher.search(emails, query);
+            Set<IEmail> matchingEmails = Searcher.search(emails, query);
             System.out.println("matching emails: " + matchingEmails.size());
             replaceListViewContent(matchingEmails);
         } else {
@@ -153,16 +155,16 @@ public class EmailListPresenter implements Initializable, IObserver {
                 break;
             case REMOVED_TAG_FROM_EMAIL:
                 Pair<IEmail, ITag> pair = (Pair<IEmail, ITag>)evt.getValue();
-                replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith(pair.getSecond())));
+                replaceListViewContent(new TreeSet<>(tagHandler.getEmailsWith(pair.getSecond())));
                 break;
             case CLEAR_EMAILS:
                 clearEmails();
                 break;
             case SELECT_TAG:
                 if(evt.getValue() != null) {
-                    replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith((ITag) evt.getValue())));
+                    replaceListViewContent(new TreeSet<>(tagHandler.getEmailsWith((ITag) evt.getValue())));
                 } else {
-                    replaceListViewContent(new ArrayList<>(accountHandler.getAllEmails()));
+                    replaceListViewContent(new TreeSet<>(accountHandler.getAllEmails()));
                 }
                 break;
         }

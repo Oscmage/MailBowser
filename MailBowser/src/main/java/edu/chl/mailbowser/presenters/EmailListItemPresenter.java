@@ -12,10 +12,7 @@ import javafx.scene.layout.FlowPane;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by filip on 07/05/15.
@@ -54,7 +51,7 @@ public class EmailListItemPresenter extends FlowPane implements Initializable, C
         subject.setText(email.getSubject());
         content.setText(email.getContent().replaceAll("<[^>]*>", "").replace("\n", "").replace("\r", ""));
 
-        List<String> tagStrings = new ArrayList<String>();
+        Set<String> tagStrings = new TreeSet<>();
         Set<ITag> tagSet = MainHandler.INSTANCE.getTagHandler().getTagsWith(email);
         for(ITag tag : tagSet) {
             tagStrings.add(tag.getName());

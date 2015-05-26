@@ -63,6 +63,12 @@ public enum MailServerTypes {
             case GMAIL:
                 server = new IncomingServer("imap.gmail.com", "993");
                 break;
+            case HOTMAIL:
+                server = new IncomingServer("imap-mail.outlook.com", "993");
+                break;
+            case YAHOO:
+                server = new IncomingServer("imap.mail.yahoo.com", "993");
+                break;
             default:
                 break;
         }

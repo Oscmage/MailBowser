@@ -49,7 +49,9 @@ public class AddAccountPresenter extends VBox implements Initializable {
 
     private void setupAccountTypeChoiceBox() {
         ObservableList<MailServerTypes> observableList = FXCollections.observableArrayList();
-        observableList.add(MailServerTypes.GMAIL);
+        for(MailServerTypes mailServerTypes : MailServerTypes.values()) {
+            observableList.add(mailServerTypes);
+        }
         accountTypeChoiceBox.setItems(observableList);
         accountTypeChoiceBox.getSelectionModel().select(0);
     }

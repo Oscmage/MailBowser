@@ -42,8 +42,8 @@ public class Email implements IEmail {
         private List<IAddress> bcc = new ArrayList<>();
 
         public Builder(String subject, String content) {
-            this.subject = subject;
-            this.content = content;
+            this.subject = (subject == null) ? "" : subject;
+            this.content = (content == null) ? "" : content;
 
             this.sentDate = new Date();
             this.receivedDate = new Date();
@@ -359,9 +359,9 @@ public class Email implements IEmail {
 
         query = query.toLowerCase();
 
-        return subject.toLowerCase().contains(query)
+        return (subject != null && subject.toLowerCase().contains(query))
                 || (content != null && content.toLowerCase().contains(query))
-                || sender.matches(query)
+                || (sender != null && sender.matches(query))
                 || checkIfAnyAddressMatchesQuery(query, to)
                 || checkIfAnyAddressMatchesQuery(query, cc)
                 || checkIfAnyAddressMatchesQuery(query, bcc);

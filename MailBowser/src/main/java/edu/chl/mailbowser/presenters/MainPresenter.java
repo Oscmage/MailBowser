@@ -116,6 +116,10 @@ public class MainPresenter implements IObserver, Initializable {
         stage.show();
     }
 
+    private void openContactBook() {
+        openWindow(new ContactBookPresenter(), "Contact Book", 400, 300, 100, 100, false);
+    }
+
     private void openAddTagWindow() {
         openWindow(new AddTagPresenter(), "Add tag...", 200, 100, 100, 100, true);
     }
@@ -191,8 +195,12 @@ public class MainPresenter implements IObserver, Initializable {
                 email = (IEmail)evt.getValue();
                 openComposeEmailWindow("", "Fw: " + email.getSubject(), email.getContent());
                 break;
+            case OPEN_CONTACT_BOOK:
+                openContactBook();
+                break;
             case OPEN_ADD_TAG_WINDOW:
                 openAddTagWindow();
+                break;
             case MARK_EMAIL_AS_DELETED:
                 tagHandler.getTagsWith(email).stream().forEach(t -> tagHandler.removeTagFromEmail(email, t));
                 tagHandler.addTagToEmail(email, new Tag("Deleted"));

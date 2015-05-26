@@ -12,8 +12,8 @@ import edu.chl.mailbowser.utils.Callback;
 import edu.chl.mailbowser.utils.Pair;
 import edu.chl.mailbowser.utils.Crypto;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by OscarEvertsson on 09/04/15.
@@ -32,7 +32,7 @@ public class Account implements IAccount {
     private IOutgoingServer outgoingServer;
     private transient ITagHandler tagHandler;
 
-    private List<IEmail> emails = new ArrayList<>();
+    private Set<IEmail> emails = new TreeSet<>();
 
     public Account(IAddress address, String password, IIncomingServer incomingServer, IOutgoingServer outgoingServer,
                    ITagHandler tagHandler) {
@@ -146,7 +146,7 @@ public class Account implements IAccount {
      * @return a list of all emails that belong to this account
      */
     @Override
-    public List<IEmail> getEmails() {
+    public Set<IEmail> getEmails() {
         return emails;
     }
 
@@ -197,7 +197,7 @@ public class Account implements IAccount {
     @Override
     public void refetch() {
         System.out.println("Account: refetch()");
-        emails = new ArrayList<>();
+        emails = new TreeSet<>();
         EventBus.INSTANCE.publish(new Event(EventType.CLEAR_EMAILS, null));
         initFetch(true);
     }

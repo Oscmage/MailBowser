@@ -9,6 +9,8 @@ import edu.chl.mailbowser.tag.ITagHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by mats on 11/05/15.
@@ -49,8 +51,8 @@ public class AccountHandler implements IAccountHandler{
      * {@inheritDoc}
      */
     @Override
-    public List<IEmail> getAllEmails() {
-        List<IEmail> emails = new ArrayList<IEmail>();
+    public Set<IEmail> getAllEmails() {
+        Set<IEmail> emails = new TreeSet<>();
 
         for(IAccount account : accounts) {
             emails.addAll(account.getEmails());
