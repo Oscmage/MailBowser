@@ -23,12 +23,15 @@ public class Contact implements IContact {
         this.lastName = lastName;
     }
 
+    /**
+     * Creates an empty Contact.
+     */
     public Contact (){
 
     }
 
     /**
-     * @return the full name with the last name first and separated by semi-colon
+     * {@inheritDoc}
      */
     @Override
     public String getFullName() {
@@ -37,48 +40,72 @@ public class Contact implements IContact {
 
 
     /**
-     * @return the last name of the contact
+     * {@inheritDoc}
      */
     @Override
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addAddress(IAddress address) {
         emailAddresses.add(address);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addAllAddresses(List<IAddress> addresses) {
         emailAddresses.addAll(addresses);
     }
 
+    /**
+     * {@inheritDoc}
+    */
     @Override
     public List<IAddress> getEmailAddresses() {
         return new ArrayList<IAddress>(emailAddresses);
     }
 
+    /**
+     * {@inheritDoc}
+    */
     @Override
     public int compareTo(IContact contact) {
             return getFullName().compareTo(contact.getFullName()            );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean matches(String query) {
         if(query != null)
@@ -86,6 +113,9 @@ public class Contact implements IContact {
         return false;
     }
 
+    /**
+     * Returns true if the object has the same last name, first name and email-addresses.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -106,6 +136,9 @@ public class Contact implements IContact {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode(){
         return (firstName.hashCode() * 7)  + (lastName.hashCode() * 17 )+ (emailAddresses.hashCode() * 23 );

@@ -169,7 +169,7 @@ public class MainPresenter implements IObserver, Initializable {
                 email = (IEmail)evt.getValue();
                 showOrHideMenuOptions();
                 break;
-            case ADD_ACCOUNT:
+            case ACCOUNT_ADDED:
                 showOrHideMenuOptions();
                 break;
             case ADD_TAG_TO_EMAIL:
@@ -202,7 +202,7 @@ public class MainPresenter implements IObserver, Initializable {
                 openAddTagWindow();
                 break;
             case MARK_EMAIL_AS_DELETED:
-                tagHandler.getTagsWith(email).stream().forEach(t -> tagHandler.removeTagFromEmail(email, t));
+                tagHandler.getTagsWithEmail(email).stream().forEach(t -> tagHandler.removeTagFromEmail(email, t));
                 tagHandler.addTagToEmail(email, new Tag("Deleted"));
                 break;
         }

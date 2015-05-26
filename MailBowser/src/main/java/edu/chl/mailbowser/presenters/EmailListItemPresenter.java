@@ -52,7 +52,7 @@ public class EmailListItemPresenter extends FlowPane implements Initializable, C
         content.setText(email.getContent().replaceAll("<[^>]*>", "").replace("\n", "").replace("\r", ""));
 
         Set<String> tagStrings = new TreeSet<>();
-        Set<ITag> tagSet = MainHandler.INSTANCE.getTagHandler().getTagsWith(email);
+        Set<ITag> tagSet = MainHandler.INSTANCE.getTagHandler().getTagsWithEmail(email);
         for(ITag tag : tagSet) {
             tagStrings.add(tag.getName());
         }

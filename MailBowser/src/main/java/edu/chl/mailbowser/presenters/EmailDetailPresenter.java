@@ -68,7 +68,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
 
         this.webView.getEngine().loadContent(email.getContent());
 
-        updateTagsList(tagHandler.getTagsWith(email));
+        updateTagsList(tagHandler.getTagsWithEmail(email));
         emailDetail.setOpacity(1);
     }
 
