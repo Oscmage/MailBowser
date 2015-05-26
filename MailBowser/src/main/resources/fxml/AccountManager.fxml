@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox ?>
+<?import javafx.scene.layout.HBox?>
 
-<VBox stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.AccountManagerPresenter">
+<fx:root type="javafx.scene.layout.VBox" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 <children>
    <HBox maxHeight="1.7976931348623157E308" styleClass="menuBar" VBox.vgrow="NEVER">
       <children>
@@ -29,4 +29,4 @@
       </children>
    </HBox>
 </children>
-</VBox>
+</fx:root>

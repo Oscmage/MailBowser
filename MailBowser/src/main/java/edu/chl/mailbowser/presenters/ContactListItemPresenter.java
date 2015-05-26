@@ -29,7 +29,13 @@ public class ContactListItemPresenter extends FlowPane{
             System.out.println("FXML-file not found");
         }
         this.contact = contact;
+        initializeNameLabel();
+    }
 
+    /**
+     * Sets a nicer value to the "Name"-label depending on the name of the contact supplied in the constructor.
+     */
+    private void initializeNameLabel() {
         if(contact.getFirstName() != null && contact.getLastName() != null) {
             setText(contact.getFullName());
         } else if((contact.getFirstName() != null)) {
@@ -39,14 +45,21 @@ public class ContactListItemPresenter extends FlowPane{
         } else {
             setText("New contact...");
         }
-
-
     }
 
+    /**
+     * Returns the contact assigned to this list item.
+     *
+     * @return
+     */
     public IContact getContact(){
         return contact;
     }
 
+    /**
+     * Sets a value to the "Name"-label.
+     * @param text
+     */
     public void setText(String text){
         nameLabel.setText(text);
     }

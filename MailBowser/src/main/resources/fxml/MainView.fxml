@@ -5,6 +5,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import edu.chl.mailbowser.presenters.EmailDetailPresenter?>
+<?import edu.chl.mailbowser.presenters.EmailListPresenter?>
+<?import edu.chl.mailbowser.presenters.TagList?>
+<?import edu.chl.mailbowser.presenters.TopbarPresenter?>
 <VBox minHeight="600.0" minWidth="960.0" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.MainPresenter">
     <children>
         <MenuBar>
@@ -55,12 +59,22 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <fx:include charset="utf-8" source="TopbarView.fxml" />
+        <TopbarPresenter />
         <HBox VBox.vgrow="ALWAYS">
             <children>
-                <fx:include source="sidebar/SidebarView.fxml" />
-                <fx:include source="EmailListView.fxml" />
-                <fx:include source="EmailDetailView.fxml" />
+                <VBox id="sidebar" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER">
+                            <children>
+                                <Label maxWidth="1.7976931348623157E308" text="Tags" HBox.hgrow="ALWAYS" />
+                                <Button styleClass="fontawesome, naked" text="&#xf067;" HBox.hgrow="NEVER" />
+                            </children>
+                        </HBox>
+                        <TagList minWidth="200.0" prefWidth="200.0" VBox.vgrow="NEVER" />
+                    </children>
+                </VBox>
+                <EmailListPresenter />
+                <EmailDetailPresenter />
             </children>
         </HBox>
     </children>

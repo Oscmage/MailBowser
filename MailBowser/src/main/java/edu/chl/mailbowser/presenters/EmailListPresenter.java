@@ -17,12 +17,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
-
-import java.net.URL;
+import java.io.IOException;
 import java.util.Comparator;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -30,30 +28,36 @@ import java.util.stream.Collectors;
 /**
  * Created by filip on 04/05/15.
  */
-public class EmailListPresenter implements Initializable, IObserver {
+public class EmailListPresenter extends ListView implements IObserver {
 
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
-    // this list holds all EmailListViewItems. when you add an item to this list, emailListListView will update
-    // itself automatically
     @FXML private ObservableList<EmailListItemPresenter> observableEmailList = FXCollections.observableArrayList();
-
-    // a wrapper for observableEmailList that automatically sorts the items using the compareTo method in EmailListItemPresenter
     @FXML private SortedList<EmailListItemPresenter> sortedObservableEmailList = new SortedList<>(observableEmailList,
             Comparator.<EmailListItemPresenter>naturalOrder());
-
-    // OK, do not get frightened. Read it like so: "An email-list ListView."
     @FXML protected ListView<EmailListItemPresenter> emailListListView;
-
-    // this flag determines whether or not to update the list view when a FETCHED_EMAIL event comes in. it is set to
-    // false when you search
     private boolean updateListOnIncomingEmail = true;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        EventBus.INSTANCE.register(this);
+    public EmailListPresenter() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EmailListView.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
 
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            throw new IllegalStateException(e.getMessage(), e.getCause());
+        }
+
+        EventBus.INSTANCE.register(this);
+        initializeList();
+    }
+
+    /**
+     * Adds all emails, from all accounts, to the list, selects the first and assigns a listener to "select"-events.
+     */
+    private void initializeList() {
         emailListListView.setItems(sortedObservableEmailList);
 
         replaceListViewContent(accountHandler.getAllEmails());
@@ -69,7 +73,6 @@ public class EmailListPresenter implements Initializable, IObserver {
                 EventBus.INSTANCE.publish(new Event(EventType.SELECT_EMAIL, newValue.getEmail()));
             }
         });
-
     }
 
 
