@@ -19,11 +19,12 @@ public class SidebarPresenter extends VBox implements IObserver{
 
     ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
-    TagList<TagListItem> tagList = new TagList<TagListItem>(TagList.Type.GLOBAL);
-    ObservableList<TagListItem> observableTagList = FXCollections.observableArrayList();
+    TagList tagList = new TagList(tagHandler.getTags(), TagList.Type.GLOBAL);
+
     @FXML protected VBox sidebarContent;
 
     public SidebarPresenter() {
+        EventBus.INSTANCE.register(this);
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SidebarView.fxml"));
         fxmlLoader.setRoot(this);
@@ -37,27 +38,29 @@ public class SidebarPresenter extends VBox implements IObserver{
 
         tagList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                EventBus.INSTANCE.publish(new Event(EventType.SELECT_TAG, ((TagListItem)newValue).getTag()));
+                EventBus.INSTANCE.publish(new Event(EventType.SELECT_TAG, newValue.getTag()));
             }
         });
 
-        updateView();
-
         sidebarContent.getChildren().add(tagList);
-
     }
 
     /**
-     * A general method for updating the sidebar with the correct tags.
+     * Adds a tag to the list of tags if it isn't added since before.
+     *
+     * @param tag the tag to remove
      */
-    private void updateView() {
-        observableTagList.clear();
-        for(ITag tag : tagHandler.getTags()) {
-            if(!observableTagList.contains(tag)) {
-                observableTagList.add(new TagListItem(tag, TagList.Type.GLOBAL));
-            }
-        }
-        tagList.setItems(observableTagList);
+    public void addTagToList(ITag tag) {
+        tagList.addTag(tag);
+    }
+
+    /**
+     * Removes a tag from the list of tags.
+     *
+     * @param tag the tag to remove
+     */
+    public void removeTagFromList(ITag tag) {
+        tagList.removeTag(tag);
     }
 
     @Override
@@ -69,14 +72,11 @@ public class SidebarPresenter extends VBox implements IObserver{
 
     private void handleEvent(IEvent evt) {
         switch (evt.getType()) {
-            case DELETED_TAG:
-                updateView();
+            case NEW_TAG_ADDED:
+                addTagToList((ITag) evt.getValue());
                 break;
-            case REMOVED_TAG_FROM_EMAIL:
-                updateView();
-                break;
-            case ADDED_TAG_TO_EMAIL:
-                updateView();
+            case REMOVED_TAG_COMPLETELY:
+                removeTagFromList((ITag) evt.getValue());
                 break;
         }
     }

@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by OscarEvertsson on 24/04/15.
  */
-public interface ITag extends Searchable, Serializable {
+public interface ITag extends Searchable, Serializable, Comparable<ITag> {
 
    /**
     * Changes the name of the tag to the specified string.

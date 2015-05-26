@@ -41,7 +41,7 @@ public class EmailDetail extends VBox implements IObserver {
     @FXML protected WebView webView;
     @FXML protected VBox emailDetail;
     @FXML protected VBox emailDetailTop;
-    protected TagList<TagListItem> tagListView;
+    protected TagList tagListView;
 
     public EmailDetail() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/email/EmailDetail.fxml"));
@@ -56,7 +56,7 @@ public class EmailDetail extends VBox implements IObserver {
 
         EventBus.INSTANCE.register(this);
 
-        tagListView = new TagList<>(TagList.Type.LOCAL);
+        tagListView = new TagList(TagList.Type.LOCAL);
         tagListView.setOrientation(Orientation.HORIZONTAL);
         tagListView.setEditable(false);
         VBox.setVgrow(tagListView, Priority.NEVER);
@@ -101,7 +101,6 @@ public class EmailDetail extends VBox implements IObserver {
         ObservableList<TagListItem> observableList = FXCollections.observableArrayList();
 
         for(ITag tag : tags) {
-            System.out.println(tag.toString());
             TagListItem tagListItem = new TagListItem(tag, TagList.Type.LOCAL);
             tagListItem.getStyleClass().add("tag");
             observableList.add(tagListItem);

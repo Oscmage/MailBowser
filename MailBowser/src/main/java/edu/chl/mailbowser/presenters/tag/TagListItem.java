@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by filip on 07/05/15.
  */
-public class TagListItem extends HBox {
+public class TagListItem extends HBox implements Comparable<TagListItem> {
 
     private ITag tag;
     private TagList.Type type;
@@ -80,19 +80,18 @@ public class TagListItem extends HBox {
     }
 
     public boolean equals(Object o) {
-        if(o instanceof TagListItem) {
-            if(tag != null) {
-                return this.tag.equals(
-                        ((TagListItem)o).getTag()
-                );
-            } else {
-                return tagName.getText().equals(
-                        ((TagListItem)o).getName()
-                );
-            }
-
+        if (o == this) {
+            return true;
+        } else if (o == null) {
+            return false;
+        } else if (!o.getClass().equals(this.getClass())) {
+            return false;
         }
-        return false;
+
+        TagListItem other = (TagListItem) o;
+
+        return tag != null && other.getTag() != null
+                && tag.equals(other.getTag());
     }
 
     @Override
@@ -103,5 +102,10 @@ public class TagListItem extends HBox {
             return getName().hashCode();
         }
 
+    }
+
+    @Override
+    public int compareTo(TagListItem o) {
+        return tag.compareTo(tag);
     }
 }
