@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -21,6 +22,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ import java.util.ResourceBundle;
 /**
  * Created by jesper on 2015-05-22.
  */
-public class ContactBookPresenter implements Initializable{
+public class ContactBookPresenter extends VBox implements Initializable{
     @FXML protected ListView<ContactListViewItem> contactList;
     @FXML protected Button saveButton;
     @FXML protected Button addButton;
@@ -50,6 +52,18 @@ public class ContactBookPresenter implements Initializable{
 
     private IContactBook contactBook = MainHandler.INSTANCE.getContactBook();
     private ContactListViewItem selectedContact;
+
+    public ContactBookPresenter() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ContactBookView.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            System.out.println("FXML-file not found");
+        }
+    }
 
     @FXML
     public void addContactButtonOnAction(ActionEvent actionEvent) {
