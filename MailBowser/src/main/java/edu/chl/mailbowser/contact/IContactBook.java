@@ -10,6 +10,7 @@ public interface IContactBook {
 
     /**
      * Adds a contact.
+     * @param contact
      */
     void addContact(IContact contact);
 
