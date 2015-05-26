@@ -46,11 +46,11 @@ public class ContactTest {
 
     @Test
     public void testHashCode() throws Exception {
-
+        IContact contact = new Contact("","");
+        assertTrue(contact == contact);
     }
 
     @Test
     public void testHashAndEquals() throws Exception {
-
     }
 }
