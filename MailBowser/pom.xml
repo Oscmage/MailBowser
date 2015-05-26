@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.chalmers.tda367</groupId>
     <artifactId>mailbowser</artifactId>
-    <version>0.1</version>
+    <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>MailBowser</name>
 
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>annotations</artifactId>
-            <version>2.0.3</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
@@ -113,7 +113,7 @@
                     <effort>Max</effort>
                     <includeTests>true</includeTests>
                     <threshold>Low</threshold>
-                    <!--<excludeFilterFile>${project.basedir}/findbugs-exclude.xml</excludeFilterFile>-->
+                    <excludeFilterFile>${project.basedir}/findbugs-exclude.xml</excludeFilterFile>
                     <plugins>
                         <plugin>
                             <groupId>com.mebigfatguy.fb-contrib</groupId>
@@ -152,7 +152,7 @@
                 -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.4</version>
                 <configuration>
                     <includeTests>true</includeTests>
                     <targetJdk>${maven.compiler.target}</targetJdk>
