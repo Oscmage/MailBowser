@@ -13,6 +13,14 @@ public enum MailServerTypes {
         public String toString() {
             return "Gmail";
         }
+    },
+    HOTMAIL {
+        @Override
+        public String toString() { return "Hotmail"; }
+    },
+    YAHOO {
+        @Override
+        public String toString() { return "Yahoo"; }
     };
 
     /**
@@ -26,6 +34,12 @@ public enum MailServerTypes {
         switch (this) {
             case GMAIL:
                 server = new OutgoingServer("smtp.gmail.com", "587");
+                break;
+            case HOTMAIL:
+                server = new OutgoingServer("smtp.live.com", "25");
+                break;
+            case YAHOO:
+                server = new OutgoingServer("smtp.mail.yahoo.com", "465");
                 break;
             default:
                 break;
