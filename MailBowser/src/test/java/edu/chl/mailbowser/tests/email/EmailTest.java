@@ -74,8 +74,8 @@ public class EmailTest {
         assertTrue(bcc.get(0).getJavaMailAddressCalled);
 
         // tests if the sent dates and received dates are approximately the same
-        assertTrue(newEmail.getSentDate().getTime() - email.getSentDate().getTime() < 100);
-        assertTrue(newEmail.getReceivedDate().getTime() - email.getReceivedDate().getTime() < 100);
+        assertTrue(newEmail.getSentDate().getTime() - email.getSentDate().getTime() < 1000);
+        assertTrue(newEmail.getReceivedDate().getTime() - email.getReceivedDate().getTime() < 1000);
 
         // tests if you can get an email from a null JavaMail message
         boolean exceptionThrown = false;
