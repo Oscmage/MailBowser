@@ -4,17 +4,17 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.ContactBookPresenter">
+<fx:root type="javafx.scene.layout.VBox" stylesheets="@../css/style.css" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox maxHeight="1.7976931348623157E308" styleClass="menuBar" VBox.vgrow="NEVER">
          <children>
-            <HBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
+            <HBox fx:id="menuBarLeft" alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
                   <Button fx:id="addContactButton" mnemonicParsing="false" onAction="#addContactButtonOnAction" styleClass="circle, fontawesome" text="" />
                   <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonOnAction" styleClass="circle, fontawesome" text="" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="NEVER">
+            <HBox fx:id="menuBarRight" alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="NEVER">
                <children>
                   <Button fx:id="addNewAddressButton" mnemonicParsing="false" onAction="#addNewAddressButtonOnAction" styleClass="circle, fontawesome" text="&#xf0fe;" />
                   <Button fx:id="removeAddressButton" mnemonicParsing="false" onAction="#addNewAddressButtonOnAction" styleClass="circle, fontawesome" text="&#xf146;" />
@@ -25,7 +25,7 @@
       </HBox>
       <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <children>
-            <ListView fx:id="contactList" onMouseClicked="#contactListOnMouseClicked" prefHeight="300" HBox.hgrow="ALWAYS" />
+            <ListView fx:id="contactsList" prefHeight="300" HBox.hgrow="ALWAYS" />
             <ScrollPane hbarPolicy="NEVER" minWidth="200.0" maxWidth="200.0" prefViewportWidth="200.0" HBox.hgrow="ALWAYS">
                <content>
                   <VBox HBox.hgrow="ALWAYS">
@@ -46,4 +46,4 @@
          </children>
       </HBox>
    </children>
-</VBox>
+</fx:root>
