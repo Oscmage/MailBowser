@@ -4,4 +4,4 @@
 <?import javafx.scene.control.*?>
 
 
-<ListView id="emailList" fx:id="emailListListView" maxWidth="240.0" minWidth="240.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.EmailListPresenter" />
+<fx:root type="javafx.scene.control.ListView" id="emailList" fx:id="emailListListView" maxWidth="240.0" minWidth="240.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />

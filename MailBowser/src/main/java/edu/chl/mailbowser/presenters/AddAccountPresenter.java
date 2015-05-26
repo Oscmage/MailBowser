@@ -9,19 +9,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * Created by mats on 22/05/15.
  */
-public class AddAccountPresenter extends VBox implements Initializable {
+public class AddAccountPresenter extends VBox {
 
     @FXML protected TextField usernameField;
     @FXML protected TextField passwordField;
@@ -41,13 +38,13 @@ public class AddAccountPresenter extends VBox implements Initializable {
             throw new IllegalStateException(e.getMessage(), e.getCause());
         }
 
-        setupAccountTypeChoiceBox();
+        initializeAccountTypeChoiceBox();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {}
-
-    private void setupAccountTypeChoiceBox() {
+    /**
+     * Populates the choice box with all supported server types.
+     */
+    private void initializeAccountTypeChoiceBox() {
         ObservableList<MailServerTypes> observableList = FXCollections.observableArrayList();
         for(MailServerTypes mailServerTypes : MailServerTypes.values()) {
             observableList.add(mailServerTypes);

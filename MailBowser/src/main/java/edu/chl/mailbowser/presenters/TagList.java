@@ -13,9 +13,11 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -24,15 +26,24 @@ import java.util.Set;
 /**
  * Created by filip on 04/05/15.
  */
-public class SidebarPresenter implements IObserver, Initializable {
+public class TagList extends ListView implements IObserver {
 
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
-
-    @FXML private ListView<SidebarViewItemPresenter> tagsList;
     private ObservableList<SidebarViewItemPresenter> observableTagsList = FXCollections.observableList(new ArrayList<>());
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @FXML protected ListView<SidebarViewItemPresenter> tagsList;
+
+    public TagList() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/sidebar/TagList.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            throw new IllegalStateException(e.getMessage(), e.getCause());
+        }
+
         EventBus.INSTANCE.register(this);
 
         observableTagsList.add(new SidebarViewItemPresenter("All emails"));
@@ -48,7 +59,6 @@ public class SidebarPresenter implements IObserver, Initializable {
                 EventBus.INSTANCE.publish(new Event(EventType.SELECT_TAG, newValue.getTag()));
             }
         });
-
     }
 
     private void updateView() {

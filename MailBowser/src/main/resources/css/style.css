@@ -483,3 +483,15 @@
     -fx-padding: 10;
     -fx-spacing: 10;
 }
+
+.choice-box {
+    -fx-background-color: -fx-bright;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-pref-width: 13337; // haxx
+}
+
+.choice-box.gridded {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: derive(-fx-bright, -15%);
+}

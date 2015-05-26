@@ -6,18 +6,14 @@ import edu.chl.mailbowser.account.OutgoingServer;
 import edu.chl.mailbowser.email.Address;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * Created by mats on 22/05/15.
  */
-public class EditAccountPresenter extends VBox implements Initializable {
+public class EditAccountPresenter extends VBox {
 
     private IAccount account;
 
@@ -49,12 +45,6 @@ public class EditAccountPresenter extends VBox implements Initializable {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {}
-
-    /**
      * Updates the selected account with the new info from the view.
      */
     public void updateAccountInfo() {
@@ -83,15 +73,4 @@ public class EditAccountPresenter extends VBox implements Initializable {
         this.outgoingServerPortField.setText(this.account.getOutgoingServer().getPort());
     }
 
-    /**
-     * Validates the fields for address and password.
-     *
-     * @return false if any fields are empty, otherwise true
-     */
-    //private boolean validateFields() {
-    //    if (address.getText().isEmpty() || password.getText().isEmpty()) {
-    //        return false;
-    //    }
-    //    return true;
-    //}
 }
