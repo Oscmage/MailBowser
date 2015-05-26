@@ -31,7 +31,18 @@ public class ContactListViewItem extends FlowPane{
             System.out.println("FXML-file not found");
         }
         this.contact = contact;
-        setText(contact.getFullName());
+
+        if(contact.getFirstName() != null && contact.getLastName() != null) {
+            setText(contact.getFullName());
+        } else if((contact.getFirstName() != null)) {
+            setText(contact.getFirstName());
+        } else if((contact.getLastName() != null)) {
+            setText(contact.getLastName());
+        } else {
+            setText("New contact...");
+        }
+
+
     }
 
     public IContact getContact(){

@@ -69,18 +69,7 @@ public class ContactBookPresenter extends VBox {
             System.out.println("FXML-file not found in " + fxmlLoader.getLocation());
         }
 
-        contactsList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                selectedContact = newValue;
-                updateView();
-            }
-        });
-
-        for(IContact contact : contactBook.getContacts()) {
-            contactListItems.add(new ContactListViewItem(contact));
-        }
-
-        contactsList.setItems(contactListItems);
+        initializeContactBook();
     }
 
     public ContactBookPresenter(boolean showInsertButton) {
@@ -101,12 +90,35 @@ public class ContactBookPresenter extends VBox {
         menuBarRight.getChildren().add(button);
     }
 
+    private void initializeContactBook() {
+        contactsList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                selectedContact = newValue;
+                updateView();
+            }
+        });
+
+        for(IContact contact : contactBook.getContacts()) {
+            contactListItems.add(new ContactListViewItem(contact));
+        }
+
+        contactsList.setItems(contactListItems);
+
+        if(contactListItems.isEmpty()) {
+            firstNameField.setEditable(false);
+            lastNameField.setEditable(false);
+        }
+
+    }
+
     private void updateView() {
         lastNameField.setText(selectedContact.getContact().getLastName());
         firstNameField.setText(selectedContact.getContact().getFirstName());
         for (IAddress address : selectedContact.getContact().getEmailAddresses()) {
             addAddressField(address);
         }
+        firstNameField.setEditable(true);
+        lastNameField.setEditable(true);
     }
 
     private void addAddressField(IAddress address){
@@ -131,8 +143,10 @@ public class ContactBookPresenter extends VBox {
     @FXML
     public void addContactButtonOnAction(ActionEvent actionEvent) {
         IContact newContact = new Contact();
+        ContactListViewItem contactListViewItem = new ContactListViewItem(newContact);
         contactBook.addContact(newContact);
-        contactListItems.add(new ContactListViewItem(newContact));
+        contactListItems.add(contactListViewItem);
+        contactsList.getSelectionModel().select(contactListViewItem);
     }
 
     @FXML
