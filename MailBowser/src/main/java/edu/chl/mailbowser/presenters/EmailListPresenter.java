@@ -155,14 +155,14 @@ public class EmailListPresenter implements Initializable, IObserver {
                 break;
             case REMOVED_TAG_FROM_EMAIL:
                 Pair<IEmail, ITag> pair = (Pair<IEmail, ITag>)evt.getValue();
-                replaceListViewContent(new TreeSet<>(tagHandler.getEmailsWith(pair.getSecond())));
+                replaceListViewContent(new TreeSet<>(tagHandler.getEmailsWithTag(pair.getSecond())));
                 break;
             case CLEAR_EMAILS:
                 clearEmails();
                 break;
             case SELECT_TAG:
                 if(evt.getValue() != null) {
-                    replaceListViewContent(new TreeSet<>(tagHandler.getEmailsWith((ITag) evt.getValue())));
+                    replaceListViewContent(new TreeSet<>(tagHandler.getEmailsWithTag((ITag) evt.getValue())));
                 } else {
                     replaceListViewContent(new TreeSet<>(accountHandler.getAllEmails()));
                 }

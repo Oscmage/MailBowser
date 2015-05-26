@@ -8,11 +8,14 @@ import java.util.TimerTask;
 /**
  * Created by jesper on 2015-05-07.
  *
- * A concrete implementation of IBackgroundFetcher.
+ * A concrete implementation of IBackgroundFetcher. This fetcher is initiated with an interval and an account handler.
+ * A timer is started with the interval, and a fetch is initiated using the account handler on every iteration.
  */
 public class BackgroundFetcher implements IBackgroundFetcher {
     private int fetchInterval;
     private IAccountHandler accountHandler;
+
+    // an instance variable to keep track of the timer. this is used for starting and stopping the timer
     private Timer timer = new Timer(true);
 
     /**

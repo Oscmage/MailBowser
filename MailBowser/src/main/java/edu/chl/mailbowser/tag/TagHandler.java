@@ -22,12 +22,9 @@ public class TagHandler implements ITagHandler{
     private Map<ITag,Set<IEmail>> mapFromTagsToEmails = new HashMap<>();
     private Map<IEmail,Set<ITag>> mapFromEmailsToTags = new HashMap<>();
 
+
     /**
-     * Adds the tag to the email and vice versa.
-     * Synchronized since we're reAdding everything on startup and
-     * during that time you could possible add a tag at the same time.
-     * @param email
-     * @param tag
+     * {@inheritDoc}
      */
     @Override
     public synchronized void addTagToEmail(IEmail email, ITag tag){
@@ -44,45 +41,42 @@ public class TagHandler implements ITagHandler{
         EventBus.INSTANCE.publish(new Event(EventType.ADDED_TAG_TO_EMAIL, new Pair<>(email, tag)));
     }
 
+
     /**
-     * Returns a set of emails for the given tag.
-     * @param tag
-     * @return
+     * {@inheritDoc}
      */
     @Override
-    public Set<IEmail> getEmailsWith(ITag tag){
+    public Set<IEmail> getEmailsWithTag(ITag tag){
         if(mapFromTagsToEmails.get(tag) != null) {
             return new HashSet<>(mapFromTagsToEmails.get(tag));
         }
         return new HashSet<>();
     }
 
+
     /**
-     * Returns a set of tags for the given email.
-     * @param email
-     * @return
+     * {@inheritDoc}
      */
     @Override
-    public Set<ITag> getTagsWith(IEmail email){
+    public Set<ITag> getTagsWithEmail(IEmail email){
         if(mapFromEmailsToTags.get(email) != null) {
             return new HashSet<>(mapFromEmailsToTags.get(email));
         }
         return new HashSet<>();
     }
 
+
     /**
-     * Returns all the tag(s).
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public Set<ITag> getTags(){
         return mapFromTagsToEmails.keySet();
     }
 
+
     /**
-     * Removes the tag from the specified email(from both maps.).
-     * @param email
-     * @param tag
+     * {@inheritDoc}
      */
     @Override
     public synchronized void removeTagFromEmail(IEmail email,ITag tag){
@@ -106,8 +100,7 @@ public class TagHandler implements ITagHandler{
     }
 
     /**
-     * Removes the specified tag from all mapFromEmailsToTags and mapFromTagsToEmails.
-     * @param tag
+     * {@inheritDoc}
      */
     @Override
     public synchronized void eraseTag(ITag tag) {
@@ -123,11 +116,9 @@ public class TagHandler implements ITagHandler{
         }
     }
 
+
     /**
-     * Reads in the mapFromTagsToEmails HashMaps from disk
-     * Then builds the mapFromEmailsToTags HashMap from mapFromTagsToEmails
-     * @param filename location of the file
-     * @return true if the reading of mapFromTagsToEmails was successful
+     * {@inheritDoc}
      */
     @Override
     public boolean readTags(String filename){
@@ -151,9 +142,7 @@ public class TagHandler implements ITagHandler{
     }
 
     /**
-     * Writes the mapFromTagsToEmails HashMap to disk
-     * @param filename the location of the file
-     * @return return true on success
+     * {@inheritDoc}
      */
     @Override
     public boolean writeTags(String filename){
