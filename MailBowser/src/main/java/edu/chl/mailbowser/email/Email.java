@@ -308,15 +308,6 @@ public class Email implements IEmail {
         this.sender = sender;
     }
 
-    private void setSentDate(){
-        this.sentDate = new Date();
-    }
-
-    @Override
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
