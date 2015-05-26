@@ -5,6 +5,7 @@ import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by OscarEvertsson on 19/05/15.
@@ -38,7 +39,7 @@ public interface IAccountHandler {
      *
      * @return a list of emails
      */
-    List<IEmail> getAllEmails();
+    Set<IEmail> getAllEmails();
 
     /**
      * Initiates fetching from all accounts

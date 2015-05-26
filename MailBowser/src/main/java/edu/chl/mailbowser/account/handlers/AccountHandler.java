@@ -1,22 +1,19 @@
 package edu.chl.mailbowser.account.handlers;
 
-import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.io.*;
-import edu.chl.mailbowser.tag.handlers.ITagHandler;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
-import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.IOException;
-import java.security.*;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
+
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by mats on 11/05/15.
@@ -57,8 +54,8 @@ public class AccountHandler implements IAccountHandler{
      * {@inheritDoc}
      */
     @Override
-    public List<IEmail> getAllEmails() {
-        List<IEmail> emails = new ArrayList<IEmail>();
+    public Set<IEmail> getAllEmails() {
+        Set<IEmail> emails = new TreeSet<>();
 
         for(IAccount account : accounts) {
             emails.addAll(account.getEmails());
