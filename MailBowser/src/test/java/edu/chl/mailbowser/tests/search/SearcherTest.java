@@ -1,7 +1,7 @@
 package edu.chl.mailbowser.tests.search;
 
 import edu.chl.mailbowser.search.Searcher;
-import edu.chl.mailbowser.tag.models.Tag;
+import edu.chl.mailbowser.tag.Tag;
 import org.junit.Before;
 import org.junit.Test;
 

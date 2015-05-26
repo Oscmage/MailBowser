@@ -2,10 +2,12 @@ package edu.chl.mailbowser;
 
 import edu.chl.mailbowser.account.AccountHandler;
 import edu.chl.mailbowser.account.IAccountHandler;
+import edu.chl.mailbowser.backgroundfetcher.BackgroundFetcher;
+import edu.chl.mailbowser.backgroundfetcher.IBackgroundFetcher;
 import edu.chl.mailbowser.contact.ContactBook;
 import edu.chl.mailbowser.contact.IContactBook;
-import edu.chl.mailbowser.tag.handlers.ITagHandler;
-import edu.chl.mailbowser.tag.handlers.TagHandler;
+import edu.chl.mailbowser.tag.ITagHandler;
+import edu.chl.mailbowser.tag.TagHandler;
 
 /**
  * Created by OscarEvertsson on 19/05/15.

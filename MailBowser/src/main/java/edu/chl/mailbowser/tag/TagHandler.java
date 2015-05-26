@@ -1,11 +1,10 @@
-package edu.chl.mailbowser.tag.handlers;
+package edu.chl.mailbowser.tag;
 
 import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.io.*;
-import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.utils.Pair;
 
 import java.util.HashMap;

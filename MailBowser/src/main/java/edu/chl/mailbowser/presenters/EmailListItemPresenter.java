@@ -2,7 +2,7 @@ package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.IEmail;
-import edu.chl.mailbowser.tag.models.ITag;
+import edu.chl.mailbowser.tag.ITag;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

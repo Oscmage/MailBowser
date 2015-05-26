@@ -5,7 +5,7 @@ import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.io.*;
-import edu.chl.mailbowser.tag.handlers.ITagHandler;
+import edu.chl.mailbowser.tag.ITagHandler;
 
 import java.util.ArrayList;
 import java.util.List;

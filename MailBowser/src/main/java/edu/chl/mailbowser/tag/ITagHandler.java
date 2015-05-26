@@ -1,9 +1,7 @@
-package edu.chl.mailbowser.tag.handlers;
+package edu.chl.mailbowser.tag;
 
 import edu.chl.mailbowser.email.IEmail;
-import edu.chl.mailbowser.tag.models.ITag;
 
-import java.io.Serializable;
 import java.util.Set;
 
 /**

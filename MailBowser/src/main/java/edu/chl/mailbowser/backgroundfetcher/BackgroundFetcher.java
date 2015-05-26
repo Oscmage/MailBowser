@@ -1,4 +1,4 @@
-package edu.chl.mailbowser;
+package edu.chl.mailbowser.backgroundfetcher;
 
 import edu.chl.mailbowser.account.IAccountHandler;
 

@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.tag.models;
+package edu.chl.mailbowser.tag;
 
 /**
  * Created by OscarEvertsson on 24/04/15.

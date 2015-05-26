@@ -1,4 +1,4 @@
-package edu.chl.mailbowser;
+package edu.chl.mailbowser.backgroundfetcher;
 
 /**
  * Created by jesper on 21/05/15.

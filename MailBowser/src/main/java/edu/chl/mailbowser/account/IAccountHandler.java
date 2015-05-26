@@ -1,7 +1,7 @@
 package edu.chl.mailbowser.account;
 
 import edu.chl.mailbowser.email.IEmail;
-import edu.chl.mailbowser.tag.handlers.ITagHandler;
+import edu.chl.mailbowser.tag.ITagHandler;
 
 import java.util.List;
 

@@ -1,10 +1,9 @@
-package edu.chl.mailbowser.tag.views;
+package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
-import edu.chl.mailbowser.tag.models.ITag;
-import javafx.event.ActionEvent;
+import edu.chl.mailbowser.tag.ITag;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

@@ -1,6 +1,7 @@
 package edu.chl.mailbowser;
 
 
+import edu.chl.mailbowser.backgroundfetcher.IBackgroundFetcher;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;

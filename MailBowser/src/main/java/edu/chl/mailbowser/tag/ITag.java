@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.tag.models;
+package edu.chl.mailbowser.tag;
 
 import edu.chl.mailbowser.search.Searchable;
 

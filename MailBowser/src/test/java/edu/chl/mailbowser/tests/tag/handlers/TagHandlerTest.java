@@ -1,8 +1,8 @@
 package edu.chl.mailbowser.tests.tag.handlers;
 
 import edu.chl.mailbowser.email.IEmail;
-import edu.chl.mailbowser.tag.handlers.TagHandler;
-import edu.chl.mailbowser.tag.models.ITag;
+import edu.chl.mailbowser.tag.TagHandler;
+import edu.chl.mailbowser.tag.ITag;
 import edu.chl.mailbowser.tests.account.models.MockEmail;
 import org.junit.Before;
 import org.junit.Test;
