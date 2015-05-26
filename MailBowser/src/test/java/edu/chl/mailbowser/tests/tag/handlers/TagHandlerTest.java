@@ -13,14 +13,21 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created by filip on 19/05/15.
+ * A test class for TagHandler
  */
 public class TagHandlerTest {
 
     private TagHandler tagHandler;
+    private IEmail email;
+    private ITag tagOne;
+    private ITag tagTwo;
 
     @Before
     public void init() {
         tagHandler = new TagHandler();
+        email = new MockEmail();
+        tagOne = new MockTag();
+        tagTwo = new MockTag();
     }
 
     @Test
@@ -29,38 +36,44 @@ public class TagHandlerTest {
         assertTrue(tagHandler.getTagsWithEmail(new MockEmail()).isEmpty());
     }
 
+
     @Test
     public void testAddTag() {
-        IEmail e1 = new MockEmail();
-        ITag t1 = new MockTag();
 
-        tagHandler.addTagToEmail(e1, t1);
+        tagHandler.addTagToEmail(email, tagOne);
 
-        assertEquals(tagHandler.getEmailsWithTag(t1).toArray()[0], e1);
-        assertEquals(tagHandler.getTagsWithEmail(e1).toArray()[0], t1);
+        //Tests if you get the same email after adding it with a certain tag
+        assertEquals(tagHandler.getEmailsWithTag(tagOne).toArray()[0], email);
+
+        //Tests if you get the same tag after adding it with a certain email.
+        assertEquals(tagHandler.getTagsWithEmail(email).toArray()[0], tagOne);
     }
 
     @Test
     public void testMultipleAddTag() {
-        IEmail e1 = new MockEmail();
-        ITag t1 = new MockTag();
-        ITag t2 = new MockTag();
-
         // Single email with multiple tags?
-        tagHandler.addTagToEmail(e1, t2);
-        tagHandler.addTagToEmail(e1, t1);
-        assertTrue(tagHandler.getTagsWithEmail(e1).contains(t1));
-        assertTrue(tagHandler.getTagsWithEmail(e1).contains(t2));
+        tagHandler.addTagToEmail(email, tagTwo);
+        tagHandler.addTagToEmail(email, tagOne);
+
+        //Contains first added tag?
+        assertTrue(tagHandler.getTagsWithEmail(email).contains(tagOne));
+        //Contains tag nr 2?
+        assertTrue(tagHandler.getTagsWithEmail(email).contains(tagTwo));
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddTagToEmailException() {
+        //Null test
+        tagHandler.addTagToEmail(null,null);
     }
 
     @Test
     public void testRemoveTag() {
-        IEmail e1 = new MockEmail();
-        ITag t1 = new MockTag();
 
-        tagHandler.addTagToEmail(e1, t1);
-        tagHandler.eraseTag(t1);
-        assertTrue(tagHandler.getTagsWithEmail(e1).isEmpty());
+        tagHandler.addTagToEmail(email, tagOne);
+        tagHandler.eraseTag(tagOne);
+        assertTrue(tagHandler.getTagsWithEmail(email).isEmpty());
     }
 
 }
