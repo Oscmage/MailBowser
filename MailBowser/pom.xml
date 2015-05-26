@@ -113,7 +113,7 @@
                     <effort>Max</effort>
                     <includeTests>true</includeTests>
                     <threshold>Low</threshold>
-                    <excludeFilterFile>${project.basedir}/findbugs-exclude.xml</excludeFilterFile>
+                    <!--<excludeFilterFile>${project.basedir}/findbugs-exclude.xml</excludeFilterFile>-->
                     <plugins>
                         <plugin>
                             <groupId>com.mebigfatguy.fb-contrib</groupId>
