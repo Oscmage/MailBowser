@@ -39,7 +39,7 @@ import java.util.ResourceBundle;
 /**
  * Created by mats on 09/04/15.
  */
-public class ComposeEmailPresenter extends GridPane implements Initializable, IObserver {
+public class ComposeEmailPresenter extends GridPane implements IObserver {
 
     private static final String EMAIL_CSS = "<head><style>* {font-family: \"Arial\"}</style></head>";
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
@@ -55,7 +55,7 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
     @FXML protected WebView webView;
     @FXML protected Parent root;
 
-    public ComposeEmailPresenter(String recipients, String subject, String content) {
+    public ComposeEmailPresenter() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ComposeEmailView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -68,7 +68,14 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
 
         getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
 
+        EventBus.INSTANCE.register(this);
+
         initializeAccountTypeChoiceBox();
+        showOrHideSendButton();
+    }
+
+    public ComposeEmailPresenter(String recipients, String subject, String content) {
+        this();
         toTextField.setText(recipients);
         subjectTextField.setText(subject);
         contentTextArea.setText(content);
@@ -85,6 +92,65 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
 
         fromChoiceBox.setItems(observableList);
         fromChoiceBox.getSelectionModel().select(0);
+    }
+
+    /**
+     * Parses the string in the recipients field and returns a list of IAddresses.
+     *
+     * @param addressString a string with addresses to parse, separated by comma
+     * @return a list of parsed IAddresses
+     */
+    public static List<IAddress> parseAddresses(String addressString) {
+        String[] addressArray = addressString.split(", ");
+
+        List<IAddress> addressList = new ArrayList<>();
+        for (String address : addressArray) {
+            addressList.add(new Address(address));
+        }
+
+        return addressList;
+    }
+
+    /**
+     * Depending on whether an account exists the send button is disabled or enabled.
+     */
+    private void showOrHideSendButton() {
+        if (accountHandler.getAccounts().size() == 0) {
+            this.sendButton.setDisable(true);
+        } else {
+            this.sendButton.setDisable(false);
+        }
+    }
+
+    /**
+     * Invoked when the "Insert"-button in the contact book is clicked.
+     * @param contact
+     */
+    private void insertContactToEmail(IContact contact) {
+        for (IAddress address : contact.getEmailAddresses()) {
+            if(toTextField.getText().length() != 0) {
+                toTextField.appendText(", " + address.getString());
+            } else {
+                toTextField.setText(address.getString());
+            }
+        }
+    }
+
+    /**
+     * Invoked when typing in the content text-area with the purpose of compiling text to markdown
+     * and showing it in the Web View.
+     */
+    @FXML
+    protected void onKeyTyped() {
+        try {
+            html = new Markdown4jProcessor().process(contentTextArea.getText());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        html = EMAIL_CSS + html;
+
+        webView.getEngine().loadContent(html);
     }
 
     /**
@@ -115,14 +181,17 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
 
         // Build the email and send it
         IEmail email = emailBuilder.build();
-
-        // TODO: Fix sender
-        accountHandler.getAccounts().get(0).send(email);
+        fromChoiceBox.getValue().send(email);
 
         Stage stage = (Stage) this.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Opens the contact book with the "ComposeEmailPresenter"-window as modal parent.
+     *
+     * @param event
+     */
     @FXML
     protected void openContactBook(ActionEvent event) {
         Stage stage = new Stage();
@@ -132,76 +201,6 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
         stage.setMinHeight(300);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
-    }
-
-    private void setReceivers(String value) {
-        toTextField.textProperty().set(value);
-    }
-
-    private void setSubject(String value) {
-        subjectTextField.textProperty().set(value);
-    }
-
-    private void setContent(String value) {
-        contentTextArea.textProperty().set(value);
-    }
-
-    /**
-     * Parses the string in the recipients field and returns a list of IAddresses.
-     *
-     * @param addressString a string with addresses to parse, separated by comma
-     * @return a list of parsed IAddresses
-     */
-    public static List<IAddress> parseAddresses(String addressString) {
-        String[] addressArray = addressString.split(", ");
-
-        List<IAddress> addressList = new ArrayList<>();
-        for (String address : addressArray) {
-            addressList.add(new Address(address));
-        }
-
-        return addressList;
-    }
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        showOrHideSendButton();
-        EventBus.INSTANCE.register(this);
-    }
-
-    /**
-     * Depending on whether an account exists the send button is disabled or enabled.
-     */
-    private void showOrHideSendButton() {
-        if (accountHandler.getAccounts().size() == 0) {
-            this.sendButton.setDisable(true);
-        } else {
-            this.sendButton.setDisable(false);
-        }
-    }
-
-    private void insertContactToEmail(IContact contact) {
-
-        for (IAddress address : contact.getEmailAddresses()) {
-            if(toTextField.getText().length() != 0) {
-                toTextField.appendText(", " + address.getString());
-            } else {
-                toTextField.setText(address.getString());
-            }
-        }
-    }
-
-    public void onKeyTyped() {
-        try {
-            html = new Markdown4jProcessor().process(contentTextArea.getText());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        html = EMAIL_CSS + html;
-
-        webView.getEngine().loadContent(html);
     }
 
     @Override
