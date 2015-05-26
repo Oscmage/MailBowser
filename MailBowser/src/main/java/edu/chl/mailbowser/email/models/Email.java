@@ -225,7 +225,7 @@ public class Email implements IEmail {
             msg.addRecipients(Message.RecipientType.BCC, getJavaxRecipients(bcc));
         } catch (MessagingException e) {
             // TODO handle this exception.
-            throw new IllegalArgumentException("getJavaMailMessage: f");
+            throw new IllegalArgumentException("Invalid session");
         }
         return msg;
     }
