@@ -8,6 +8,7 @@
 <?import edu.chl.mailbowser.presenters.EmailDetailPresenter?>
 <?import edu.chl.mailbowser.presenters.EmailListPresenter?>
 <?import edu.chl.mailbowser.presenters.TagList?>
+<?import edu.chl.mailbowser.presenters.TopbarPresenter?>
 <VBox minHeight="600.0" minWidth="960.0" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.MainPresenter">
     <children>
         <MenuBar>
@@ -58,7 +59,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <fx:include charset="utf-8" source="TopbarView.fxml" />
+        <TopbarPresenter />
         <HBox VBox.vgrow="ALWAYS">
             <children>
                 <VBox id="sidebar" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
