@@ -1,9 +1,5 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.account.IAccountHandler;
-import edu.chl.mailbowser.account.IAccount;
-import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

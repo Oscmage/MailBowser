@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.MainHandler;
+import edu.chl.mailbowser.main.MainHandler;
 import edu.chl.mailbowser.email.IAddress;
 import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.*;

@@ -4,7 +4,7 @@ import edu.chl.mailbowser.account.MailServerTypes;
 import edu.chl.mailbowser.account.Account;
 import edu.chl.mailbowser.account.IAccount;
 import edu.chl.mailbowser.email.Address;
-import edu.chl.mailbowser.MainHandler;
+import edu.chl.mailbowser.main.MainHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

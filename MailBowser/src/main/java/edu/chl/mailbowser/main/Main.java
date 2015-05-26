@@ -1,4 +1,4 @@
-package edu.chl.mailbowser;
+package edu.chl.mailbowser.main;
 
 
 import edu.chl.mailbowser.backgroundfetcher.IBackgroundFetcher;

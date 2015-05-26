@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.MainHandler;
+import edu.chl.mailbowser.main.MainHandler;
 import edu.chl.mailbowser.contact.Contact;
 import edu.chl.mailbowser.contact.IContact;
 import edu.chl.mailbowser.contact.IContactBook;
