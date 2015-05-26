@@ -16,8 +16,6 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private static ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
-    private static IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
     private static IBackgroundFetcher backgroundFetching = MainHandler.INSTANCE.getBackgroundFetching();
 
     @Override
@@ -45,34 +43,17 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         // load serialized objects from disk
-        load();
+        MainHandler.INSTANCE.loadComponents();
+
+        // initiate background fetching
         backgroundFetching.start();
+
         // used to launch a JavaFX application
         launch(args);
+        // stop background fetching
         backgroundFetching.stop();
+
         // save serializable objects to disk
-        save();
-    }
-
-    private static void load() {
-        boolean loadAccountsSuccessful = accountHandler.readAccounts("Accounts.ser");
-        boolean loadTagHandlerSuccessful = tagHandler.readTags("Tags.ser");
-
-        if (!loadAccountsSuccessful) {
-            System.out.println("load: failed to load accounts from Accounts.ser");
-        } else {
-            System.out.println("load: loaded accounts " + accountHandler.getAccounts());
-        }
-
-        if(!loadTagHandlerSuccessful){
-            System.out.println("load: failed to load tags from Tags.ser");
-        } else {
-            System.out.println("load: loaded tags " + tagHandler.getTags());
-        }
-    }
-
-    private static void save() {
-        accountHandler.writeAccounts("Accounts.ser");
-        tagHandler.writeTags("Tags.ser");
+        MainHandler.INSTANCE.saveComponents();
     }
 }

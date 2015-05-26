@@ -1,6 +1,5 @@
 package edu.chl.mailbowser.account.models;
 
-import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
@@ -11,7 +10,6 @@ import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.models.Tag;
 import edu.chl.mailbowser.utils.Crypto;
 
-import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,25 +19,26 @@ import java.util.List;
  * A model class for an email account. An account has an address, a password and two mail servers - an incoming and an outgoing.
  */
 public class Account implements IAccount {
-    // TODO: Remove the call to MainHandler and instead supply the tag handler in the constructor
-    private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
-
     private IAddress address;
 
+    // the key to use when encrypting and decrypting the password. the password is never saved in plain text, it is
+    // only saved as an encrypted byte array
     private static final String KEY = "%*tR7sfa";
     private byte[] password;
 
     private IIncomingServer incomingServer;
     private IOutgoingServer outgoingServer;
+    private transient ITagHandler tagHandler;
 
     private List<IEmail> emails = new ArrayList<>();
 
-
-    public Account(IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer) {
-        address = newAddress;
-        setPassword(newPassword);
-        incomingServer = newIncomingServer;
-        outgoingServer = newOutgoingServer;
+    public Account(IAddress address, String password, IIncomingServer incomingServer, IOutgoingServer outgoingServer,
+                   ITagHandler tagHandler) {
+        this.address = address;
+        setPassword(password);
+        this.incomingServer = incomingServer;
+        this.outgoingServer = outgoingServer;
+        this.tagHandler = tagHandler;
     }
 
     /**
@@ -183,6 +182,11 @@ public class Account implements IAccount {
     @Override
     public boolean testConnect(){
         return incomingServer.testConnection(getUsername(),getPassword());
+    }
+
+    @Override
+    public void setTagHandler(ITagHandler tagHandler) {
+        this.tagHandler = tagHandler;
     }
 
     /**
