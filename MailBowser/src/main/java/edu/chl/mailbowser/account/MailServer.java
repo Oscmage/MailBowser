@@ -56,6 +56,7 @@ public abstract class MailServer implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+        if (o == null) return false;
         if (!this.getClass().equals(o.getClass())) return false;
 
         MailServer that = (MailServer) o;

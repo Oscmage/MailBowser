@@ -96,7 +96,7 @@ public class Account implements IAccount {
      */
     @Override
     public String getPassword() {
-        return Crypto.decryptByteArray(password, KEY);
+        return Crypto.decryptByteArray(password, KEY, "UTF-8");
     }
 
     /**
@@ -147,7 +147,7 @@ public class Account implements IAccount {
      */
     @Override
     public void setPassword(String password) {
-        this.password = Crypto.encryptString(password, KEY);
+        this.password = Crypto.encryptString(password, KEY, "UTF-8");
     }
 
     /**
