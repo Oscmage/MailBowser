@@ -12,8 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,7 +27,7 @@ public class SidebarViewItemPresenter extends HBox implements Initializable {
     @FXML protected Button button;
 
     public SidebarViewItemPresenter() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/sidebar/SidebarViewItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/sidebar/TagListItem.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
