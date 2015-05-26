@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
  */
 public class Email implements IEmail {
     private IAddress sender;
-    private String subject;
-    private String content;
+    private final String subject;
+    private final String content;
 
     private List<IAddress> to = new ArrayList<>();
     private List<IAddress> cc = new ArrayList<>();
@@ -299,22 +299,8 @@ public class Email implements IEmail {
     }
 
     @Override
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    @Override
     public void setSender(IAddress sender) {
         this.sender = sender;
-    }
-
-    private void setSentDate(){
-        this.sentDate = new Date();
-    }
-
-    @Override
-    public void setSubject(String subject) {
-        this.subject = subject;
     }
 
     @Override

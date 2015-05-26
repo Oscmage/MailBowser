@@ -9,7 +9,7 @@ import javax.mail.internet.InternetAddress;
  * Address represents an email address. You cannot create an invalid Address obejct.
  */
 public class Address implements IAddress{
-    private String address;
+    private final String address;
 
     //rfc822 is a standard for ARPA internet text messages
     private static final String ALLOWED_ADDRESS_TYPE = "rfc822";

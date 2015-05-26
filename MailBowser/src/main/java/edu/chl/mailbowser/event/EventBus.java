@@ -5,6 +5,9 @@ import java.util.List;
 
 /**
  * Created by mats on 29/04/15.
+ *
+ * A singleton used as a central point for events. Observers register to the EventBus, and observables sends events
+ * to the EventBus. The EventBus takes all incoming events and distibutes them to all registered observers.
  */
 public enum EventBus implements IObservable {
     INSTANCE;

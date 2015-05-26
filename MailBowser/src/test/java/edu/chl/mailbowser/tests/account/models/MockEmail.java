@@ -64,20 +64,9 @@ public class MockEmail implements IEmail {
         return null;
     }
 
-
-    @Override
-    public void setContent(String content) {
-
-    }
-
     @Override
     public void setSender(IAddress sender) {
         setSender = true;
-    }
-
-    @Override
-    public void setSubject(String subject) {
-
     }
 
     @Override

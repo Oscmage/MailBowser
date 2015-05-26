@@ -2,6 +2,8 @@ package edu.chl.mailbowser.event;
 
 /**
  * Created by mats on 29/04/15.
+ *
+ * A concrete implementation of the IEvent interface.
  */
 public class Event implements IEvent {
     private final EventType type;
@@ -19,9 +21,7 @@ public class Event implements IEvent {
     }
 
     /**
-     * Returns the type of this event.
-     *
-     * @return the type of this event.
+     * {@inheritDoc}
      */
     @Override
     public EventType getType() {
@@ -29,9 +29,7 @@ public class Event implements IEvent {
     }
 
     /**
-     * Returns the value of this event.
-     *
-     * @return the value of this event.
+     * {@inheritDoc}
      */
     @Override
     public Object getValue() {
@@ -39,7 +37,7 @@ public class Event implements IEvent {
     }
 
     /**
-     * Returns a string representation of this event.
+     * Returns a string representation of this event. The string will look something like this: "Event [type=type, value=(value)]"
      *
      * @return a string representation of this event.
      */
