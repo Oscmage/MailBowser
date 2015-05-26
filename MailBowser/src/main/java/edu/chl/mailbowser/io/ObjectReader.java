@@ -25,8 +25,8 @@ public class ObjectReader<T extends Serializable> implements IObjectReader<T> {
             fileInputStream = new FileInputStream(source);
             objectInputStream = new ObjectInputStream(fileInputStream);
             object = (T) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException | NullPointerException e) {
-            throw new ObjectReadException(e.getMessage(), e.getCause());
+        } catch (IOException | ClassNotFoundException | ClassCastException | NullPointerException e) {
+            throw new ObjectReadException(e);
         } finally {
             IOUtils.closeStream(fileInputStream);
             IOUtils.closeStream(objectInputStream);
