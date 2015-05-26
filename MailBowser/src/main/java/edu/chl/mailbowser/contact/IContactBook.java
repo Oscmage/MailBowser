@@ -4,12 +4,31 @@ import java.util.Set;
 
 /**
  * Created by OscarEvertsson on 20/05/15.
+ * This is an interface to represent the contact book.
  */
 public interface IContactBook {
 
+    /**
+     * Adds a contact.
+     */
     void addContact(IContact contact);
+
+    /**
+     * Removes the specified contact.
+     */
     void removeContact(IContact contact);
+
+    /**
+     * Returns a set with all contacts
+     * @return
+     */
     Set<IContact> getContacts();
+
+    /**
+     * Returns a set of contacts that matches the given string.
+     * @param query
+     * @return
+     */
     Set<IContact> getMatchingContacts(String query);
 
     /**
