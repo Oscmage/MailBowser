@@ -1,5 +1,6 @@
 package edu.chl.mailbowser.presenters;
 
+import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.factories.MailServerTypes;
 import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.account.models.IAccount;
@@ -68,7 +69,8 @@ public class AddAccountPresenter extends VBox implements Initializable {
                 new Address(username),
                 password,
                 serverType.createIncomingServer(),
-                serverType.createOutgoingServer()
+                serverType.createOutgoingServer(),
+                MainHandler.INSTANCE.getTagHandler()
         );
     }
 }
