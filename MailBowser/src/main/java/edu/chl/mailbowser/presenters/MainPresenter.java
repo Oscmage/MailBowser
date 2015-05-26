@@ -169,7 +169,7 @@ public class MainPresenter implements IObserver, Initializable {
                 email = (IEmail)evt.getValue();
                 showOrHideMenuOptions();
                 break;
-            case ADD_ACCOUNT:
+            case ACCOUNT_ADDED:
                 showOrHideMenuOptions();
                 break;
             case ADD_TAG_TO_EMAIL:

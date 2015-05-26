@@ -168,10 +168,10 @@ public class AccountManagerPresenter implements Initializable, IObserver {
 
     private void handleEvent(IEvent evt) {
         switch (evt.getType()) {
-            case ADD_ACCOUNT:
+            case ACCOUNT_ADDED:
                 addAccountToList((IAccount) evt.getValue());
                 break;
-            case REMOVE_ACCOUNT:
+            case ACCOUNT_REMOVED:
                 removeAccountFromList((IAccount) evt.getValue());
                 break;
         }

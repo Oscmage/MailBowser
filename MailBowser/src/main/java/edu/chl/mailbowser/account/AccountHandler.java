@@ -17,9 +17,9 @@ import java.util.TreeSet;
  *
  * A concrete implementation of IAccountHandler. This particular implementation stores the accounts in a list.
  */
-public class AccountHandler implements IAccountHandler{
+public class AccountHandler implements IAccountHandler {
+    // a list of all accounts that have been added to this handler
     private List<IAccount> accounts = new ArrayList<>();
-
 
     /**
      * {@inheritDoc}
@@ -27,7 +27,7 @@ public class AccountHandler implements IAccountHandler{
     @Override
     public void addAccount(IAccount account) {
         accounts.add(account);
-        EventBus.INSTANCE.publish(new Event(EventType.ADD_ACCOUNT, account));
+        EventBus.INSTANCE.publish(new Event(EventType.ACCOUNT_ADDED, account));
     }
 
     /**
@@ -36,7 +36,7 @@ public class AccountHandler implements IAccountHandler{
     @Override
     public void removeAccount(IAccount account) {
         accounts.remove(account);
-        EventBus.INSTANCE.publish(new Event(EventType.REMOVE_ACCOUNT, account));
+        EventBus.INSTANCE.publish(new Event(EventType.ACCOUNT_REMOVED, account));
     }
 
     /**
@@ -87,6 +87,7 @@ public class AccountHandler implements IAccountHandler{
         try {
             accounts = objectReader.read(filename);
 
+            // the tag handler is not saved to disk with the IAccount, so here we set it manually
             for (IAccount account : accounts) {
                 account.setTagHandler(tagHandler);
             }

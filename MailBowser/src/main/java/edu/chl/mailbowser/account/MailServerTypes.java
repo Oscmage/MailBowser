@@ -1,14 +1,10 @@
 package edu.chl.mailbowser.account;
 
-import edu.chl.mailbowser.account.IIncomingServer;
-import edu.chl.mailbowser.account.IOutgoingServer;
-import edu.chl.mailbowser.account.IncomingServer;
-import edu.chl.mailbowser.account.OutgoingServer;
 
 /**
  * Created by mats on 16/04/15.
  *
- * A factory class for creating configured MailServer objects.
+ * A factory class for creating pre-configured MailServer objects.
  */
 public enum MailServerTypes {
     GMAIL {
@@ -52,7 +48,7 @@ public enum MailServerTypes {
     }
 
     /**
-     * Creates a new pre-configured mail server for receiving email.
+     * Creates a new pre-configured mail server for fetching email.
      *
      * @return the created mail server
      */
