@@ -22,6 +22,8 @@ import java.util.TreeSet;
  * A concrete implementation of the IAccount interface.
  */
 public class Account implements IAccount {
+    private static final long serialVersionUID = -1081064603886454171L;
+
     // the key to use when encrypting and decrypting the password. the password is never saved in plain text, it is
     // only saved as an encrypted byte array
     private static final String KEY = "%*tR7sfa";
@@ -48,7 +50,7 @@ public class Account implements IAccount {
      * @throws IllegalArgumentException if any parameter is null
      */
     public Account(IAddress address, String password, IIncomingServer incomingServer, IOutgoingServer outgoingServer,
-                   ITagHandler tagHandler) throws IllegalArgumentException {
+                   ITagHandler tagHandler) {
         if (address == null) {
             throw new IllegalArgumentException("Can't create an Account with address null");
         }
@@ -144,9 +146,12 @@ public class Account implements IAccount {
      *
      * The password is never saved in plain text. It is encrypted to a byte array in the set method, and decrypted in
      * the get method.
+     *
+     * This method is final because it is used in the constructor. This means that the behaviour of this method is
+     * guaranteed to be the same even if the class is subclassed.
      */
     @Override
-    public void setPassword(String password) {
+    public final void setPassword(String password) {
         this.password = Crypto.encryptString(password, KEY, "UTF-8");
     }
 
@@ -182,7 +187,7 @@ public class Account implements IAccount {
      * @throws IllegalArgumentException when a null email is sent
      */
     @Override
-    public void send(IEmail email) throws IllegalArgumentException {
+    public void send(IEmail email) {
         if (email == null) {
             throw new IllegalArgumentException("Can't send a null email");
         }

@@ -1,30 +1,23 @@
 package edu.chl.mailbowser.account;
 
-import edu.chl.mailbowser.email.IEmail;
-
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Store;
-import java.io.Serializable;
-import java.util.List;
-import java.util.Properties;
-
 /**
  * Created by filip on 09/04/15.
  *
  * An abstract class for mail servers. This class provides a hostname and a port.
  */
-public abstract class MailServer implements Serializable {
+public abstract class AbstractMailServer implements IMailServer {
+    private static final long serialVersionUID = 3297957952585426890L;
+
     private String hostname;
     private String port;
 
     /**
-     * Creates a new MailServer with the specified hostname and port.
+     * Creates a new AbstractMailServer with the specified hostname and port.
      *
      * @param hostname
      * @param port
      */
-    public MailServer(String hostname, String port) {
+    public AbstractMailServer(String hostname, String port) {
         this.hostname = hostname;
         this.port = port;
     }
@@ -50,7 +43,7 @@ public abstract class MailServer implements Serializable {
     /**
      * {@inheritDoc}
      *
-     * This MailServer is equal to another object if the other object is a MailServer of the same type,
+     * This AbstractMailServer is equal to another object if the other object is a AbstractMailServer of the same type,
      * and its hostname and port are the same.
      */
     @Override
@@ -59,7 +52,7 @@ public abstract class MailServer implements Serializable {
         if (o == null) return false;
         if (!this.getClass().equals(o.getClass())) return false;
 
-        MailServer that = (MailServer) o;
+        AbstractMailServer that = (AbstractMailServer) o;
 
         if (hostname != null ? !hostname.equals(that.hostname) : that.hostname != null) return false;
         if (port != null ? !port.equals(that.port) : that.port != null) return false;
