@@ -1,8 +1,10 @@
 package edu.chl.mailbowser.presenters;
 
+import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.account.factories.MailServerTypes;
 import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.account.models.IAccount;
+import edu.chl.mailbowser.account.models.MailServer;
 import edu.chl.mailbowser.email.models.Address;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,7 +51,9 @@ public class AddAccountPresenter extends VBox implements Initializable {
 
     private void setupAccountTypeChoiceBox() {
         ObservableList<MailServerTypes> observableList = FXCollections.observableArrayList();
-        observableList.add(MailServerTypes.GMAIL);
+        for(MailServerTypes mailServerTypes : MailServerTypes.values()) {
+            observableList.add(mailServerTypes);
+        }
         accountTypeChoiceBox.setItems(observableList);
         accountTypeChoiceBox.getSelectionModel().select(0);
     }
@@ -68,7 +72,8 @@ public class AddAccountPresenter extends VBox implements Initializable {
                 new Address(username),
                 password,
                 serverType.createIncomingServer(),
-                serverType.createOutgoingServer()
+                serverType.createOutgoingServer(),
+                MainHandler.INSTANCE.getTagHandler()
         );
     }
 }

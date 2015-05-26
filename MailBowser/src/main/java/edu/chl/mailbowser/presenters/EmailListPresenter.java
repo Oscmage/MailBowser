@@ -5,17 +5,11 @@ import edu.chl.mailbowser.account.handlers.IAccountHandler;
 import edu.chl.mailbowser.account.models.Pair;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.email.views.EmailListViewItem;
-import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventType;
-import edu.chl.mailbowser.event.IEvent;
-import edu.chl.mailbowser.event.Event;
-import edu.chl.mailbowser.event.IObserver;
+import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.search.Searcher;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -23,11 +17,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.URL;
-import java.util.*;
+import java.util.Comparator;
+import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -81,7 +75,7 @@ public class EmailListPresenter implements Initializable, IObserver {
      *
      * @param emails the new emails to show in the list
      */
-    private void replaceListViewContent(List<IEmail> emails) {
+    private void replaceListViewContent(Set<IEmail> emails) {
         observableEmailList.setAll(emails.stream()
                         .map(email -> (new EmailListViewItem(email)))
                         .collect(Collectors.toList())
@@ -107,11 +101,11 @@ public class EmailListPresenter implements Initializable, IObserver {
      * @param query the query to search for
      */
     private void search(String query) {
-        List<IEmail> emails = accountHandler.getAllEmails();
+        Set<IEmail> emails = accountHandler.getAllEmails();
 
         if (!query.equals("")) {
             updateListOnIncomingEmail = false;
-            List<IEmail> matchingEmails = Searcher.search(emails, query);
+            Set<IEmail> matchingEmails = Searcher.search(emails, query);
             System.out.println("matching emails: " + matchingEmails.size());
             replaceListViewContent(matchingEmails);
         } else {
@@ -158,16 +152,16 @@ public class EmailListPresenter implements Initializable, IObserver {
                 break;
             case REMOVED_TAG_FROM_EMAIL:
                 Pair<IEmail, ITag> pair = (Pair<IEmail, ITag>)evt.getValue();
-                replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith(pair.getSecond())));
+                replaceListViewContent(new TreeSet<>(tagHandler.getEmailsWith(pair.getSecond())));
                 break;
             case CLEAR_EMAILS:
                 clearEmails();
                 break;
             case SELECT_TAG:
                 if(evt.getValue() != null) {
-                    replaceListViewContent(new ArrayList<>(tagHandler.getEmailsWith((ITag) evt.getValue())));
+                    replaceListViewContent(new TreeSet<>(tagHandler.getEmailsWith((ITag) evt.getValue())));
                 } else {
-                    replaceListViewContent(new ArrayList<>(accountHandler.getAllEmails()));
+                    replaceListViewContent(new TreeSet<>(accountHandler.getAllEmails()));
                 }
                 break;
         }

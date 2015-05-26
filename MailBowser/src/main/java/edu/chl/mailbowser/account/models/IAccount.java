@@ -2,11 +2,10 @@ package edu.chl.mailbowser.account.models;
 
 import edu.chl.mailbowser.email.models.IAddress;
 import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
 
 import java.io.Serializable;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by OscarEvertsson on 09/04/15.
@@ -23,7 +22,8 @@ public interface IAccount extends Serializable {
     IOutgoingServer getOutgoingServer();
     void send(IEmail email);
     void fetch();
-    List<IEmail> getEmails();
+    Set<IEmail> getEmails();
     void refetch();
     boolean testConnect();
+    void setTagHandler(ITagHandler tagHandler);
 }
