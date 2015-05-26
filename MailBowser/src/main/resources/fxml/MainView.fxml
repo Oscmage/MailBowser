@@ -5,10 +5,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import edu.chl.mailbowser.presenters.EmailDetailPresenter?>
-<?import edu.chl.mailbowser.presenters.EmailListPresenter?>
-<?import edu.chl.mailbowser.presenters.TagList?>
+<?import edu.chl.mailbowser.presenters.email.EmailDetail?>
+<?import edu.chl.mailbowser.presenters.email.EmailList?>
+<?import edu.chl.mailbowser.presenters.tag.TagList?>
 <?import edu.chl.mailbowser.presenters.TopbarPresenter?>
+<?import edu.chl.mailbowser.presenters.tag.TagList.Type?>
 <VBox minHeight="600.0" minWidth="960.0" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.MainPresenter">
     <children>
         <MenuBar>
@@ -62,7 +63,7 @@
         <TopbarPresenter />
         <HBox VBox.vgrow="ALWAYS">
             <children>
-                <VBox id="sidebar" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+                <VBox fx:id="sidebar" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
                     <children>
                         <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER">
                             <children>
@@ -70,11 +71,10 @@
                                 <Button styleClass="fontawesome, naked" text="&#xf067;" HBox.hgrow="NEVER" />
                             </children>
                         </HBox>
-                        <TagList minWidth="200.0" prefWidth="200.0" VBox.vgrow="NEVER" />
                     </children>
                 </VBox>
-                <EmailListPresenter />
-                <EmailDetailPresenter />
+                <EmailList />
+                <EmailDetail />
             </children>
         </HBox>
     </children>
