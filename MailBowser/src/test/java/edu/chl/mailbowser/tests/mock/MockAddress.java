@@ -13,13 +13,7 @@ public class MockAddress implements IAddress {
     public boolean matchesCalled = false;
     public boolean getJavaMailAddressCalled = false;
 
-    //private String address;
-
     public MockAddress() {}
-
-    //public MockAddress(String address) {
-    //    this.address = address;
-    //}
 
     @Override
     public Address getJavaMailAddress() {
@@ -30,18 +24,11 @@ public class MockAddress implements IAddress {
             e.printStackTrace();
             return null;
         }
-        //try {
-        //    return new InternetAddress(address);
-        //} catch (AddressException e) {
-        //    e.printStackTrace();
-        //    return null;
-        //}
     }
 
     @Override
     public String getString() {
         return null;
-        //return address;
     }
 
     @Override
@@ -49,18 +36,4 @@ public class MockAddress implements IAddress {
         matchesCalled = true;
         return false;
     }
-
-    //@Override
-    //public boolean equals(Object obj) {
-    //    if (obj == this) {
-    //        return true;
-    //    } else if (obj == null) {
-    //        return false;
-    //    } else if (!(obj instanceof IAddress)) {
-    //        return false;
-    //    }
-    //
-    //    IAddress address = (IAddress) obj;
-    //    return address.getString().equals(this.address);
-    //}
 }
