@@ -54,7 +54,7 @@ public class EmailForm extends GridPane implements IObserver {
     @FXML protected Parent root;
 
     public EmailForm() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ComposeEmailView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/email/EmailForm.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

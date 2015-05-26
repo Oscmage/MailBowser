@@ -3,13 +3,10 @@ package edu.chl.mailbowser.presenters.tag;
 import edu.chl.mailbowser.main.MainHandler;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
-import edu.chl.mailbowser.event.IEvent;
-import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.tag.ITagHandler;
 import edu.chl.mailbowser.tag.ITag;
 import edu.chl.mailbowser.tag.Tag;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,7 +34,7 @@ public class TagList<T> extends ListView {
     @FXML protected ListView<TagListItem> tagsList;
 
     public TagList() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/TagList.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/tag/TagList.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

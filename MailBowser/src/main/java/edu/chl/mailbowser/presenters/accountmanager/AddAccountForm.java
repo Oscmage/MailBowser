@@ -28,7 +28,7 @@ public class AddAccountForm extends VBox {
      * Initializes a create account view.
      */
     public AddAccountForm() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AddAccountView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/accountmanager/AddAccountForm.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

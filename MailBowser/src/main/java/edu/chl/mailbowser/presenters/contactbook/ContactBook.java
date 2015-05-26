@@ -55,7 +55,7 @@ public class ContactBook extends VBox {
     private ContactListItem selectedContact;
 
     public ContactBook() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ContactBookView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/contactbook/ContactBook.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

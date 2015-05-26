@@ -22,7 +22,7 @@ public class AddTagForm extends VBox {
     @FXML protected Button tagButton;
     
     public AddTagForm() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AddTagView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/tag/AddTagForm.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

@@ -25,7 +25,7 @@ public class EmailListItem extends FlowPane implements Comparable {
     @FXML protected Label tags;
 
     private EmailListItem() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EmailListViewItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/email/EmailListItem.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {

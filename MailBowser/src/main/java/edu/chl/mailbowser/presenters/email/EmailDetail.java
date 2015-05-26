@@ -16,8 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
@@ -46,7 +44,7 @@ public class EmailDetail extends VBox implements IObserver {
     protected TagList<TagListItem> tagListView;
 
     public EmailDetail() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EmailDetailView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/email/EmailDetail.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

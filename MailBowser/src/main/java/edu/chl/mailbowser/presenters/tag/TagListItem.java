@@ -24,7 +24,7 @@ public class TagListItem extends HBox {
     @FXML protected Label tagName;
 
     private TagListItem() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/TagListItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/tag/TagListItem.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
