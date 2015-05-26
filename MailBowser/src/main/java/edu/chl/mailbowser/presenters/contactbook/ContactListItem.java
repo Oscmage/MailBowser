@@ -19,7 +19,7 @@ public class ContactListItem extends FlowPane{
     private IContact contact;
 
     public ContactListItem(IContact contact){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ContactListViewItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/contactbook/ContactListItem.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

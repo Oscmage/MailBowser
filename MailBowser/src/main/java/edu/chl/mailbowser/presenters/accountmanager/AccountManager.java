@@ -44,7 +44,7 @@ public class AccountManager extends VBox implements IObserver {
     @FXML protected ListView<IAccount> accountsList;
 
     public AccountManager() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AccountManager.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/accountmanager/AccountManager.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

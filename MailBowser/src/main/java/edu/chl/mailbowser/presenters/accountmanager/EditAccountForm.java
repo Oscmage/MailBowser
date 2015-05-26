@@ -30,7 +30,7 @@ public class EditAccountForm extends VBox {
      * @param account the account to edit
      */
     public EditAccountForm(IAccount account) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EditAccountView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/accountmanager/EditAccountForm.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

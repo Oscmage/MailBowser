@@ -8,7 +8,6 @@ import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.IObserver;
-import edu.chl.mailbowser.presenters.email.EmailListItem;
 import edu.chl.mailbowser.search.Searcher;
 import edu.chl.mailbowser.tag.ITagHandler;
 import edu.chl.mailbowser.tag.ITag;
@@ -41,7 +40,7 @@ public class EmailList extends ListView implements IObserver {
     private boolean updateListOnIncomingEmail = true;
 
     public EmailList() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EmailListView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/email/EmailList.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
