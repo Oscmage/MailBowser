@@ -12,28 +12,40 @@ import edu.chl.mailbowser.utils.Callback;
 import edu.chl.mailbowser.utils.Pair;
 import edu.chl.mailbowser.utils.Crypto;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
 /**
  * Created by OscarEvertsson on 09/04/15.
  *
- * A model class for an email account. An account has an address, a password and two mail servers - an incoming and an outgoing.
+ * A concrete implementation of the IAccount interface.
  */
 public class Account implements IAccount {
-    private IAddress address;
-
     // the key to use when encrypting and decrypting the password. the password is never saved in plain text, it is
     // only saved as an encrypted byte array
     private static final String KEY = "%*tR7sfa";
     private byte[] password;
 
+    // the address that is used when sending emails. the getString() value of this address is also used when
+    // authenticating with mail servers
+    private IAddress address;
+
     private IIncomingServer incomingServer;
     private IOutgoingServer outgoingServer;
     private transient ITagHandler tagHandler;
-
     private Set<IEmail> emails = new TreeSet<>();
 
+    /**
+     * Creates a new account.
+     *
+     * @param address the address to use when sending email from this account. The result of getString() on this IAddress
+     *                is also used when authenticating with mail servers
+     * @param password the password to use when authenticating with mail servers
+     * @param incomingServer the server to use when fetching emails
+     * @param outgoingServer the server to use when sending emails
+     * @param tagHandler the tag handler to use when tagging emails
+     */
     public Account(IAddress address, String password, IIncomingServer incomingServer, IOutgoingServer outgoingServer,
                    ITagHandler tagHandler) {
         this.address = address;
@@ -44,56 +56,7 @@ public class Account implements IAccount {
     }
 
     /**
-     * Returns a string representation of this object.
-     * The string will look like this: "address@example.com"
-     *
-     * @return a string representation of this object
-     */
-    @Override
-    public String toString() {
-        return address.toString();
-    }
-
-    /**
-     * Returns the username for the account as a String.
-     *
-     * @return username as a String
-     */
-    @Override
-    public String getUsername() {
-        return address.getString();
-    }
-
-    /**
-     * Sets the password to a new string.
-     *
-     * @param password
-     */
-    @Override
-    public void setPassword(String password) {
-        this.password = Crypto.encryptString(password, KEY);
-    }
-
-    /**
-     * @return password
-     */
-    @Override
-    public String getPassword() {
-        return Crypto.decryptByteArray(password, KEY);
-    }
-
-    /**
-     * Updates the email address for the account.
-     *
-     * @param address new address
-     */
-    @Override
-    public void setAddress(IAddress address) {
-        this.address = address;
-    }
-
-    /**
-     * @return address
+     * {@inheritDoc}
      */
     @Override
     public IAddress getAddress() {
@@ -101,9 +64,69 @@ public class Account implements IAccount {
     }
 
     /**
-     * Sets the incoming server for the account.
+     * {@inheritDoc}
+     */
+    @Override
+    public String getUsername() {
+        return address.getString();
+    }
+
+    /**
+     * {@inheritDoc}
      *
-     * @param server
+     * The password is never saved in plain text. It is encrypted to a byte array in the set method, and decrypted in
+     * the get method.
+     */
+    @Override
+    public String getPassword() {
+        return Crypto.decryptByteArray(password, KEY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IIncomingServer getIncomingServer() {
+        return incomingServer;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IOutgoingServer getOutgoingServer() {
+        return outgoingServer;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<IEmail> getEmails() {
+        return emails;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAddress(IAddress address) {
+        this.address = address;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * The password is never saved in plain text. It is encrypted to a byte array in the set method, and decrypted in
+     * the get method.
+     */
+    @Override
+    public void setPassword(String password) {
+        this.password = Crypto.encryptString(password, KEY);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void setIncomingServer(IIncomingServer server) {
@@ -112,18 +135,7 @@ public class Account implements IAccount {
     }
 
     /**
-     * @return incoming server
-     */
-    @Override
-    public IIncomingServer getIncomingServer() {
-        // TODO: make immutable?
-        return incomingServer;
-    }
-
-    /**
-     * Sets the outgoing server for the account.
-     *
-     * @param server
+     * {@inheritDoc}
      */
     @Override
     public void setOutgoingServer(IOutgoingServer server) {
@@ -132,28 +144,15 @@ public class Account implements IAccount {
     }
 
     /**
-     * @return outgoing server
+     * {@inheritDoc}
      */
     @Override
-    public IOutgoingServer getOutgoingServer() {
-        // TODO: make immutable?
-        return outgoingServer;
+    public void setTagHandler(ITagHandler tagHandler) {
+        this.tagHandler = tagHandler;
     }
 
     /**
-     * Returns all emails that belong to this account.
-     *
-     * @return a list of all emails that belong to this account
-     */
-    @Override
-    public Set<IEmail> getEmails() {
-        return emails;
-    }
-
-    /**
-     * Uses the outgoing server to send an email.
-     *
-     * @param email the email to send
+     * {@inheritDoc}
      */
     @Override
     public void send(IEmail email) {
@@ -173,7 +172,7 @@ public class Account implements IAccount {
     }
 
     /**
-     * Fetches for new email.
+     * {@inheritDoc}
      */
     @Override
     public void fetch() {
@@ -181,18 +180,8 @@ public class Account implements IAccount {
         initFetch(false);
     }
 
-    @Override
-    public boolean testConnect(){
-        return incomingServer.testConnection(getUsername(),getPassword());
-    }
-
-    @Override
-    public void setTagHandler(ITagHandler tagHandler) {
-        this.tagHandler = tagHandler;
-    }
-
     /**
-     * Clears the already fetched emails and does a new fetch from a clean state.
+     * Clears the already fetched emails and does a new fetch from a clean state using the initFetch method.
      */
     @Override
     public void refetch() {
@@ -236,6 +225,24 @@ public class Account implements IAccount {
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public boolean testConnect(){
+        return incomingServer.testConnection(getUsername(),getPassword());
+    }
+
+    /**
+     * Returns a string representation of this object. The string will look something like this: "address@example.com".
+     *
+     * @return a string representation of this object
+     */
+    @Override
+    public String toString() {
+        return address.toString();
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * An object is equal to this account if the object is an account, and its tag handler, address, password,
      * incomingServer, outgoingServer and emails are the same.
@@ -249,7 +256,7 @@ public class Account implements IAccount {
 
         if (tagHandler != null ? !tagHandler.equals(account.tagHandler) : account.tagHandler != null) return false;
         if (address != null ? !address.equals(account.address) : account.address != null) return false;
-        if (password != null ? !password.equals(account.password) : account.password != null) return false;
+        if (password != null ? !Arrays.equals(password, account.password) : account.password != null) return false;
         if (incomingServer != null ? !incomingServer.equals(account.incomingServer) : account.incomingServer != null)
             return false;
         if (outgoingServer != null ? !outgoingServer.equals(account.outgoingServer) : account.outgoingServer != null)
@@ -267,12 +274,10 @@ public class Account implements IAccount {
     public int hashCode() {
         int result = tagHandler != null ? tagHandler.hashCode() : 0;
         result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (password != null ? Arrays.hashCode(password) : 0);
         result = 31 * result + (incomingServer != null ? incomingServer.hashCode() : 0);
         result = 31 * result + (outgoingServer != null ? outgoingServer.hashCode() : 0);
         result = 31 * result + (emails != null ? emails.hashCode() : 0);
         return result;
     }
-
-
 }

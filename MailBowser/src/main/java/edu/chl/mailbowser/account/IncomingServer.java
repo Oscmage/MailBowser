@@ -17,10 +17,10 @@ import java.util.Properties;
  * A concrete implementation of IIncomingServer.
  */
 public class IncomingServer extends MailServer implements IIncomingServer {
-
     // this flag will be used to mark emails that have previously fetched
     private static final Flags PROCESSED_FLAG = new Flags("MailBowserProcessed");
 
+    // fetcher gets set to a value when a fetch is initiated, and set to null when it has finished
     private transient Fetcher fetcher = null;
 
     /**
