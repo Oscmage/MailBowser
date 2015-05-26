@@ -1,12 +1,19 @@
 package edu.chl.mailbowser.account.handlers;
 
+import edu.chl.mailbowser.account.models.Account;
 import edu.chl.mailbowser.account.models.IAccount;
 import edu.chl.mailbowser.email.models.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.io.*;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
+import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +24,7 @@ import java.util.List;
  */
 public class AccountHandler implements IAccountHandler{
     private List<IAccount> accounts = new ArrayList<>();
+
 
     /**
      * {@inheritDoc}
@@ -100,5 +108,4 @@ public class AccountHandler implements IAccountHandler{
         IObjectWriter<ArrayList<IAccount>> objectReaderWriter = new ObjectWriter<>();
         return objectReaderWriter.write((ArrayList<IAccount>) accounts, filename);
     }
-
 }

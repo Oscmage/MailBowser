@@ -9,7 +9,9 @@ import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.models.Tag;
+import edu.chl.mailbowser.utils.Crypto;
 
+import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,16 +25,19 @@ public class Account implements IAccount {
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
     private IAddress address;
-    private String password;
+
+    private static final String KEY = "%*tR7sfa";
+    private byte[] password;
 
     private IIncomingServer incomingServer;
     private IOutgoingServer outgoingServer;
 
     private List<IEmail> emails = new ArrayList<>();
 
+
     public Account(IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer) {
         address = newAddress;
-        password = newPassword;
+        setPassword(newPassword);
         incomingServer = newIncomingServer;
         outgoingServer = newOutgoingServer;
     }
@@ -65,7 +70,7 @@ public class Account implements IAccount {
      */
     @Override
     public void setPassword(String password) {
-        this.password = password;
+        this.password = Crypto.encryptString(password, KEY);
     }
 
     /**
@@ -73,7 +78,7 @@ public class Account implements IAccount {
      */
     @Override
     public String getPassword() {
-        return password;
+        return Crypto.decryptByteArray(password, KEY);
     }
 
     /**
@@ -152,7 +157,7 @@ public class Account implements IAccount {
     @Override
     public void send(IEmail email) {
         email.setSender(address);
-        outgoingServer.send(email, getUsername(), password, new Callback<IEmail>() {
+        outgoingServer.send(email, getUsername(), getPassword(), new Callback<IEmail>() {
             @Override
             public void onSuccess(IEmail object) {
                 EventBus.INSTANCE.publish(new Event(EventType.SEND_EMAIL, object));
@@ -203,7 +208,7 @@ public class Account implements IAccount {
      *                   will be fetched
      */
     private void initFetch(boolean cleanFetch) {
-        incomingServer.fetch(getUsername(), password, cleanFetch, new Callback<Pair<IEmail, String>>() {
+        incomingServer.fetch(getUsername(), getPassword(), cleanFetch, new Callback<Pair<IEmail, String>>() {
             @Override
             public void onSuccess(Pair<IEmail, String> object) {
                 IEmail email = object.getFirst();
@@ -262,4 +267,6 @@ public class Account implements IAccount {
         result = 31 * result + (emails != null ? emails.hashCode() : 0);
         return result;
     }
+
+
 }
