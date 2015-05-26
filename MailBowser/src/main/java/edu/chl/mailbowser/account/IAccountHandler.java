@@ -51,7 +51,7 @@ public interface IAccountHandler {
     void initRefetchingFromAllAccounts();
 
     /**
-     * Reads a file from disk with IAccounts and adds them to this account handler.
+     * Reads a file with IAccounts from disk and adds them to this account handler.
      *
      * @param filename the file to look for accounts in
      * @return false if no accounts are found, otherwise true

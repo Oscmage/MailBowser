@@ -16,6 +16,12 @@ public class Crypto {
     //Private constructor to prevent instantiation
     private Crypto(){}
 
+    /**
+     * Encrypts a String using DES algorithem
+     * @param str the string to be encrypted
+     * @param keyString the key used to encrypted
+     * @return the encrypted byte array
+     */
     public static byte[] encryptString(String str, String keyString) {
         byte[] keyBytes = keyString.getBytes();
         Key key = new SecretKeySpec(keyBytes, "DES");
@@ -31,6 +37,12 @@ public class Crypto {
         }
     }
 
+    /**
+     * Decrypts a byte array to a string using DES algorithem
+     * @param byteArray to be decrypted
+     * @param keyString key to used decrypting
+     * @return decrypted string
+     */
     public static String decryptByteArray(byte[] byteArray, String keyString) {
         byte[] keyBytes = keyString.getBytes();
         Key key = new SecretKeySpec(keyBytes, "DES");

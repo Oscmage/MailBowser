@@ -24,11 +24,7 @@ public class OutgoingServer extends MailServer implements IOutgoingServer {
     }
 
     /**
-     * Sends an email using the supplied username and password.
-     *
-     * @param email the email to send
-     * @param username the username to authenticate with
-     * @param password the password to authenticate with
+     * {@inheritDoc}
      */
     @Override
     public void send(IEmail email, String username, String password, Callback<IEmail> callback) {
@@ -38,7 +34,7 @@ public class OutgoingServer extends MailServer implements IOutgoingServer {
     }
 
     /**
-     * A class for sending emails asynchronously
+     * A class for sending emails asynchronously.
      */
     private class Sender implements Runnable {
         private IEmail email;
@@ -63,7 +59,7 @@ public class OutgoingServer extends MailServer implements IOutgoingServer {
         }
 
         /**
-         * Starts the sending process
+         * Starts the sending process.
          */
         @Override
         public void run() {

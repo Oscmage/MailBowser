@@ -82,7 +82,7 @@ public class EmailDetailPresenter extends VBox implements IObserver {
 
         this.webView.getEngine().loadContent(email.getContent());
 
-        updateTagsList(tagHandler.getTagsWith(email));
+        updateTagsList(tagHandler.getTagsWithEmail(email));
         emailDetail.setOpacity(1);
     }
 

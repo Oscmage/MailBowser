@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 /**
  * Created by filip on 09/04/15.
+ *
+ * An abstract class for mail servers. This class provides a hostname and a port.
  */
 public abstract class MailServer implements Serializable {
     private String hostname;
@@ -38,6 +40,12 @@ public abstract class MailServer implements Serializable {
         return port;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * This MailServer is equal to another object if the other object is a MailServer of the same type,
+     * and its hostname and port are the same.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,6 +59,11 @@ public abstract class MailServer implements Serializable {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * A hashcode is built using the hostname and port of this mail server.
+     */
     @Override
     public int hashCode() {
         int result = hostname != null ? hostname.hashCode() : 0;

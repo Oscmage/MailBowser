@@ -57,8 +57,8 @@ public class EmailListItemPresenter extends FlowPane implements Comparable {
      */
     private void initializeTagsList() {
         Set<String> tagStrings = new TreeSet<>();
+        Set<ITag> tagSet = MainHandler.INSTANCE.getTagHandler().getTagsWithEmail(email);
 
-        Set<ITag> tagSet = MainHandler.INSTANCE.getTagHandler().getTagsWith(email);
         for(ITag tag : tagSet) {
             tagStrings.add(tag.getName());
         }

@@ -12,10 +12,18 @@ import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * The main class to launch the application.
+ */
 public class Main extends Application {
 
     private static IBackgroundFetcher backgroundFetcher = MainHandler.INSTANCE.getBackgroundFetcher();
 
+    /**
+     * Loads the MainView fxml.
+     * @param mainStage
+     * @throws Exception thrown if FXMLLoader has troubles loading the MainView fxml.
+     */
     @Override
     public void start(Stage mainStage) throws Exception {
         Font.loadFont(getClass().getClassLoader().getResource("fonts/fontawesome.ttf").toExternalForm(), 16);
@@ -39,6 +47,12 @@ public class Main extends Application {
         mainStage.show();
     }
 
+    /**
+     * Pre launch checks whether there are any serialized files in the main directory to load.
+     * Main launches the application with background fetching.
+     * After exit of application tries to save the data and exists background fetching.
+     * @param args
+     */
     public static void main(String[] args) {
         // load serialized objects from disk
         MainHandler.INSTANCE.loadComponents();

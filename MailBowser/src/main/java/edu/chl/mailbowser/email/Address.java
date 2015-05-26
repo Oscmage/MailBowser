@@ -9,7 +9,10 @@ import javax.mail.internet.InternetAddress;
  * Address represents an email address. You cannot create an invalid Address obejct.
  */
 public class Address implements IAddress{
-    private String address;
+    private final String address;
+
+    //rfc822 is a standard for ARPA internet text messages
+    private static final String ALLOWED_ADDRESS_TYPE = "rfc822";
 
     /**
      * Creates an Address object with the specified String. The String is trimmed and validated upon creation.
@@ -31,7 +34,7 @@ public class Address implements IAddress{
      * @param address the address to create a new Address object from
      */
     public Address(javax.mail.Address address) {
-        if (address.getType().equals("rfc822")) {
+        if (address.getType().equals(ALLOWED_ADDRESS_TYPE)) {
             this.address = ((InternetAddress)address).getAddress();
         } else {
             throw new IllegalArgumentException("Address(javax.mail.Address): supplied address is not an InternetAddress");
@@ -49,6 +52,7 @@ public class Address implements IAddress{
 
     private boolean isValidAddress(String address) {
         try {
+            //InternetAddress validates the string if invalid it throws an AddressException
             new InternetAddress(address);
         } catch (AddressException e) {
             return false;
@@ -56,34 +60,24 @@ public class Address implements IAddress{
         return true;
     }
 
-    /**
-     * @return a copy of the javax.mail.InternetAddress object which holds the information
-     */
+
     @Override
     public InternetAddress getJavaMailAddress() {
         try {
             return new InternetAddress(this.address);
         } catch (AddressException e) {
-            //This will never happen since the address is validated when created.
+            throw new IllegalStateException("The address string is invalid");
         }
-        return null;
     }
 
 
-    /**
-     * Returns a string representation of the address, in the format user@domain.com
-     *
-     * @return a string representation of the address
-     */
+
     @Override
     public String toString() {
         return this.address;
     }
 
-    /**
-     * Returns a string representation of the address, in the format user@domain.com
-     * @return
-     */
+
     @Override
     public String getString(){
         return this.address;
