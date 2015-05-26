@@ -3,7 +3,7 @@ package edu.chl.mailbowser.presenters;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
-import edu.chl.mailbowser.tag.models.Tag;
+import edu.chl.mailbowser.tag.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

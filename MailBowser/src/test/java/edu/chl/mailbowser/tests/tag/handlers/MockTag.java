@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.tests.tag.handlers;
 
-import edu.chl.mailbowser.tag.models.ITag;
+import edu.chl.mailbowser.tag.ITag;
 
 /**
  * Created by filip on 19/05/15.

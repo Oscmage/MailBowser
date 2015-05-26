@@ -1,14 +1,12 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.account.models.Pair;
-import edu.chl.mailbowser.email.models.Email;
-import edu.chl.mailbowser.email.models.IAddress;
-import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.main.MainHandler;
+import edu.chl.mailbowser.email.IAddress;
+import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.*;
-import edu.chl.mailbowser.tag.handlers.ITagHandler;
-import edu.chl.mailbowser.tag.models.ITag;
-import edu.chl.mailbowser.tag.views.TagListItemPresenter;
+import edu.chl.mailbowser.tag.ITagHandler;
+import edu.chl.mailbowser.tag.ITag;
+import edu.chl.mailbowser.utils.Pair;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;

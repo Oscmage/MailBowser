@@ -1,24 +1,28 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.account.handlers.IAccountHandler;
-import edu.chl.mailbowser.email.models.Address;
-import edu.chl.mailbowser.email.models.Email;
-import edu.chl.mailbowser.email.models.IAddress;
-import edu.chl.mailbowser.email.models.IEmail;
+import edu.chl.mailbowser.main.MainHandler;
+import edu.chl.mailbowser.account.IAccountHandler;
+import edu.chl.mailbowser.email.Address;
+import edu.chl.mailbowser.email.Email;
+import edu.chl.mailbowser.email.IAddress;
+import edu.chl.mailbowser.email.IEmail;
+import edu.chl.mailbowser.contact.IContact;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.markdown4j.Markdown4jProcessor;
 
@@ -41,14 +45,22 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
 
     // Assign the fields from the view to variables via the fx:id attribute
     // Note that these variables belong to the javafx.scene.control package
-    @FXML protected TextField to;
-    @FXML protected TextField cc;
-    @FXML protected TextField bcc;
-    @FXML protected TextField subject;
-    @FXML protected TextArea content;
-    @FXML protected WebView markdown;
-    @FXML protected Parent root;
-    @FXML protected Button sendButton;
+    @FXML
+    protected TextField to;
+    @FXML
+    protected TextField cc;
+    @FXML
+    protected TextField bcc;
+    @FXML
+    protected TextField subject;
+    @FXML
+    protected TextArea content;
+    @FXML
+    protected WebView markdown;
+    @FXML
+    protected Parent root;
+    @FXML
+    protected Button sendButton;
 
     public ComposeEmailPresenter(String recipients, String subject, String content) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ComposeEmailView.fxml"));
@@ -70,7 +82,8 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
     }
 
     // This method is invoked when the send button is pressed, and is bound via the onAction attribute
-    @FXML protected void sendButtonActionPerformed(ActionEvent event) {
+    @FXML
+    protected void sendButtonActionPerformed(ActionEvent event) {
         // Start building an email
         Email.Builder emailBuilder = new Email.Builder(subject.getText(), html);
 
@@ -100,8 +113,15 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
         stage.close();
     }
 
-    @FXML protected void openContactBook(ActionEvent event) {
-
+    @FXML
+    protected void openContactBook(ActionEvent event) {
+        Stage stage = new Stage();
+        stage.setScene(new Scene(new ContactBookPresenter(true), 400, 300));
+        stage.setTitle("Contact Book");
+        stage.setMinWidth(400);
+        stage.setMinHeight(300);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
     public void setReceivers(String value) {
@@ -134,7 +154,6 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
     }
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showOrHideSendButton();
@@ -145,10 +164,21 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
      * Depending on whether an account exists the send button is disabled or enabled.
      */
     private void showOrHideSendButton() {
-        if(accountHandler.getAccounts().size() == 0) {
+        if (accountHandler.getAccounts().size() == 0) {
             this.sendButton.setDisable(true);
         } else {
             this.sendButton.setDisable(false);
+        }
+    }
+
+    private void insertContactToEmail(IContact contact) {
+
+        for (IAddress address : contact.getEmailAddresses()) {
+            if(to.getText().length() != 0) {
+                to.appendText(", " + address.getString());
+            } else {
+                to.setText(address.getString());
+            }
         }
     }
 
@@ -166,11 +196,15 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
 
     @Override
     public void onEvent(IEvent evt) {
+        Platform.runLater( // JavaFX can get thread problems otherwise
+                () -> handleEvent(evt)
+        );
+    }
+
+    private void handleEvent(IEvent evt) {
         switch (evt.getType()) {
-            case ADD_ACCOUNT:
-                //It should be possible to create an email and then realize you need to create an account to send mail,
-                // in that case the send button needs to be enabled.
-                showOrHideSendButton();
+            case INSERT_CONTACT_TO_EMAIL:
+                insertContactToEmail((IContact) evt.getValue());
                 break;
         }
     }

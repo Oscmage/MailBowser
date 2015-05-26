@@ -1,10 +1,10 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.account.factories.MailServerTypes;
-import edu.chl.mailbowser.account.models.Account;
-import edu.chl.mailbowser.account.models.IAccount;
-import edu.chl.mailbowser.email.models.Address;
+import edu.chl.mailbowser.account.MailServerTypes;
+import edu.chl.mailbowser.account.Account;
+import edu.chl.mailbowser.account.IAccount;
+import edu.chl.mailbowser.email.Address;
+import edu.chl.mailbowser.main.MainHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -50,7 +49,9 @@ public class AddAccountPresenter extends VBox implements Initializable {
 
     private void setupAccountTypeChoiceBox() {
         ObservableList<MailServerTypes> observableList = FXCollections.observableArrayList();
-        observableList.add(MailServerTypes.GMAIL);
+        for(MailServerTypes mailServerTypes : MailServerTypes.values()) {
+            observableList.add(mailServerTypes);
+        }
         accountTypeChoiceBox.setItems(observableList);
         accountTypeChoiceBox.getSelectionModel().select(0);
     }

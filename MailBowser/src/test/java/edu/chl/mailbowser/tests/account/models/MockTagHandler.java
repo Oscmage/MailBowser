@@ -1,8 +1,8 @@
 package edu.chl.mailbowser.tests.account.models;
 
-import edu.chl.mailbowser.email.models.IEmail;
-import edu.chl.mailbowser.tag.handlers.ITagHandler;
-import edu.chl.mailbowser.tag.models.ITag;
+import edu.chl.mailbowser.email.IEmail;
+import edu.chl.mailbowser.tag.ITagHandler;
+import edu.chl.mailbowser.tag.ITag;
 
 import java.util.Set;
 
