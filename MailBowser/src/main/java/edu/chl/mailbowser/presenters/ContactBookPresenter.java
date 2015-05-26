@@ -109,30 +109,6 @@ public class ContactBookPresenter extends VBox {
         }
     }
 
-    @FXML
-    public void addContactButtonOnAction(ActionEvent actionEvent) {
-        IContact newContact = new Contact();
-        contactBook.addContact(newContact);
-        contactListItems.add(new ContactListViewItem(newContact));
-    }
-
-    public void deleteButtonOnAction(ActionEvent actionEvent) {
-        contactBook.removeContact(selectedContact.getContact());
-        contactListItems.remove(selectedContact);
-    }
-
-    public void saveButtonOnAction(ActionEvent actionEvent) {
-        selectedContact.getContact().setFirstName(firstNameField.getText());
-        selectedContact.getContact().setLastName(lastNameField.getText());
-        for (TextField textField : addresses) {
-            selectedContact.getContact().addAddress(new Address(textField.getText()));
-        }
-    }
-
-    public void addNewAddressButtonOnAction(ActionEvent actionEvent) {
-        addAddressField();
-    }
-
     private void addAddressField(IAddress address){
         TextField newTextField = new TextField();
         Label newLabel = new Label("Address " + (newAddressIndex));
@@ -152,5 +128,31 @@ public class ContactBookPresenter extends VBox {
         addresses.add(newTextField);
     }
 
+    @FXML
+    public void addContactButtonOnAction(ActionEvent actionEvent) {
+        IContact newContact = new Contact();
+        contactBook.addContact(newContact);
+        contactListItems.add(new ContactListViewItem(newContact));
+    }
+
+    @FXML
+    protected void deleteButtonOnAction(ActionEvent actionEvent) {
+        contactBook.removeContact(selectedContact.getContact());
+        contactListItems.remove(selectedContact);
+    }
+
+    @FXML
+    protected void saveButtonOnAction(ActionEvent actionEvent) {
+        selectedContact.getContact().setFirstName(firstNameField.getText());
+        selectedContact.getContact().setLastName(lastNameField.getText());
+        for (TextField textField : addresses) {
+            selectedContact.getContact().addAddress(new Address(textField.getText()));
+        }
+    }
+
+    @FXML
+    protected void addNewAddressButtonOnAction(ActionEvent actionEvent) {
+        addAddressField();
+    }
 
 }
