@@ -1,5 +1,6 @@
 package edu.chl.mailbowser.presenters;
 
+import edu.chl.mailbowser.account.IAccount;
 import edu.chl.mailbowser.main.MainHandler;
 import edu.chl.mailbowser.account.IAccountHandler;
 import edu.chl.mailbowser.email.Address;
@@ -11,6 +12,8 @@ import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -35,34 +39,23 @@ import java.util.ResourceBundle;
 /**
  * Created by mats on 09/04/15.
  */
-public class ComposeEmailPresenter extends GridPane implements Initializable, IObserver {
+public class ComposeEmailPresenter extends GridPane implements IObserver {
+
     private static final String EMAIL_CSS = "<head><style>* {font-family: \"Arial\"}</style></head>";
-
-
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
-
     private String html = "";
 
-    // Assign the fields from the view to variables via the fx:id attribute
-    // Note that these variables belong to the javafx.scene.control package
-    @FXML
-    protected TextField to;
-    @FXML
-    protected TextField cc;
-    @FXML
-    protected TextField bcc;
-    @FXML
-    protected TextField subject;
-    @FXML
-    protected TextArea content;
-    @FXML
-    protected WebView markdown;
-    @FXML
-    protected Parent root;
-    @FXML
-    protected Button sendButton;
+    @FXML protected ChoiceBox<IAccount> fromChoiceBox;
+    @FXML protected TextField toTextField;
+    @FXML protected TextField ccTextField;
+    @FXML protected TextField bccTextField;
+    @FXML protected TextField subjectTextField;
+    @FXML protected TextArea contentTextArea;
+    @FXML protected Button sendButton;
+    @FXML protected WebView webView;
+    @FXML protected Parent root;
 
-    public ComposeEmailPresenter(String recipients, String subject, String content) {
+    public ComposeEmailPresenter() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ComposeEmailView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -75,65 +68,30 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
 
         getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
 
-        setReceivers(recipients);
-        setSubject(subject);
-        setContent(content);
+        EventBus.INSTANCE.register(this);
 
+        initializeAccountTypeChoiceBox();
+        showOrHideSendButton();
     }
 
-    // This method is invoked when the send button is pressed, and is bound via the onAction attribute
-    @FXML
-    protected void sendButtonActionPerformed(ActionEvent event) {
-        // Start building an email
-        Email.Builder emailBuilder = new Email.Builder(subject.getText(), html);
+    public ComposeEmailPresenter(String recipients, String subject, String content) {
+        this();
+        toTextField.setText(recipients);
+        subjectTextField.setText(subject);
+        contentTextArea.setText(content);
+    }
 
-        // Add to, cc and bcc if they are entered
-        if (!this.to.getText().isEmpty()) {
-            List<IAddress> toAddresses = parseAddresses(this.to.getText());
-            emailBuilder.to(toAddresses);
+    /**
+     * Populates the choice box with all supported server types.
+     */
+    private void initializeAccountTypeChoiceBox() {
+        ObservableList<IAccount> observableList = FXCollections.observableArrayList();
+        for(IAccount account : accountHandler.getAccounts()) {
+            observableList.add(account);
         }
 
-        if (!this.cc.getText().isEmpty()) {
-            List<IAddress> ccAddresses = parseAddresses(this.cc.getText());
-            emailBuilder.cc(ccAddresses);
-        }
-
-        if (!this.bcc.getText().isEmpty()) {
-            List<IAddress> bccAddresses = parseAddresses(this.bcc.getText());
-            emailBuilder.bcc(bccAddresses);
-        }
-
-        // Build the email and send it
-        IEmail email = emailBuilder.build();
-
-        // TODO: Fix sender
-        accountHandler.getAccounts().get(0).send(email);
-
-        Stage stage = (Stage) this.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    protected void openContactBook(ActionEvent event) {
-        Stage stage = new Stage();
-        stage.setScene(new Scene(new ContactBookPresenter(true), 400, 300));
-        stage.setTitle("Contact Book");
-        stage.setMinWidth(400);
-        stage.setMinHeight(300);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-    }
-
-    public void setReceivers(String value) {
-        to.textProperty().set(value);
-    }
-
-    public void setSubject(String value) {
-        subject.textProperty().set(value);
-    }
-
-    public void setContent(String value) {
-        content.textProperty().set(value);
+        fromChoiceBox.setItems(observableList);
+        fromChoiceBox.getSelectionModel().select(0);
     }
 
     /**
@@ -153,13 +111,6 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
         return addressList;
     }
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        showOrHideSendButton();
-        EventBus.INSTANCE.register(this);
-    }
-
     /**
      * Depending on whether an account exists the send button is disabled or enabled.
      */
@@ -171,27 +122,85 @@ public class ComposeEmailPresenter extends GridPane implements Initializable, IO
         }
     }
 
+    /**
+     * Invoked when the "Insert"-button in the contact book is clicked.
+     * @param contact
+     */
     private void insertContactToEmail(IContact contact) {
-
         for (IAddress address : contact.getEmailAddresses()) {
-            if(to.getText().length() != 0) {
-                to.appendText(", " + address.getString());
+            if(toTextField.getText().length() != 0) {
+                toTextField.appendText(", " + address.getString());
             } else {
-                to.setText(address.getString());
+                toTextField.setText(address.getString());
             }
         }
     }
 
-    public void onKeyTyped() {
+    /**
+     * Invoked when typing in the content text-area with the purpose of compiling text to markdown
+     * and showing it in the Web View.
+     */
+    @FXML
+    protected void onKeyTyped() {
         try {
-            html = new Markdown4jProcessor().process(content.getText());
+            html = new Markdown4jProcessor().process(contentTextArea.getText());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         html = EMAIL_CSS + html;
 
-        markdown.getEngine().loadContent(html);
+        webView.getEngine().loadContent(html);
+    }
+
+    /**
+     * Invoked when the "Send"-button is clicked.
+     *
+     * @param event
+     */
+    @FXML
+    protected void sendButtonActionPerformed(ActionEvent event) {
+        // Start building an email
+        Email.Builder emailBuilder = new Email.Builder(subjectTextField.getText(), html);
+
+        // Add to, cc and bcc if they are entered
+        if (!this.toTextField.getText().isEmpty()) {
+            List<IAddress> toAddresses = parseAddresses(this.toTextField.getText());
+            emailBuilder.to(toAddresses);
+        }
+
+        if (!this.ccTextField.getText().isEmpty()) {
+            List<IAddress> ccAddresses = parseAddresses(this.ccTextField.getText());
+            emailBuilder.cc(ccAddresses);
+        }
+
+        if (!this.bccTextField.getText().isEmpty()) {
+            List<IAddress> bccAddresses = parseAddresses(this.bccTextField.getText());
+            emailBuilder.bcc(bccAddresses);
+        }
+
+        // Build the email and send it
+        IEmail email = emailBuilder.build();
+        fromChoiceBox.getValue().send(email);
+
+        Stage stage = (Stage) this.getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * Opens the contact book with the "ComposeEmailPresenter"-window as modal parent.
+     *
+     * @param event
+     */
+    @FXML
+    protected void openContactBook(ActionEvent event) {
+        Stage stage = new Stage();
+        stage.setScene(new Scene(new ContactBookPresenter(true), 400, 300));
+        stage.setTitle("Contact Book");
+        stage.setMinWidth(400);
+        stage.setMinHeight(300);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
     @Override

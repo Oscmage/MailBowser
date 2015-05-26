@@ -15,7 +15,8 @@
         <RowConstraints minHeight="20.0" vgrow="NEVER" />
         <RowConstraints minHeight="20.0" vgrow="NEVER" />
         <RowConstraints minHeight="20.0" vgrow="NEVER" />
-      <RowConstraints minHeight="20.0" vgrow="NEVER" />
+        <RowConstraints minHeight="20.0" vgrow="NEVER" />
+        <RowConstraints minHeight="20.0" vgrow="NEVER" />
         <RowConstraints minHeight="20.0" vgrow="NEVER" />
         <RowConstraints minHeight="20.0" vgrow="ALWAYS" />
     </rowConstraints>
@@ -24,46 +25,44 @@
         <HBox id="topbar" GridPane.rowIndex="0">
             <children>
                 <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
-                   <children>
-                       <Button fx:id="sendButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sendButtonActionPerformed" prefHeight="40.0" prefWidth="250.0" text="">
-                           <cursor>
-                               <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <styleClass>
-                               <String fx:value="fontawesome" />
-                               <String fx:value="circle" />
-                           </styleClass>
-                       </Button>
-                   </children>
+                    <children>
+                        <Button fx:id="sendButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sendButtonActionPerformed" prefHeight="40.0" prefWidth="250.0" text="">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <styleClass>
+                                <String fx:value="fontawesome" />
+                                <String fx:value="circle" />
+                            </styleClass>
+                        </Button>
+                    </children>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-                   <children>
-                       <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openContactBook" prefHeight="40.0" prefWidth="250.0" text="">
-                           <cursor>
-                               <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <styleClass>
-                               <String fx:value="fontawesome" />
-                               <String fx:value="circle" />
-                           </styleClass>
-                       </Button>
-                   </children>
+                    <children>
+                        <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openContactBook" prefHeight="40.0" prefWidth="250.0" text="">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <styleClass>
+                                <String fx:value="fontawesome" />
+                                <String fx:value="circle" />
+                            </styleClass>
+                        </Button>
+                    </children>
                 </HBox>
             </children>
         </HBox>
 
-        <TextField fx:id="to" prefHeight="40.0" promptText="To" styleClass="gridded" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+        <ChoiceBox fx:id="fromChoiceBox" prefHeight="40.0" styleClass="gridded" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+        <TextField fx:id="toTextField" prefHeight="40.0" promptText="To" styleClass="gridded" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+        <TextField fx:id="ccTextField" prefHeight="40.0" promptText="Copy" styleClass="gridded" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+        <TextField fx:id="bccTextField" prefHeight="40.0" promptText="Blind Copy" styleClass="gridded" GridPane.rowIndex="4" />
+        <TextField fx:id="subjectTextField" prefHeight="40.0" promptText="Subject" styleClass="gridded" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" />
 
-        <TextField fx:id="cc" prefHeight="40.0" promptText="Copy" styleClass="gridded" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-      <TextField fx:id="bcc" prefHeight="40.0" promptText="Blind Copy" styleClass="gridded" GridPane.rowIndex="3" />
-
-        <TextField fx:id="subject" prefHeight="40.0" promptText="Subject" styleClass="gridded" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
-
-        <SplitPane dividerPositions="0.5" GridPane.rowIndex="5">
+        <SplitPane dividerPositions="0.5" GridPane.rowIndex="6">
             <items>
-                <TextArea fx:id="content" onKeyReleased="#onKeyTyped" promptText="Message..." wrapText="true">
-                </TextArea>
-                <WebView fx:id="markdown" prefHeight="0.0" prefWidth="0.0" />
+                <TextArea fx:id="contentTextArea" onKeyReleased="#onKeyTyped" promptText="Message..." wrapText="true" />
+                <WebView fx:id="webView" prefHeight="0.0" prefWidth="0.0" />
             </items>
         </SplitPane>
 

@@ -129,8 +129,7 @@ public class MainPresenter implements IObserver, Initializable {
      * @throws IOException
      */
     public void openAccountManager() throws IOException {
-        Parent scene = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AccountManager.fxml"));
-        openWindow(scene, "Account Manager", 400, 300, 50, 50, false);
+        openWindow(new AccountManagerPresenter(), "Account Manager", 400, 300, 50, 50, false);
 
     }
 

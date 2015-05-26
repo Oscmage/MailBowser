@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<HBox id="topbar" alignment="CENTER_LEFT" maxHeight="60.0" maxWidth="1.7976931348623157E308" prefHeight="60.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.TopbarPresenter">
+<fx:root type="javafx.scene.layout.HBox" id="topbar" alignment="CENTER_LEFT" maxHeight="60.0" maxWidth="1.7976931348623157E308" prefHeight="60.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <HBox alignment="CENTER_LEFT" maxWidth="420.0" spacing="10.0">
             <children>
@@ -56,4 +56,4 @@
     <padding>
         <Insets left="10.0" right="10.0" />
     </padding>
-</HBox>
+</fx:root>

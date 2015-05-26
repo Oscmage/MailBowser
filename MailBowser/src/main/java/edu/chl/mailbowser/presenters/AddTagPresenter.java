@@ -20,7 +20,7 @@ public class AddTagPresenter extends VBox {
 
     @FXML protected TextField tagTextField;
     @FXML protected Button tagButton;
-
+    
     public AddTagPresenter() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AddTagView.fxml"));
         fxmlLoader.setRoot(this);
@@ -33,10 +33,18 @@ public class AddTagPresenter extends VBox {
         }
     }
 
+    /**
+     * Closes the "Add tag"-window.
+     */
     private void closeWindow() {
         ((Stage)this.getScene().getWindow()).close();
     }
 
+    /**
+     * Invoked when the "Tag"-button is clicked.
+     *
+     * @param actionEvent
+     */
     @FXML
     public void tagButtonOnAction(ActionEvent actionEvent) {
         if(!tagTextField.getText().equals("")) {
@@ -45,6 +53,11 @@ public class AddTagPresenter extends VBox {
         }
     }
 
+    /**
+     * Invoked when the "Cancel"-button is clicked.
+     *
+     * @param actionEvent
+     */
     @FXML
     public void cancelButtonOnAction(ActionEvent actionEvent) {
         closeWindow();
