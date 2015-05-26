@@ -11,14 +11,14 @@
             <HBox fx:id="menuBarLeft" alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
                   <Button fx:id="addContactButton" mnemonicParsing="false" onAction="#addContactButtonOnAction" styleClass="circle, fontawesome" text="" />
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonOnAction" styleClass="circle, fontawesome" text="" />
+                  <Button fx:id="deleteContactButton" mnemonicParsing="false" onAction="#deleteContactButtonOnAction" styleClass="circle, fontawesome" text="" />
                </children>
             </HBox>
             <HBox fx:id="menuBarRight" alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="NEVER">
                <children>
                   <Button fx:id="addNewAddressButton" mnemonicParsing="false" onAction="#addNewAddressButtonOnAction" styleClass="circle, fontawesome" text="&#xf0fe;" />
-                  <Button fx:id="removeAddressButton" mnemonicParsing="false" onAction="#addNewAddressButtonOnAction" styleClass="circle, fontawesome" text="&#xf146;" />
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonOnAction" styleClass="circle, fontawesome" text="" />
+                  <Button fx:id="removeAddressButton" mnemonicParsing="false" onAction="#removeAddressButtonOnAction" styleClass="circle, fontawesome" text="&#xf146;" />
+                  <Button fx:id="saveContactButton" mnemonicParsing="false" onAction="#saveContactButtonOnAction" styleClass="circle, fontawesome" text="" />
                </children>
             </HBox>
          </children>
@@ -38,7 +38,6 @@
                               <TextField fx:id="lastNameField" />
                            </children>
                         </VBox>
-
                      </children>
                   </VBox>
                </content>
