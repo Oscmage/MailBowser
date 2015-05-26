@@ -85,5 +85,4 @@ public interface IEmail extends Searchable, Serializable, Comparable<IEmail> {
      * @param sender string that current sender is set to
      */
     void setSender(IAddress sender);
-    void setSubject(String subject);
 }
