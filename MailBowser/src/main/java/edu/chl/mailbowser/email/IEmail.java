@@ -75,12 +75,6 @@ public interface IEmail extends Searchable, Serializable, Comparable<IEmail> {
     Date getReceivedDate();
 
     /**
-     * Sets the content of the email
-     * @param content string that current content is set to
-     */
-    void setContent(String content);
-
-    /**
      * Sets sender of the email
      * @param sender string that current sender is set to
      */
