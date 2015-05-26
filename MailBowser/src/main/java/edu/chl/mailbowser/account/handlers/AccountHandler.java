@@ -7,6 +7,9 @@ import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.io.*;
 
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -81,11 +84,15 @@ public class AccountHandler implements IAccountHandler{
      * {@inheritDoc}
      */
     @Override
-    public boolean readAccounts(String filename) {
+    public boolean readAccounts(String filename, ITagHandler tagHandler) {
         IObjectReader<ArrayList<IAccount>> objectReader = new ObjectReader<>();
 
         try {
             accounts = objectReader.read(filename);
+
+            for (IAccount account : accounts) {
+                account.setTagHandler(tagHandler);
+            }
         } catch (ObjectReadException e) {
             // initiate accounts to a new empty ArrayList to make sure that no corrupt data has been loaded
             accounts = new ArrayList<>();

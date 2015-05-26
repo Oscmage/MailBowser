@@ -35,4 +35,26 @@ public enum MainHandler {
     public IBackgroundFetcher getBackgroundFetching() {
         return this.backgroundFetching;
     }
+
+    /**
+     * Saves all handlers that need to be saved by the program.
+     *
+     * This method tells each handler to save it's components.
+     */
+    public void saveComponents() {
+        tagHandler.writeTags("Tags.ser");
+        accountHandler.writeAccounts("Accounts.ser");
+        //contactBook.writeContacts("Contacts.ser");
+    }
+
+    /**
+     * Loads all handlers that need to be loaded by the program.
+     *
+     * This method tells each handler to load it's components.
+     */
+    public void loadComponents() {
+        tagHandler.readTags("Tags.ser");
+        accountHandler.readAccounts("Accounts.ser", tagHandler);
+        //contactBook.readContacts("Contacts.ser");
+    }
 }
