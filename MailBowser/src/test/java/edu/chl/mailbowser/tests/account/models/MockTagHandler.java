@@ -16,12 +16,12 @@ public class MockTagHandler implements ITagHandler {
     }
 
     @Override
-    public Set<IEmail> getEmailsWith(ITag tag) {
+    public Set<IEmail> getEmailsWithTag(ITag tag) {
         return null;
     }
 
     @Override
-    public Set<ITag> getTagsWith(IEmail email) {
+    public Set<ITag> getTagsWithEmail(IEmail email) {
         return null;
     }
 
