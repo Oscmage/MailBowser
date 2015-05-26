@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.presenters;
+package edu.chl.mailbowser.presenters.tag;
 
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
@@ -16,13 +16,13 @@ import java.io.IOException;
 /**
  * Created by filip on 21/05/15.
  */
-public class AddTagPresenter extends VBox {
+public class AddTagForm extends VBox {
 
     @FXML protected TextField tagTextField;
     @FXML protected Button tagButton;
     
-    public AddTagPresenter() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AddTagView.fxml"));
+    public AddTagForm() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/tag/AddTagForm.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

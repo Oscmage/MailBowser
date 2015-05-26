@@ -6,18 +6,26 @@ import edu.chl.mailbowser.email.IAddress;
 import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.*;
+import edu.chl.mailbowser.presenters.accountmanager.AccountManager;
+import edu.chl.mailbowser.presenters.contactbook.ContactBook;
+import edu.chl.mailbowser.presenters.email.EmailForm;
+import edu.chl.mailbowser.presenters.tag.AddTagForm;
+import edu.chl.mailbowser.presenters.tag.TagList;
+import edu.chl.mailbowser.presenters.tag.TagListItem;
 import edu.chl.mailbowser.tag.ITagHandler;
 import edu.chl.mailbowser.tag.ITag;
 import edu.chl.mailbowser.tag.Tag;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -39,8 +47,7 @@ public class MainPresenter implements IObserver, Initializable {
     @FXML private MenuItem replyAllMenuItem;
     @FXML private MenuItem fetchMenuItem;
     @FXML private MenuItem refetchMenuItem;
-    Stage newStage;
-    Stage accountManager;
+    @FXML protected VBox sidebar;
 
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
@@ -52,6 +59,18 @@ public class MainPresenter implements IObserver, Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
         showOrHideMenuOptions();
+
+        ObservableList<TagListItem> observableList = FXCollections.observableArrayList();
+
+        for(ITag tag : tagHandler.getTags()) {
+            TagListItem tagListItem = new TagListItem(tag, TagList.Type.GLOBAL);
+            observableList.add(tagListItem);
+        }
+        TagList tagList = new TagList(TagList.Type.GLOBAL);
+        tagList.setItems(observableList);
+        sidebar.getChildren().add(tagList);
+
+
     }
 
 
@@ -117,11 +136,11 @@ public class MainPresenter implements IObserver, Initializable {
     }
 
     private void openContactBook() {
-        openWindow(new ContactBookPresenter(), "Contact Book", 400, 300, 100, 100, false);
+        openWindow(new ContactBook(), "Contact Book", 400, 300, 100, 100, false);
     }
 
     private void openAddTagWindow() {
-        openWindow(new AddTagPresenter(), "Add tag...", 200, 100, 100, 100, true);
+        openWindow(new AddTagForm(), "Add tag...", 200, 100, 100, 100, true);
     }
 
     /**
@@ -129,7 +148,7 @@ public class MainPresenter implements IObserver, Initializable {
      * @throws IOException
      */
     public void openAccountManager() throws IOException {
-        openWindow(new AccountManagerPresenter(), "Account Manager", 400, 300, 50, 50, false);
+        openWindow(new AccountManager(), "Account Manager", 400, 300, 50, 50, false);
 
     }
 
@@ -148,8 +167,8 @@ public class MainPresenter implements IObserver, Initializable {
     }
 
     private void openComposeEmailWindow(String recipients, String subject, String content) {
-        ComposeEmailPresenter composeEmailPresenter = new ComposeEmailPresenter(recipients, subject, content);
-        openWindow(composeEmailPresenter, "New Email...", 768, 480, 50, 50, false);
+        EmailForm emailForm = new EmailForm(recipients, subject, content);
+        openWindow(emailForm, "New Email...", 768, 480, 50, 50, false);
     }
 
     @Override

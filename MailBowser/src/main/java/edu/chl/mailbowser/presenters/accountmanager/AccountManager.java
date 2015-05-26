@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.presenters;
+package edu.chl.mailbowser.presenters.accountmanager;
 
 import edu.chl.mailbowser.main.MainHandler;
 import edu.chl.mailbowser.account.IAccountHandler;
@@ -12,21 +12,18 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by filip on 19/05/15.
  */
-public class AccountManagerPresenter extends VBox implements IObserver {
+public class AccountManager extends VBox implements IObserver {
 
     /**
      * An enum for keeping track of what view is being shown.
@@ -46,8 +43,8 @@ public class AccountManagerPresenter extends VBox implements IObserver {
     @FXML protected ScrollPane accountForm;
     @FXML protected ListView<IAccount> accountsList;
 
-    public AccountManagerPresenter() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AccountManager.fxml"));
+    public AccountManager() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/accountmanager/AccountManager.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -95,7 +92,7 @@ public class AccountManagerPresenter extends VBox implements IObserver {
      * @param account the account to create an edit view for
      */
     private void showEditAccountView(IAccount account) {
-        accountForm.setContent(new EditAccountPresenter(account));
+        accountForm.setContent(new EditAccountForm(account));
         currentMode = Mode.EDIT;
     }
 
@@ -103,7 +100,7 @@ public class AccountManagerPresenter extends VBox implements IObserver {
      * Switches to the add account view in the right hand pane.
      */
     private void showAddAccountView() {
-        accountForm.setContent(new AddAccountPresenter());
+        accountForm.setContent(new AddAccountForm());
         currentMode = Mode.ADD;
     }
 
@@ -139,14 +136,14 @@ public class AccountManagerPresenter extends VBox implements IObserver {
     protected void saveAccountButtonOnAction(ActionEvent actionEvent) {
         switch (currentMode) {
             case ADD:
-                AddAccountPresenter addAccountPresenter = (AddAccountPresenter) accountForm.getContent();
-                IAccount account = addAccountPresenter.createAccount();
+                AddAccountForm addAccountForm = (AddAccountForm) accountForm.getContent();
+                IAccount account = addAccountForm.createAccount();
                 accountHandler.addAccount(account);
                 break;
             case EDIT:
-                EditAccountPresenter editAccountPresenter = (EditAccountPresenter) accountForm.getContent();
-                editAccountPresenter.updateAccountInfo();
-                editAccountPresenter.updateAccountInfo();
+                EditAccountForm editAccountForm = (EditAccountForm) accountForm.getContent();
+                editAccountForm.updateAccountInfo();
+                editAccountForm.updateAccountInfo();
                 break;
         }
     }

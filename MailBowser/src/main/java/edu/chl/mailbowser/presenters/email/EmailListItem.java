@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.presenters;
+package edu.chl.mailbowser.presenters.email;
 
 import edu.chl.mailbowser.main.MainHandler;
 import edu.chl.mailbowser.email.IEmail;
@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Created by filip on 07/05/15.
  */
-public class EmailListItemPresenter extends FlowPane implements Comparable {
+public class EmailListItem extends FlowPane implements Comparable {
 
     private IEmail email;
 
@@ -24,8 +24,8 @@ public class EmailListItemPresenter extends FlowPane implements Comparable {
     @FXML protected Label content;
     @FXML protected Label tags;
 
-    private EmailListItemPresenter() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EmailListViewItem.fxml"));
+    private EmailListItem() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/email/EmailListItem.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -35,7 +35,7 @@ public class EmailListItemPresenter extends FlowPane implements Comparable {
         }
     }
 
-    public EmailListItemPresenter(IEmail email) {
+    public EmailListItem(IEmail email) {
         this();
         this.email = email;
         initializeContent();
@@ -89,8 +89,8 @@ public class EmailListItemPresenter extends FlowPane implements Comparable {
      */
     @Override
     public int compareTo(Object o) {
-        if (o instanceof EmailListItemPresenter) {
-            EmailListItemPresenter e = (EmailListItemPresenter) o;
+        if (o instanceof EmailListItem) {
+            EmailListItem e = (EmailListItem) o;
             return this.getEmail().compareTo(e.getEmail());
         }
         return 0;
@@ -103,9 +103,9 @@ public class EmailListItemPresenter extends FlowPane implements Comparable {
      */
     @Override
     public boolean equals(Object o) {
-        if(o instanceof EmailListItemPresenter) {
+        if(o instanceof EmailListItem) {
             return this.email.equals(
-                    ((EmailListItemPresenter)o).getEmail()
+                    ((EmailListItem)o).getEmail()
             );
         }
         return false;

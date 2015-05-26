@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.presenters;
+package edu.chl.mailbowser.presenters.accountmanager;
 
 import edu.chl.mailbowser.account.MailServerTypes;
 import edu.chl.mailbowser.account.Account;
@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * Created by mats on 22/05/15.
  */
-public class AddAccountPresenter extends VBox {
+public class AddAccountForm extends VBox {
 
     @FXML protected TextField usernameField;
     @FXML protected TextField passwordField;
@@ -27,8 +27,8 @@ public class AddAccountPresenter extends VBox {
     /**
      * Initializes a create account view.
      */
-    public AddAccountPresenter() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AddAccountView.fxml"));
+    public AddAccountForm() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/accountmanager/AddAccountForm.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

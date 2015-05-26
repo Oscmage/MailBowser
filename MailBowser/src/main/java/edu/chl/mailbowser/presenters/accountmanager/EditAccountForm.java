@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.presenters;
+package edu.chl.mailbowser.presenters.accountmanager;
 
 import edu.chl.mailbowser.account.IAccount;
 import edu.chl.mailbowser.account.IncomingServer;
@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by mats on 22/05/15.
  */
-public class EditAccountPresenter extends VBox {
+public class EditAccountForm extends VBox {
 
     private IAccount account;
 
@@ -29,8 +29,8 @@ public class EditAccountPresenter extends VBox {
      *
      * @param account the account to edit
      */
-    public EditAccountPresenter(IAccount account) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EditAccountView.fxml"));
+    public EditAccountForm(IAccount account) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/accountmanager/EditAccountForm.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

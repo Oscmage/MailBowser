@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.presenters;
+package edu.chl.mailbowser.presenters.contactbook;
 
 import edu.chl.mailbowser.main.MainHandler;
 import edu.chl.mailbowser.contact.Contact;
@@ -31,9 +31,9 @@ import java.util.stream.Collectors;
 /**
  * Created by jesper on 2015-05-22.
  */
-public class ContactBookPresenter extends VBox {
+public class ContactBook extends VBox {
 
-    @FXML protected ListView<ContactListItemPresenter> contactsList;
+    @FXML protected ListView<ContactListItem> contactsList;
     @FXML protected Button saveContactButton;
     @FXML protected Button addContactButton;
     @FXML protected Button deleteContactButton;
@@ -49,13 +49,13 @@ public class ContactBookPresenter extends VBox {
 
     private int newAddressIndex = ORIGINAL_INDEX;
 
-    private ObservableList<ContactListItemPresenter> contactListItems = FXCollections.observableArrayList();
+    private ObservableList<ContactListItem> contactListItems = FXCollections.observableArrayList();
 
     private IContactBook contactBook = MainHandler.INSTANCE.getContactBook();
-    private ContactListItemPresenter selectedContact;
+    private ContactListItem selectedContact;
 
-    public ContactBookPresenter() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ContactBookView.fxml"));
+    public ContactBook() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/contactbook/ContactBook.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -69,7 +69,7 @@ public class ContactBookPresenter extends VBox {
         initializeContactBook();
     }
 
-    public ContactBookPresenter(boolean showInsertButton) {
+    public ContactBook(boolean showInsertButton) {
         this();
         menuBarLeft.getChildren().clear();
         menuBarRight.getChildren().clear();
@@ -99,7 +99,7 @@ public class ContactBookPresenter extends VBox {
         });
 
         for(IContact contact : contactBook.getContacts()) {
-            contactListItems.add(new ContactListItemPresenter(contact));
+            contactListItems.add(new ContactListItem(contact));
         }
 
         contactsList.setItems(contactListItems);
@@ -192,10 +192,10 @@ public class ContactBookPresenter extends VBox {
     @FXML
     public void addContactButtonOnAction(ActionEvent actionEvent) {
         IContact newContact = new Contact();
-        ContactListItemPresenter contactListItemPresenter = new ContactListItemPresenter(newContact);
+        ContactListItem contactListItem = new ContactListItem(newContact);
         contactBook.addContact(newContact);
-        contactListItems.add(contactListItemPresenter);
-        contactsList.getSelectionModel().select(contactListItemPresenter);
+        contactListItems.add(contactListItem);
+        contactsList.getSelectionModel().select(contactListItem);
     }
 
     /**

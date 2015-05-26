@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.presenters;
+package edu.chl.mailbowser.presenters.email;
 
 import edu.chl.mailbowser.main.MainHandler;
 import edu.chl.mailbowser.account.IAccountHandler;
@@ -28,19 +28,19 @@ import java.util.stream.Collectors;
 /**
  * Created by filip on 04/05/15.
  */
-public class EmailListPresenter extends ListView implements IObserver {
+public class EmailList extends ListView implements IObserver {
 
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
-    @FXML private ObservableList<EmailListItemPresenter> observableEmailList = FXCollections.observableArrayList();
-    @FXML private SortedList<EmailListItemPresenter> sortedObservableEmailList = new SortedList<>(observableEmailList,
-            Comparator.<EmailListItemPresenter>naturalOrder());
-    @FXML protected ListView<EmailListItemPresenter> emailListListView;
+    @FXML private ObservableList<EmailListItem> observableEmailList = FXCollections.observableArrayList();
+    @FXML private SortedList<EmailListItem> sortedObservableEmailList = new SortedList<>(observableEmailList,
+            Comparator.<EmailListItem>naturalOrder());
+    @FXML protected ListView<EmailListItem> emailListListView;
     private boolean updateListOnIncomingEmail = true;
 
-    public EmailListPresenter() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EmailListView.fxml"));
+    public EmailList() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/email/EmailList.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -83,7 +83,7 @@ public class EmailListPresenter extends ListView implements IObserver {
      */
     private void replaceListViewContent(Set<IEmail> emails) {
         observableEmailList.setAll(emails.stream()
-                        .map(EmailListItemPresenter::new)
+                        .map(EmailListItem::new)
                         .collect(Collectors.toList())
         );
     }
@@ -94,9 +94,9 @@ public class EmailListPresenter extends ListView implements IObserver {
      * @param email
      */
     private void addEmailToListView(IEmail email) {
-        EmailListItemPresenter emailListItemPresenter = new EmailListItemPresenter(email);
-        if (!observableEmailList.contains(emailListItemPresenter)) {
-            observableEmailList.addAll(emailListItemPresenter);
+        EmailListItem emailListItem = new EmailListItem(email);
+        if (!observableEmailList.contains(emailListItem)) {
+            observableEmailList.addAll(emailListItem);
         }
     }
 
