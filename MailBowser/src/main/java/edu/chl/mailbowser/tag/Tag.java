@@ -11,7 +11,7 @@ public class Tag implements ITag {
      * Creates a Tag with the specified name.
      */
     public Tag(String name) {
-        this.name = name.toLowerCase();
+        setTagName(name);
     }
 
 
@@ -20,7 +20,11 @@ public class Tag implements ITag {
      */
     @Override
     public void setTagName(String name) {
-        this.name = name;
+        if(name != null) {
+            this.name = name.toLowerCase();
+        } else {
+            throw new IllegalArgumentException("Null is not accepted when creating a tag.");
+        }
     }
 
     /**

@@ -45,9 +45,26 @@ public class Account implements IAccount {
      * @param incomingServer the server to use when fetching emails
      * @param outgoingServer the server to use when sending emails
      * @param tagHandler the tag handler to use when tagging emails
+     * @throws IllegalArgumentException if any parameter is null
      */
     public Account(IAddress address, String password, IIncomingServer incomingServer, IOutgoingServer outgoingServer,
-                   ITagHandler tagHandler) {
+                   ITagHandler tagHandler) throws IllegalArgumentException {
+        if (address == null) {
+            throw new IllegalArgumentException("Can't create an Account with address null");
+        }
+        if (password == null) {
+            throw new IllegalArgumentException("Can't create an Account with password null");
+        }
+        if (incomingServer == null) {
+            throw new IllegalArgumentException("Can't create an Account with incomingServer null");
+        }
+        if (outgoingServer == null) {
+            throw new IllegalArgumentException("Can't create an Account with outgoingServer null");
+        }
+        if (tagHandler == null) {
+            throw new IllegalArgumentException("Can't create an Account with tagHandler null");
+        }
+
         this.address = address;
         setPassword(password);
         this.incomingServer = incomingServer;
@@ -153,9 +170,15 @@ public class Account implements IAccount {
 
     /**
      * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException when a null email is sent
      */
     @Override
-    public void send(IEmail email) {
+    public void send(IEmail email) throws IllegalArgumentException {
+        if (email == null) {
+            throw new IllegalArgumentException("Can't send a null email");
+        }
+
         email.setSender(address);
         outgoingServer.send(email, getUsername(), getPassword(), new Callback<IEmail>() {
             @Override
