@@ -37,9 +37,9 @@ public class TagListItem extends HBox {
     public TagListItem(ITag tag, TagList.Type type) {
         this();
 
-        if(type == TagList.Type.LOCAL) {
+        if(type == TagList.Type.GLOBAL) {
             this.getStyleClass().add("global-tag");
-        } else {
+        } else if (type == TagList.Type.LOCAL) {
             this.getStyleClass().add("local-tag");
         }
 

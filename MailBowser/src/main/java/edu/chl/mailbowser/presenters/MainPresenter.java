@@ -47,7 +47,6 @@ public class MainPresenter implements IObserver, Initializable {
     @FXML private MenuItem replyAllMenuItem;
     @FXML private MenuItem fetchMenuItem;
     @FXML private MenuItem refetchMenuItem;
-    @FXML protected VBox sidebar;
 
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
@@ -59,18 +58,6 @@ public class MainPresenter implements IObserver, Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         EventBus.INSTANCE.register(this);
         showOrHideMenuOptions();
-
-        ObservableList<TagListItem> observableList = FXCollections.observableArrayList();
-
-        for(ITag tag : tagHandler.getTags()) {
-            TagListItem tagListItem = new TagListItem(tag, TagList.Type.GLOBAL);
-            observableList.add(tagListItem);
-        }
-        TagList tagList = new TagList(TagList.Type.GLOBAL);
-        tagList.setItems(observableList);
-        sidebar.getChildren().add(tagList);
-
-
     }
 
 
