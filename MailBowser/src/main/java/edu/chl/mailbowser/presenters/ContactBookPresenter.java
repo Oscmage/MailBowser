@@ -7,10 +7,12 @@ import edu.chl.mailbowser.contact.IContactBook;
 import edu.chl.mailbowser.contact.views.ContactListViewItem;
 import edu.chl.mailbowser.email.models.Address;
 import edu.chl.mailbowser.email.models.IAddress;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,9 +20,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,6 +42,8 @@ public class ContactBookPresenter extends VBox implements Initializable{
     @FXML protected TextField lastNameField;
     @FXML protected TextField firstNameField;
     @FXML protected VBox contactForm;
+    @FXML protected HBox menuBarLeft;
+    @FXML protected HBox menuBarRight;
 
     private final int ORIGINAL_INDEX = 1;
 
@@ -61,8 +64,27 @@ public class ContactBookPresenter extends VBox implements Initializable{
         try {
             fxmlLoader.load();
         } catch (IOException e) {
-            System.out.println("FXML-file not found");
+            System.out.println(e);
+            System.out.println("FXML-file not found in " + fxmlLoader.getLocation());
         }
+    }
+
+    public ContactBookPresenter(boolean showInsertButton) {
+        this();
+        menuBarLeft.getChildren().clear();
+        menuBarRight.getChildren().clear();
+
+        firstNameField.setEditable(false);
+        lastNameField.setEditable(false);
+
+        Button button = new Button("&#xf0ab;");
+        button.getStylesheets().addAll("circle", "fontawesome");
+        button.setOnAction(event -> {
+            EventBus.INSTANCE.publish(new Event(EventType.INSERT_CONTACT_TO_EMAIL,
+                    contactList.getSelectionModel().getSelectedItem().getContact()
+            ));
+        });
+        menuBarRight.getChildren().add(button);
     }
 
     @FXML
