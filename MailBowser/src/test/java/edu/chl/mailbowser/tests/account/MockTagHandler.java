@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.tests.account.models;
+package edu.chl.mailbowser.tests.account;
 
 import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.tag.ITagHandler;

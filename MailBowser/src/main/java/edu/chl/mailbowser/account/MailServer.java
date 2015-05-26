@@ -1,6 +1,13 @@
 package edu.chl.mailbowser.account;
 
+import edu.chl.mailbowser.email.IEmail;
+
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Store;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by filip on 09/04/15.
