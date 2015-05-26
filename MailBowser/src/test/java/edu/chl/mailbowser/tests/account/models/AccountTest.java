@@ -12,13 +12,15 @@ public class AccountTest {
     MockInServer incomingServer;
     MockOutServer outgoingServer;
     MockEmail email;
+    MockTagHandler tagHandler;
 
     @Before
     public void init(){
         incomingServer = new MockInServer();
         outgoingServer = new MockOutServer();
         email = new MockEmail();
-        account = new Account(new MockAddress(),"",incomingServer,outgoingServer);
+        tagHandler = new MockTagHandler();
+        account = new Account(new MockAddress(), "", incomingServer, outgoingServer, tagHandler);
     }
 
     @Test

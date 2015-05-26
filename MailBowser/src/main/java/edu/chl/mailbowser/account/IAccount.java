@@ -2,6 +2,7 @@ package edu.chl.mailbowser.account;
 
 import edu.chl.mailbowser.email.IAddress;
 import edu.chl.mailbowser.email.IEmail;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,4 +25,5 @@ public interface IAccount extends Serializable {
     List<IEmail> getEmails();
     void refetch();
     boolean testConnect();
+    void setTagHandler(ITagHandler tagHandler);
 }

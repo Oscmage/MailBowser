@@ -24,11 +24,11 @@ public class EmailListItemPresenter extends FlowPane implements Initializable, C
 
     private IEmail email;
 
-    @FXML private Label sender;
-    @FXML private Label sent;
-    @FXML private Label subject;
-    @FXML private Label content;
-    @FXML private Label tags;
+    @FXML protected Label sender;
+    @FXML protected Label sent;
+    @FXML protected Label subject;
+    @FXML protected Label content;
+    @FXML protected Label tags;
 
     public EmailListItemPresenter() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EmailListViewItem.fxml"));
@@ -47,6 +47,7 @@ public class EmailListItemPresenter extends FlowPane implements Initializable, C
         this();
 
         this.email = email;
+
 
         sender.setText(email.getSender().toString());
         sent.setText(new SimpleDateFormat("yyyy-MM-dd").format(email.getSentDate()));

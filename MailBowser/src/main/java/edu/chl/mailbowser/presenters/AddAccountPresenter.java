@@ -4,6 +4,7 @@ import edu.chl.mailbowser.account.MailServerTypes;
 import edu.chl.mailbowser.account.Account;
 import edu.chl.mailbowser.account.IAccount;
 import edu.chl.mailbowser.email.Address;
+import edu.chl.mailbowser.MainHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -67,7 +68,8 @@ public class AddAccountPresenter extends VBox implements Initializable {
                 new Address(username),
                 password,
                 serverType.createIncomingServer(),
-                serverType.createOutgoingServer()
+                serverType.createOutgoingServer(),
+                MainHandler.INSTANCE.getTagHandler()
         );
     }
 }

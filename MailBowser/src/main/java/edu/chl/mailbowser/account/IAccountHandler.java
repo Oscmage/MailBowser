@@ -1,6 +1,7 @@
 package edu.chl.mailbowser.account;
 
 import edu.chl.mailbowser.email.IEmail;
+import edu.chl.mailbowser.tag.handlers.ITagHandler;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public interface IAccountHandler {
      * @param filename the file to look for accounts in
      * @return false if no accounts are found, otherwise true
      */
-    boolean readAccounts(String filename);
+    boolean readAccounts(String filename, ITagHandler tagHandler);
 
     /**
      * Writes all accounts that have been added to this account handler to a file on disk.

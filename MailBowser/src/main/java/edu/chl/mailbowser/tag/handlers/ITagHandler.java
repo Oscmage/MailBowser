@@ -9,8 +9,8 @@ import java.util.Set;
 /**
  * Created by OscarEvertsson on 19/05/15.
  */
-public interface ITagHandler extends Serializable {
-    void addTag(IEmail email, ITag tag);
+public interface ITagHandler {
+    void addTagToEmail(IEmail email, ITag tag);
     Set<IEmail> getEmailsWith(ITag tag);
     Set<ITag> getTagsWith(IEmail email);
     Set<ITag> getTags();

@@ -1,12 +1,13 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.MainHandler;
-import edu.chl.mailbowser.email.Email;
 import edu.chl.mailbowser.email.IAddress;
+import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.tag.handlers.ITagHandler;
 import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.views.TagListItemPresenter;
+import edu.chl.mailbowser.utils.Pair;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 
 public class EmailDetailPresenter implements IObserver, Initializable {
 
-    private Email email;
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
     @FXML protected Label subjectLabel;
@@ -39,9 +38,7 @@ public class EmailDetailPresenter implements IObserver, Initializable {
     @FXML protected Label toLabel;
     @FXML protected Label ccLabel;
     @FXML protected Label receivedDateLabel;
-    @FXML protected Label tagLabel;
     @FXML protected WebView webView;
-    @FXML protected FlowPane tagFlowPane;
 
     @FXML protected VBox emailDetail;
 
@@ -53,10 +50,9 @@ public class EmailDetailPresenter implements IObserver, Initializable {
         EventBus.INSTANCE.register(this);
         tagListView.setItems(observableTagList);
         emailDetail.setOpacity(0.5);
-        EventBus.INSTANCE.publish(new Event(EventType.EMAILDETAILPRESENTER_READY,new Object()));
     }
 
-    private void updateView() {
+    private void updateView(IEmail email) {
         subjectLabel.setText(email.getSubject());
         receivedDateLabel.setText(email.getReceivedDate().toString());
         this.fromLabel.setText(email.getSender().getString());
@@ -73,11 +69,11 @@ public class EmailDetailPresenter implements IObserver, Initializable {
 
         this.webView.getEngine().loadContent(email.getContent());
 
-        replaceListViewContent(tagHandler.getTagsWith(this.email));
+        updateTagsList(tagHandler.getTagsWith(email));
         emailDetail.setOpacity(1);
     }
 
-    private void replaceListViewContent(Set<ITag> tags) {
+    private void updateTagsList(Set<ITag> tags) {
         observableTagList.setAll(
                 tags.stream()
                         .map(TagListItemPresenter::new)
@@ -93,22 +89,18 @@ public class EmailDetailPresenter implements IObserver, Initializable {
     }
 
     private void handleEvent(IEvent evt) {
+        IEmail email;
         switch (evt.getType()) {
-            case SELECTED_EMAIL:
-                this.email = (Email) evt.getValue();
-                updateView();
+            case SELECT_EMAIL:
+                updateView((IEmail)evt.getValue());
                 break;
-            case REMOVE_TAG:
+            case REMOVED_TAG_FROM_EMAIL:
+                email = (IEmail)((Pair)evt.getValue()).getFirst();
+                updateView(email);
                 break;
-            case ADD_TAG:
-                if(email != null) {
-                    replaceListViewContent(tagHandler.getTagsWith(this.email));
-                }
-                break;
-            case GUI_REMOVE_TAG:
-                ITag tag = (ITag) evt.getValue();
-                tagHandler.removeTagFromEmail(this.email, tag);
-                updateView();
+            case ADDED_TAG_TO_EMAIL:
+                email = (IEmail)((Pair)evt.getValue()).getFirst();
+                updateView(email);
                 break;
         }
     }

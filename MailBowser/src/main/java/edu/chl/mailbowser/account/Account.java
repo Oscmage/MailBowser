@@ -1,6 +1,5 @@
 package edu.chl.mailbowser.account;
 
-import edu.chl.mailbowser.MainHandler;
 import edu.chl.mailbowser.email.IAddress;
 import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.Event;
@@ -11,6 +10,7 @@ import edu.chl.mailbowser.tag.models.ITag;
 import edu.chl.mailbowser.tag.models.Tag;
 import edu.chl.mailbowser.utils.Callback;
 import edu.chl.mailbowser.utils.Pair;
+import edu.chl.mailbowser.utils.Crypto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,22 +21,26 @@ import java.util.List;
  * A model class for an email account. An account has an address, a password and two mail servers - an incoming and an outgoing.
  */
 public class Account implements IAccount {
-    // TODO: Remove the call to MainHandler and instead supply the tag handler in the constructor
-    private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
-
     private IAddress address;
-    private String password;
+
+    // the key to use when encrypting and decrypting the password. the password is never saved in plain text, it is
+    // only saved as an encrypted byte array
+    private static final String KEY = "%*tR7sfa";
+    private byte[] password;
 
     private IIncomingServer incomingServer;
     private IOutgoingServer outgoingServer;
+    private transient ITagHandler tagHandler;
 
     private List<IEmail> emails = new ArrayList<>();
 
-    public Account(IAddress newAddress, String newPassword, IIncomingServer newIncomingServer, IOutgoingServer newOutgoingServer) {
-        address = newAddress;
-        password = newPassword;
-        incomingServer = newIncomingServer;
-        outgoingServer = newOutgoingServer;
+    public Account(IAddress address, String password, IIncomingServer incomingServer, IOutgoingServer outgoingServer,
+                   ITagHandler tagHandler) {
+        this.address = address;
+        setPassword(password);
+        this.incomingServer = incomingServer;
+        this.outgoingServer = outgoingServer;
+        this.tagHandler = tagHandler;
     }
 
     /**
@@ -67,7 +71,7 @@ public class Account implements IAccount {
      */
     @Override
     public void setPassword(String password) {
-        this.password = password;
+        this.password = Crypto.encryptString(password, KEY);
     }
 
     /**
@@ -75,7 +79,7 @@ public class Account implements IAccount {
      */
     @Override
     public String getPassword() {
-        return password;
+        return Crypto.decryptByteArray(password, KEY);
     }
 
     /**
@@ -154,10 +158,11 @@ public class Account implements IAccount {
     @Override
     public void send(IEmail email) {
         email.setSender(address);
-        outgoingServer.send(email, getUsername(), password, new Callback<IEmail>() {
+        outgoingServer.send(email, getUsername(), getPassword(), new Callback<IEmail>() {
             @Override
             public void onSuccess(IEmail object) {
                 EventBus.INSTANCE.publish(new Event(EventType.SEND_EMAIL, object));
+                fetch();
             }
 
             @Override
@@ -179,6 +184,11 @@ public class Account implements IAccount {
     @Override
     public boolean testConnect(){
         return incomingServer.testConnection(getUsername(),getPassword());
+    }
+
+    @Override
+    public void setTagHandler(ITagHandler tagHandler) {
+        this.tagHandler = tagHandler;
     }
 
     /**
@@ -204,7 +214,7 @@ public class Account implements IAccount {
      *                   will be fetched
      */
     private void initFetch(boolean cleanFetch) {
-        incomingServer.fetch(getUsername(), password, cleanFetch, new Callback<Pair<IEmail, String>>() {
+        incomingServer.fetch(getUsername(), getPassword(), cleanFetch, new Callback<Pair<IEmail, String>>() {
             @Override
             public void onSuccess(Pair<IEmail, String> object) {
                 IEmail email = object.getFirst();
@@ -212,14 +222,14 @@ public class Account implements IAccount {
                 ITag tag = new Tag(folderName);
 
                 emails.add(email);
-                tagHandler.addTag(email, tag);
+                tagHandler.addTagToEmail(email, tag);
 
-                EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAIL, email));
+                EventBus.INSTANCE.publish(new Event(EventType.FETCHED_EMAIL, email));
             }
 
             @Override
             public void onFailure(String msg) {
-                EventBus.INSTANCE.publish(new Event(EventType.FETCH_EMAILS_FAIL, msg));
+                EventBus.INSTANCE.publish(new Event(EventType.FETCHED_ALL_EMAILS_FAILED, msg));
             }
         });
     }
@@ -263,4 +273,6 @@ public class Account implements IAccount {
         result = 31 * result + (emails != null ? emails.hashCode() : 0);
         return result;
     }
+
+
 }
