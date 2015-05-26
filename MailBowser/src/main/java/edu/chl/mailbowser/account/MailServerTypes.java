@@ -4,7 +4,7 @@ package edu.chl.mailbowser.account;
 /**
  * Created by mats on 16/04/15.
  *
- * A factory class for creating pre-configured MailServer objects.
+ * A factory class for creating pre-configured AbstractMailServer objects.
  */
 public enum MailServerTypes {
     GMAIL {

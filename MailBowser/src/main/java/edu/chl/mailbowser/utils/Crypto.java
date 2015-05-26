@@ -5,6 +5,9 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.UnsupportedCharsetException;
+import java.nio.charset.spi.CharsetProvider;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -22,17 +25,19 @@ public class Crypto {
      * @param keyString the key used to encrypted
      * @return the encrypted byte array
      */
-    public static byte[] encryptString(String str, String keyString) {
-        byte[] keyBytes = keyString.getBytes();
-        Key key = new SecretKeySpec(keyBytes, "DES");
-
+    public static byte[] encryptString(String str, String keyString, String charset) {
         try {
+            byte[] keyBytes;
+            keyBytes = keyString.getBytes(charset);
+            Key key = new SecretKeySpec(keyBytes, "DES");
+
             Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, key);
-            return cipher.doFinal(str.getBytes());
+            return cipher.doFinal(str.getBytes(charset));
         } catch (IllegalBlockSizeException | InvalidKeyException |
                 BadPaddingException | NoSuchAlgorithmException |
-                NoSuchPaddingException e) {
+                NoSuchPaddingException | UnsupportedEncodingException e) {
+
             throw new IllegalArgumentException(e.getCause());
         }
     }
@@ -43,17 +48,18 @@ public class Crypto {
      * @param keyString key to used decrypting
      * @return decrypted string
      */
-    public static String decryptByteArray(byte[] byteArray, String keyString) {
-        byte[] keyBytes = keyString.getBytes();
-        Key key = new SecretKeySpec(keyBytes, "DES");
-
+    public static String decryptByteArray(byte[] byteArray, String keyString, String charset) {
         try {
+            byte[] keyBytes = keyString.getBytes(charset);
+            Key key = new SecretKeySpec(keyBytes, "DES");
             Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, key);
-            return new String(cipher.doFinal(byteArray));
+
+            return new String(cipher.doFinal(byteArray), charset);
         } catch (IllegalBlockSizeException | InvalidKeyException |
                 BadPaddingException | NoSuchAlgorithmException |
-                NoSuchPaddingException e) {
+                NoSuchPaddingException | UnsupportedEncodingException e) {
+
             throw new IllegalArgumentException(e);
         }
     }

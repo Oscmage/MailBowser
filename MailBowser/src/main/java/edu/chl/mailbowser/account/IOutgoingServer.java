@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by jesper on 2015-04-21.
  */
-public interface IOutgoingServer extends Serializable {
+public interface IOutgoingServer extends IMailServer, Serializable {
     /**
      * Sends an email using the supplied credentials. When the sending has finished, the onSuccess method is called
      * in the callback with the send email as a parameter.
