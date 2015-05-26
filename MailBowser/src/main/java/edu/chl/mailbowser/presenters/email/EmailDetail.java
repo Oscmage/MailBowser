@@ -1,9 +1,11 @@
-package edu.chl.mailbowser.presenters;
+package edu.chl.mailbowser.presenters.email;
 
 import edu.chl.mailbowser.main.MainHandler;
 import edu.chl.mailbowser.email.IAddress;
 import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.*;
+import edu.chl.mailbowser.presenters.tag.TagList;
+import edu.chl.mailbowser.presenters.tag.TagListItem;
 import edu.chl.mailbowser.tag.ITagHandler;
 import edu.chl.mailbowser.tag.ITag;
 import edu.chl.mailbowser.utils.Pair;
@@ -12,17 +14,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
  * Created by filip on 04/05/15.
  */
 
-public class EmailDetailPresenter extends VBox implements IObserver {
+public class EmailDetail extends VBox implements IObserver {
 
     private ITagHandler tagHandler = MainHandler.INSTANCE.getTagHandler();
 
@@ -41,10 +42,10 @@ public class EmailDetailPresenter extends VBox implements IObserver {
     @FXML protected Label receivedDateLabel;
     @FXML protected WebView webView;
     @FXML protected VBox emailDetail;
-    @FXML protected ObservableList<HBox> observableTagList = FXCollections.observableArrayList();
-    @FXML protected ListView<HBox> tagListView;
+    @FXML protected VBox emailDetailTop;
+    protected TagList<TagListItem> tagListView;
 
-    public EmailDetailPresenter() {
+    public EmailDetail() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EmailDetailView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -56,7 +57,14 @@ public class EmailDetailPresenter extends VBox implements IObserver {
         }
 
         EventBus.INSTANCE.register(this);
-        tagListView.setItems(observableTagList);
+
+        tagListView = new TagList<>(TagList.Type.LOCAL);
+        tagListView.setOrientation(Orientation.HORIZONTAL);
+        tagListView.setEditable(false);
+        VBox.setVgrow(tagListView, Priority.NEVER);
+        tagListView.setId("emailDetailTagsList");
+        emailDetailTop.getChildren().add(tagListView);
+
         emailDetail.setOpacity(0.5);
     }
 
@@ -92,11 +100,15 @@ public class EmailDetailPresenter extends VBox implements IObserver {
      * @param tags
      */
     private void updateTagsList(Set<ITag> tags) {
-        observableTagList.setAll(
-                tags.stream()
-                        .map(TagListItemPresenter::new)
-                        .collect(Collectors.toList())
-        );
+        ObservableList<TagListItem> observableList = FXCollections.observableArrayList();
+
+        for(ITag tag : tags) {
+            System.out.println(tag.toString());
+            TagListItem tagListItem = new TagListItem(tag, TagList.Type.LOCAL);
+            tagListItem.getStyleClass().add("tag");
+            observableList.add(tagListItem);
+        }
+        tagListView.setItems(observableList);
     }
 
     @Override

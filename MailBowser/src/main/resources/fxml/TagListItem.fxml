@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
 
-<fx:root alignment="CENTER_LEFT" styleClass="tag" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" spacing="5.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-<children>
-   <Button fx:id="button" styleClass="fontawesome" onAction="#removeTagFromEmail" text="&#xf00d;" />
-   <Label fx:id="name" text="Label" />
-</children>
+<fx:root alignment="CENTER_LEFT" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="button" styleClass="fontawesome" onAction="#removeTag" text="&#xf00d;" />
+      <Label fx:id="tagName" text="Label" />
+   </children>
 </fx:root>

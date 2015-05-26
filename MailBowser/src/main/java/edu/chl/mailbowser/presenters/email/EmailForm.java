@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.presenters;
+package edu.chl.mailbowser.presenters.email;
 
 import edu.chl.mailbowser.account.IAccount;
 import edu.chl.mailbowser.main.MainHandler;
@@ -11,13 +11,13 @@ import edu.chl.mailbowser.contact.IContact;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.IObserver;
+import edu.chl.mailbowser.presenters.contactbook.ContactBook;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -31,15 +31,13 @@ import javafx.stage.Stage;
 import org.markdown4j.Markdown4jProcessor;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by mats on 09/04/15.
  */
-public class ComposeEmailPresenter extends GridPane implements IObserver {
+public class EmailForm extends GridPane implements IObserver {
 
     private static final String EMAIL_CSS = "<head><style>* {font-family: \"Arial\"}</style></head>";
     private IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
@@ -55,7 +53,7 @@ public class ComposeEmailPresenter extends GridPane implements IObserver {
     @FXML protected WebView webView;
     @FXML protected Parent root;
 
-    public ComposeEmailPresenter() {
+    public EmailForm() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ComposeEmailView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -74,7 +72,7 @@ public class ComposeEmailPresenter extends GridPane implements IObserver {
         showOrHideSendButton();
     }
 
-    public ComposeEmailPresenter(String recipients, String subject, String content) {
+    public EmailForm(String recipients, String subject, String content) {
         this();
         toTextField.setText(recipients);
         subjectTextField.setText(subject);
@@ -195,7 +193,7 @@ public class ComposeEmailPresenter extends GridPane implements IObserver {
     @FXML
     protected void openContactBook(ActionEvent event) {
         Stage stage = new Stage();
-        stage.setScene(new Scene(new ContactBookPresenter(true), 400, 300));
+        stage.setScene(new Scene(new ContactBook(true), 400, 300));
         stage.setTitle("Contact Book");
         stage.setMinWidth(400);
         stage.setMinHeight(300);
