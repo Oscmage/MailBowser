@@ -25,7 +25,7 @@
       </HBox>
       <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <children>
-            <ListView fx:id="contactList" prefHeight="300" HBox.hgrow="ALWAYS" />
+            <ListView fx:id="contactsList" prefHeight="300" HBox.hgrow="ALWAYS" />
             <ScrollPane hbarPolicy="NEVER" minWidth="200.0" maxWidth="200.0" prefViewportWidth="200.0" HBox.hgrow="ALWAYS">
                <content>
                   <VBox HBox.hgrow="ALWAYS">

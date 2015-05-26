@@ -33,8 +33,9 @@ import java.util.ResourceBundle;
 /**
  * Created by jesper on 2015-05-22.
  */
-public class ContactBookPresenter extends VBox implements Initializable{
-    @FXML protected ListView<ContactListViewItem> contactList;
+public class ContactBookPresenter extends VBox {
+
+    @FXML protected ListView<ContactListViewItem> contactsList;
     @FXML protected Button saveButton;
     @FXML protected Button addButton;
     @FXML protected Button deleteButton;
@@ -67,6 +68,19 @@ public class ContactBookPresenter extends VBox implements Initializable{
             System.out.println(e);
             System.out.println("FXML-file not found in " + fxmlLoader.getLocation());
         }
+
+        contactsList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                selectedContact = newValue;
+                updateView();
+            }
+        });
+
+        for(IContact contact : contactBook.getContacts()) {
+            contactListItems.add(new ContactListViewItem(contact));
+        }
+
+        contactsList.setItems(contactListItems);
     }
 
     public ContactBookPresenter(boolean showInsertButton) {
@@ -77,14 +91,22 @@ public class ContactBookPresenter extends VBox implements Initializable{
         firstNameField.setEditable(false);
         lastNameField.setEditable(false);
 
-        Button button = new Button("&#xf0ab;");
-        button.getStylesheets().addAll("circle", "fontawesome");
+        Button button = new Button("\uf0ab");
+        button.getStyleClass().addAll("circle", "fontawesome");
         button.setOnAction(event -> {
             EventBus.INSTANCE.publish(new Event(EventType.INSERT_CONTACT_TO_EMAIL,
-                    contactList.getSelectionModel().getSelectedItem().getContact()
+                    contactsList.getSelectionModel().getSelectedItem().getContact()
             ));
         });
         menuBarRight.getChildren().add(button);
+    }
+
+    private void updateView() {
+        lastNameField.setText(selectedContact.getContact().getLastName());
+        firstNameField.setText(selectedContact.getContact().getFirstName());
+        for (IAddress address : selectedContact.getContact().getEmailAddresses()) {
+            addAddressField(address);
+        }
     }
 
     @FXML
@@ -95,43 +117,20 @@ public class ContactBookPresenter extends VBox implements Initializable{
     }
 
     public void deleteButtonOnAction(ActionEvent actionEvent) {
-        selectedContact = contactList.getSelectionModel().getSelectedItem();
-        if(selectedContact != null) {
-            contactBook.removeContact(selectedContact.getContact());
-            contactListItems.remove(selectedContact);
-        }
+        contactBook.removeContact(selectedContact.getContact());
+        contactListItems.remove(selectedContact);
     }
 
     public void saveButtonOnAction(ActionEvent actionEvent) {
-        selectedContact = contactList.getSelectionModel().getSelectedItem();
-        if(selectedContact != null) {
-            selectedContact.getContact().setFirstName(firstNameField.getText());
-            selectedContact.getContact().setLastName(lastNameField.getText());
-            for (TextField textField : addresses) {
-                selectedContact.getContact().addAddress(new Address(textField.getText()));
-            }
+        selectedContact.getContact().setFirstName(firstNameField.getText());
+        selectedContact.getContact().setLastName(lastNameField.getText());
+        for (TextField textField : addresses) {
+            selectedContact.getContact().addAddress(new Address(textField.getText()));
         }
     }
 
     public void addNewAddressButtonOnAction(ActionEvent actionEvent) {
         addAddressField();
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        contactList.setItems(contactListItems);
-    }
-
-    public void contactListOnMouseClicked(Event event) {
-        selectedContact = contactList.getSelectionModel().getSelectedItem();
-        
-        addresses.clear();
-        newAddressIndex = ORIGINAL_INDEX;
-        lastNameField.setText(selectedContact.getContact().getLastName());
-        firstNameField.setText(selectedContact.getContact().getFirstName());
-        for (IAddress address : selectedContact.getContact().getEmailAddresses()) {
-            addAddressField(address);
-        }
     }
 
     private void addAddressField(IAddress address){
@@ -145,8 +144,13 @@ public class ContactBookPresenter extends VBox implements Initializable{
         addresses.add(newTextField);
     }
 
-    private void addAddressField(){
-        addAddressField((IAddress)null);
+    private void addAddressField() {
+        TextField newTextField = new TextField();
+        Label newLabel = new Label("Address " + (newAddressIndex));
+        newAddressIndex++;
+        contactForm.getChildren().addAll(newLabel, newTextField);
+        addresses.add(newTextField);
     }
+
 
 }
