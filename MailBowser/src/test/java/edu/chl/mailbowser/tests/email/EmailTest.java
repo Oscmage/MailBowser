@@ -1,14 +1,12 @@
 package edu.chl.mailbowser.tests.email;
 
-import edu.chl.mailbowser.email.Address;
 import edu.chl.mailbowser.email.Email;
-import edu.chl.mailbowser.email.IAddress;
+import edu.chl.mailbowser.tests.mock.MockAddress;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.mail.Message;
 import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -23,75 +21,101 @@ import static org.junit.Assert.assertTrue;
 public class EmailTest {
     private Email email;
 
+    private String subject = "subject";
+    private String content = "content";
+    private MockAddress sender;
+    private List<MockAddress> to;
+    private List<MockAddress> cc;
+    private List<MockAddress> bcc;
+
     @Before
     public void setUp() {
-        List<IAddress> recipients = new ArrayList<>();
-        recipients.add(new Address("address@hotmail.com"));
-        email = new Email("Subject", "Content", new Address("mailbows3r@gmail.com"), recipients);
+        sender = new MockAddress();
+        to = new ArrayList<>();
+        cc = new ArrayList<>();
+        bcc = new ArrayList<>();
+        to.add(new MockAddress());
+        cc.add(new MockAddress());
+        bcc.add(new MockAddress());
+        email = new Email.Builder(subject, content)
+                .sender(sender)
+                .to(to)
+                .cc(cc)
+                .bcc(bcc)
+                .build();
     }
 
     @Test
-    public void testGetJavaxMessage() throws Exception {
-        Session s = Session.getInstance(new Properties()); //JavaMail class
-        Message m = email.getJavaMailMessage(s); //JavaMail class
+    public void testBuilder() throws Exception {
+        // test if all values are set correctly
+        assertEquals(email.getSubject(), subject);
+        assertEquals(email.getContent(), content);
+        assertEquals(email.getSender(), sender);
+        assertEquals(email.getTo(), to);
+        assertEquals(email.getCc(), cc);
+        assertEquals(email.getBcc(), bcc);
+    }
 
-        //Subject is the same?
-        assertEquals(m.getSubject(), "Subject");
+    @Test
+    public void testGetJavaMailMessageAndConstructor() throws Exception {
+        // get a JavaMail message from the email and then transform it to an email again. check if all fields are
+        // set correctly
+        Session session = Session.getInstance(new Properties()); // JavaMail class
+        Message message = email.getJavaMailMessage(session); // JavaMail class
+        Email newEmail = new Email(message);
 
-        //Content is the same?
-        assertEquals(m.getContent(), "Content");
+        assertEquals(newEmail.getSubject(), subject);
+        assertEquals(newEmail.getContent(), content);
 
-        //From length equals 1?
-        assertEquals(m.getFrom().length, 1);
+        // tests if the getJavaMailAddress method has been called in the address objects
+        assertTrue(sender.getJavaMailAddressCalled);
+        assertTrue(to.get(0).getJavaMailAddressCalled);
+        assertTrue(cc.get(0).getJavaMailAddressCalled);
+        assertTrue(bcc.get(0).getJavaMailAddressCalled);
 
-        //Creates a new InternetAddress with the same string
-        assertEquals(m.getFrom()[0], new InternetAddress("mailbows3r@gmail.com"));
+        // tests if the sent dates and received dates are approximately the same
+        assertTrue(newEmail.getSentDate().getTime() - email.getSentDate().getTime() < 100);
+        assertTrue(newEmail.getReceivedDate().getTime() - email.getReceivedDate().getTime() < 100);
 
-        //recipients should be equals to 1
-        assertEquals(m.getRecipients(Message.RecipientType.TO).length, 1);
-
-        //Creates a InternetAddress with the same address
-        assertEquals(m.getRecipients(Message.RecipientType.TO)[0], new InternetAddress("address@hotmail.com"));
+        // tests if you can get an email from a null JavaMail message
+        boolean exceptionThrown = false;
+        try {
+            new Email(null);
+        } catch (IllegalArgumentException e) {
+            exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
     }
 
     @Test
     public void testMatches() throws Exception {
-
         //Same string but no caps
-        assertTrue(email.matches("subject"));
+        assertTrue(email.matches(subject));
 
         //Same string with all caps
-        assertTrue(email.matches("SUBJECT"));
+        assertTrue(email.matches(subject.toUpperCase()));
 
         //Same string but no caps
-        assertTrue(email.matches("content"));
+        assertTrue(email.matches(content));
 
         //Same string but all caps
-        assertTrue(email.matches("CONTENT"));
+        assertTrue(email.matches(content.toUpperCase()));
 
-        //Same string
-        assertTrue(email.matches("mailbows3r@gmail.com"));
-
-        //Same string all caps
-        assertTrue(email.matches("MAILBOWS3R@GMAIL.COM"));
-
-        //Same string
-        assertTrue(email.matches("address@hotmail.com"));
-
-        //Same string all caps
-        assertTrue(email.matches("ADDRESS@HOTMAIL.COM"));
+        // sender, to, cc and bcc
+        email.matches("sender");
+        email.matches("to");
+        email.matches("cc");
+        email.matches("bcc");
+        assertTrue(sender.matchesCalled);
+        assertTrue(to.get(0).matchesCalled);
+        assertTrue(cc.get(0).matchesCalled);
+        assertTrue(bcc.get(0).matchesCalled);
 
         //Part of subject
         assertTrue(email.matches("ubje"));
 
         //Part of content
         assertTrue(email.matches("nten"));
-
-        //Part of address
-        assertTrue(email.matches("bows"));
-
-        //Part of address
-        assertTrue(email.matches("hotm"));
 
         //Random string
         assertFalse(email.matches("abcdefg"));

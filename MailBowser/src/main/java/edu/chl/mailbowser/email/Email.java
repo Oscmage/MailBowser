@@ -17,9 +17,9 @@ public class Email implements IEmail {
     private final String subject;
     private final String content;
 
-    private List<IAddress> to = new ArrayList<>();
-    private List<IAddress> cc = new ArrayList<>();
-    private List<IAddress> bcc = new ArrayList<>();
+    private List<? extends IAddress> to = new ArrayList<>();
+    private List<? extends IAddress> cc = new ArrayList<>();
+    private List<? extends IAddress> bcc = new ArrayList<>();
 
     private Date sentDate;
     private Date receivedDate;
@@ -37,9 +37,9 @@ public class Email implements IEmail {
 
         // optional fields
         private IAddress sender = null;
-        private List<IAddress> to = new ArrayList<>();
-        private List<IAddress> cc = new ArrayList<>();
-        private List<IAddress> bcc = new ArrayList<>();
+        private List<? extends IAddress> to = new ArrayList<>();
+        private List<? extends IAddress> cc = new ArrayList<>();
+        private List<? extends IAddress> bcc = new ArrayList<>();
 
         /**
          * Builder constructor initiates the builder with the fields mandatory when creating an email
@@ -59,17 +59,17 @@ public class Email implements IEmail {
             return this;
         }
 
-        public Builder to(List<IAddress> val) {
+        public Builder to(List<? extends IAddress> val) {
             this.to = val;
             return this;
         }
 
-        public Builder cc(List<IAddress> val) {
+        public Builder cc(List<? extends IAddress> val) {
             this.cc = val;
             return this;
         }
 
-        public Builder bcc(List<IAddress> val) {
+        public Builder bcc(List<? extends IAddress> val) {
             this.bcc = val;
             return this;
         }
@@ -102,62 +102,76 @@ public class Email implements IEmail {
     }
 
     /**
-     * Constructor for testing the email search function.
-     *
-     * @param subject
-     * @param content
-     * @param sender
-     * @param to
-     */
-    public Email(String subject, String content, IAddress sender, List<IAddress> to) {
-        this.subject = subject;
-        this.content = content;
-        this.sender = sender;
-        this.to = to;
-    }
-
-    /**
      * Creates an email from an existing javax.mail.Message.
      *
      * @param message the message to create a new Email object from
+     * @throws IllegalArgumentException when message is null, or if the message is invalid
      */
-    public Email(Message message) {
+    public Email(Message message) throws IllegalArgumentException {
+        if (message == null) {
+            throw new IllegalArgumentException("Can't create an email from a null message");
+        }
+
         try {
-            // add to
-            javax.mail.Address[] to = message.getRecipients(Message.RecipientType.TO);
-            if (to != null) {
-                for (javax.mail.Address recipient : to) {
-                    this.to.add(new edu.chl.mailbowser.email.Address(recipient));
-                }
-            }
+            // set subject and content
+            String subject = message.getSubject();
+            this.subject = (subject == null) ? "" : subject;
 
-            // add cc
-            javax.mail.Address[] cc = message.getRecipients(Message.RecipientType.CC);
-            if (cc != null) {
-                for (javax.mail.Address recipient : cc) {
-                    this.cc.add(new edu.chl.mailbowser.email.Address(recipient));
-                }
-            }
+            String content = recursiveGetText(message);
+            this.content = (content == null) ? "" : content;
 
-            // add bcc
-            javax.mail.Address[] bcc = message.getRecipients(Message.RecipientType.BCC);
-            if (bcc != null) {
-                for (javax.mail.Address recipient : bcc) {
-                    this.bcc.add(new edu.chl.mailbowser.email.Address(recipient));
-                }
-            }
+            // set recipients
+            this.to = getRecipients(message, Message.RecipientType.TO);
+            this.cc = getRecipients(message, Message.RecipientType.CC);
+            this.bcc = getRecipients(message, Message.RecipientType.BCC);
 
-            // set subject, content and from
-            this.subject = message.getSubject();
-            this.content = recursiveGetText(message);
-            this.sender = new edu.chl.mailbowser.email.Address(message.getFrom()[0]);
+            // set sender. if there are none, throw an exception
+            javax.mail.Address[] senders = message.getFrom();
+            if (senders == null || senders.length == 0) {
+                throw new MessagingException("The message doesn't have any senders");
+            }
+            this.sender = new Address(senders[0]);
 
             // set dates
-            this.sentDate = message.getSentDate();
-            this.receivedDate = message.getReceivedDate();
+            Date sentDate = message.getSentDate();
+            if (sentDate == null) {
+                this.sentDate = new Date();
+            } else {
+                this.sentDate = message.getSentDate();
+            }
+
+            Date receivedDate = message.getReceivedDate();
+            if (receivedDate == null) {
+                this.receivedDate = new Date();
+            } else {
+                this.receivedDate = receivedDate;
+            }
         } catch (MessagingException e) {
-            throw new IllegalArgumentException("Email(Message): An error occurred while reading the message");
+            throw new IllegalArgumentException("Invalid message: " + e.getMessage());
         }
+    }
+
+    /**
+     * Takes a JavaMail message and a recipient type and returns all the recipients of that type in a list.
+     *
+     * @param message the message to get recipients from
+     * @param type the type of recipients to get
+     * @return a list containing all the recipients of a specific type
+     * @throws MessagingException when an error occurs while getting the recipients from the message
+     */
+    private List<IAddress> getRecipients(Message message, Message.RecipientType type) throws MessagingException {
+        List<IAddress> recipients = new ArrayList<>();
+
+        javax.mail.Address[] addressArray = message.getRecipients(type);
+        if (addressArray == null) {
+            return new ArrayList<>();
+        } else {
+            for (javax.mail.Address address : addressArray) {
+                recipients.add(new Address(address));
+            }
+        }
+
+        return recipients;
     }
 
     /**
@@ -221,12 +235,11 @@ public class Email implements IEmail {
             msg.setFrom(this.sender.getJavaMailAddress());
             msg.setSubject(this.subject);
             msg.setContent(this.content, "text/html; charset=utf-8");
-            msg.setSentDate(new Date());
+            msg.setSentDate(this.sentDate);
 
-            // add recipients of all three different types
-            msg.addRecipients(Message.RecipientType.TO, getJavaxRecipients(to));
-            msg.addRecipients(Message.RecipientType.CC, getJavaxRecipients(cc));
-            msg.addRecipients(Message.RecipientType.BCC, getJavaxRecipients(bcc));
+            msg.addRecipients(Message.RecipientType.TO, convertToJavaMailAddresses(to));
+            msg.addRecipients(Message.RecipientType.CC, convertToJavaMailAddresses(cc));
+            msg.addRecipients(Message.RecipientType.BCC, convertToJavaMailAddresses(bcc));
         } catch (MessagingException e) {
             throw new IllegalArgumentException("Invalid session");
         }
@@ -238,15 +251,19 @@ public class Email implements IEmail {
      * @param addresses
      * @return
      */
-    private static javax.mail.Address[] getJavaxRecipients(List<IAddress> addresses) {
-        //We use stream to iterat over all recipients and call getJavaMailAddress
-        List<javax.mail.Address> recipients = addresses
-                .stream()
-                .map(IAddress::getJavaMailAddress)
-                .collect(Collectors.toList());
+    private static javax.mail.Address[] convertToJavaMailAddresses(List<? extends IAddress> addresses) {
+        List<javax.mail.Address> converted = new ArrayList<>();
 
-        // create an array of the list of addresses
-        return recipients.toArray(new javax.mail.Address[addresses.size()]);
+        // loop through all addresses, convert them to JavaMail addresses, and add them to the converted list
+        // if they aren't null
+        for (IAddress address : addresses) {
+            javax.mail.Address convertedAddress = address.getJavaMailAddress();
+            if (convertedAddress != null) {
+                converted.add(convertedAddress);
+            }
+        }
+
+        return converted.toArray(new javax.mail.Address[converted.size()]);
     }
 
     @Override
@@ -364,7 +381,7 @@ public class Email implements IEmail {
      * @param addresses the list of addresses to search in
      * @return true if any of the addresses matches the given query, otherwise false
      */
-    private static boolean checkIfAnyAddressMatchesQuery(String query, List<IAddress> addresses) {
+    private static boolean checkIfAnyAddressMatchesQuery(String query, List<? extends IAddress> addresses) {
         for (IAddress address : addresses) {
             if (address.matches(query)) {
                 return true;
