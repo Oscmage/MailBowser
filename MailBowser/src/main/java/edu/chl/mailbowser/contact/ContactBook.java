@@ -1,8 +1,7 @@
 package edu.chl.mailbowser.contact;
 
-import edu.chl.mailbowser.io.*;
-import edu.chl.mailbowser.search.Searcher;
-import edu.chl.mailbowser.search.SetSearcher;
+import edu.chl.mailbowser.utils.io.*;
+import edu.chl.mailbowser.utils.search.SetSearcher;
 
 import java.util.Set;
 import java.util.TreeSet;

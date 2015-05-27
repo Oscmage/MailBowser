@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.search;
+package edu.chl.mailbowser.utils.search;
 
 /**
  * Created by mats on 05/05/15.

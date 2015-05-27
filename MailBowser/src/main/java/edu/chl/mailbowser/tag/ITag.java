@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.tag;
 
-import edu.chl.mailbowser.search.Searchable;
+import edu.chl.mailbowser.utils.search.Searchable;
 
 import java.io.Serializable;
 
