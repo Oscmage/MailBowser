@@ -113,7 +113,7 @@
                     <effort>Max</effort>
                     <includeTests>true</includeTests>
                     <threshold>Low</threshold>
-                    <!-- <maxRank>3</maxRank> This doesn't seem to work very well... -->
+                    <maxRank>5</maxRank> <!-- Also needs to be set in findbugs-include.xml -->
                     <excludeFilterFile>${project.basedir}/findbugs-exclude.xml</excludeFilterFile>
                     <includeFilterFile>${project.basedir}/findbugs-include.xml</includeFilterFile>
                     <plugins>
