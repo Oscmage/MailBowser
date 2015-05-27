@@ -68,4 +68,9 @@ public interface ITagHandler {
      * @return return true on success
      */
     boolean writeTags(String filename);
+
+    /**
+     * Resets the tag handler. This method clears all current relationships between tags and emails.
+     */
+    void reset();
 }

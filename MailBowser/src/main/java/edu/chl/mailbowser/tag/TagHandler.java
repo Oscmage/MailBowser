@@ -180,4 +180,14 @@ public class TagHandler implements ITagHandler{
         IObjectWriter<HashMap> objectReaderWriter = new ObjectWriter<>();
         return objectReaderWriter.write((HashMap) mapFromTagsToEmails, filename);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void reset() {
+        mapFromEmailsToTags.clear();
+        mapFromTagsToEmails.clear();
+        EventBus.INSTANCE.publish(new Event(EventType.TAGS_CLEARED, null));
+    }
 }

@@ -34,5 +34,6 @@ public enum EventType {
     INSERT_CONTACT_TO_EMAIL,
     NEW_TAG_ADDED,
     REMOVED_TAG_COMPLETELY,
+    TAGS_CLEARED,
     FXML_LOADED
 }
