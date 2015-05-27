@@ -47,8 +47,9 @@ public class AddTagForm extends VBox {
      */
     @FXML
     public void tagButtonOnAction(ActionEvent actionEvent) {
-        if(!tagTextField.getText().equals("")) {
-            EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG_TO_EMAIL, new Tag(tagTextField.getText())));
+        String tagText = tagTextField.getText();
+        if(!tagText.isEmpty()) {
+            EventBus.INSTANCE.publish(new Event(EventType.ADD_TAG_TO_EMAIL, new Tag(tagText)));
             closeWindow();
         }
     }

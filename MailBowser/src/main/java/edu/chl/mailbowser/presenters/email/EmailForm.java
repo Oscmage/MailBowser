@@ -162,18 +162,21 @@ public class EmailForm extends GridPane implements IObserver {
         Email.Builder emailBuilder = new Email.Builder(subjectTextField.getText(), html);
 
         // Add to, cc and bcc if they are entered
-        if (!this.toTextField.getText().isEmpty()) {
-            List<IAddress> toAddresses = parseAddresses(this.toTextField.getText());
+        String toText = toTextField.getText();
+        if (!toText.isEmpty()) {
+            List<IAddress> toAddresses = parseAddresses(toText);
             emailBuilder.to(toAddresses);
         }
 
-        if (!this.ccTextField.getText().isEmpty()) {
-            List<IAddress> ccAddresses = parseAddresses(this.ccTextField.getText());
+        String ccText = ccTextField.getText();
+        if (!ccText.isEmpty()) {
+            List<IAddress> ccAddresses = parseAddresses(ccText);
             emailBuilder.cc(ccAddresses);
         }
 
-        if (!this.bccTextField.getText().isEmpty()) {
-            List<IAddress> bccAddresses = parseAddresses(this.bccTextField.getText());
+        String bccText = bccTextField.getText();
+        if (!bccText.isEmpty()) {
+            List<IAddress> bccAddresses = parseAddresses(bccText);
             emailBuilder.bcc(bccAddresses);
         }
 
