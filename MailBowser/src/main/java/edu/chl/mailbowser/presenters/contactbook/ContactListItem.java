@@ -34,8 +34,11 @@ public class ContactListItem extends FlowPane{
 
     /**
      * Sets a nicer value to the "Name"-label depending on the name of the contact supplied in the constructor.
+     *
+     * This method is final because it is used in the constructor. Making it final prevents subclasses from overriding
+     * it, so it's behaviour is guaranteed to always be the same.
      */
-    private void initializeNameLabel() {
+    private final void initializeNameLabel() {
         if(contact.getFirstName() != null && contact.getLastName() != null) {
             setText(contact.getFullName());
         } else if((contact.getFirstName() != null)) {
