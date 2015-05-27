@@ -1,8 +1,6 @@
 package edu.chl.mailbowser.presenters.accountmanager;
 
-import edu.chl.mailbowser.account.IAccount;
-import edu.chl.mailbowser.account.IncomingServer;
-import edu.chl.mailbowser.account.OutgoingServer;
+import edu.chl.mailbowser.account.*;
 import edu.chl.mailbowser.email.Address;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -67,10 +65,14 @@ public class EditAccountForm extends VBox {
     public void updateView() {
         this.usernameField.setText(this.account.getUsername());
         this.passwordField.setText(this.account.getPassword());
-        this.incomingServerUrlField.setText(this.account.getIncomingServer().getHostname());
-        this.incomingServerPortField.setText(this.account.getIncomingServer().getPort());
-        this.outgoingServerUrlField.setText(this.account.getOutgoingServer().getHostname());
-        this.outgoingServerPortField.setText(this.account.getOutgoingServer().getPort());
+
+        IIncomingServer incomingServer = this.account.getIncomingServer();
+        this.incomingServerUrlField.setText(incomingServer.getHostname());
+        this.incomingServerPortField.setText(incomingServer.getPort());
+
+        IOutgoingServer outgoingServer = this.account.getOutgoingServer();
+        this.outgoingServerUrlField.setText(outgoingServer.getHostname());
+        this.outgoingServerPortField.setText(outgoingServer.getPort());
     }
 
 }
