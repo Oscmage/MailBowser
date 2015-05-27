@@ -7,11 +7,9 @@
 
 <?import edu.chl.mailbowser.presenters.email.EmailDetail?>
 <?import edu.chl.mailbowser.presenters.email.EmailList?>
-<?import edu.chl.mailbowser.presenters.tag.TagList?>
 <?import edu.chl.mailbowser.presenters.TopbarPresenter?>
-<?import edu.chl.mailbowser.presenters.tag.TagList.Type?>
 <?import edu.chl.mailbowser.presenters.SidebarPresenter?>
-<VBox minHeight="600.0" minWidth="960.0" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.MainPresenter">
+<VBox stylesheets="@../css/style.css" minHeight="600.0" minWidth="960.0" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.chl.mailbowser.presenters.MainPresenter">
     <children>
         <MenuBar>
             <menus>
