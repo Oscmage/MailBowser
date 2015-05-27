@@ -114,6 +114,7 @@
                     <includeTests>true</includeTests>
                     <threshold>Low</threshold>
                     <excludeFilterFile>${project.basedir}/findbugs-exclude.xml</excludeFilterFile>
+                    <includeFilterFile>${project.basedir}/findbugs-include.xml</includeFilterFile>
                     <plugins>
                         <plugin>
                             <groupId>com.mebigfatguy.fb-contrib</groupId>
