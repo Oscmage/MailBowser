@@ -113,7 +113,9 @@
                     <effort>Max</effort>
                     <includeTests>true</includeTests>
                     <threshold>Low</threshold>
+                    <!-- <maxRank>3</maxRank> This doesn't seem to work very well... -->
                     <excludeFilterFile>${project.basedir}/findbugs-exclude.xml</excludeFilterFile>
+                    <includeFilterFile>${project.basedir}/findbugs-include.xml</includeFilterFile>
                     <plugins>
                         <plugin>
                             <groupId>com.mebigfatguy.fb-contrib</groupId>
