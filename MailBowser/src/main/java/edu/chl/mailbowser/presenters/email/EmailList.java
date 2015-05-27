@@ -9,6 +9,7 @@ import edu.chl.mailbowser.event.IEvent;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.search.Searcher;
+import edu.chl.mailbowser.search.SetSearcher;
 import edu.chl.mailbowser.tag.ITagHandler;
 import edu.chl.mailbowser.tag.ITag;
 import edu.chl.mailbowser.utils.Pair;
@@ -111,7 +112,7 @@ public class EmailList extends ListView implements IObserver {
 
         if (!query.equals("")) {
             updateListOnIncomingEmail = false;
-            Set<IEmail> matchingEmails = Searcher.search(emails, query);
+            Set<IEmail> matchingEmails = new SetSearcher<IEmail>().search(emails, query);
             System.out.println("matching emails: " + matchingEmails.size());
             replaceListViewContent(matchingEmails);
         } else {

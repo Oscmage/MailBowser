@@ -1,45 +1,23 @@
 package edu.chl.mailbowser.search;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.Collection;
 
 /**
- * Created by mats on 05/05/15.
+ * Created by mats on 27/05/15.
  *
- * A class for searching for strings in sets.
+ * A function interface for searchers. A searcher has only one method that takes a collection and a query,
+ * and returns a new collection with all the items that matches the query. It is up to each individual item in the
+ * collection to determine if it matches the query or not.
  */
-public class Searcher {
-    /*
-     * private constructor to prevent initialization
-     */
-    private Searcher() {}
-
+@FunctionalInterface
+public interface Searcher<S extends Searchable> {
     /**
-     * Takes a set and a query, and returns a new set with all the items that matches the query.
-     * It is up to each individual item in the set to determine if it matches the query or not.
+     * Takes a collection and a query, and returns a new collection with all the items that matches
+     * the query. It is up to each individual item in the collection to determine if it matches the query or not.
      *
-     * @param set the set to search in
+     * @param collection the set to search in
      * @param query the query to search for
-     * @return a new set with all items from the original set that matches the given query
+     * @return a new collection with all items from the original collection that matches the given query
      */
-    public static <T extends Searchable> Set<T> search(Set<T> set, String query) {
-        return set.stream()
-                .filter(item -> item.matches(query))
-                .collect(Collectors.toSet());
-    }
-
-    /**
-     * Takes a list and a query, and returns a new list with all the items that matches the query.
-     * It is up to each individual item in the set to determine if it matches the query or not.
-     *
-     * @param list the list to search in
-     * @param query the query to search for
-     * @return a new list with all items from the original list that matches the given query
-     */
-    public static <T extends Searchable> List<T> search(List<T> list, String query) {
-        return list.stream()
-                .filter(item -> item.matches(query))
-                .collect(Collectors.toList());
-    }
+    Collection<S> search(Collection<S> collection, String query);
 }
