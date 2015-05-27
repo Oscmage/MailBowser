@@ -224,6 +224,7 @@ public class Account implements IAccount {
         System.out.println("Account: refetch()");
         emails = new TreeSet<>();
         EventBus.INSTANCE.publish(new Event(EventType.CLEAR_EMAILS, null));
+        tagHandler.reset();
         initFetch(true);
     }
 
