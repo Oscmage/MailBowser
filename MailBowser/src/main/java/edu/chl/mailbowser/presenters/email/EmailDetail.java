@@ -41,7 +41,7 @@ public class EmailDetail extends VBox implements IObserver {
     @FXML protected WebView webView;
     @FXML protected VBox emailDetail;
     @FXML protected VBox emailDetailTop;
-    protected TagList tagListView;
+    protected TagList tagList;
 
     public EmailDetail() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/email/EmailDetail.fxml"));
@@ -56,12 +56,12 @@ public class EmailDetail extends VBox implements IObserver {
 
         EventBus.INSTANCE.register(this);
 
-        tagListView = new TagList(TagList.Type.LOCAL);
-        tagListView.setOrientation(Orientation.HORIZONTAL);
-        tagListView.setEditable(false);
-        VBox.setVgrow(tagListView, Priority.NEVER);
-        tagListView.setId("emailDetailTagsList");
-        emailDetailTop.getChildren().add(tagListView);
+        tagList = new TagList(TagList.Type.LOCAL);
+        tagList.setOrientation(Orientation.HORIZONTAL);
+        tagList.setEditable(false);
+        VBox.setVgrow(tagList, Priority.NEVER);
+        tagList.setId("emailDetailTagsList");
+        emailDetailTop.getChildren().add(tagList);
 
         emailDetail.setOpacity(0.5);
     }
@@ -105,12 +105,19 @@ public class EmailDetail extends VBox implements IObserver {
             tagListItem.getStyleClass().add("tag");
             observableList.add(tagListItem);
         }
-        tagListView.setItems(observableList);
+        tagList.setItems(observableList);
+    }
+
+    /**
+     * Clears the tag list from all tags.
+     */
+    public void clearTagList() {
+        tagList.clear();
     }
 
     @Override
     public void onEvent(IEvent evt) {
-        Platform.runLater( //JavaFX can get thread problems otherwise
+        Platform.runLater(
                 () -> handleEvent(evt)
         );
     }
@@ -128,6 +135,9 @@ public class EmailDetail extends VBox implements IObserver {
             case ADDED_TAG_TO_EMAIL:
                 email = (IEmail)((Pair)evt.getValue()).getFirst();
                 updateView(email);
+                break;
+            case TAGS_CLEARED:
+                clearTagList();
                 break;
         }
     }

@@ -1,6 +1,10 @@
 package edu.chl.mailbowser.presenters.tag;
 
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.IEvent;
+import edu.chl.mailbowser.event.IObserver;
 import edu.chl.mailbowser.tag.ITag;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -59,19 +63,40 @@ public class TagList extends ListView<TagListItem> {
         return type;
     }
 
+    /**
+     * Adds all tags to the list.
+     *
+     * @param tags the tags to add
+     */
     public void setTags(Set<ITag> tags) {
         for (ITag tag : tags) {
             tagList.add(new TagListItem(tag, type));
         }
     }
 
+    /**
+     * Adds a tag to the list
+     *
+     * @param tag the tag to add
+     */
     public void addTag(ITag tag) {
         tagList.add(new TagListItem(tag, type));
     }
 
+    /**
+     * Removes a tag from the list.
+     *
+     * @param tag the tag to remove
+     */
     public void removeTag(ITag tag) {
         tagList.remove(new TagListItem(tag, type));
     }
 
+    /**
+     * Removes all added tags from the list.
+     */
+    public void clear() {
+        tagList.clear();
+    }
 }
 
