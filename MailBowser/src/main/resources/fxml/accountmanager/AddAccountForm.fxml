@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 
-<fx:root styleClass="form" stylesheets="@../../css/style.css" type="javafx.scene.layout.VBox" minWidth="220.0" maxWidth="220.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<fx:root styleClass="form" type="javafx.scene.layout.VBox" minWidth="220.0" maxWidth="220.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
     <children>
         <Label text="Username" />
         <TextField fx:id="usernameField" />

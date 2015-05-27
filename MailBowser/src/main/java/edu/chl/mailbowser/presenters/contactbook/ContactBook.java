@@ -71,20 +71,22 @@ public class ContactBook extends VBox {
 
     public ContactBook(boolean showInsertButton) {
         this();
-        menuBarLeft.getChildren().clear();
-        menuBarRight.getChildren().clear();
 
-        firstNameField.setEditable(false);
-        lastNameField.setEditable(false);
+        if (showInsertButton) {
+            firstNameField.setEditable(false);
+            lastNameField.setEditable(false);
 
-        Button button = new Button("\uf0ab");
-        button.getStyleClass().addAll("circle", "fontawesome");
-        button.setOnAction(event -> {
-            EventBus.INSTANCE.publish(new Event(EventType.INSERT_CONTACT_TO_EMAIL,
-                    contactsList.getSelectionModel().getSelectedItem().getContact()
-            ));
-        });
-        menuBarRight.getChildren().add(button);
+            Button button = new Button("\uf0ab");
+            button.getStyleClass().addAll("circle", "fontawesome");
+            button.setOnAction(event -> {
+                EventBus.INSTANCE.publish(new Event(EventType.INSERT_CONTACT_TO_EMAIL,
+                        contactsList.getSelectionModel().getSelectedItem().getContact()
+                ));
+            });
+
+            menuBarRight.getChildren().setAll(button);
+            menuBarLeft.getChildren().clear();
+        }
     }
 
     /**
@@ -135,9 +137,11 @@ public class ContactBook extends VBox {
      * A general method for updating the view when a contact is selected.
      */
     private void updateView() {
-        lastNameField.setText(selectedContact.getContact().getLastName());
-        firstNameField.setText(selectedContact.getContact().getFirstName());
-        for (IAddress address : selectedContact.getContact().getEmailAddresses()) {
+        IContact contact = selectedContact.getContact();
+
+        lastNameField.setText(contact.getLastName());
+        firstNameField.setText(contact.getFirstName());
+        for (IAddress address : contact.getEmailAddresses()) {
             addAddressField(address);
         }
         firstNameField.setEditable(true);
@@ -179,8 +183,9 @@ public class ContactBook extends VBox {
         if(!addresses.isEmpty()) {
             TextField latestAdded = addresses.get(addresses.size() - 1);
             addresses.remove(latestAdded);
-            contactForm.getChildren().remove(latestAdded);
-            contactForm.getChildren().remove(contactForm.getChildren().size() - 1);
+            ObservableList<Node> contactFormChildren = contactForm.getChildren();
+            contactFormChildren.remove(latestAdded);
+            contactFormChildren.remove(contactFormChildren.size() - 1);
             newAddressIndex--;
         }
     }
@@ -214,10 +219,11 @@ public class ContactBook extends VBox {
      */
     @FXML
     protected void saveContactButtonOnAction(ActionEvent actionEvent) {
-        selectedContact.getContact().setFirstName(firstNameField.getText());
-        selectedContact.getContact().setLastName(lastNameField.getText());
+        IContact contact = selectedContact.getContact();
+        contact.setFirstName(firstNameField.getText());
+        contact.setLastName(lastNameField.getText());
         for (TextField textField : addresses) {
-            selectedContact.getContact().addAddress(new Address(textField.getText()));
+            contact.addAddress(new Address(textField.getText()));
         }
     }
 

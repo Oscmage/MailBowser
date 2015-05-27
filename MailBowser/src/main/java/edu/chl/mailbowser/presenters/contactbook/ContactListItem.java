@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Created by jesper on 2015-05-22.
@@ -34,14 +35,14 @@ public class ContactListItem extends FlowPane{
 
     /**
      * Sets a nicer value to the "Name"-label depending on the name of the contact supplied in the constructor.
+     *
+     * This method is final because it is used in the constructor. Making it final prevents subclasses from overriding
+     * it, so it's behaviour is guaranteed to always be the same.
      */
-    private void initializeNameLabel() {
-        if(contact.getFirstName() != null && contact.getLastName() != null) {
-            setText(contact.getFullName());
-        } else if((contact.getFirstName() != null)) {
-            setText(contact.getFirstName());
-        } else if((contact.getLastName() != null)) {
-            setText(contact.getLastName());
+    private final void initializeNameLabel() {
+        String fullName = contact.getFullName();
+        if (!fullName.isEmpty()) {
+            setText(fullName);
         } else {
             setText("New contact...");
         }

@@ -17,17 +17,26 @@ public class Contact implements IContact {
      * Creates a new contact with no emailAddresses
      * @param firstName Contacts first name
      * @param lastName Contacts last name
+     * @throws IllegalArgumentException if firstName or lastName is null
      */
     public Contact (String firstName, String lastName){
+        if (firstName == null) {
+            throw new IllegalArgumentException("Can't create a contact with first name null");
+        }
+        if (lastName == null) {
+            throw new IllegalArgumentException("Can't create a contact with last name null");
+        }
+
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
     /**
-     * Creates an empty Contact.
+     * Creates an empty Contact with first name and last name set to empty strings.
      */
     public Contact (){
-
+        this.firstName = "";
+        this.lastName = "";
     }
 
     /**
@@ -35,7 +44,7 @@ public class Contact implements IContact {
      */
     @Override
     public String getFullName() {
-        return lastName+";"+firstName;
+        return lastName + ", " + firstName;
     }
 
 
@@ -57,17 +66,29 @@ public class Contact implements IContact {
 
     /**
      * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException if firstName is null
      */
     @Override
     public void setFirstName(String firstName) {
+        if (firstName == null) {
+            throw new IllegalArgumentException("Can't set first name to null");
+        }
+
         this.firstName = firstName;
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException if lastName is null
      */
     @Override
     public void setLastName(String lastName) {
+        if (lastName == null) {
+            throw new IllegalArgumentException("Can't set last name to null");
+        }
+
         this.lastName = lastName;
     }
 
@@ -76,7 +97,9 @@ public class Contact implements IContact {
      */
     @Override
     public void addAddress(IAddress address) {
-        emailAddresses.add(address);
+        if (address != null) {
+            emailAddresses.add(address);
+        }
     }
 
     /**
@@ -84,7 +107,13 @@ public class Contact implements IContact {
      */
     @Override
     public void addAllAddresses(List<IAddress> addresses) {
-        emailAddresses.addAll(addresses);
+        if (addresses != null) {
+            for (IAddress address : addresses) {
+                if (address != null) {
+                    emailAddresses.add(address);
+                }
+            }
+        }
     }
 
     /**
@@ -92,12 +121,9 @@ public class Contact implements IContact {
     */
     @Override
     public List<IAddress> getEmailAddresses() {
-        return new ArrayList<IAddress>(emailAddresses);
+        return new ArrayList<>(emailAddresses);
     }
 
-    /**
-     * {@inheritDoc}
-    */
     @Override
     public int compareTo(IContact contact) {
             return getFullName().compareTo(contact.getFullName()            );
