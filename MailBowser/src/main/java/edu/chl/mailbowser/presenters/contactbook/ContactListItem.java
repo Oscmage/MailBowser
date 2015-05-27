@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Created by jesper on 2015-05-22.
@@ -39,12 +40,9 @@ public class ContactListItem extends FlowPane{
      * it, so it's behaviour is guaranteed to always be the same.
      */
     private final void initializeNameLabel() {
-        if(contact.getFirstName() != null && contact.getLastName() != null) {
-            setText(contact.getFullName());
-        } else if((contact.getFirstName() != null)) {
-            setText(contact.getFirstName());
-        } else if((contact.getLastName() != null)) {
-            setText(contact.getLastName());
+        String fullName = contact.getFullName();
+        if (!fullName.isEmpty()) {
+            setText(fullName);
         } else {
             setText("New contact...");
         }
