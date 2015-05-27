@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
  * This class represents an Email with sender, receivers, subject, content, createdDate, sentDate, lastEditedDate and isSent.
  */
 public class Email implements IEmail {
+    private static final long serialVersionUID = 2832405631172419366L;
+
     private IAddress sender;
     private final String subject;
     private final String content;
