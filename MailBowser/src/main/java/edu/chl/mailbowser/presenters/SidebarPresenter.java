@@ -63,6 +63,13 @@ public class SidebarPresenter extends VBox implements IObserver{
         tagList.removeTag(tag);
     }
 
+    /**
+     * Clears the tag list from all tags.
+     */
+    public void clearTagList() {
+        tagList.clear();
+    }
+
     @Override
     public void onEvent(IEvent evt) {
         Platform.runLater( // JavaFX can get thread problems otherwise
@@ -77,6 +84,9 @@ public class SidebarPresenter extends VBox implements IObserver{
                 break;
             case REMOVED_TAG_COMPLETELY:
                 removeTagFromList((ITag) evt.getValue());
+                break;
+            case TAGS_CLEARED:
+                clearTagList();
                 break;
         }
     }

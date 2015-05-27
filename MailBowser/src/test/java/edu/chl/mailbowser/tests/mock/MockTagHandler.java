@@ -49,4 +49,9 @@ public class MockTagHandler implements ITagHandler {
     public boolean writeTags(String filename) {
         return false;
     }
+
+    @Override
+    public void reset() {
+
+    }
 }
