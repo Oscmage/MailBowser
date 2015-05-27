@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.tests.io;
 
-import edu.chl.mailbowser.io.ObjectWriter;
+import edu.chl.mailbowser.utils.io.ObjectWriter;
 import org.junit.Before;
 import org.junit.Test;
 

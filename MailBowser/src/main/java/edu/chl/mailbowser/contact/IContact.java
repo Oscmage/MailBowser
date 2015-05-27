@@ -1,7 +1,7 @@
 package edu.chl.mailbowser.contact;
 
 import edu.chl.mailbowser.email.IAddress;
-import edu.chl.mailbowser.search.Searchable;
+import edu.chl.mailbowser.utils.search.Searchable;
 
 import java.io.Serializable;
 import java.util.List;

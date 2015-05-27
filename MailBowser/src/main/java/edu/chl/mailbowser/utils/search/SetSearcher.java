@@ -1,7 +1,6 @@
-package edu.chl.mailbowser.search;
+package edu.chl.mailbowser.utils.search;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

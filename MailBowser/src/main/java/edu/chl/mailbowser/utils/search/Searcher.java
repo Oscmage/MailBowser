@@ -1,4 +1,4 @@
-package edu.chl.mailbowser.search;
+package edu.chl.mailbowser.utils.search;
 
 import java.util.Collection;
 
