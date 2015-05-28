@@ -1,6 +1,6 @@
 package edu.chl.mailbowser.tests.io;
 
-import edu.chl.mailbowser.io.IOUtils;
+import edu.chl.mailbowser.utils.io.IOUtils;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

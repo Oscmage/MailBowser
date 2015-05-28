@@ -22,6 +22,8 @@ import java.util.TreeSet;
  * A concrete implementation of the IAccount interface.
  */
 public class Account implements IAccount {
+    private static final long serialVersionUID = -1081064603886454171L;
+
     // the key to use when encrypting and decrypting the password. the password is never saved in plain text, it is
     // only saved as an encrypted byte array
     private static final String KEY = "%*tR7sfa";
@@ -45,9 +47,26 @@ public class Account implements IAccount {
      * @param incomingServer the server to use when fetching emails
      * @param outgoingServer the server to use when sending emails
      * @param tagHandler the tag handler to use when tagging emails
+     * @throws IllegalArgumentException if any parameter is null
      */
     public Account(IAddress address, String password, IIncomingServer incomingServer, IOutgoingServer outgoingServer,
                    ITagHandler tagHandler) {
+        if (address == null) {
+            throw new IllegalArgumentException("Can't create an Account with address null");
+        }
+        if (password == null) {
+            throw new IllegalArgumentException("Can't create an Account with password null");
+        }
+        if (incomingServer == null) {
+            throw new IllegalArgumentException("Can't create an Account with incomingServer null");
+        }
+        if (outgoingServer == null) {
+            throw new IllegalArgumentException("Can't create an Account with outgoingServer null");
+        }
+        if (tagHandler == null) {
+            throw new IllegalArgumentException("Can't create an Account with tagHandler null");
+        }
+
         this.address = address;
         setPassword(password);
         this.incomingServer = incomingServer;
@@ -79,7 +98,7 @@ public class Account implements IAccount {
      */
     @Override
     public String getPassword() {
-        return Crypto.decryptByteArray(password, KEY);
+        return Crypto.decryptByteArray(password, KEY, "UTF-8");
     }
 
     /**
@@ -110,6 +129,14 @@ public class Account implements IAccount {
      * {@inheritDoc}
      */
     @Override
+    public ITagHandler getTagHandler() {
+        return tagHandler;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setAddress(IAddress address) {
         this.address = address;
     }
@@ -119,10 +146,13 @@ public class Account implements IAccount {
      *
      * The password is never saved in plain text. It is encrypted to a byte array in the set method, and decrypted in
      * the get method.
+     *
+     * This method is final because it is used in the constructor. This means that the behaviour of this method is
+     * guaranteed to be the same even if the class is subclassed.
      */
     @Override
-    public void setPassword(String password) {
-        this.password = Crypto.encryptString(password, KEY);
+    public final void setPassword(String password) {
+        this.password = Crypto.encryptString(password, KEY, "UTF-8");
     }
 
     /**
@@ -153,9 +183,15 @@ public class Account implements IAccount {
 
     /**
      * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException when a null email is sent
      */
     @Override
     public void send(IEmail email) {
+        if (email == null) {
+            throw new IllegalArgumentException("Can't send a null email");
+        }
+
         email.setSender(address);
         outgoingServer.send(email, getUsername(), getPassword(), new Callback<IEmail>() {
             @Override
@@ -188,6 +224,7 @@ public class Account implements IAccount {
         System.out.println("Account: refetch()");
         emails = new TreeSet<>();
         EventBus.INSTANCE.publish(new Event(EventType.CLEAR_EMAILS, null));
+        tagHandler.reset();
         initFetch(true);
     }
 

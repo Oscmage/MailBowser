@@ -4,7 +4,7 @@ import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
-import edu.chl.mailbowser.io.*;
+import edu.chl.mailbowser.utils.io.*;
 import edu.chl.mailbowser.utils.Pair;
 
 import java.util.HashMap;
@@ -19,24 +19,33 @@ import java.util.Set;
 public class TagHandler implements ITagHandler{
 
     //IMPORTANT! Name is based on From key to value
-    private Map<ITag,Set<IEmail>> mapFromTagsToEmails = new HashMap<>();
-    private Map<IEmail,Set<ITag>> mapFromEmailsToTags = new HashMap<>();
+    private HashMap<ITag,Set<IEmail>> mapFromTagsToEmails = new HashMap<>();
+    private HashMap<IEmail,Set<ITag>> mapFromEmailsToTags = new HashMap<>();
 
 
     /**
      * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException when email or tag is null.
      */
     @Override
-    public synchronized void addTagToEmail(IEmail email, ITag tag){
-        if (!mapFromTagsToEmails.containsKey(tag)) { //If key doesn't exists
-            mapFromTagsToEmails.put(tag, new HashSet<>()); //Create key with empty set
+    public synchronized void addTagToEmail(IEmail email, ITag tag) {
+        if (email == null || tag == null) {
+            throw new IllegalArgumentException("addTagToEmail: Null on email or tag is not supported.");
         }
-        mapFromTagsToEmails.get(tag).add(email); // Add the value to the set
 
-        if (!mapFromEmailsToTags.containsKey(email)) { //If key doesn't exists
-            mapFromEmailsToTags.put(email, new HashSet<>()); //Create key with empty set
+        // if tag doesn't have any emails since before, add it to the tag map
+        if (!mapFromTagsToEmails.containsKey(tag)) {
+            mapFromTagsToEmails.put(tag, new HashSet<>());
+            EventBus.INSTANCE.publish(new Event(EventType.NEW_TAG_ADDED, tag));
         }
-        mapFromEmailsToTags.get(email).add(tag); // Add the value to the set
+        mapFromTagsToEmails.get(tag).add(email);
+
+        // if email doesn't have any tags since before, add it to the email map
+        if (!mapFromEmailsToTags.containsKey(email)) {
+            mapFromEmailsToTags.put(email, new HashSet<>());
+        }
+        mapFromEmailsToTags.get(email).add(tag);
 
         EventBus.INSTANCE.publish(new Event(EventType.ADDED_TAG_TO_EMAIL, new Pair<>(email, tag)));
     }
@@ -80,23 +89,43 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public synchronized void removeTagFromEmail(IEmail email,ITag tag){
-        if (mapFromEmailsToTags.containsKey(email)) { //If key exists
-            Set<ITag> tagSet = mapFromEmailsToTags.get(email); //Get set for the key
-            tagSet.remove(tag); // Remove the tag from the set
-            if (tagSet.isEmpty()) { //If set is empty
-                mapFromEmailsToTags.remove(email); //Remove the key
+        // check if the email exists in the email map
+        if (mapFromEmailsToTags.containsKey(email)) {
+            Set<ITag> tagSet = mapFromEmailsToTags.get(email);
+
+            // check if the email has the tag
+            if (tagSet != null && tagSet.contains(tag)) {
+                // remove tag from set
+                tagSet.remove(tag);
+
+                // if no more tags on email, remove email from map
+                if (tagSet.isEmpty()) {
+                    mapFromEmailsToTags.remove(email);
+                }
+
+                // send event
+                EventBus.INSTANCE.publish(new Event(EventType.REMOVED_TAG_FROM_EMAIL, new Pair<>(email, tag)));
             }
         }
 
-        if (mapFromTagsToEmails.containsKey(tag)) { // If key exists
-            Set<IEmail> emailSet = mapFromTagsToEmails.get(tag); // Get set for the key
-            emailSet.remove(email); // Remove the email from the set
-            if (emailSet.isEmpty()) { //If set is empty
-                mapFromTagsToEmails.remove(tag); // Remove the key
+        // check if the tag exists in the tag map
+        if (mapFromTagsToEmails.containsKey(tag)) {
+            Set<IEmail> emailSet = mapFromTagsToEmails.get(tag);
+
+            // check if the tag has the email
+            if (emailSet != null && emailSet.contains(email)) {
+                // remove email from set
+                emailSet.remove(email);
+
+                // if no more emails for tag, remove tag from tag map
+                if (emailSet.isEmpty()) {
+                    mapFromTagsToEmails.remove(tag);
+
+                    // send event
+                    EventBus.INSTANCE.publish(new Event(EventType.REMOVED_TAG_COMPLETELY, tag));
+                }
             }
         }
-
-        EventBus.INSTANCE.publish(new Event(EventType.REMOVED_TAG_FROM_EMAIL, new Pair<>(email, tag)));
     }
 
     /**
@@ -105,15 +134,17 @@ public class TagHandler implements ITagHandler{
     @Override
     public synchronized void eraseTag(ITag tag) {
         Set<IEmail> emailSet = mapFromTagsToEmails.remove(tag); //Gets the Set of emails belong to the tag.
+        if(emailSet != null){
+            for (IEmail email : emailSet) { //Loop through each email in the set
+                Set <ITag> tagSet = mapFromEmailsToTags.get(email); //Get the tagSet for the email
+                tagSet.remove(tag); //Remove the tag from the set.
 
-        for (IEmail email : emailSet) { //Loop through each email in the set
-            Set <ITag> tagSet = mapFromEmailsToTags.get(email); //Get the tagSet for the email
-            tagSet.remove(tag); //Remove the tag from the set.
-
-            if (tagSet.isEmpty()) { //If the email only had this tag
-                mapFromEmailsToTags.remove(email);
+                if (tagSet.isEmpty()) { //If the email only had this tag
+                    mapFromEmailsToTags.remove(email);
+                }
             }
         }
+        EventBus.INSTANCE.publish(new Event(EventType.REMOVED_TAG_COMPLETELY, tag));
     }
 
 
@@ -122,7 +153,7 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public boolean readTags(String filename){
-        IObjectReader<HashMap> objectReader = new ObjectReader<>();
+        IObjectReader<HashMap<ITag,Set<IEmail>>> objectReader = new ObjectReader<>();
 
         try{
             mapFromTagsToEmails = objectReader.read(filename); //Try to read from disk
@@ -146,7 +177,17 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public boolean writeTags(String filename){
-        IObjectWriter<HashMap> objectReaderWriter = new ObjectWriter<>();
-        return objectReaderWriter.write((HashMap) mapFromTagsToEmails, filename);
+        IObjectWriter<HashMap<ITag,Set<IEmail>>> objectReaderWriter = new ObjectWriter<>();
+        return objectReaderWriter.write(mapFromTagsToEmails, filename);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void reset() {
+        mapFromEmailsToTags.clear();
+        mapFromTagsToEmails.clear();
+        EventBus.INSTANCE.publish(new Event(EventType.TAGS_CLEARED, null));
     }
 }

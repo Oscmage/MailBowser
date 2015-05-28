@@ -4,47 +4,47 @@ package edu.chl.mailbowser.account;
 /**
  * Created by mats on 16/04/15.
  *
- * A factory class for creating pre-configured MailServer objects.
+ * A factory class for creating pre-configured AbstractMailServer objects.
  */
 public enum MailServerTypes {
-    GMAIL {
+    GMAIL ("Gmail") {
         @Override
-        public String toString() {
-            return "Gmail";
+        public IIncomingServer createIncomingServer() {
+            return new IncomingServer("imap.gmail.com", "993");
+        }
+
+        @Override
+        public IOutgoingServer createOutgoingServer() {
+            return new OutgoingServer("smtp.gmail.com", "587");
         }
     },
-    HOTMAIL {
+    HOTMAIL ("Hotmail") {
         @Override
-        public String toString() { return "Hotmail"; }
+        public IIncomingServer createIncomingServer() {
+            return new IncomingServer("imap-mail.outlook.com", "25");
+        }
+
+        @Override
+        public IOutgoingServer createOutgoingServer() {
+            return new OutgoingServer("smtp.gmail.com", "587");
+        }
     },
-    YAHOO {
+    YAHOO ("Yahoo") {
         @Override
-        public String toString() { return "Yahoo"; }
+        public IIncomingServer createIncomingServer() {
+            return new IncomingServer("imap.mail.yahoo.com", "993");
+        }
+
+        @Override
+        public IOutgoingServer createOutgoingServer() {
+            return new OutgoingServer("smtp.mail.yahoo.com", "587");
+        }
     };
 
-    /**
-     * Creates a new pre-configured mail server for sending email.
-     *
-     * @return the created mail server
-     */
-    public IOutgoingServer createOutgoingServer() {
-        IOutgoingServer server = null;
+    private final String name;
 
-        switch (this) {
-            case GMAIL:
-                server = new OutgoingServer("smtp.gmail.com", "587");
-                break;
-            case HOTMAIL:
-                server = new OutgoingServer("smtp.live.com", "25");
-                break;
-            case YAHOO:
-                server = new OutgoingServer("smtp.mail.yahoo.com", "465");
-                break;
-            default:
-                break;
-        }
-
-        return server;
+    MailServerTypes(String name) {
+        this.name = name;
     }
 
     /**
@@ -52,23 +52,17 @@ public enum MailServerTypes {
      *
      * @return the created mail server
      */
-    public IIncomingServer createIncomingServer() {
-        IIncomingServer server = null;
+    public abstract IIncomingServer createIncomingServer();
 
-        switch (this) {
-            case GMAIL:
-                server = new IncomingServer("imap.gmail.com", "993");
-                break;
-            case HOTMAIL:
-                server = new IncomingServer("imap-mail.outlook.com", "993");
-                break;
-            case YAHOO:
-                server = new IncomingServer("imap.mail.yahoo.com", "993");
-                break;
-            default:
-                break;
-        }
+    /**
+     * Creates a new pre-configured mail server for sending email.
+     *
+     * @return the created mail server
+     */
+    public abstract IOutgoingServer createOutgoingServer();
 
-        return server;
+    @Override
+    public String toString() {
+        return name;
     }
 }

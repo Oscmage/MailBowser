@@ -11,7 +11,7 @@ import javax.mail.*;
  *
  * A concrete implementation of IOutgoingServer.
  */
-public class OutgoingServer extends MailServer implements IOutgoingServer {
+public class OutgoingServer extends AbstractMailServer implements IOutgoingServer {
 
     /**
      * Creates a new OutgoingServer with the specified hostname and port.

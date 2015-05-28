@@ -1,0 +1,13 @@
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.* ?>
+
+<fx:root type="javafx.scene.layout.VBox" id="sidebar" fx:id="sidebarContent" maxHeight="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER">
+            <children>
+                <Label maxWidth="1.7976931348623157E308" text="Tags" HBox.hgrow="ALWAYS" />
+                <Button styleClass="fontawesome, naked" text="&#xf067;" HBox.hgrow="NEVER" />
+            </children>
+        </HBox>
+    </children>
+</fx:root>

@@ -22,4 +22,9 @@ public class MockTag implements ITag {
     public boolean matches(String query) {
         return false;
     }
+
+    @Override
+    public int compareTo(ITag o) {
+        return 0;
+    }
 }

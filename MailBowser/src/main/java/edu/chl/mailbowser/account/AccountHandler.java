@@ -4,7 +4,7 @@ import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
-import edu.chl.mailbowser.io.*;
+import edu.chl.mailbowser.utils.io.*;
 import edu.chl.mailbowser.tag.ITagHandler;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.TreeSet;
  */
 public class AccountHandler implements IAccountHandler {
     // a list of all accounts that have been added to this handler
-    private List<IAccount> accounts = new ArrayList<>();
+    private ArrayList<IAccount> accounts = new ArrayList<>();
 
     /**
      * {@inheritDoc}
@@ -106,6 +106,6 @@ public class AccountHandler implements IAccountHandler {
     @Override
     public boolean writeAccounts(String filename) {
         IObjectWriter<ArrayList<IAccount>> objectReaderWriter = new ObjectWriter<>();
-        return objectReaderWriter.write((ArrayList<IAccount>) accounts, filename);
+        return objectReaderWriter.write(accounts, filename);
     }
 }

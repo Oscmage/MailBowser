@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<FindBugsFilter>
+	<Match>
+        <!-- <Confidence value="1" /> [1-3] Lower number = More confident bug -->
+        <Rank value="5" />
+	</Match>
+</FindBugsFilter>

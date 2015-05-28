@@ -1,7 +1,7 @@
 package edu.chl.mailbowser.contact;
 
-import edu.chl.mailbowser.io.*;
-import edu.chl.mailbowser.search.Searcher;
+import edu.chl.mailbowser.utils.io.*;
+import edu.chl.mailbowser.utils.search.SetSearcher;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -12,7 +12,7 @@ import java.util.TreeSet;
  */
 public class ContactBook implements IContactBook{
 
-    private Set<IContact> contacts = new TreeSet<>();
+    private TreeSet<IContact> contacts = new TreeSet<>();
 
     /**
      * {@inheritDoc}
@@ -49,7 +49,7 @@ public class ContactBook implements IContactBook{
      */
     @Override
     public Set<IContact> getMatchingContacts(String query) {
-        return Searcher.search(this.contacts,query);
+        return new SetSearcher<IContact>().search(this.contacts, query);
     }
 
     /**
@@ -79,7 +79,7 @@ public class ContactBook implements IContactBook{
     @Override
     public boolean writeContacts(String filename) {
         IObjectWriter<TreeSet<IContact>> objectWriter = new ObjectWriter<>();
-        return objectWriter.write((TreeSet<IContact>)contacts, filename); 
+        return objectWriter.write(contacts, filename);
     }
 
 

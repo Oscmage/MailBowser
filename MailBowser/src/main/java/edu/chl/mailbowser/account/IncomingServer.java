@@ -16,7 +16,7 @@ import java.util.Properties;
  *
  * A concrete implementation of IIncomingServer.
  */
-public class IncomingServer extends MailServer implements IIncomingServer {
+public class IncomingServer extends AbstractMailServer implements IIncomingServer {
     // this flag will be used to mark emails that have previously fetched
     private static final Flags PROCESSED_FLAG = new Flags("MailBowserProcessed");
 
@@ -31,6 +31,35 @@ public class IncomingServer extends MailServer implements IIncomingServer {
      */
     public IncomingServer(String hostname, String port) {
         super(hostname, port);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean testConnection(String username, String password) {
+        Properties props = new Properties();
+        props.setProperty("mail.store.protocol", "imaps");
+
+        Session session = Session.getInstance(props, null);
+
+        Store store = null;
+        try {
+            store = session.getStore();
+            store.connect(getHostname(), username, password);
+        } catch (MessagingException e) {
+            return false;
+        } finally {
+            if (store != null) {
+                try {
+                    store.close();
+                } catch (MessagingException e) {
+                    // the store is closed even if an exception occurs, so we don't have do take any action
+                    e.printStackTrace();
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -61,27 +90,6 @@ public class IncomingServer extends MailServer implements IIncomingServer {
             // start the fetcher in a new thread to prevent GUI lockups
             new Thread(fetcher).start();
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean testConnection(String username, String password) {
-        List<IEmail> emails;
-
-        Properties props = new Properties();
-        props.setProperty("mail.store.protocol", "imaps");
-
-        Session session = Session.getInstance(props, null);
-
-        try {
-            Store store = session.getStore();
-            store.connect(getHostname(), username, password);
-        } catch (MessagingException e) {
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -152,7 +160,7 @@ public class IncomingServer extends MailServer implements IIncomingServer {
                     try {
                         store.close();
                     } catch (MessagingException e) {
-                        // the folder is closed even if an exception occurs, so we don't have do take any action
+                        // the store is closed even if an exception occurs, so we don't have do take any action
                         e.printStackTrace();
                     }
                 }

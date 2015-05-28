@@ -11,7 +11,7 @@ public class Tag implements ITag {
      * Creates a Tag with the specified name.
      */
     public Tag(String name) {
-        this.name = name.toLowerCase();
+        setTagName(name);
     }
 
 
@@ -20,7 +20,11 @@ public class Tag implements ITag {
      */
     @Override
     public void setTagName(String name) {
-        this.name = name;
+        if(name != null) {
+            this.name = name.toLowerCase();
+        } else {
+            throw new IllegalArgumentException("Null is not accepted when creating a tag.");
+        }
     }
 
     /**
@@ -28,6 +32,11 @@ public class Tag implements ITag {
      */
     @Override
     public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public String toString() {
         return this.name;
     }
 
@@ -61,5 +70,10 @@ public class Tag implements ITag {
     @Override
     public boolean matches(String query) {
         return query != null && name.startsWith(query.toLowerCase());
+    }
+
+    @Override
+    public int compareTo(ITag o) {
+        return name.compareTo(o.getName());
     }
 }
