@@ -30,13 +30,15 @@
                <content>
                   <VBox HBox.hgrow="ALWAYS">
                      <children>
-                        <VBox fx:id="contactForm" spacing="10.0" minWidth="180.0" styleClass="form" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="nameForm" spacing="10.0" minWidth="180.0" styleClass="form" VBox.vgrow="ALWAYS">
                            <children>
                               <Label text="First name" />
                               <TextField fx:id="firstNameField" />
                               <Label text="Last name" />
                               <TextField fx:id="lastNameField" />
                            </children>
+                        </VBox>
+                        <VBox fx:id="addressForm" spacing="10.0" minWidth="180.0" styleClass="form" VBox.vgrow="ALWAYS">
                         </VBox>
                      </children>
                   </VBox>

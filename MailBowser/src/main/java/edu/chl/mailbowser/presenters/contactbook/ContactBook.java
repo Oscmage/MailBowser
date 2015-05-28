@@ -40,7 +40,8 @@ public class ContactBook extends VBox {
     @FXML protected Button addNewAddressButton;
     @FXML protected TextField lastNameField;
     @FXML protected TextField firstNameField;
-    @FXML protected VBox contactForm;
+    @FXML protected VBox nameForm;
+    @FXML protected VBox addressForm;
     @FXML protected HBox menuBarLeft;
     @FXML protected HBox menuBarRight;
 
@@ -138,6 +139,8 @@ public class ContactBook extends VBox {
      */
     private void updateView() {
         IContact contact = selectedContact.getContact();
+        addressForm.getChildren().clear();
+        newAddressIndex = 1;
 
         lastNameField.setText(contact.getLastName());
         firstNameField.setText(contact.getFirstName());
@@ -161,7 +164,7 @@ public class ContactBook extends VBox {
         if(address != null) {
             newTextField.setText(address.getString());
         }
-        contactForm.getChildren().addAll(newLabel, newTextField);
+        addressForm.getChildren().addAll(newLabel, newTextField);
         addresses.add(newTextField);
     }
 
@@ -172,7 +175,7 @@ public class ContactBook extends VBox {
         TextField newTextField = new TextField();
         Label newLabel = new Label("Address " + (newAddressIndex));
         newAddressIndex++;
-        contactForm.getChildren().addAll(newLabel, newTextField);
+        addressForm.getChildren().addAll(newLabel, newTextField);
         addresses.add(newTextField);
     }
 
@@ -183,7 +186,7 @@ public class ContactBook extends VBox {
         if(!addresses.isEmpty()) {
             TextField latestAdded = addresses.get(addresses.size() - 1);
             addresses.remove(latestAdded);
-            ObservableList<Node> contactFormChildren = contactForm.getChildren();
+            ObservableList<Node> contactFormChildren = addressForm.getChildren();
             contactFormChildren.remove(latestAdded);
             contactFormChildren.remove(contactFormChildren.size() - 1);
             newAddressIndex--;
