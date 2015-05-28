@@ -19,8 +19,8 @@ import java.util.Set;
 public class TagHandler implements ITagHandler{
 
     //IMPORTANT! Name is based on From key to value
-    private Map<ITag,Set<IEmail>> mapFromTagsToEmails = new HashMap<>();
-    private Map<IEmail,Set<ITag>> mapFromEmailsToTags = new HashMap<>();
+    private HashMap<ITag,Set<IEmail>> mapFromTagsToEmails = new HashMap<>();
+    private HashMap<IEmail,Set<ITag>> mapFromEmailsToTags = new HashMap<>();
 
 
     /**
@@ -153,7 +153,7 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public boolean readTags(String filename){
-        IObjectReader<HashMap> objectReader = new ObjectReader<>();
+        IObjectReader<HashMap<ITag,Set<IEmail>>> objectReader = new ObjectReader<>();
 
         try{
             mapFromTagsToEmails = objectReader.read(filename); //Try to read from disk
@@ -177,8 +177,8 @@ public class TagHandler implements ITagHandler{
      */
     @Override
     public boolean writeTags(String filename){
-        IObjectWriter<HashMap> objectReaderWriter = new ObjectWriter<>();
-        return objectReaderWriter.write((HashMap) mapFromTagsToEmails, filename);
+        IObjectWriter<HashMap<ITag,Set<IEmail>>> objectReaderWriter = new ObjectWriter<>();
+        return objectReaderWriter.write(mapFromTagsToEmails, filename);
     }
 
     /**
