@@ -110,6 +110,20 @@ public class EmailForm extends GridPane implements IObserver {
     }
 
     /**
+     * Validates the receiver address and adds a error-CSS-class to its text field unless valid.
+     */
+    private boolean validateReceiver() {
+        if(Address.isValidAddress(toTextField.getText())) {
+            toTextField.getStyleClass().remove("error");
+            return true;
+        }
+        if(!toTextField.getStyleClass().contains("error")) {
+            toTextField.getStyleClass().add("error");
+        }
+        return false;
+    }
+
+    /**
      * Depending on whether an account exists the send button is disabled or enabled.
      */
     private void showOrHideSendButton() {
@@ -180,12 +194,14 @@ public class EmailForm extends GridPane implements IObserver {
             emailBuilder.bcc(bccAddresses);
         }
 
-        // Build the email and send it
-        IEmail email = emailBuilder.build();
-        fromChoiceBox.getValue().send(email);
+        if(validateReceiver()) {
+            // Build the email and send it
+            IEmail email = emailBuilder.build();
+            fromChoiceBox.getValue().send(email);
+            Stage stage = (Stage) this.getScene().getWindow();
+            stage.close();
+        }
 
-        Stage stage = (Stage) this.getScene().getWindow();
-        stage.close();
     }
 
     /**

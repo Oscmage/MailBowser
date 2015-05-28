@@ -214,8 +214,13 @@
 
 .text-field.gridded {
     -fx-background-radius: 0;
+    -fx-border-radius: 0;
     -fx-border-width: 0 0 1 0;
     -fx-border-color: derive(-fx-bright, -15%);
+}
+
+.text-field.gridded.error {
+    -fx-border-color: red;
 }
 
 .text-area {
