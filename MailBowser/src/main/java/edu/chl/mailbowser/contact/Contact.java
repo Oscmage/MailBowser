@@ -118,6 +118,14 @@ public class Contact implements IContact {
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public void removeAllAddresses() {
+        emailAddresses.clear();
+    }
+
+    /**
+     * {@inheritDoc}
     */
     @Override
     public List<IAddress> getEmailAddresses() {

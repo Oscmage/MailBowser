@@ -28,7 +28,7 @@
             <ListView fx:id="contactsList" prefHeight="300" HBox.hgrow="ALWAYS" />
             <ScrollPane hbarPolicy="NEVER" minWidth="200.0" maxWidth="200.0" prefViewportWidth="200.0" HBox.hgrow="ALWAYS">
                <content>
-                  <VBox HBox.hgrow="ALWAYS">
+                  <VBox HBox.hgrow="ALWAYS" fx:id="contactForm">
                      <children>
                         <VBox fx:id="nameForm" spacing="10.0" minWidth="180.0" styleClass="form" VBox.vgrow="ALWAYS">
                            <children>
@@ -36,6 +36,7 @@
                               <TextField fx:id="firstNameField" />
                               <Label text="Last name" />
                               <TextField fx:id="lastNameField" />
+                              <Label>Addresses</Label>
                            </children>
                         </VBox>
                         <VBox fx:id="addressForm" spacing="10.0" minWidth="180.0" styleClass="form" VBox.vgrow="ALWAYS">
