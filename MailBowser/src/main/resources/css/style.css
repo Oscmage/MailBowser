@@ -194,12 +194,18 @@
     -fx-background-color: -fx-bright;
     -fx-background-insets: 0;
     -fx-background-radius: 3em;
+    -fx-border-radius: 3em;
     -fx-height: 3em;
     -fx-max-height: 3em;
     -fx-min-height: 3em;
     -fx-text-fill: -fx-dark;
     -fx-prompt-text-fill: derive(-fx-bright, -25%);
     -fx-cursor: text;
+}
+
+.text-field.error {
+    -fx-border-width: 1;
+    -fx-border-color: red;
 }
 
 .text-field:disabled {

@@ -54,6 +54,11 @@ public interface IContact extends Comparable<IContact>, Searchable, Serializable
     void addAllAddresses(List<IAddress> addresses);
 
     /**
+     * Clears the list of addresses completely.
+     */
+    void removeAllAddresses();
+
+    /**
      * Returns a list of all email-addresses.
      * @return
      * */

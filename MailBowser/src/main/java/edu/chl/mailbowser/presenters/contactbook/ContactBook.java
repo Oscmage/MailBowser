@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
@@ -41,12 +42,12 @@ public class ContactBook extends VBox {
     @FXML protected TextField lastNameField;
     @FXML protected TextField firstNameField;
     @FXML protected VBox contactForm;
+    @FXML protected VBox nameForm;
+    @FXML protected VBox addressForm;
     @FXML protected HBox menuBarLeft;
     @FXML protected HBox menuBarRight;
 
     private final int ORIGINAL_INDEX = 1;
-    private List<TextField> addresses = new ArrayList<>();
-
     private int newAddressIndex = ORIGINAL_INDEX;
 
     private ObservableList<ContactListItem> contactListItems = FXCollections.observableArrayList();
@@ -138,6 +139,8 @@ public class ContactBook extends VBox {
      */
     private void updateView() {
         IContact contact = selectedContact.getContact();
+        addressForm.getChildren().clear();
+        newAddressIndex = 1;
 
         lastNameField.setText(contact.getLastName());
         firstNameField.setText(contact.getFirstName());
@@ -155,39 +158,59 @@ public class ContactBook extends VBox {
      * @param address
      */
     private void addAddressField(IAddress address){
-        TextField newTextField = new TextField();
-        Label newLabel = new Label("Address " + (newAddressIndex));
+        TextField newAddress = new TextField();
+        newAddress.setPromptText("Address" + newAddressIndex);
         newAddressIndex++;
+
         if(address != null) {
-            newTextField.setText(address.getString());
+            newAddress.setText(address.getString());
         }
-        contactForm.getChildren().addAll(newLabel, newTextField);
-        addresses.add(newTextField);
+
+        addressForm.getChildren().add(newAddress);
     }
 
     /**
      * Adds a new TextField to the "Add contact"-form for assigning yet another address to the selected contact.
      */
     private void addAddressField() {
-        TextField newTextField = new TextField();
-        Label newLabel = new Label("Address " + (newAddressIndex));
+        TextField newAddress = new TextField();
+        newAddress.setPromptText("Address" + newAddressIndex);
         newAddressIndex++;
-        contactForm.getChildren().addAll(newLabel, newTextField);
-        addresses.add(newTextField);
+        addressForm.getChildren().addAll(newAddress);
     }
 
     /**
      * Removes the most recently added address field.
      */
     private void removeAddressField() {
-        if(!addresses.isEmpty()) {
-            TextField latestAdded = addresses.get(addresses.size() - 1);
+
+        ObservableList<Node> addresses = addressForm.getChildren();
+
+        if(!addressForm.getChildren().isEmpty()) {
+            TextField latestAdded = (TextField)addresses.get(addresses.size() - 1);
             addresses.remove(latestAdded);
-            ObservableList<Node> contactFormChildren = contactForm.getChildren();
-            contactFormChildren.remove(latestAdded);
-            contactFormChildren.remove(contactFormChildren.size() - 1);
             newAddressIndex--;
         }
+    }
+
+    private boolean validateForm() {
+        if(firstNameField.getText().equals("")) {
+            System.out.println("First name cannot be empty!");
+            return false;
+        }
+
+        if(lastNameField.getText().equals("")) {
+            System.out.println("Last name cannot be empty!");
+            return false;
+        }
+
+        for (Node textField : addressForm.getChildren()) {
+            if(!Address.isValidAddress(((TextField) textField).getText())) {
+                System.out.println("Faulty address: " + textField.toString());
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -219,11 +242,22 @@ public class ContactBook extends VBox {
      */
     @FXML
     protected void saveContactButtonOnAction(ActionEvent actionEvent) {
-        IContact contact = selectedContact.getContact();
-        contact.setFirstName(firstNameField.getText());
-        contact.setLastName(lastNameField.getText());
-        for (TextField textField : addresses) {
-            contact.addAddress(new Address(textField.getText()));
+
+        if(validateForm()) {
+            IContact contact = selectedContact.getContact();
+            contact.setFirstName(firstNameField.getText());
+            contact.setLastName(lastNameField.getText());
+
+            contact.removeAllAddresses();
+            System.out.println(contact.getEmailAddresses().size());
+
+            for (Node textField : addressForm.getChildren()) {
+                contact.addAddress(new Address(((TextField)textField).getText()));
+            }
+            for (Node node : contactForm.getChildren()) {
+                node.getStyleClass().remove("error");
+            }
+            System.out.println("Saved contact!");
         }
     }
 

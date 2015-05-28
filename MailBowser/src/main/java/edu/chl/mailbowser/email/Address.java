@@ -50,7 +50,7 @@ public class Address implements IAddress{
         this(address.getString());
     }
 
-    private boolean isValidAddress(String address) {
+    public static boolean isValidAddress(String address) {
         try {
             //InternetAddress validates the string if invalid it throws an AddressException
             new InternetAddress(address);
