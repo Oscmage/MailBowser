@@ -115,6 +115,12 @@ public class ContactBook extends VBox {
 
     }
 
+    private void updateContactList() {
+        for(ContactListItem item : contactsList.getItems()) {
+            item.setText(item.getContact().getFullName());
+        }
+    }
+
     /**
      * Toggles the "Disabled"-attribute on buttons in the top right side of the menubar.
      * @param disableButtons
@@ -138,6 +144,7 @@ public class ContactBook extends VBox {
      * A general method for updating the view when a contact is selected.
      */
     private void updateView() {
+
         IContact contact = selectedContact.getContact();
         addressForm.getChildren().clear();
         newAddressIndex = 1;
@@ -193,24 +200,58 @@ public class ContactBook extends VBox {
         }
     }
 
+    /**
+     * Makes sure no name field is empty, and validates correct
+     * email addresses in the the address fields. Also applies some CSS-styles to invalid fields.
+     * @return True if form is valid, otherwise false.
+     */
     private boolean validateForm() {
-        if(firstNameField.getText().equals("")) {
-            System.out.println("First name cannot be empty!");
-            return false;
-        }
 
-        if(lastNameField.getText().equals("")) {
-            System.out.println("Last name cannot be empty!");
-            return false;
-        }
+        boolean foundErrors = false;
 
-        for (Node textField : addressForm.getChildren()) {
-            if(!Address.isValidAddress(((TextField) textField).getText())) {
-                System.out.println("Faulty address: " + textField.toString());
-                return false;
+        for(Node node : nameForm.getChildren()) {
+
+            ObservableList<String> styles = node.getStyleClass();
+            if(node instanceof TextField) {
+                if(((TextField) node).getText().equals("")) {
+                    if (!styles.contains("error")) {
+                        styles.add("error");
+                    }
+                    foundErrors = true;
+                } else {
+                    node.getStyleClass().remove("error");
+                }
             }
         }
-        return true;
+
+        for(Node node : addressForm.getChildren()) {
+
+            ObservableList<String> styles = node.getStyleClass();
+            if(node instanceof TextField) {
+                if(!Address.isValidAddress(((TextField)node).getText())) {
+                    if (!styles.contains("error")) {
+                        styles.add("error");
+                    }
+                    foundErrors = true;
+                } else {
+                    node.getStyleClass().remove("error");
+                }
+            }
+        }
+
+        return !foundErrors;
+
+    }
+
+    /**
+     * Toggles the "error" CSS-class on Nodes.
+     */
+    private void toggleErrorClass(Node node) {
+        if(node.getStyleClass().contains("error")) {
+            node.getStyleClass().remove("error");
+        } else {
+            node.getStyleClass().add("error");
+        }
     }
 
     /**
@@ -249,7 +290,6 @@ public class ContactBook extends VBox {
             contact.setLastName(lastNameField.getText());
 
             contact.removeAllAddresses();
-            System.out.println(contact.getEmailAddresses().size());
 
             for (Node textField : addressForm.getChildren()) {
                 contact.addAddress(new Address(((TextField)textField).getText()));
@@ -257,8 +297,11 @@ public class ContactBook extends VBox {
             for (Node node : contactForm.getChildren()) {
                 node.getStyleClass().remove("error");
             }
-            System.out.println("Saved contact!");
+
+            updateView();
+            updateContactList();
         }
+
     }
 
     /**

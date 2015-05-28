@@ -51,6 +51,11 @@ public class Address implements IAddress{
     }
 
     public static boolean isValidAddress(String address) {
+
+        if(address.equals("")) {
+            return false;
+        }
+
         try {
             //InternetAddress validates the string if invalid it throws an AddressException
             new InternetAddress(address);
