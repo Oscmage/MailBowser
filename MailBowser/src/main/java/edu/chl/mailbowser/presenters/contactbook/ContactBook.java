@@ -193,24 +193,58 @@ public class ContactBook extends VBox {
         }
     }
 
+    /**
+     * Makes sure no name field is empty, and validates correct
+     * email addresses in the the address fields. Also applies some CSS-styles to invalid fields.
+     * @return True if form is valid, otherwise false.
+     */
     private boolean validateForm() {
-        if(firstNameField.getText().equals("")) {
-            System.out.println("First name cannot be empty!");
-            return false;
-        }
 
-        if(lastNameField.getText().equals("")) {
-            System.out.println("Last name cannot be empty!");
-            return false;
-        }
+        boolean foundErrors = false;
 
-        for (Node textField : addressForm.getChildren()) {
-            if(!Address.isValidAddress(((TextField) textField).getText())) {
-                System.out.println("Faulty address: " + textField.toString());
-                return false;
+        for(Node node : nameForm.getChildren()) {
+
+            ObservableList<String> styles = node.getStyleClass();
+            if(node instanceof TextField) {
+                if(((TextField) node).getText().equals("")) {
+                    if (!styles.contains("error")) {
+                        styles.add("error");
+                    }
+                    foundErrors = true;
+                } else {
+                    node.getStyleClass().remove("error");
+                }
             }
         }
-        return true;
+
+        for(Node node : addressForm.getChildren()) {
+
+            ObservableList<String> styles = node.getStyleClass();
+            if(node instanceof TextField) {
+                if(!Address.isValidAddress(((TextField)node).getText())) {
+                    if (!styles.contains("error")) {
+                        styles.add("error");
+                    }
+                    foundErrors = true;
+                } else {
+                    node.getStyleClass().remove("error");
+                }
+            }
+        }
+
+        return !foundErrors;
+
+    }
+
+    /**
+     * Toggles the "error" CSS-class on Nodes.
+     */
+    private void toggleErrorClass(Node node) {
+        if(node.getStyleClass().contains("error")) {
+            node.getStyleClass().remove("error");
+        } else {
+            node.getStyleClass().add("error");
+        }
     }
 
     /**
@@ -259,6 +293,7 @@ public class ContactBook extends VBox {
             }
             System.out.println("Saved contact!");
         }
+
     }
 
     /**
