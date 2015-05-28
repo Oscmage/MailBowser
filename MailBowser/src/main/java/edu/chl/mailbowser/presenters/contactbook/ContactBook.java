@@ -115,6 +115,12 @@ public class ContactBook extends VBox {
 
     }
 
+    private void updateContactList() {
+        for(ContactListItem item : contactsList.getItems()) {
+            item.setText(item.getContact().getFullName());
+        }
+    }
+
     /**
      * Toggles the "Disabled"-attribute on buttons in the top right side of the menubar.
      * @param disableButtons
@@ -138,6 +144,7 @@ public class ContactBook extends VBox {
      * A general method for updating the view when a contact is selected.
      */
     private void updateView() {
+
         IContact contact = selectedContact.getContact();
         addressForm.getChildren().clear();
         newAddressIndex = 1;
@@ -283,7 +290,6 @@ public class ContactBook extends VBox {
             contact.setLastName(lastNameField.getText());
 
             contact.removeAllAddresses();
-            System.out.println(contact.getEmailAddresses().size());
 
             for (Node textField : addressForm.getChildren()) {
                 contact.addAddress(new Address(((TextField)textField).getText()));
@@ -291,7 +297,9 @@ public class ContactBook extends VBox {
             for (Node node : contactForm.getChildren()) {
                 node.getStyleClass().remove("error");
             }
-            System.out.println("Saved contact!");
+
+            updateView();
+            updateContactList();
         }
 
     }
