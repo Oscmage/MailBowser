@@ -16,14 +16,13 @@ public class ContactBook implements IContactBook{
 
     /**
      * {@inheritDoc}
-     * @throws IllegalArgumentException if contact is null
      */
     @Override
     public void addContact(IContact contact) {
-        if(contact == null){
-            throw new IllegalArgumentException("Contact can't be null");
+        if(contact != null){
+            this.contacts.add(contact);
         }
-        this.contacts.add(contact);
+
     }
 
     /**
