@@ -1,5 +1,8 @@
 package edu.chl.mailbowser.contact;
 
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.utils.io.*;
 import edu.chl.mailbowser.utils.search.SetSearcher;
 
@@ -21,8 +24,8 @@ public class ContactBook implements IContactBook{
     public void addContact(IContact contact) {
         if(contact != null){
             this.contacts.add(contact);
+            EventBus.INSTANCE.publish(new Event(EventType.CONTACT_ADDED, contact));
         }
-
     }
 
     /**
@@ -31,6 +34,7 @@ public class ContactBook implements IContactBook{
     @Override
     public void removeContact(IContact contact) {
         this.contacts.remove(contact);
+        EventBus.INSTANCE.publish(new Event(EventType.CONTACT_REMOVED, contact));
     }
 
     /**
