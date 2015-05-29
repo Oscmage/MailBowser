@@ -1,5 +1,6 @@
 package edu.chl.mailbowser.presenters.contactbook;
 
+import edu.chl.mailbowser.contact.Contact;
 import edu.chl.mailbowser.contact.IContact;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,8 +30,17 @@ public class ContactListItem extends FlowPane{
         } catch (IOException e) {
             System.out.println("FXML-file not found");
         }
+
+        setContact(contact);
+    }
+
+    /**
+     * Updates this ContactListItem to show information about another contact.
+     * @param contact
+     */
+    public final void setContact(IContact contact) {
         this.contact = contact;
-        initializeNameLabel();
+        updateNameLabel();
     }
 
     /**
@@ -39,7 +49,7 @@ public class ContactListItem extends FlowPane{
      * This method is final because it is used in the constructor. Making it final prevents subclasses from overriding
      * it, so it's behaviour is guaranteed to always be the same.
      */
-    private final void initializeNameLabel() {
+    private final void updateNameLabel() {
         String fullName = contact.getFullName();
         if (!fullName.isEmpty()) {
             setText(fullName);
@@ -61,7 +71,26 @@ public class ContactListItem extends FlowPane{
      * Sets a value to the "Name"-label.
      * @param text
      */
-    public void setText(String text){
+    private void setText(String text){
         nameLabel.setText(text);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (o == null) {
+            return false;
+        } else if (!o.getClass().equals(o.getClass())) {
+            return false;
+        }
+
+        ContactListItem other = (ContactListItem) o;
+        return contact.equals(other.getContact());
+    }
+
+    @Override
+    public int hashCode() {
+        return contact.hashCode();
     }
 }

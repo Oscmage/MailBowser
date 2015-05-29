@@ -47,13 +47,9 @@ public class ContactBook extends VBox {
     @FXML protected HBox menuBarLeft;
     @FXML protected HBox menuBarRight;
 
-    private final int ORIGINAL_INDEX = 1;
-    private int newAddressIndex = ORIGINAL_INDEX;
-
     private ObservableList<ContactListItem> contactListItems = FXCollections.observableArrayList();
 
     private IContactBook contactBook = MainHandler.INSTANCE.getContactBook();
-    private ContactListItem selectedContact;
 
     public ContactBook() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/contactbook/ContactBook.fxml"));
@@ -91,14 +87,17 @@ public class ContactBook extends VBox {
     }
 
     /**
-     * Populates the contact list, adds listeners to its items and disables controls if no contact is selected.
+     * Populates the contact list, adds listeners to its items and disables controls if there are no contacts.
      */
     private void initializeContactBook() {
         contactsList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                selectedContact = newValue;
-                updateView();
+            if (newValue == null) {
+                disableFieldsAndButtons();
+            } else {
+                enableFieldsAndButtons();
             }
+            updateEditView(newValue);
+            removeErrorIndications();
         });
 
         for(IContact contact : contactBook.getContacts()) {
@@ -107,23 +106,78 @@ public class ContactBook extends VBox {
 
         contactsList.setItems(contactListItems);
 
-        if(contactListItems.isEmpty()) {
-            firstNameField.setEditable(false);
-            lastNameField.setEditable(false);
-            toggleDisableButtons(true);
-        }
-
-    }
-
-    private void updateContactList() {
-        for(ContactListItem item : contactsList.getItems()) {
-            item.setText(item.getContact().getFullName());
+        // disable fields and buttons if there are no contacts, otherwise select the first contact in the list
+        if (contactListItems.isEmpty()) {
+            disableFieldsAndButtons();
+        } else {
+            contactsList.getSelectionModel().select(0);
         }
     }
 
     /**
+     * A general method for updating the view when a contact is selected.
+     *
+     * Updates the edit view to match a selected item in the list.
+     */
+    private void updateEditView(ContactListItem selectedItem) {
+        System.out.println(selectedItem);
+
+        addressForm.getChildren().clear();
+        if (selectedItem == null) {
+            lastNameField.setText("");
+            firstNameField.setText("");
+        } else {
+            IContact contact = selectedItem.getContact();
+            lastNameField.setText(contact.getLastName());
+            firstNameField.setText(contact.getFirstName());
+
+            for (IAddress address : contact.getEmailAddresses()) {
+                addAddressField(address);
+            }
+        }
+    }
+
+    /**
+     * Adds a new TextField to the "Add contact"-form. If the supplied address isn't null, the TextFields value
+     * will be wet to the value of the address.
+     *
+     * @param address
+     */
+    private void addAddressField(IAddress address){
+        ObservableList<Node> addressFormFields = addressForm.getChildren();
+
+        TextField newAddress = new TextField();
+        newAddress.setPromptText("Address " + (addressFormFields.size() + 1));
+
+        if (address != null) {
+            newAddress.setText(address.getString());
+        }
+
+        addressFormFields.add(newAddress);
+    }
+
+    /**
+     * Disables buttons and editing of fields.
+     */
+    private void disableFieldsAndButtons() {
+        firstNameField.setEditable(false);
+        lastNameField.setEditable(false);
+        toggleDisableButtons(true);
+    }
+
+    /**
+     * Enabled buttons and editing of fields.
+     */
+    private void enableFieldsAndButtons() {
+        firstNameField.setEditable(true);
+        lastNameField.setEditable(true);
+        toggleDisableButtons(false);
+    }
+
+    /**
      * Toggles the "Disabled"-attribute on buttons in the top right side of the menubar.
-     * @param disableButtons
+     *
+     * @param disableButtons true if buttons should be disabled, false if they should be enabled
      */
     private void toggleDisableButtons(boolean disableButtons) {
         List<Node> buttons = menuBarRight.getChildren().stream()
@@ -131,72 +185,18 @@ public class ContactBook extends VBox {
                 .map(o -> (Button) o)
                 .collect(Collectors.toList());
 
-        if(disableButtons) {
-            buttons.stream()
-                    .forEach(s -> s.setDisable(true));
-        } else {
-            buttons.stream()
-                    .forEach(s -> s.setDisable(false));
-        }
-    }
-
-    /**
-     * A general method for updating the view when a contact is selected.
-     */
-    private void updateView() {
-
-        IContact contact = selectedContact.getContact();
-        addressForm.getChildren().clear();
-        newAddressIndex = 1;
-
-        lastNameField.setText(contact.getLastName());
-        firstNameField.setText(contact.getFirstName());
-        for (IAddress address : contact.getEmailAddresses()) {
-            addAddressField(address);
-        }
-        firstNameField.setEditable(true);
-        lastNameField.setEditable(true);
-        toggleDisableButtons(false);
-    }
-
-    /**
-     * Adds a new TextField to the "Add contact"-form and populates it with the address supplied as parameter.
-     *
-     * @param address
-     */
-    private void addAddressField(IAddress address){
-        TextField newAddress = new TextField();
-        newAddress.setPromptText("Address" + newAddressIndex);
-        newAddressIndex++;
-
-        if(address != null) {
-            newAddress.setText(address.getString());
-        }
-
-        addressForm.getChildren().add(newAddress);
-    }
-
-    /**
-     * Adds a new TextField to the "Add contact"-form for assigning yet another address to the selected contact.
-     */
-    private void addAddressField() {
-        TextField newAddress = new TextField();
-        newAddress.setPromptText("Address" + newAddressIndex);
-        newAddressIndex++;
-        addressForm.getChildren().addAll(newAddress);
+        buttons.stream()
+                .forEach(s -> s.setDisable(disableButtons));
     }
 
     /**
      * Removes the most recently added address field.
      */
     private void removeAddressField() {
+        ObservableList<Node> addressFormFields = addressForm.getChildren();
 
-        ObservableList<Node> addresses = addressForm.getChildren();
-
-        if(!addressForm.getChildren().isEmpty()) {
-            TextField latestAdded = (TextField)addresses.get(addresses.size() - 1);
-            addresses.remove(latestAdded);
-            newAddressIndex--;
+        if (!addressFormFields.isEmpty()) {
+            addressFormFields.remove(addressFormFields.size() - 1);
         }
     }
 
@@ -243,14 +243,20 @@ public class ContactBook extends VBox {
 
     }
 
-    /**
-     * Toggles the "error" CSS-class on Nodes.
-     */
-    private void toggleErrorClass(Node node) {
-        if(node.getStyleClass().contains("error")) {
-            node.getStyleClass().remove("error");
-        } else {
-            node.getStyleClass().add("error");
+    private void removeErrorIndications() {
+        for(Node node : nameForm.getChildren()) {
+
+            ObservableList<String> styles = node.getStyleClass();
+            if(node instanceof TextField) {
+                styles.remove("error");
+            }
+        }
+
+        for(Node node : addressForm.getChildren()) {
+            ObservableList<String> styles = node.getStyleClass();
+            if(node instanceof TextField) {
+                styles.remove("error");
+            }
         }
     }
 
@@ -273,8 +279,9 @@ public class ContactBook extends VBox {
      */
     @FXML
     protected void deleteContactButtonOnAction(ActionEvent actionEvent) {
-        contactBook.removeContact(selectedContact.getContact());
-        contactListItems.remove(selectedContact);
+        ContactListItem selectedItem = contactsList.getSelectionModel().getSelectedItem();
+        contactListItems.remove(selectedItem);
+        contactBook.removeContact(selectedItem.getContact());
     }
 
     /**
@@ -283,9 +290,10 @@ public class ContactBook extends VBox {
      */
     @FXML
     protected void saveContactButtonOnAction(ActionEvent actionEvent) {
+        if (validateForm()) {
+            ContactListItem selectedItem = contactsList.getSelectionModel().getSelectedItem();
 
-        if(validateForm()) {
-            IContact contact = selectedContact.getContact();
+            IContact contact = selectedItem.getContact();
             contact.setFirstName(firstNameField.getText());
             contact.setLastName(lastNameField.getText());
 
@@ -294,14 +302,9 @@ public class ContactBook extends VBox {
             for (Node textField : addressForm.getChildren()) {
                 contact.addAddress(new Address(((TextField)textField).getText()));
             }
-            for (Node node : contactForm.getChildren()) {
-                node.getStyleClass().remove("error");
-            }
 
-            updateView();
-            updateContactList();
+            selectedItem.setContact(contact);
         }
-
     }
 
     /**
@@ -310,7 +313,7 @@ public class ContactBook extends VBox {
      */
     @FXML
     protected void addNewAddressButtonOnAction(ActionEvent actionEvent) {
-        addAddressField();
+        addAddressField(null);
     }
 
     /**
