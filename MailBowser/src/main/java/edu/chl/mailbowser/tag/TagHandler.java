@@ -190,4 +190,26 @@ public class TagHandler implements ITagHandler{
         mapFromTagsToEmails.clear();
         EventBus.INSTANCE.publish(new Event(EventType.TAGS_CLEARED, null));
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TagHandler)) return false;
+
+        TagHandler that = (TagHandler) o;
+
+        if (mapFromEmailsToTags != null ? !mapFromEmailsToTags.equals(that.mapFromEmailsToTags) : that.mapFromEmailsToTags != null)
+            return false;
+        if (mapFromTagsToEmails != null ? !mapFromTagsToEmails.equals(that.mapFromTagsToEmails) : that.mapFromTagsToEmails != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mapFromTagsToEmails != null ? mapFromTagsToEmails.hashCode() : 0;
+        result = 31 * result + (mapFromEmailsToTags != null ? mapFromEmailsToTags.hashCode() : 0);
+        return result;
+    }
 }

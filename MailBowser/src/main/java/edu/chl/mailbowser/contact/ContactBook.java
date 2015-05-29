@@ -82,5 +82,20 @@ public class ContactBook implements IContactBook{
         return objectWriter.write(contacts, filename);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ContactBook)) return false;
 
+        ContactBook that = (ContactBook) o;
+
+        if (contacts != null ? !contacts.equals(that.contacts) : that.contacts != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return contacts != null ? contacts.hashCode() : 0;
+    }
 }

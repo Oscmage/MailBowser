@@ -100,6 +100,7 @@ public class AccountHandler implements IAccountHandler {
         return true;
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -107,5 +108,20 @@ public class AccountHandler implements IAccountHandler {
     public boolean writeAccounts(String filename) {
         IObjectWriter<ArrayList<IAccount>> objectReaderWriter = new ObjectWriter<>();
         return objectReaderWriter.write(accounts, filename);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AccountHandler)) return false;
+
+        AccountHandler that = (AccountHandler) o;
+
+        return(accounts != null ? !accounts.equals(that.accounts) : that.accounts != null);
+    }
+
+    @Override
+    public int hashCode() {
+        return accounts != null ? accounts.hashCode() : 0;
     }
 }
