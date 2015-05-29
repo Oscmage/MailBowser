@@ -18,6 +18,9 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private static IBackgroundFetcher backgroundFetcher = MainHandler.INSTANCE.getBackgroundFetcher();
+    private static int SCENE_HEIGHT = 600, SCENE_WIDTH = 960;
+    private static int MIN_STAGE_HEIGHT = 600, MIN_STAGE_WIDTH = 800;
+
 
     /**
      * Loads the MainView fxml.
@@ -34,13 +37,13 @@ public class Main extends Application {
 
         mainStage.setTitle("MailBowser");
 
-        Scene scene = new Scene(root, 960, 600);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         // Add fonts and styles to the scene
         scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
 
-        mainStage.setMinHeight(600);
-        mainStage.setMinWidth(800);
+        mainStage.setMinHeight(MIN_STAGE_HEIGHT);
+        mainStage.setMinWidth(MIN_STAGE_WIDTH);
 
         mainStage.setScene(scene);
         mainStage.show();
