@@ -44,6 +44,10 @@ public class Contact implements IContact {
      */
     @Override
     public String getFullName() {
+        if (lastName.isEmpty() && firstName.isEmpty()) {
+            return "";
+        }
+
         return lastName + ", " + firstName;
     }
 

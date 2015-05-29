@@ -41,7 +41,7 @@ public class ContactListItem extends FlowPane{
      */
     private final void initializeNameLabel() {
         String fullName = contact.getFullName();
-        if (!fullName.equals(", ")) {
+        if (!fullName.isEmpty()) {
             setText(fullName);
         } else {
             setText("New contact...");
