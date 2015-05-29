@@ -41,15 +41,6 @@ public class Address implements IAddress{
         }
     }
 
-    /**
-     * Creates a new Address from an existing Address
-     *
-     * @param address the address to copy
-     */
-    public Address(Address address) {
-        this(address.getString());
-    }
-
     public static boolean isValidAddress(String address) {
 
         if(address.equals("")) {
