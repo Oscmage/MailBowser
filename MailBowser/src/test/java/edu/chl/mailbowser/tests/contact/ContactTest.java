@@ -200,6 +200,7 @@ public class ContactTest {
         assertFalse(c2.equals(c1));
         assertFalse(c1.equals(c2));
         assertTrue(c2.equals(c2));
+        assertFalse(c1.equals("ObjectThatIsNotAContact"));
     }
 
     @Test
