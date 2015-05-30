@@ -49,7 +49,8 @@ public class Address implements IAddress{
 
         try {
             //InternetAddress validates the string if invalid it throws an AddressException
-            new InternetAddress(address);
+            InternetAddress internetAddress = new InternetAddress(address);
+            internetAddress.validate();
         } catch (AddressException e) {
             return false;
         }
@@ -70,7 +71,7 @@ public class Address implements IAddress{
 
     @Override
     public String toString() {
-        return this.address;
+        return getString();
     }
 
 

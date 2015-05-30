@@ -32,6 +32,7 @@ import org.markdown4j.Markdown4jProcessor;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -110,17 +111,35 @@ public class EmailForm extends GridPane implements IObserver {
     }
 
     /**
-     * Validates the receiver address and adds a error-CSS-class to its text field unless valid.
+     * Validates the address fields and adds a error-CSS-class to the first invalid field.
      */
-    private boolean validateReceiver() {
-        if(Address.isValidAddress(toTextField.getText())) {
-            toTextField.getStyleClass().remove("error");
-            return true;
+    private boolean validateReceivers() {
+        List<String> receivers = Arrays.asList(toTextField.getText().split(",[ ]*"));
+        List<String> cc = Arrays.asList(ccTextField.getText().split(",[ ]*"));
+        List<String> bcc = Arrays.asList(bccTextField.getText().split(",[ ]*"));
+
+        for(String receiver : receivers) {
+            if(!(Address.isValidAddress(receiver))) {
+                toTextField.getStyleClass().add("error");
+                return false;
+            }
         }
-        if(!toTextField.getStyleClass().contains("error")) {
-            toTextField.getStyleClass().add("error");
+
+        for(String copy : cc) {
+            if(!(Address.isValidAddress(copy)) && !copy.equals("")) {
+                ccTextField.getStyleClass().add("error");
+                return false;
+            }
         }
-        return false;
+
+        for(String blindCopy : bcc) {
+            if(!(Address.isValidAddress(blindCopy)) && !blindCopy.equals("")) {
+                ccTextField.getStyleClass().add("error");
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -175,31 +194,33 @@ public class EmailForm extends GridPane implements IObserver {
         // Start building an email
         Email.Builder emailBuilder = new Email.Builder(subjectTextField.getText(), html);
 
-        // Add to, cc and bcc if they are entered
-        String toText = toTextField.getText();
-        if (!toText.isEmpty()) {
-            List<IAddress> toAddresses = parseAddresses(toText);
-            emailBuilder.to(toAddresses);
-        }
+        if(validateReceivers()) {
 
-        String ccText = ccTextField.getText();
-        if (!ccText.isEmpty()) {
-            List<IAddress> ccAddresses = parseAddresses(ccText);
-            emailBuilder.cc(ccAddresses);
-        }
+            // Add to, cc and bcc if they are entered
+            String toText = toTextField.getText();
+            if (!toText.isEmpty()) {
+                List<IAddress> toAddresses = parseAddresses(toText);
+                emailBuilder.to(toAddresses);
+            }
 
-        String bccText = bccTextField.getText();
-        if (!bccText.isEmpty()) {
-            List<IAddress> bccAddresses = parseAddresses(bccText);
-            emailBuilder.bcc(bccAddresses);
-        }
+            String ccText = ccTextField.getText();
+            if (!ccText.isEmpty()) {
+                List<IAddress> ccAddresses = parseAddresses(ccText);
+                emailBuilder.cc(ccAddresses);
+            }
 
-        if(validateReceiver()) {
+            String bccText = bccTextField.getText();
+            if (!bccText.isEmpty()) {
+                List<IAddress> bccAddresses = parseAddresses(bccText);
+                emailBuilder.bcc(bccAddresses);
+            }
+
             // Build the email and send it
             IEmail email = emailBuilder.build();
             fromChoiceBox.getValue().send(email);
             Stage stage = (Stage) this.getScene().getWindow();
             stage.close();
+
         }
 
     }

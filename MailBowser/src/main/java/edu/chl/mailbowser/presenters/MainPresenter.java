@@ -1,31 +1,24 @@
 package edu.chl.mailbowser.presenters;
 
-import edu.chl.mailbowser.main.MainHandler;
 import edu.chl.mailbowser.account.IAccountHandler;
 import edu.chl.mailbowser.email.IAddress;
 import edu.chl.mailbowser.email.IEmail;
-import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.*;
+import edu.chl.mailbowser.main.MainHandler;
 import edu.chl.mailbowser.presenters.accountmanager.AccountManager;
 import edu.chl.mailbowser.presenters.contactbook.ContactBook;
 import edu.chl.mailbowser.presenters.email.EmailForm;
 import edu.chl.mailbowser.presenters.tag.AddTagForm;
-import edu.chl.mailbowser.presenters.tag.TagList;
-import edu.chl.mailbowser.presenters.tag.TagListItem;
-import edu.chl.mailbowser.tag.ITagHandler;
 import edu.chl.mailbowser.tag.ITag;
+import edu.chl.mailbowser.tag.ITagHandler;
 import edu.chl.mailbowser.tag.Tag;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
-
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -177,6 +170,9 @@ public class MainPresenter implements IObserver, Initializable {
             case ACCOUNT_ADDED:
                 showOrHideMenuOptions();
                 break;
+            case ACCOUNT_REMOVED:
+                showOrHideMenuOptions();
+                break;
             case ADD_TAG_TO_EMAIL:
                 tagHandler.addTagToEmail(email, (ITag)evt.getValue());
                 break;
@@ -230,7 +226,7 @@ public class MainPresenter implements IObserver, Initializable {
 
     @FXML
     private void addTagMenuItemOnAction(ActionEvent actionEvent) {
-        //TODO solve when events refactoring handled.
+        EventBus.INSTANCE.publish(new Event(EventType.OPEN_ADD_TAG_WINDOW, null));
     }
 
     @FXML
@@ -252,7 +248,7 @@ public class MainPresenter implements IObserver, Initializable {
 
     @FXML
     private void openContactBookMenuItemOnAction(ActionEvent actionEvent) {
-        //TODO solve when events refactoring handled.
+        EventBus.INSTANCE.publish(new Event(EventType.OPEN_CONTACT_BOOK, null));
     }
 
     @FXML

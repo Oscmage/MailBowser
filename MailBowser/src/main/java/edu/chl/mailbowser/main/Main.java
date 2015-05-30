@@ -1,7 +1,7 @@
 package edu.chl.mailbowser.main;
 
 
-import edu.chl.mailbowser.backgroundfetcher.IBackgroundFetcher;
+import edu.chl.mailbowser.account.IAccountHandler;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
@@ -12,12 +12,17 @@ import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.Timer;
+
 /**
  * The main class to launch the application.
  */
 public class Main extends Application {
 
-    private static IBackgroundFetcher backgroundFetcher = MainHandler.INSTANCE.getBackgroundFetcher();
+    private static int SCENE_HEIGHT = 600, SCENE_WIDTH = 960;
+    private static int MIN_STAGE_HEIGHT = 600, MIN_STAGE_WIDTH = 800;
+    private static final int FETCH_INTERVAL = 30000;
+
 
     /**
      * Loads the MainView fxml.
@@ -34,13 +39,13 @@ public class Main extends Application {
 
         mainStage.setTitle("MailBowser");
 
-        Scene scene = new Scene(root, 960, 600);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         // Add fonts and styles to the scene
         scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Roboto:400italic,300,700,400");
 
-        mainStage.setMinHeight(600);
-        mainStage.setMinWidth(800);
+        mainStage.setMinHeight(MIN_STAGE_HEIGHT);
+        mainStage.setMinWidth(MIN_STAGE_WIDTH);
 
         mainStage.setScene(scene);
         mainStage.show();
@@ -56,13 +61,16 @@ public class Main extends Application {
         // load serialized objects from disk
         MainHandler.INSTANCE.loadComponents();
 
-        // initiate background fetching
-        backgroundFetcher.start();
+        // initiate periodic fetching
+        Timer timer = new Timer(true);
+        IAccountHandler accountHandler = MainHandler.INSTANCE.getAccountHandler();
+        timer.schedule(new FetchTask(accountHandler), 0, FETCH_INTERVAL);
 
         // used to launch a JavaFX application
         launch(args);
-        // stop background fetching
-        backgroundFetcher.stop();
+
+        // stop periodic fetching
+        timer.cancel();
 
         // save serializable objects to disk
         MainHandler.INSTANCE.saveComponents();
