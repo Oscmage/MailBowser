@@ -1,9 +1,6 @@
 package edu.chl.mailbowser.contact;
 
 import edu.chl.mailbowser.email.IAddress;
-import edu.chl.mailbowser.event.Event;
-import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventType;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,7 +56,7 @@ public class Contact implements IContact {
      * @param addresses Contacts addresses
      * @throws IllegalArgumentException if firstName or lastName is null
      */
-    public Contact (String firstName, String lastName, List<IAddress> addresses){
+    public Contact (String firstName, String lastName, List<? extends IAddress> addresses){
         this(firstName, lastName);
 
         if (addresses != null) {
@@ -78,6 +75,10 @@ public class Contact implements IContact {
     public String getFullName() {
         if (lastName.isEmpty() && firstName.isEmpty()) {
             return "";
+        } else if (lastName.isEmpty()) {
+            return firstName;
+        } else if (firstName.isEmpty()) {
+            return lastName;
         }
 
         return lastName + ", " + firstName;
