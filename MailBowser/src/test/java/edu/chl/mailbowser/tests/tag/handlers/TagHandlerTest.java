@@ -103,15 +103,42 @@ public class TagHandlerTest {
         assertTrue(tagHandler.getTagsWithEmail(email).isEmpty());
 
 
+        //Reset tagHandler
+        tagHandler = new TagHandler();
         //Adds two x tags from an email
-        tagHandler.addTagToEmail(email,tagOne);
-        tagHandler.addTagToEmail(email,tagTwo);
+        tagHandler.addTagToEmail(email, tagOne);
+        tagHandler.addTagToEmail(email, tagTwo);
 
         //Removes ONE of the tags
-        tagHandler.removeTagFromEmail(email,tagOne);
+        tagHandler.removeTagFromEmail(email, tagOne);
 
-        //Checks if the email is still tagged with the other tag.
+        //Checks if the email no longer is tagged with "tagOne" and if still tagged with "tagTwo"
+        assertFalse(tagHandler.getTagsWithEmail(email).contains(tagOne));
         assertTrue(tagHandler.getTagsWithEmail(email).contains(tagTwo));
+    }
+
+    @Test
+    public void testEraseTag(){
+        IEmail secondMockEmail = new MockEmail();
+        tagHandler.addTagToEmail(email,tagOne);
+        tagHandler.addTagToEmail(email,tagTwo);
+        tagHandler.addTagToEmail(secondMockEmail,tagOne);
+
+        tagHandler.eraseTag(tagOne);
+
+        //The tag shouldn't belong in the MapFromTagsToEmails
+        assertFalse(tagHandler.getTags().contains(tagOne));
+
+        //The tag shouldn't belong in the MapFromEmailsToTags
+        assertFalse(tagHandler.getTagsWithEmail(email).contains(tagOne));
+        assertFalse(tagHandler.getTagsWithEmail(secondMockEmail).contains(tagOne));
+
+        //Check that tagTwo still exists on the email
+        assertTrue(tagHandler.getTagsWithEmail(email).contains(tagTwo));
+
+        //Checks if secondMockEmail has been removed
+        assertTrue(tagHandler.getTagsWithEmail(secondMockEmail).isEmpty());
+
     }
 
     @Test
@@ -120,10 +147,10 @@ public class TagHandlerTest {
         tagHandler.addTagToEmail(email, tagTwo);
         tagHandler.reset();
 
-        //Everything gone in MapFromTagsToEmail ?
+        //Any trace of the tag in MapFromTagsToEmail ?
         assertTrue(tagHandler.getTags().isEmpty());
 
-        //Everything gone in MapFromEmailsToTags ?
+        //Any trace of the tag in MapFromEmailsToTags ?
         assertTrue(tagHandler.getEmailsWithTag(tagOne).isEmpty());
         assertTrue(tagHandler.getEmailsWithTag(tagTwo).isEmpty());
     }
