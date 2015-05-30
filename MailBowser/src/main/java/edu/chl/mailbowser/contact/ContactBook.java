@@ -35,8 +35,10 @@ public class ContactBook implements IContactBook{
      */
     @Override
     public void removeContact(IContact contact) {
-        this.contacts.remove(contact);
-        EventBus.INSTANCE.publish(new Event(EventType.CONTACT_REMOVED, contact));
+        if (contact != null) {
+            this.contacts.remove(contact);
+            EventBus.INSTANCE.publish(new Event(EventType.CONTACT_REMOVED, contact));
+        }
     }
 
     /**
