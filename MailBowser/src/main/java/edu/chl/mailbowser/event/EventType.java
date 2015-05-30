@@ -35,5 +35,7 @@ public enum EventType {
     NEW_TAG_ADDED,
     REMOVED_TAG_COMPLETELY,
     TAGS_CLEARED,
+    CONTACT_REMOVED,
+    CONTACT_ADDED,
     FXML_LOADED
 }
