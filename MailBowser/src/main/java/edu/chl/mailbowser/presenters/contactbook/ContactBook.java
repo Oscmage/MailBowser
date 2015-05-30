@@ -1,38 +1,37 @@
 package edu.chl.mailbowser.presenters.contactbook;
 
+import edu.chl.mailbowser.event.*;
 import edu.chl.mailbowser.main.MainHandler;
 import edu.chl.mailbowser.contact.Contact;
 import edu.chl.mailbowser.contact.IContact;
 import edu.chl.mailbowser.contact.IContactBook;
 import edu.chl.mailbowser.email.Address;
 import edu.chl.mailbowser.email.IAddress;
-import edu.chl.mailbowser.event.Event;
-import edu.chl.mailbowser.event.EventBus;
-import edu.chl.mailbowser.event.EventType;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
 /**
  * Created by jesper on 2015-05-22.
  */
-public class ContactBook extends VBox {
+public class ContactBook extends VBox implements IObserver {
 
     @FXML protected ListView<ContactListItem> contactsList;
     @FXML protected Button saveContactButton;
@@ -48,10 +47,14 @@ public class ContactBook extends VBox {
     @FXML protected HBox menuBarRight;
 
     private ObservableList<ContactListItem> contactListItems = FXCollections.observableArrayList();
+    private SortedList<ContactListItem> sortedContactListItems = new SortedList<>(contactListItems,
+            Comparator.<ContactListItem>naturalOrder());
 
     private IContactBook contactBook = MainHandler.INSTANCE.getContactBook();
 
     public ContactBook() {
+        EventBus.INSTANCE.register(this);
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/contactbook/ContactBook.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -90,6 +93,8 @@ public class ContactBook extends VBox {
      * Populates the contact list, adds listeners to its items and disables controls if there are no contacts.
      */
     private void initializeContactBook() {
+        contactsList.setItems(sortedContactListItems);
+
         contactsList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
                 disableFieldsAndButtons();
@@ -103,8 +108,6 @@ public class ContactBook extends VBox {
         for(IContact contact : contactBook.getContacts()) {
             contactListItems.add(new ContactListItem(contact));
         }
-
-        contactsList.setItems(contactListItems);
 
         // disable fields and buttons if there are no contacts, otherwise select the first contact in the list
         if (contactListItems.isEmpty()) {
@@ -120,8 +123,6 @@ public class ContactBook extends VBox {
      * Updates the edit view to match a selected item in the list.
      */
     private void updateEditView(ContactListItem selectedItem) {
-        System.out.println(selectedItem);
-
         addressForm.getChildren().clear();
         if (selectedItem == null) {
             lastNameField.setText("");
@@ -261,16 +262,34 @@ public class ContactBook extends VBox {
     }
 
     /**
+     * Adds a contact to the list of contacts.
+     *
+     * @param contact the contact to add
+     */
+    public void addContactToList(IContact contact) {
+        ContactListItem contactListItem = new ContactListItem(contact);
+        contactListItems.add(contactListItem);
+        contactsList.getSelectionModel().select(contactListItem);
+    }
+
+    /**
+     * Removes a contact form the list of contacts.
+     *
+     * @param contact the contact to remove
+     */
+    public void removeContactFromList(IContact contact) {
+        ContactListItem contactListItem = new ContactListItem(contact);
+        contactListItems.remove(contactListItem);
+    }
+
+    /**
      * Invoked when the "Add contact"-button is clicked.
      * @param actionEvent
      */
     @FXML
     public void addContactButtonOnAction(ActionEvent actionEvent) {
         IContact newContact = new Contact();
-        ContactListItem contactListItem = new ContactListItem(newContact);
         contactBook.addContact(newContact);
-        contactListItems.add(contactListItem);
-        contactsList.getSelectionModel().select(contactListItem);
     }
 
     /**
@@ -280,8 +299,9 @@ public class ContactBook extends VBox {
     @FXML
     protected void deleteContactButtonOnAction(ActionEvent actionEvent) {
         ContactListItem selectedItem = contactsList.getSelectionModel().getSelectedItem();
-        contactListItems.remove(selectedItem);
-        contactBook.removeContact(selectedItem.getContact());
+        if (selectedItem != null) {
+            contactBook.removeContact(selectedItem.getContact());
+        }
     }
 
     /**
@@ -292,18 +312,16 @@ public class ContactBook extends VBox {
     protected void saveContactButtonOnAction(ActionEvent actionEvent) {
         if (validateForm()) {
             ContactListItem selectedItem = contactsList.getSelectionModel().getSelectedItem();
+            IContact selectedContact = selectedItem.getContact();
 
-            IContact contact = selectedItem.getContact();
-            contact.setFirstName(firstNameField.getText());
-            contact.setLastName(lastNameField.getText());
-
-            contact.removeAllAddresses();
-
+            List<IAddress> addresses = new ArrayList<>();
             for (Node textField : addressForm.getChildren()) {
-                contact.addAddress(new Address(((TextField)textField).getText()));
+                addresses.add(new Address(((TextField) textField).getText()));
             }
+            IContact newContact = new Contact(firstNameField.getText(), lastNameField.getText(), addresses);
 
-            selectedItem.setContact(contact);
+            contactBook.removeContact(selectedContact);
+            contactBook.addContact(newContact);
         }
     }
 
@@ -325,4 +343,21 @@ public class ContactBook extends VBox {
         removeAddressField();
     }
 
+    @Override
+    public void onEvent(IEvent evt) {
+        Platform.runLater(() -> {
+            handleEvent(evt);
+        });
+    }
+
+    private void handleEvent(IEvent evt) {
+        switch (evt.getType()) {
+            case CONTACT_ADDED:
+                addContactToList((IContact) evt.getValue());
+                break;
+            case CONTACT_REMOVED:
+                removeContactFromList((IContact) evt.getValue());
+                break;
+        }
+    }
 }

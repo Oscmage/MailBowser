@@ -1,21 +1,23 @@
 package edu.chl.mailbowser.presenters.contactbook;
 
-import edu.chl.mailbowser.contact.Contact;
 import edu.chl.mailbowser.contact.IContact;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.IEvent;
+import edu.chl.mailbowser.event.IObserver;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * Created by jesper on 2015-05-22.
  *
  * ContactListItemPresenter
  */
-public class ContactListItem extends FlowPane{
+public class ContactListItem extends FlowPane implements Comparable<ContactListItem> {
     @FXML private Label nameLabel;
 
     private IContact contact;
@@ -54,7 +56,7 @@ public class ContactListItem extends FlowPane{
         if (!fullName.isEmpty()) {
             setText(fullName);
         } else {
-            setText("New contact...");
+            setText("Empty contact...");
         }
     }
 
@@ -81,7 +83,7 @@ public class ContactListItem extends FlowPane{
             return true;
         } else if (o == null) {
             return false;
-        } else if (!o.getClass().equals(o.getClass())) {
+        } else if (!this.getClass().equals(o.getClass())) {
             return false;
         }
 
@@ -92,5 +94,10 @@ public class ContactListItem extends FlowPane{
     @Override
     public int hashCode() {
         return contact.hashCode();
+    }
+
+    @Override
+    public int compareTo(ContactListItem o) {
+        return this.contact.compareTo(o.getContact());
     }
 }
