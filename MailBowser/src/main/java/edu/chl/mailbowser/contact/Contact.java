@@ -1,14 +1,27 @@
 package edu.chl.mailbowser.contact;
 
 import edu.chl.mailbowser.email.IAddress;
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by jesper on 2015-05-20.
+ *
+ * A concrete implementation of the IContact interface. Objects of this class are immutable.
  */
 public class Contact implements IContact {
+    private static final long serialVersionUID = -2918882420849049598L;
+
+    // each contact object gets a unique id
+    private UUID uuid = UUID.randomUUID();
+    private Date createdDate = new Date();
+
     private String firstName;
     private String lastName;
     private List<IAddress> emailAddresses = new ArrayList<>();
@@ -35,8 +48,27 @@ public class Contact implements IContact {
      * Creates an empty Contact with first name and last name set to empty strings.
      */
     public Contact (){
-        this.firstName = "";
-        this.lastName = "";
+        this("", "");
+    }
+
+    /**
+     * Creates a new contact with a list of addresses. Only non-null addresses are added to the contact.
+     *
+     * @param firstName Contacts first name
+     * @param lastName Contacts last name
+     * @param addresses Contacts addresses
+     * @throws IllegalArgumentException if firstName or lastName is null
+     */
+    public Contact (String firstName, String lastName, List<IAddress> addresses){
+        this(firstName, lastName);
+
+        if (addresses != null) {
+            for (IAddress address : addresses) {
+                if (address != null) {
+                    this.emailAddresses.add(address);
+                }
+            }
+        }
     }
 
     /**
@@ -70,62 +102,15 @@ public class Contact implements IContact {
 
     /**
      * {@inheritDoc}
-     *
-     * @throws IllegalArgumentException if firstName is null
      */
     @Override
-    public void setFirstName(String firstName) {
-        if (firstName == null) {
-            throw new IllegalArgumentException("Can't set first name to null");
-        }
-
-        this.firstName = firstName;
+    public UUID getUUID() {
+        return uuid;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @throws IllegalArgumentException if lastName is null
-     */
     @Override
-    public void setLastName(String lastName) {
-        if (lastName == null) {
-            throw new IllegalArgumentException("Can't set last name to null");
-        }
-
-        this.lastName = lastName;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addAddress(IAddress address) {
-        if (address != null) {
-            emailAddresses.add(address);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addAllAddresses(List<IAddress> addresses) {
-        if (addresses != null) {
-            for (IAddress address : addresses) {
-                if (address != null) {
-                    emailAddresses.add(address);
-                }
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void removeAllAddresses() {
-        emailAddresses.clear();
+    public Date getCreatedDate() {
+        return (Date) createdDate.clone();
     }
 
     /**
@@ -136,9 +121,29 @@ public class Contact implements IContact {
         return new ArrayList<>(emailAddresses);
     }
 
+
+    /**
+     * Compares an IContact to this contact. Comparison is first done by comparing the contacts full names. If their
+     * names are equal, their created dates are compared. If they too are equal, their UUID:s are compared.
+     *
+     * @param contact the contact to compare this contact with
+     * @return {@inheritDoc}
+     */
     @Override
     public int compareTo(IContact contact) {
-            return getFullName().compareTo(contact.getFullName()            );
+        int fullNameComparison = this.getFullName().toLowerCase().compareTo(contact.getFullName().toLowerCase());
+
+        if (fullNameComparison != 0) {
+            return fullNameComparison;
+        }
+
+        int addedDateComparison = this.createdDate.compareTo(contact.getCreatedDate());
+
+        if (addedDateComparison != 0) {
+            return -addedDateComparison;
+        }
+
+        return uuid.compareTo(contact.getUUID());
     }
 
     /**
@@ -146,13 +151,14 @@ public class Contact implements IContact {
      */
     @Override
     public boolean matches(String query) {
-        if(query != null)
-            return getFullName().contains(query);
-        return false;
+        return query != null && getFullName().contains(query);
     }
 
     /**
-     * Returns true if the object has the same last name, first name and email-addresses.
+     * Determines if this contact is equal to an object.
+     *
+     * @param o the object to compare this contact with
+     * @return true if the object is a contact and has the same UUID as this contact.
      */
     @Override
     public boolean equals(Object o) {
@@ -164,21 +170,16 @@ public class Contact implements IContact {
             return false;
         }
         Contact c = (Contact) o;
-        if (!this.firstName.equals(c.firstName)) {
-            return false;
-        } else if (!this.lastName.equals(c.getLastName())) {
-            return false;
-        } else if (!this.getEmailAddresses().equals(c.getEmailAddresses())) {
-            return false;
-        }
-        return true;
+        return this.uuid.equals(c.getUUID());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int hashCode(){
-        return (firstName.hashCode() * 7)  + (lastName.hashCode() * 17 )+ (emailAddresses.hashCode() * 23 );
+        return uuid.hashCode() * 7;
+    }
+
+    @Override
+    public String toString() {
+        return getFullName();
     }
 }

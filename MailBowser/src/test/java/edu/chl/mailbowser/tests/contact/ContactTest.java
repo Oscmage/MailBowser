@@ -23,7 +23,7 @@ public class ContactTest {
     @Test
     public void testCompareTo() throws Exception {
         assertTrue(contactA.compareTo(contactA)==0);
-        assertTrue(contactA.compareTo(contactC)==0);
+        assertTrue(contactA.compareTo(contactC)!=0);
         assertTrue(contactA.compareTo(contactB)<0);
         assertTrue(contactB.compareTo(contactC)>0);
 
@@ -40,7 +40,7 @@ public class ContactTest {
     @Test
     public void testEquals() throws Exception {
         assertTrue(contactA.equals(contactA));
-        assertTrue(contactA.equals(contactC));
+        assertFalse(contactA.equals(contactC));
         assertFalse(contactA.equals(contactB));
     }
 
