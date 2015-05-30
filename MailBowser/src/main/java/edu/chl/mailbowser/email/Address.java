@@ -80,7 +80,7 @@ public class Address implements IAddress{
 
     @Override
     public String toString() {
-        return this.address;
+        return getString();
     }
 
 
