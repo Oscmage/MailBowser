@@ -1,6 +1,7 @@
 package edu.chl.mailbowser.presenters;
 
 import edu.chl.mailbowser.event.*;
+import edu.chl.mailbowser.main.MainHandler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,6 +38,7 @@ public class TopbarPresenter extends HBox implements IObserver{
 
         EventBus.INSTANCE.register(this);
         toggleDisableButtons(true);
+        toggleDisableFetchButton(MainHandler.INSTANCE.getAccountHandler().getAccounts().isEmpty());
     }
 
     /**
@@ -56,6 +58,14 @@ public class TopbarPresenter extends HBox implements IObserver{
             buttons.stream()
                     .forEach(s -> s.setDisable(false));
         }
+    }
+
+    /**
+     * Disables the fetch button if provided with true and enables it if provided with false.
+     * @param disableButton
+     */
+    private void toggleDisableFetchButton(boolean disableButton) {
+        this.fetchButton.setDisable(disableButton);
     }
 
     /**
@@ -154,6 +164,14 @@ public class TopbarPresenter extends HBox implements IObserver{
                     toggleDisableButtons(false);
                 } else {
                     toggleDisableButtons(true);
+                }
+                break;
+            case ACCOUNT_ADDED:
+                toggleDisableFetchButton(false);
+                break;
+            case ACCOUNT_REMOVED:
+                if(MainHandler.INSTANCE.getAccountHandler().getAccounts().isEmpty()){
+                    toggleDisableFetchButton(true);
                 }
                 break;
         }
