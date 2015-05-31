@@ -117,7 +117,7 @@ public class AccountHandler implements IAccountHandler {
 
         AccountHandler that = (AccountHandler) o;
 
-        return(accounts != null ? !accounts.equals(that.accounts) : that.accounts != null);
+        return(accounts != null ? accounts.equals(that.accounts) : that.accounts == null);
     }
 
     @Override
