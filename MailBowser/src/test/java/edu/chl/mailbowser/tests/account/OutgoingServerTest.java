@@ -33,7 +33,7 @@ public class OutgoingServerTest {
      */
     public void testSend() throws Exception {
         List<IAddress> to = new ArrayList<>();
-        to.add(new Address("addressthatdoesnotexist@domainthatdoesnotexist.com"));
+        to.add(new Address("mailbowser@teleworm.us"));
         Email email = new Email.Builder("Subject", "Content").sender(new Address("mailbows3r@gmail.com")).to(to).build();
         outgoingServer1.send(email, "mailbows3r@gmail.com", "bowsmail3r", new Callback<IEmail>() {
             @Override
