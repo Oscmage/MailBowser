@@ -51,6 +51,14 @@ public class TagListItem extends HBox implements Comparable<TagListItem> {
 
     public TagListItem(String string, TagList.Type type) {
         this();
+
+        if(type == TagList.Type.GLOBAL) {
+            this.getStyleClass().add("global-tag");
+        } else if (type == TagList.Type.LOCAL) {
+            this.getStyleClass().add("tag");
+            this.getStyleClass().add("local-tag");
+        }
+
         this.getChildren().remove(button);
         this.type = type;
         tagName.setText(string);
