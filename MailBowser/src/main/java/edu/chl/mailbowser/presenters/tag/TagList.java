@@ -78,6 +78,7 @@ public class TagList extends ListView<TagListItem> {
      * @param tags the tags to add
      */
     public void setTags(Set<ITag> tags) {
+        tagList.clear();
         for (ITag tag : tags) {
             tagList.add(new TagListItem(tag, type));
         }
