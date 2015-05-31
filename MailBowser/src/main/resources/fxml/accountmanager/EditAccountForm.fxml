@@ -5,16 +5,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root styleClass="form" type="javafx.scene.layout.VBox" minWidth="220.0" maxWidth="220.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<fx:root maxWidth="220.0" minWidth="220.0" styleClass="form" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Label fx:id="usernameLabel" text="Username" />
         <TextField fx:id="usernameField" />
         <Label fx:id="passwordLabel" text="Password" />
-        <TextField fx:id="passwordField" />
+      <PasswordField fx:id="passwordField" />
         <Label fx:id="incomingServerLabel" text="Incoming server" />
         <HBox>
             <children>
-                <TextField fx:id="incomingServerUrlField"/>
+                <TextField fx:id="incomingServerUrlField" />
                 <TextField fx:id="incomingServerPortField">
                 </TextField>
             </children>
@@ -22,7 +22,7 @@
         <Label fx:id="outgoingServerLabel" text="Outgoing server" />
         <HBox>
             <children>
-                <TextField fx:id="outgoingServerUrlField"/>
+                <TextField fx:id="outgoingServerUrlField" />
                 <TextField fx:id="outgoingServerPortField">
                 </TextField>
             </children>

@@ -9,11 +9,6 @@ import edu.chl.mailbowser.tag.ITag;
 public class MockTag implements ITag {
 
     @Override
-    public void setTagName(String name) {
-
-    }
-
-    @Override
     public String getName() {
         return null;
     }
