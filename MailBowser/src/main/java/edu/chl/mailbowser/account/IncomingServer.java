@@ -70,8 +70,6 @@ public class IncomingServer extends AbstractMailServer implements IIncomingServe
      */
     @Override
     public void fetch(String username, String password, boolean cleanFetch, Callback<Pair<IEmail, String>> callback) {
-        System.out.println("IncomingServer: fetch(" + username + ", " + password + ", " + cleanFetch + ", " + callback);
-
         // this is to prevent multiple simultaneous fetch calls to the server
         // when a fetch is initiated, fetcher gets a value. when the fetch is done, fetcher is set to null
         if (fetcher == null) {
@@ -133,8 +131,6 @@ public class IncomingServer extends AbstractMailServer implements IIncomingServe
          */
         @Override
         public void run() {
-            System.out.println("Fetcher: run()");
-
             List<IEmail> emails;
 
             // create a properties object, fill it with information, and use it to open a session to the mail server

@@ -212,7 +212,6 @@ public class Account implements IAccount {
      */
     @Override
     public void fetch() {
-        System.out.println("Account: fetch()");
         initFetch(false);
     }
 
@@ -221,7 +220,6 @@ public class Account implements IAccount {
      */
     @Override
     public void refetch() {
-        System.out.println("Account: refetch()");
         emails = new TreeSet<>();
         EventBus.INSTANCE.publish(new Event(EventType.CLEAR_EMAILS, null));
         tagHandler.reset();
