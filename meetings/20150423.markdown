@@ -1,0 +1,40 @@
+# Meeting Agenda
+
+Date: 2015-04-23
+
+Facilitator: Oscar Evertsson 
+
+Participants: Oscar Evertsson, Jesper Jaxing, Filip Hallqvist, Mats Högberg.
+
+## Objectives
+
+* Discuss how to move on with the project, and what tasks to delegate to who
+
+## Reports from previous meeting
+
+* We've reviewed the sequence diagram, as well as the UML.
+* We've figured out how to structure our folders and will move on to a more modular approach.
+* We've got partly functional code for fetching emails.
+
+## Discussion items
+
+* How to use "tags" and structure the emails we receive from the server.
+* How to write the report.
+
+## Outcomes and assignments 
+
+* Mats and Jesper continues their work on getting incoming emails to work.
+* Filip and Oscar will implement funcionality for tagging emails.
+* Everyone will contribute to the report disposition.
+
+## Wrap up
+
+### Unresolved issues
+
+* We're a little unsure about the project structure (I.E. folders and dependencies), but will look more into it.
+
+MVC folder structure
+
+### Next meeting
+
+2015-04-28, 12:00-13:00

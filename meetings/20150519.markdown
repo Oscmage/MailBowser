@@ -1,0 +1,40 @@
+# Meeting Agenda
+
+Date: 2015-05-19
+
+Facilitator: Oscar Evertsson
+
+Participants: Mats Högberg, Oscar Evertsson, Jesper Jaxing, Filip Hallqvist
+  
+## Objectives
+
+* SDD
+* RAD
+* Resolve what's left to do
+
+## Reports
+
+* Mats has added a refetch button with working functionality
+* Oscar has added forward, reply, replyAll button with corresponding backend
+* Mats and Oscar have fixed tagHandler thread problems and added functionality to remove tags
+* Jesper fixed a new view for adding an account and corresponding backend
+* Jesper updated fetching 
+
+## Discussion items
+
+* What's left and who's doing what?
+
+## Outcomes and assignments
+
+* Final functionality fixed at 22/5
+* Final version of the report 26/5
+* More tests from Oscar, Jax and Filip
+* Sidebar Filip will fix
+* Mats will work on the SDD/RAD
+
+### Unsolved issues
+
+
+### Next meeting
+
+2015-05-21 09.00-10.00

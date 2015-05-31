@@ -1,0 +1,37 @@
+# Meeting Agenda
+
+Date: 2015-05-14
+
+Facilitator: Oscar Evertsson
+
+Participants: Mats Högberg, Oscar Evertsson, Filip Hallqvist, Jesper Jaxing
+  
+## Objectives
+
+* The TagHandler doesn't work as it should
+
+## Reports
+
+* Oscar and Mats has worked on the GUI. Mats implemented the search feature in the GUI, and Oscar has started to work on the tagging feature
+* Jesper fixed email sorting and markdown editing
+* Filip fixed support for fontawesome, for nice button icons
+
+## Discussion items
+
+* We need a feature to refetch all mails from the server
+* The sidebar need to be connected to the GUI and backend
+
+## Outcomes and assignments
+
+* Mats will implement a feature to refetch all mails from the server
+* Filip will write tests, and after that he will work with the sidebar
+* Mats and Oscar will work with the TagHandler, and connect all GUI buttons to the backend
+* Jesper will fix some sort of login window where you can register a custom account
+
+### Unsolved issues
+
+* We have to work on the RAD and the SDD
+
+### Next meeting
+
+2015-05-19 12.00-13.00
