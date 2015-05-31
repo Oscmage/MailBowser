@@ -66,15 +66,34 @@
                         <index>true</index>
                         <manifest>
                             <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
                             <!-- Will create executable jar -->
-                            <mainClass>edu.chalmers.MailBowser.Main</mainClass>
+                            <mainClass>edu.chl.mailbowser.main.Main</mainClass>
                         </manifest>
 
                     </archive>
                 </configuration>
-
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <!--
                 The JaCoCo Maven plug-in provides the JaCoCo runtime agent
