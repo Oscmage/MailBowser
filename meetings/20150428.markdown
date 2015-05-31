@@ -1,0 +1,36 @@
+# Meeting Agenda
+
+  Date:2015-04-28 
+
+  Facilitator:Oscar Evertsson
+
+  Participants:Oscar Evertsson,Mats Högberg, Filip Hallqvist, Jesper Jaxing
+
+## Objectives 
+  * Make a one-way depandency between mail and tag 
+  * Do we need to remove methodes that aren't used jet.
+  * When should we write report 1.0
+  * email recipients can be internetaddress or newsgroupaddress
+
+## Reports 
+  * Oscar and Filip have created a tag class to categorise email
+  * Jesper and Mats have made it possible to receive emails.
+  * The team have written the disposion for the report
+  
+## Discussion items
+  * We will introduce a taghandeler class to solve comunications beetween email and tag.
+  * We will remove method that we can't be sure if they will be used or not.
+  * We have decided to use the tuesdays and thursdays to write raport and disscus how we want to work with our code.
+  * We will not use newsgroupaddress.
+  
+## Outcomes and assignments 
+  * This wednesday Mats, Oscar and Filip will be writing on the sdd.
+  * Filip will contiune on the GUI.
+  * Oscar will create taghandeler. 
+  * Mats will research and possibly develop an event-bus.
+  
+## Wrap up
+  * Analyze the structure and depandencies.
+  
+## Next meeting
+  thursday 30/04

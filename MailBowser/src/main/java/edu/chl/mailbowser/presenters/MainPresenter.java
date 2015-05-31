@@ -206,6 +206,12 @@ public class MainPresenter implements IObserver, Initializable {
                 tagHandler.getTagsWithEmail(email).stream().forEach(t -> tagHandler.removeTagFromEmail(email, t));
                 tagHandler.addTagToEmail(email, new Tag("Deleted"));
                 break;
+            case FETCH_ALL_EMAILS:
+                accountHandler.initFetchingFromAllAccounts();
+                break;
+            case DELETE_TAG:
+                ITag tag = (ITag) evt.getValue();
+                tagHandler.eraseTag(tag);
         }
     }
 

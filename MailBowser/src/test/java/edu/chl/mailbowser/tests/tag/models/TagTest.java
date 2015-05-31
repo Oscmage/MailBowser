@@ -112,6 +112,9 @@ public class TagTest {
     public void testCompareTo() throws Exception {
         assertTrue(tag.compareTo(new Tag("A"))>0);
         assertTrue(tag.compareTo(new Tag("x"))<0);
-        assertTrue(tag.compareTo(tag) == 0);
+         //Same string should return true
+        assertTrue(tag.compareTo(new Tag(s)) == 0);
+        //Not the same string should return false
+        assertFalse(tag.compareTo(new Tag("uohqwoie")) == 0);
     }
 }

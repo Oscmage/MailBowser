@@ -39,6 +39,8 @@ public class EmailList extends ListView implements IObserver {
     @FXML protected ListView<EmailListItem> emailListListView;
     private boolean updateListOnIncomingEmail = true;
 
+    private ITag selectedTag = null;
+
     public EmailList() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/email/EmailList.fxml"));
         fxmlLoader.setRoot(this);
@@ -60,19 +62,17 @@ public class EmailList extends ListView implements IObserver {
     private void initializeList() {
         emailListListView.setItems(sortedObservableEmailList);
 
-        replaceListViewContent(accountHandler.getAllEmails());
-
-        if(observableEmailList.size() != 0) {
-            this.emailListListView.getSelectionModel().selectFirst();
-            EventBus.INSTANCE.publish(new Event(EventType.SELECT_EMAIL,
-                    this.emailListListView.getSelectionModel().getSelectedItem().getEmail()));
-        }
-
         emailListListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null) {
                 EventBus.INSTANCE.publish(new Event(EventType.SELECT_EMAIL, newValue.getEmail()));
             }
         });
+
+        replaceListViewContent(accountHandler.getAllEmails());
+
+        if(observableEmailList.size() != 0) {
+            this.emailListListView.getSelectionModel().selectFirst();
+        }
     }
 
 
@@ -96,8 +96,18 @@ public class EmailList extends ListView implements IObserver {
     private void addEmailToListView(IEmail email) {
         EmailListItem emailListItem = new EmailListItem(email);
         if (!observableEmailList.contains(emailListItem)) {
-            observableEmailList.addAll(emailListItem);
+            observableEmailList.add(emailListItem);
         }
+    }
+
+    /**
+     * Removes a single email from the list.
+     *
+     * @param email the email to remove
+     */
+    private void removeEmailFromList(IEmail email) {
+        EmailListItem emailListItem = new EmailListItem(email);
+        this.observableEmailList.remove(emailListItem);
     }
 
     /**
@@ -106,17 +116,21 @@ public class EmailList extends ListView implements IObserver {
      *
      * @param query the query to search for
      */
-    private void search(String query) {
-        Set<IEmail> emails = accountHandler.getAllEmails();
-
+    private void searchOccured(String query) {
         if (!query.equals("")) {
             updateListOnIncomingEmail = false;
+
+            Set<IEmail> emails = accountHandler.getAllEmails();
             Set<IEmail> matchingEmails = new SetSearcher<IEmail>().search(emails, query);
-            System.out.println("matching emails: " + matchingEmails.size());
             replaceListViewContent(matchingEmails);
         } else {
             updateListOnIncomingEmail = true;
-            replaceListViewContent(emails);
+
+            if (selectedTag == null) {
+                replaceListViewContent(accountHandler.getAllEmails());
+            } else {
+                replaceListViewContent(tagHandler.getEmailsWithTag(selectedTag));
+            }
         }
     }
 
@@ -125,8 +139,8 @@ public class EmailList extends ListView implements IObserver {
      *
      * @param email the fetched email
      */
-    private void fetchEmail(IEmail email) {
-        if (updateListOnIncomingEmail) {
+    private void fetchedEmail(IEmail email) {
+        if (selectedTag == null && updateListOnIncomingEmail) {
             addEmailToListView(email);
         }
     }
@@ -136,6 +150,22 @@ public class EmailList extends ListView implements IObserver {
      */
     private void clearEmails() {
         observableEmailList.clear();
+    }
+
+    /**
+     * This method is called when an email gets tagged
+     * @param pair
+     */
+    private void addedTagToEmail(Pair<IEmail, ITag> pair) {
+        if (pair.getSecond().equals(selectedTag) && updateListOnIncomingEmail) {
+            addEmailToListView(pair.getFirst());
+        }
+    }
+
+    private void removedTagFromEmail(Pair<IEmail, ITag> pair) {
+        if (pair.getSecond().equals(selectedTag) && updateListOnIncomingEmail) {
+            removeEmailFromList(pair.getFirst());
+        }
     }
 
     /**
@@ -151,23 +181,26 @@ public class EmailList extends ListView implements IObserver {
     private void handleEvent(IEvent evt){
         switch (evt.getType()) {
             case FETCHED_EMAIL:
-                fetchEmail((IEmail) evt.getValue());
+                fetchedEmail((IEmail) evt.getValue());
                 break;
             case SEARCH:
-                search((String) evt.getValue());
+                searchOccured((String) evt.getValue());
+                break;
+            case ADDED_TAG_TO_EMAIL:
+                addedTagToEmail((Pair<IEmail, ITag>) evt.getValue());
                 break;
             case REMOVED_TAG_FROM_EMAIL:
-                Pair<IEmail, ITag> pair = (Pair<IEmail, ITag>)evt.getValue();
-                replaceListViewContent(new TreeSet<>(tagHandler.getEmailsWithTag(pair.getSecond())));
+                removedTagFromEmail((Pair<IEmail, ITag>)evt.getValue());
                 break;
             case CLEAR_EMAILS:
                 clearEmails();
                 break;
             case SELECT_TAG:
+                this.selectedTag = (ITag) evt.getValue();
                 if(evt.getValue() != null) {
-                    replaceListViewContent(new TreeSet<>(tagHandler.getEmailsWithTag((ITag) evt.getValue())));
+                    replaceListViewContent(tagHandler.getEmailsWithTag(selectedTag));
                 } else {
-                    replaceListViewContent(new TreeSet<>(accountHandler.getAllEmails()));
+                    replaceListViewContent(accountHandler.getAllEmails());
                 }
                 break;
         }

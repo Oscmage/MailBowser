@@ -17,6 +17,8 @@ import java.util.Properties;
  * A concrete implementation of IIncomingServer.
  */
 public class IncomingServer extends AbstractMailServer implements IIncomingServer {
+    private static final long serialVersionUID = 560726048333375816L;
+
     // this flag will be used to mark emails that have previously fetched
     private static final Flags PROCESSED_FLAG = new Flags("MailBowserProcessed");
 

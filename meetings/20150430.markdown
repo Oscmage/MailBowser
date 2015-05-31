@@ -1,0 +1,34 @@
+# Meeting Agenda
+
+  Date:2015-04-30
+
+  Facilitator:Oscar Evertsson
+
+  Participants:Oscar Evertsson,Mats Högberg, Filip Hallqvist, Jesper Jaxing
+
+## Objectives 
+  * Decide when to refactor the folder structure
+  * Delegate new tasks for everyone
+
+## Reports 
+  * Oscar has done the TagHandler class for a one-way dependency between Tags and Mails
+  * Mats has created an EventBus
+  * Filip has done a GUI-sketch and begun to implement it in code
+  * Everyone has started writing on the SDD, and also been looking into how unit testing works
+  
+## Discussion items
+  * How do we fix the folder and package structure?
+  * How do we use the EventBus?
+  * How can we connect the back-end with the GUI?
+  * How will we do our unit testing? 
+  
+## Outcomes and assignments 
+  * Refactor the package structure and general work this coming monday
+  * Oscar and Mats takes a look on the TagHandler to see if it works as it should
+  * Oscar and Mats tests a few classes
+  
+## Wrap up
+  * Thanks to Valborg we end this week a little early and will move on with the production next week.
+  
+## Next meeting
+  Tuesday 12:00

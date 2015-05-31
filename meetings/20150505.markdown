@@ -1,0 +1,42 @@
+# Meeting Agenda
+Date: 2015-05-05
+
+Facilitator: Oscar Evertsson
+
+Participants: Mats Högberg, Oscar Evertsson, Filip Hallqvist, Jesper Jaxing
+  
+## Objectives
+
+* Use cases
+* Delegate new tasks
+
+## Reports
+
+* First drafted GUI 
+* Some tests are completed.
+
+
+## Discussion items
+
+* equals, hashcode and toString.
+* git flow
+* use cases
+* Shared style convention for coding/branches
+
+## Outcomes and assignments
+
+* equals, hashcode and toString should be included in all new models. Jesper will take of the current ones without the methods
+* One branch per feature and when a feature is finished we will remove the branch. 
+* The GUI is preliminary finished for now which means each group member can start working on a seperate use case.
+* We'll use https://google-styleguide.googlecode.com/svn/trunk/javaguide.html for styling convention.
+* Mats will start working on the search use case.
+* Filip will connected the current backend with the frontend.
+* Oscar will assist Filip with the current backend/frontend.
+* When Jesper is finished with equals etc. He will start working on the reply email use case.
+
+### Unsolved issues
+
+-
+
+### Next meeting
+2015-05-07: 09.00-10.00

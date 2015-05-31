@@ -1,0 +1,37 @@
+# Meeting Agenda
+
+Date: 2015-05-19
+
+Facilitator: Oscar Evertsson
+
+Participants: Mats Högberg, Oscar Evertsson, Jesper Jaxing, Filip Hallqvist
+  
+## Objectives
+
+* Should we have fonts?
+* How to implements contacts?
+
+## Reports
+
+* Mats has been updating the domain model and looking into the RAD, added lots of issus in the issue tracker.
+* Oscar has made a mainhandler so that handels the other handlers
+* Filip has made account manager, writen tests and done a new gui.
+
+## Discussion items
+
+* Contacts
+* Package structer
+
+## Outcomes and assignments
+
+* Jesper and Oscar will create the contact logic
+* Refactor then package strucker then test
+
+### Unsolved issues
+* Events
+* Circulare depentency
+* Encyrpt password
+
+### Next meeting
+
+2015-05-26 12.00-13.00

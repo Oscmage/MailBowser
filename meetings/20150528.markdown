@@ -1,0 +1,38 @@
+# Meeting Agenda
+
+Date: 2015-05-28
+
+Facilitator: Mats Högberg
+
+Participants: Mats Högberg, Oscar Evertsson, Jesper Jaxing, Filip Hallqvist
+  
+## Objectives
+
+-
+
+## Reports
+
+* Filip has fixed the view/presenter architecture.
+* We all worked through all packages and fixed errors and added missing documentation.
+* We now have a first draft of the SDD. Sebastian will go through it on the next supervised meeting and give us feedback.
+* We have been checking of items on the todo list, and it is now 83% done.
+* Mats and Jesper fixed encyption of passwords.
+* Mats reworked the package structure and fixed circular dependencies.
+
+## Discussion items
+
+* Findbugs
+* SDD
+
+## Outcomes and assignments
+
+* Findbugs gives us a few warnings. We will start with the most severe warnings, and then successively go through the less severe ones.
+* We will have a meeting with Sebastian this morning (10.00) where he will go through our draft of the SDD. After that we will work on finishing the SDD.
+
+### Unsolved issues
+
+-
+
+### Next meeting
+
+None, this is the last meeting!

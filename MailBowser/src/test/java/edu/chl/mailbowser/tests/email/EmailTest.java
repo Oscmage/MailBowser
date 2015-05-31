@@ -20,6 +20,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class EmailTest {
     private Email email;
+    private Email email2;
 
     private String subject = "subject";
     private String content = "content";
@@ -38,6 +39,13 @@ public class EmailTest {
         cc.add(new MockAddress());
         bcc.add(new MockAddress());
         email = new Email.Builder(subject, content)
+                .sender(sender)
+                .to(to)
+                .cc(cc)
+                .bcc(bcc)
+                .build();
+
+        email2 = new Email.Builder(subject, content)
                 .sender(sender)
                 .to(to)
                 .cc(cc)
@@ -85,6 +93,28 @@ public class EmailTest {
             exceptionThrown = true;
         }
         assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void testEquals(){
+        //Same object
+        assertTrue(email.equals(email));
+        //Not instance of email
+        assertFalse(email.equals("hello"));
+        //Null
+        assertFalse(email.equals(null));
+        //Instance of email with the same object within it
+        assertTrue(email.equals(email2));
+    }
+
+    @Test
+    public void testHashCode(){
+        //Same object should return the same hashCode
+        assertTrue(email.hashCode() == email.hashCode());
+        //Completely different object
+        assertFalse(email.hashCode() == sender.hashCode());
+        //Not same object but contains same objects
+        assertTrue(email.hashCode() == email2.hashCode());
     }
 
     @Test

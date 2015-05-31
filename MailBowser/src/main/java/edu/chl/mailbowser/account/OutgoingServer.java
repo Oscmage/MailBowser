@@ -12,6 +12,7 @@ import javax.mail.*;
  * A concrete implementation of IOutgoingServer.
  */
 public class OutgoingServer extends AbstractMailServer implements IOutgoingServer {
+    private static final long serialVersionUID = -7751487947324807435L;
 
     /**
      * Creates a new OutgoingServer with the specified hostname and port.

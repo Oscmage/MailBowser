@@ -9,6 +9,8 @@ import javax.mail.internet.InternetAddress;
  * Address represents an email address. You cannot create an invalid Address obejct.
  */
 public class Address implements IAddress{
+    private static final long serialVersionUID = 5430029535515951841L;
+
     private final String address;
 
     //rfc822 is a standard for ARPA internet text messages
@@ -111,5 +113,10 @@ public class Address implements IAddress{
     @Override
     public boolean matches(String query) {
         return query != null && address.contains(query);
+    }
+
+    @Override
+    public int compareTo(IAddress o) {
+        return this.address.compareTo(o.getString());
     }
 }

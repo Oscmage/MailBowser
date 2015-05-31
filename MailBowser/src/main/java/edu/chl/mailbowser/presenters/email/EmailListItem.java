@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Created by filip on 07/05/15.
  */
-public class EmailListItem extends FlowPane implements Comparable {
+public class EmailListItem extends FlowPane implements Comparable<EmailListItem> {
 
     private IEmail email;
 
@@ -88,12 +88,8 @@ public class EmailListItem extends FlowPane implements Comparable {
      * @return
      */
     @Override
-    public int compareTo(Object o) {
-        if (o instanceof EmailListItem) {
-            EmailListItem e = (EmailListItem) o;
-            return this.getEmail().compareTo(e.getEmail());
-        }
-        return 0;
+    public int compareTo(EmailListItem o) {
+        return this.email.compareTo(o.getEmail());
     }
 
     /**
