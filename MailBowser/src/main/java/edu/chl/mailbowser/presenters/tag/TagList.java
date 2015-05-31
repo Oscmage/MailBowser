@@ -56,6 +56,15 @@ public class TagList extends ListView<TagListItem> {
     }
 
     /**
+     * Sets the type to use when displaying this tag list.
+     *
+     * @param type the type to use
+     */
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    /**
      * Returns the type of the TagList.
      * @return
      */
