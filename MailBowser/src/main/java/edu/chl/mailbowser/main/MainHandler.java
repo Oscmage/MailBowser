@@ -11,6 +11,8 @@ import edu.chl.mailbowser.tag.TagHandler;
  * Created by OscarEvertsson on 19/05/15.
  * MainHandler is a enum singleton to keep track of every initiated handler in the application.
  * It's in the MainHandler you retrieve access to the other handlers of the application.
+ * Any class which needs to modify anything regarding TagHandler, AccountHandler
+ * and ContactBook gains access to that class from here.
  */
 public enum MainHandler {
     INSTANCE;
