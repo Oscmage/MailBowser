@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 /**
  * Created by jesper on 2015-04-21.
+ *
+ * An interface for mail servers that handle outgoing mail.
  */
 public interface IOutgoingServer extends IMailServer, Serializable {
     /**

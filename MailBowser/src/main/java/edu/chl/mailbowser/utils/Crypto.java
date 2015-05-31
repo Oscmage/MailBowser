@@ -14,6 +14,9 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by jesper on 2015-05-25.
+ *
+ * A class for dealing with encryption and decryption of strings and byte arrays. This class only contains static
+ * methods and can not be instantiated by other classes.
  */
 public class Crypto {
     //Private constructor to prevent instantiation

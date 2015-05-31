@@ -9,7 +9,8 @@ import java.util.Set;
 /**
  * Created by OscarEvertsson on 19/05/15.
  *
- * An interface for classes that manage accounts.
+ * An interface for classes that manage accounts. This interface provides methods to add and remove accounts, and also
+ * to initiate fetching in all added accounts.
  */
 public interface IAccountHandler {
     /**

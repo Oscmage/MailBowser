@@ -14,7 +14,8 @@ import java.util.Properties;
 /**
  * Created by jesper on 2015-04-21.
  *
- * A concrete implementation of IIncomingServer.
+ * A concrete implementation of IIncomingServer. This implementation starts the fetching asynchronously in a new thread.
+ * Only one fetch at a time will be running. If a new fetch request comes in before the last one is finished, nothing happens.
  */
 public class IncomingServer extends AbstractMailServer implements IIncomingServer {
     private static final long serialVersionUID = 560726048333375816L;

@@ -10,7 +10,8 @@ import java.util.Set;
 /**
  * Created by OscarEvertsson on 09/04/15.
  *
- * An interface for classes that models email accounts. An account has an address, a password and two mail servers - an incoming and an outgoing.
+ * An interface for classes that models email accounts. Accounts are used to store account information and to send and
+ * receive email. To do this IncomingServer and OutgoingServer is used.
  */
 public interface IAccount extends Serializable {
     /**
