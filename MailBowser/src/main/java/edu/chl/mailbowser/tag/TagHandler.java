@@ -4,17 +4,18 @@ import edu.chl.mailbowser.email.IEmail;
 import edu.chl.mailbowser.event.Event;
 import edu.chl.mailbowser.event.EventBus;
 import edu.chl.mailbowser.event.EventType;
-import edu.chl.mailbowser.utils.io.*;
 import edu.chl.mailbowser.utils.Pair;
+import edu.chl.mailbowser.utils.io.*;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
  * Created by OscarEvertsson on 29/04/15.
  * TagHandler handles adding and removing tags from emails and vice versa.
+ * Instance of this class exists in MainHandler.
+ * Any class which needs to modify the tag/email relationship uses this class.
  */
 public class TagHandler implements ITagHandler{
 
