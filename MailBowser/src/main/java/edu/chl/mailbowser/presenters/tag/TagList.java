@@ -48,11 +48,23 @@ public class TagList extends ListView<TagListItem> {
     public TagList(Type type) {
         this();
         this.type = type;
+
+        if (type == type.GLOBAL) {
+            addAllEmailsTag();
+        }
     }
 
     public TagList(Set<ITag> tags, Type type) {
         this(type);
         setTags(tags);
+    }
+
+    /**
+     * Adds a tag list item called "ALL EMAILS" to this tag list. This tag list item doesn't have any tag, any is
+     * used to show all emails regardless of their tags.
+     */
+    private void addAllEmailsTag() {
+        tagList.add(new TagListItem("   ALL EMAILS", type));
     }
 
     /**
@@ -79,6 +91,11 @@ public class TagList extends ListView<TagListItem> {
      */
     public void setTags(Set<ITag> tags) {
         tagList.clear();
+
+        if (type == Type.GLOBAL) {
+            addAllEmailsTag();
+        }
+
         for (ITag tag : tags) {
             tagList.add(new TagListItem(tag, type));
         }
@@ -107,6 +124,10 @@ public class TagList extends ListView<TagListItem> {
      */
     public void clear() {
         tagList.clear();
+
+        if (type == Type.GLOBAL) {
+            addAllEmailsTag();
+        }
     }
 }
 
