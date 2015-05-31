@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  * An interface for Address.
  */
-public interface IAddress extends Searchable, Serializable{
+public interface IAddress extends Searchable, Serializable, Comparable<IAddress> {
 
     /**
      * Returns a string representation of the address, in the format user@domain.com

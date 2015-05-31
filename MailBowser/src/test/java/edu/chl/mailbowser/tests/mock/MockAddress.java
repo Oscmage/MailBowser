@@ -36,4 +36,9 @@ public class MockAddress implements IAddress {
         matchesCalled = true;
         return false;
     }
+
+    @Override
+    public int compareTo(IAddress o) {
+        return 0;
+    }
 }

@@ -41,7 +41,9 @@ public class EmailDetail extends VBox implements IObserver {
     @FXML protected WebView webView;
     @FXML protected VBox emailDetail;
     @FXML protected VBox emailDetailTop;
+
     protected TagList tagList;
+    private IEmail selectedEmail = null;
 
     public EmailDetail() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/email/EmailDetail.fxml"));
@@ -88,24 +90,26 @@ public class EmailDetail extends VBox implements IObserver {
 
         this.webView.getEngine().loadContent(email.getContent());
 
-        updateTagsList(tagHandler.getTagsWithEmail(email));
+        tagList.setTags(tagHandler.getTagsWithEmail(email));
         emailDetail.setOpacity(1);
     }
 
     /**
-     * Updates the list of tags with the tags passed as parameter.
+     * Adds a tag to the list of tags.
      *
-     * @param tags
+     * @param tag the tag to add
      */
-    private void updateTagsList(Set<ITag> tags) {
-        ObservableList<TagListItem> observableList = FXCollections.observableArrayList();
+    private void addTagToList(ITag tag) {
+        tagList.addTag(tag);
+    }
 
-        for(ITag tag : tags) {
-            TagListItem tagListItem = new TagListItem(tag, TagList.Type.LOCAL);
-            tagListItem.getStyleClass().add("tag");
-            observableList.add(tagListItem);
-        }
-        tagList.setItems(observableList);
+    /**
+     * Removes a tag from the list of tags.
+     *
+     * @param tag the tag to remove
+     */
+    private void removeTagFromList(ITag tag) {
+        tagList.removeTag(tag);
     }
 
     /**
@@ -113,6 +117,30 @@ public class EmailDetail extends VBox implements IObserver {
      */
     public void clearTagList() {
         tagList.clear();
+    }
+
+    /**
+     * This method is invoked when a tag gets removed from an email. It updates the view only if the affected email
+     * is the selected email.
+     *
+     * @param pair
+     */
+    private void removedTagFromEmail(Pair<IEmail, ITag> pair) {
+        if (pair.getFirst().equals(selectedEmail)) {
+            removeTagFromList(pair.getSecond());
+        }
+    }
+
+    /**
+     * This method is invoked when a tag gets added to an email. It updates the view only if the affected email is the
+     * selected email
+     *
+     * @param pair
+     */
+    private void addedTagToEmail(Pair<IEmail, ITag> pair) {
+        if (pair.getFirst().equals(selectedEmail)) {
+            addTagToList(pair.getSecond());
+        }
     }
 
     @Override
@@ -123,18 +151,16 @@ public class EmailDetail extends VBox implements IObserver {
     }
 
     private void handleEvent(IEvent evt) {
-        IEmail email;
         switch (evt.getType()) {
             case SELECT_EMAIL:
-                updateView((IEmail)evt.getValue());
+                this.selectedEmail = (IEmail) evt.getValue();
+                updateView(selectedEmail);
                 break;
             case REMOVED_TAG_FROM_EMAIL:
-                email = (IEmail)((Pair)evt.getValue()).getFirst();
-                updateView(email);
+                removedTagFromEmail((Pair<IEmail, ITag>) evt.getValue());
                 break;
             case ADDED_TAG_TO_EMAIL:
-                email = (IEmail)((Pair)evt.getValue()).getFirst();
-                updateView(email);
+                addedTagToEmail((Pair<IEmail, ITag>) evt.getValue());
                 break;
             case TAGS_CLEARED:
                 clearTagList();
