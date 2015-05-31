@@ -1,58 +1,57 @@
 package edu.chl.mailbowser.tests.search;
 
 import edu.chl.mailbowser.tests.mock.MockSearchable;
-import edu.chl.mailbowser.utils.search.SetSearcher;
+import edu.chl.mailbowser.utils.search.ListSearcher;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
  * Created by mats on 05/05/15.
  */
-public class SetSearcherTest {
+public class ListSearcherTest {
 
-    private SetSearcher<MockSearchable> setSearcher = new SetSearcher<>();
+    private ListSearcher<MockSearchable> ListSearcher = new ListSearcher<>();
 
     @Before
-    public void setUp() throws Exception {
-        setSearcher = new SetSearcher<>();
+    public void ListUp() throws Exception {
+        ListSearcher = new ListSearcher<>();
     }
 
     @Test
     public void testSearch() throws Exception {
-        // test if the search method gets called in all searchables, and that the size of the result set is the same
-        // as the search set when all searchables matches the query
-        Set<MockSearchable> set1 = new HashSet<>();
+        // test if the search method gets called in all searchables, and that the size of the result List is the same
+        // as the search List when all searchables matches the query
+        List<MockSearchable> list1 = new ArrayList<>();
         MockSearchable s1 = new MockSearchable();
         MockSearchable s2 = new MockSearchable();
         MockSearchable s3 = new MockSearchable();
-        set1.add(s1);
-        set1.add(s2);
-        set1.add(s3);
+        list1.add(s1);
+        list1.add(s2);
+        list1.add(s3);
 
-        Set<MockSearchable> result1 = setSearcher.search(set1, "");
+        List<MockSearchable> result1 = ListSearcher.search(list1, "");
         assertEquals(result1.size(), 3);
         assertTrue(s1.matchesCalled);
         assertTrue(s2.matchesCalled);
         assertTrue(s3.matchesCalled);
 
-        // test if the search method gets called in all searchables, and that the size of the result set is 0 when
+        // test if the search method gets called in all searchables, and that the size of the result List is 0 when
         // no searchables matches the query
-        Set<MockSearchable> set2 = new HashSet<>();
+        List<MockSearchable> list2 = new ArrayList<>();
         MockSearchable s4 = new MockSearchable();
         MockSearchable s5 = new MockSearchable();
         MockSearchable s6 = new MockSearchable();
-        set2.add(s4);
-        set2.add(s5);
-        set2.add(s6);
+        list2.add(s4);
+        list2.add(s5);
+        list2.add(s6);
 
-        Set<MockSearchable> result2 = setSearcher.search(set2, "123");
+        List<MockSearchable> result2 = ListSearcher.search(list2, "123");
         assertEquals(result2.size(), 0);
         assertTrue(s4.matchesCalled);
         assertTrue(s5.matchesCalled);

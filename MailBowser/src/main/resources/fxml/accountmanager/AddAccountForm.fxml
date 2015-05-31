@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<fx:root styleClass="form" type="javafx.scene.layout.VBox" minWidth="220.0" maxWidth="220.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<fx:root maxWidth="220.0" minWidth="220.0" styleClass="form" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Label text="Username" />
         <TextField fx:id="usernameField" />
         <Label text="Password" />
-        <TextField fx:id="passwordField" />
+      <PasswordField fx:id="passwordField" />
         <Label text="Incoming server" />
         <ChoiceBox fx:id="accountTypeChoiceBox" minWidth="200.0" />
     </children>

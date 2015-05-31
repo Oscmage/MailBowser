@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<fx:root type="javafx.scene.layout.HBox" id="topbar" alignment="CENTER_LEFT" maxHeight="60.0" maxWidth="1.7976931348623157E308" prefHeight="60.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root id="topbar" alignment="CENTER_LEFT" maxHeight="60.0" maxWidth="1.7976931348623157E308" prefHeight="60.0" spacing="10.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <HBox alignment="CENTER_LEFT" maxWidth="420.0" spacing="10.0">
             <children>
@@ -47,7 +47,10 @@
                <tooltip>
                   <Tooltip text="Reply all " />
                </tooltip></Button>
-                <Button fx:id="deleteButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="" />
+                <Button fx:id="deleteButton" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefHeight="40.0" styleClass="fontawesome, circle" text="">
+               <tooltip>
+                  <Tooltip text="Delete the currently selected email" />
+               </tooltip></Button>
                 <TextField fx:id="searchField" onAction="#searchFieldOnAction" prefWidth="220.0" promptText="Search..." />
                 <!-- <TextField fx:id="addTagTextField" maxHeight="40.0" minHeight="40.0" onAction="#addTagOnAction" prefHeight="40.0" promptText="Add tag..." />-->
             </children>

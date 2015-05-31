@@ -6,9 +6,7 @@ import org.junit.Test;
 
 import javax.mail.internet.InternetAddress;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by OscarEvertsson on 30/04/15.
@@ -18,8 +16,25 @@ public class AddressTest {
     private final String s1 = "oscar.evertsson@live.com";
 
     @Before
-    public void intitialize() {
+    public void initialize() {
         address = new Address(s1);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testConstructorException(){
+        new Address("hoinksdaoinsd@@@@@....com");
+    }
+
+    @Test
+    public void testIsValidAddress(){
+        //Test with a correct mail
+        assertTrue(Address.isValidAddress(s1));
+
+        //Several tests with incorrect strings.
+        assertFalse(Address.isValidAddress(""));
+        assertFalse(Address.isValidAddress("asdqiwoenioqnw"));
+        assertFalse(Address.isValidAddress("asdhotmail.com"));
+        assertFalse(Address.isValidAddress("@."));
     }
 
     @Test

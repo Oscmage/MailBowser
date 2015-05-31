@@ -1,5 +1,8 @@
 package edu.chl.mailbowser.contact;
 
+import edu.chl.mailbowser.event.Event;
+import edu.chl.mailbowser.event.EventBus;
+import edu.chl.mailbowser.event.EventType;
 import edu.chl.mailbowser.utils.io.*;
 import edu.chl.mailbowser.utils.search.SetSearcher;
 
@@ -20,9 +23,11 @@ public class ContactBook implements IContactBook{
     @Override
     public void addContact(IContact contact) {
         if(contact != null){
-            this.contacts.add(contact);
+            if (!this.contacts.contains(contact)) {
+                this.contacts.add(contact);
+                EventBus.INSTANCE.publish(new Event(EventType.CONTACT_ADDED, contact));
+            }
         }
-
     }
 
     /**
@@ -30,7 +35,10 @@ public class ContactBook implements IContactBook{
      */
     @Override
     public void removeContact(IContact contact) {
-        this.contacts.remove(contact);
+        if (contact != null) {
+            this.contacts.remove(contact);
+            EventBus.INSTANCE.publish(new Event(EventType.CONTACT_REMOVED, contact));
+        }
     }
 
     /**
@@ -39,7 +47,7 @@ public class ContactBook implements IContactBook{
      */
     @Override
     public Set<IContact> getContacts() {
-        return this.contacts;
+        return new TreeSet<>(this.contacts);
     }
 
     /**
@@ -49,7 +57,8 @@ public class ContactBook implements IContactBook{
      */
     @Override
     public Set<IContact> getMatchingContacts(String query) {
-        return new SetSearcher<IContact>().search(this.contacts, query);
+        SetSearcher<IContact> searcher = new SetSearcher<>();
+        return searcher.search(this.contacts, query);
     }
 
     /**

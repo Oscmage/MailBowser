@@ -4,11 +4,18 @@ import edu.chl.mailbowser.email.IAddress;
 import edu.chl.mailbowser.utils.search.Searchable;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by jesper on 2015-05-20.
- * This interface represent a contact with first name, last name, full name and email address(es).
+ *
+ * This interface represents a contact with first name, last name, full name and a list of email addresses.
+ * Each contact should have a UUID for identifying it. This is because two contacts with the same name can be
+ * two different contacts, and should not be equal.
+ *
+ * All implementations of this interface should be immutable.
  */
 public interface IContact extends Comparable<IContact>, Searchable, Serializable {
     /**
@@ -30,33 +37,18 @@ public interface IContact extends Comparable<IContact>, Searchable, Serializable
     String getLastName();
 
     /**
-     * Sets the first name to the specified string.
-     * @param firstName
+     * Returns this contacts UUID.
+     *
+     * @return this contacts UUID
      */
-    void setFirstName(String firstName);
+    UUID getUUID();
 
     /**
-     * Sets the last name to the specified string.
-     * @param lastName
+     * Returns this contacts creation date.
+     *
+     * @return
      */
-    void setLastName(String lastName);
-
-    /**
-     * Adds the email address.
-     * @param address
-     */
-    void addAddress(IAddress address);
-
-    /**
-     * Adds all addresses for the specified list to the contact.
-     * @param addresses
-     */
-    void addAllAddresses(List<IAddress> addresses);
-
-    /**
-     * Clears the list of addresses completely.
-     */
-    void removeAllAddresses();
+    Date getCreatedDate();
 
     /**
      * Returns a list of all email-addresses.
