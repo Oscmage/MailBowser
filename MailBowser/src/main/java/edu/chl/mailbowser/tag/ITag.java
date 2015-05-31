@@ -10,12 +10,6 @@ import java.io.Serializable;
 public interface ITag extends Searchable, Serializable, Comparable<ITag> {
 
    /**
-    * Changes the name of the tag to the specified string.
-    * @param name the new name for the tag
-    */
-   void setTagName(String name);
-
-   /**
     * Returns a string for the Tag's name.
     * @return the current name of the tag.
     */

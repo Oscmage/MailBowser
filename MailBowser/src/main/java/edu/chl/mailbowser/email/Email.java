@@ -178,6 +178,7 @@ public class Email implements IEmail {
 
     /**
      * Recursively works through all parts of a message, and look for the content.
+     * This implementation is copied from JavaMail API:s FAQ-page
      *
      * @param p the message part to start from
      * @return the content of a message. If something goes wrong, an empty string is returned.
