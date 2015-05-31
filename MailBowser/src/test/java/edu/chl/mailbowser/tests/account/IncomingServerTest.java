@@ -55,8 +55,7 @@ public class IncomingServerTest {
 
     @Test
     public void testHashCode() throws Exception {
-        assertTrue(incomingServer1.hashCode() == incomingServer1.hashCode());
-        assertFalse(incomingServer1.hashCode() == incomingServer3.hashCode());
+        assertEquals(incomingServer1.hashCode(), incomingServer1.hashCode());
     }
 
     @Test
