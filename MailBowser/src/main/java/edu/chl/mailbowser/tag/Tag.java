@@ -8,24 +8,17 @@ public class Tag implements ITag {
     private String name;
 
     /**
-     * Creates a Tag with the specified name.
+     * Creates a Tag with the specified name in lower case.
+     * @throws IllegalArgumentException if the specified name is null
      */
     public Tag(String name) {
-        setTagName(name);
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setTagName(String name) {
         if(name != null) {
             this.name = name.toLowerCase();
         } else {
             throw new IllegalArgumentException("Null is not accepted when creating a tag.");
         }
     }
+
 
     /**
      * {@inheritDoc}
