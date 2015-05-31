@@ -107,4 +107,11 @@ public class TagTest {
         assertFalse(tag.matches("workasdf"));
         assertFalse(tag.matches("Workasdf"));
     }
+
+    @Test
+    public void testCompareTo() throws Exception {
+        assertTrue(tag.compareTo(new Tag("A"))>0);
+        assertTrue(tag.compareTo(new Tag("x"))<0);
+        assertTrue(tag.compareTo(tag) == 0);
+    }
 }
