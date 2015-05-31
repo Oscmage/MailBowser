@@ -2,13 +2,12 @@ package edu.chl.mailbowser.main;
 
 import edu.chl.mailbowser.account.IAccountHandler;
 
-import java.util.Timer;
 import java.util.TimerTask;
 
 /**
  * Created by jesper on 2015-05-07.
- *
- * A timer task that inits fetching from all accounts in the account handler.
+ * A timer task that initializes fetching from all accounts in the account handler.
+ * Used by Main only.
  */
 
 public class FetchTask extends TimerTask {

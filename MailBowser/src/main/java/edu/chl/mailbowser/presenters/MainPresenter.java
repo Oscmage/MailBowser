@@ -29,6 +29,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by filip on 04/05/15.
+ * This class handles all views and their events. It also handles the menu.
  */
 public class MainPresenter implements IObserver, Initializable {
 

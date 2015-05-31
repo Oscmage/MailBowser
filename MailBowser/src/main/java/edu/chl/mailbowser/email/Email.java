@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by OscarEvertsson on 07/04/15.
- * This class represents an Email with sender, receivers, subject, content, createdDate, sentDate, lastEditedDate and isSent.
+ * This class represents an Email with sender, receivers, subject, content, sentDate and isSent.
+ *
  */
 public class Email implements IEmail {
     private static final long serialVersionUID = 2832405631172419366L;

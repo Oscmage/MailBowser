@@ -6,7 +6,8 @@ import javax.mail.internet.InternetAddress;
 /**
  * Created by OscarEvertsson on 07/04/15.
  *
- * Address represents an email address. You cannot create an invalid Address obejct.
+ * Address represents an email address. You cannot create an invalid Address object.
+ * Used by Account, Email and Contact.
  */
 public class Address implements IAddress{
     private static final long serialVersionUID = 5430029535515951841L;
