@@ -9,7 +9,7 @@ import javax.mail.*;
 /**
  * Created by jesper on 2015-04-22.
  *
- * A concrete implementation of IOutgoingServer.
+ * A concrete implementation of IOutgoingServer. This implementation starts the sending process asynchronously in a new thread.
  */
 public class OutgoingServer extends AbstractMailServer implements IOutgoingServer {
     private static final long serialVersionUID = -7751487947324807435L;

@@ -6,7 +6,7 @@ import java.io.IOException;
 /**
  * Created by mats on 11/05/15.
  *
- * A utility class for IO.
+ * A utility class for IO. This class only has static methods and can't be instantiated by other classes.
  */
 public class IOUtils {
     private IOUtils() {} // private constructor to prevent instantiation
