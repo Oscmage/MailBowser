@@ -4,6 +4,7 @@ package edu.chl.mailbowser.event;
  * Created by mats on 29/04/15.
  *
  * An interface for an event. An event has a type and a value.
+ * An IEvent is sent using {@link edu.chl.mailbowser.event.EventBus} to notify its listners
  */
 public interface IEvent {
     /**

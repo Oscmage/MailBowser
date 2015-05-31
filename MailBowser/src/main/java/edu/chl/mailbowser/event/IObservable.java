@@ -4,6 +4,7 @@ package edu.chl.mailbowser.event;
  * Created by mats on 29/04/15.
  *
  * An interface for objects that are observable.
+ * The interface is implemented if the state of the class is of intrest to any {@link edu.chl.mailbowser.event.IObserver} objects
  */
 public interface IObservable {
     /**

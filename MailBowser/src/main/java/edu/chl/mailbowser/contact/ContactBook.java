@@ -12,6 +12,8 @@ import java.util.TreeSet;
 /**
  * Created by OscarEvertsson on 20/05/15.
  * This class represents a contact book.
+ * This class contains several contacts and is responsibly for
+ * writing and reading the set contacts from/to disk.
  */
 public class ContactBook implements IContactBook{
 
