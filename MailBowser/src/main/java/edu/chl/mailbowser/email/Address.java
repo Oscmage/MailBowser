@@ -112,4 +112,9 @@ public class Address implements IAddress{
     public boolean matches(String query) {
         return query != null && address.contains(query);
     }
+
+    @Override
+    public int compareTo(IAddress o) {
+        return this.address.compareTo(o.getString());
+    }
 }

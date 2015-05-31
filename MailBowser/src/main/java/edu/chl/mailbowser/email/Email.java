@@ -394,9 +394,58 @@ public class Email implements IEmail {
 
     /**
      * {@inheritDoc}
+     *
+     * Emails are compared in this order:
+     * * receivedDate, newest first
+     * * sentDate, newest first
+     * * subject, alphabetical order
+     * * content, alphabetical order
+     * * sender
+     * * to
+     * * cc
+     * * bcc
+     *
+     * If all the above are the same, this method returns 0.
      */
     @Override
     public int compareTo(IEmail o) {
-        return o.getReceivedDate().compareTo(this.getReceivedDate());
+        int receivedDateComparison = this.receivedDate.compareTo(o.getReceivedDate());
+        if (receivedDateComparison != 0) {
+            return -receivedDateComparison;
+        }
+
+        int sentDateComparison = this.sentDate.compareTo(o.getSentDate());
+        if (sentDateComparison != 0) {
+            return -sentDateComparison;
+        }
+
+        int subjectComparison = this.subject.compareTo(o.getSubject());
+        if (subjectComparison != 0) {
+            return subjectComparison;
+        }
+
+        int contentComparison = this.content.compareTo(o.getContent());
+        if (contentComparison != 0) {
+            return contentComparison;
+        }
+
+        int senderComparison = this.sender.compareTo(o.getSender());
+        if (senderComparison != 0) {
+            return senderComparison;
+        }
+
+        if (!this.to.equals(o.getTo())) {
+            return -1;
+        }
+
+        if (!this.cc.equals(o.getCc())) {
+            return -1;
+        }
+
+        if (!this.bcc.equals(o.getBcc())) {
+            return -1;
+        }
+
+        return 0;
     }
 }
