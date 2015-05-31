@@ -209,6 +209,9 @@ public class MainPresenter implements IObserver, Initializable {
             case FETCH_ALL_EMAILS:
                 accountHandler.initFetchingFromAllAccounts();
                 break;
+            case DELETE_TAG:
+                ITag tag = (ITag) evt.getValue();
+                tagHandler.eraseTag(tag);
         }
     }
 
