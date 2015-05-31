@@ -5,6 +5,8 @@ package edu.chl.mailbowser.tag;
  * The class Tag represents a certain email tag, examples could be "Work", "School" etc.
  */
 public class Tag implements ITag {
+    private static final long serialVersionUID = 3229495052687019998L;
+
     private String name;
 
     /**
