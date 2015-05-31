@@ -247,10 +247,12 @@ public class Account implements IAccount {
                 String folderName = object.getSecond();
                 ITag tag = new Tag(folderName);
 
-                emails.add(email);
-                tagHandler.addTagToEmail(email, tag);
+                if (!emails.contains(email)) {
+                    emails.add(email);
+                    EventBus.INSTANCE.publish(new Event(EventType.FETCHED_EMAIL, email));
+                }
 
-                EventBus.INSTANCE.publish(new Event(EventType.FETCHED_EMAIL, email));
+                tagHandler.addTagToEmail(email, tag);
             }
 
             @Override
